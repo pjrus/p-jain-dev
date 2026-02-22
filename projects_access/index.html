@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm Visualizers Index</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Global styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Base Body Styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /* background: #f0f2f5; theme.css handles this */
+      /* color: #333; theme.css handles this */
+      line-height: 1.6;
+    }
+
+    /* Container for centralized content */
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styling */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    /* Grid Layout for Visualizer Cards */
+    .grid {
+      display: grid;
+      /* Responsive grid that adjusts columns based on available width */
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    /* Individual Card Styling */
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    /* Card Hover Effect */
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Link Styling inside Cards */
+    .card a {
+      display: block;
+      color: #1a73e8;
+      text-decoration: none;
+      padding: 20px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .card a:hover {
+      color: #0048a8;
+    }
+
+    /* Footer Styling */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Adjustments for Mobile */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .card a {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Main Header -->
+    <header>
+      <h1>Algorithm Visualizers</h1>
+      <p>Click any of the visualizers below to explore the algorithms in action.</p>
+    </header>
+
+    <!-- Visualizer Links Grid -->
+    <div class="grid">
+      <!-- AVL Tree Link -->
+      <div class="card">
+        <a href="avl_tree_balance.html">AVL Tree Balance Visualizer</a>
+      </div>
+      <!-- Bellman-Ford Link -->
+      <div class="card">
+        <a href="bellman_ford.html">Bellman-Ford Algorithm Visualizer</a>
+      </div>
+      <!-- Graph Traversal Link -->
+      <div class="card">
+        <a href="graph_traversal_visualiser.html">Graph Traversal Algorithm Visualiser</a>
+      </div>
+      <!-- MST Link -->
+      <div class="card">
+        <a href="mst_visualiser.html">Minimum Spanning Tree Algorithm Visualiser</a>
+      </div>
+      <!-- Dijkstra Link -->
+      <div class="card">
+        <a href="dijkstra_visualiser.html">Dijkstra Visualiser</a>
+      </div>
+      <!-- Ford-Fulkerson Link -->
+      <div class="card">
+        <a href="ford_fulkerson.html">Ford-Fulkerson Algorithm Visualizer</a>
+      </div>
+      <!-- Prefix Trie Link -->
+      <div class="card">
+        <a href="prefix_trie.html">Prefix Trie Visualizer</a>
+      </div>
+      <!-- Suffix Trie Link -->
+      <div class="card">
+        <a href="suffix_trie.html">Suffix Trie Visualizer</a>
+      </div>
+      <!-- Red Black & 2-3 Tree Link -->
+      <div class="card">
+        <a href="tree-visualiser.html">Red Black Tree and 2-3 Tree Visualiser</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2025 Algorithm Visualizers • Built by Your Name
+    </footer>
+  </div>
+  <script src="theme.js"></script>
+</body>
+
+</html>

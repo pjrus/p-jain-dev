@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bellman–Ford Visualizer</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout for centering */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* background-color: #f5f5f5; handled by theme.css */
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Toolbar container */
+    #toolbar {
+      margin-bottom: 10px;
+    }
+
+    /* Toolbar button styles */
+    #toolbar button {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Active button state */
+    #toolbar button.active {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    /* Disabled button state */
+    #toolbar button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* STEP CONTROLS: Flex container to align buttons and info text */
+    #stepControls {
+      margin-top: 8px;
+      width: 800px;
+      /* matches SVG width */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      box-sizing: border-box;
+    }
+
+    /* Group of step navigation buttons */
+    #stepButtons {
+      display: flex;
+      gap: 8px;
+    }
+
+    #stepButtons button {
+      padding: 5px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* Information text display for current step */
+    #stepInfo {
+      font-size: 14px;
+      color: #333;
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    /* SVG Canvas styling */
+    svg {
+      border: 1px solid #ccc;
+      background-color: white;
+      width: 800px;
+      height: 500px;
+      touch-action: none;
+      /* disables browser touch actions to allow dragging */
+    }
+
+    /* Arrow marker for directed edges */
+    marker#arrow {
+      overflow: visible;
+    }
+
+    marker#arrow path {
+      fill: #666;
+    }
+
+    /* Node visual styles */
+    .node-circle {
+      fill: #2196F3;
+      stroke: #1565C0;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .node-text {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+      /* allows clicking through text to circle */
+    }
+
+    /* Special node states */
+    .node-source {
+      fill: #4CAF50 !important;
+      /* Source node color */
+    }
+
+    .node-infinite {
+      fill: #F44336 !important;
+      /* Unreachable node color */
+    }
+
+    .node-current {
+      fill: #FFC107 !important;
+      /* Currently processing node color */
+    }
+
+    /* Edge visual styles */
+    .edge-line {
+      stroke: #666;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .edge-path {
+      stroke: #e91e63 !important;
+      /* Highlighted path/edge color */
+      stroke-width: 4 !important;
+    }
+
+    .edge-weight {
+      fill: black;
+      font-size: 12px;
+      pointer-events: none;
+    }
+  </style>
+  <script src="theme.js"></script>
+</head>
+
+<body>
+  <h1>Bellman–Ford Step-by-Step Visualizer</h1>
+
+  <!-- Top Toolbar for Graph Editing and Algorithm Control -->
+  <div id="toolbar">
+    <button id="addNodeBtn" disabled>Add Node</button>
+    <button id="addEdgeBtn" disabled>Add Edge</button>
+    <button id="deleteNodeBtn" disabled>Delete Node</button>
+    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button id="generateBtn" disabled>Generate Graph</button>
+    <button id="runBFBtn" disabled>Run Bellman–Ford</button>
+    <button id="clearBtn" disabled>Clear All</button>
+  </div>
+
+  <!-- Step Execution Controls (Hidden until algorithm runs) -->
+  <div id="stepControls" style="display: none;">
+    <div id="stepButtons">
+      <button id="prevStepBtn" disabled>◀ Prev</button>
+      <button id="nextStepBtn" disabled>Next ▶</button>
+      <button id="finishStepBtn" disabled>Finish</button>
+      <button id="exitStepBtn" disabled>Exit</button>
+    </div>
+    <span id="stepInfo"></span>
+  </div>
+
+  <!-- SVG Area for Graph Visualization -->
+  <svg id="graphSvg">
+    <defs>
+      <!-- Arrowhead definition for directed edges -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerUnits="strokeWidth" markerWidth="8"
+        markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z"></path>
+      </marker>
+    </defs>
+  </svg>
+
+  <script>
+    // ===== GLOBAL STATE & DOM ELEMENTS =====
+    const svg = document.getElementById('graphSvg');
+
+    // Toolbar buttons
+    const addNodeBtn = document.getElementById('addNodeBtn');
+    const addEdgeBtn = document.getElementById('addEdgeBtn');
+    const deleteNodeBtn = document.getElementById('deleteNodeBtn');
+    const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const runBFBtn = document.getElementById('runBFBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Step control elements
+    const prevStepBtn = document.getElementById('prevStepBtn');
+    const nextStepBtn = document.getElementById('nextStepBtn');
+    const finishStepBtn = document.getElementById('finishStepBtn');
+    const exitStepBtn = document.getElementById('exitStepBtn');
+    const stepInfo = document.getElementById('stepInfo');
+    const stepControls = document.getElementById('stepControls');
+
+    // Graph Data Structures
+    let nodes = [];       // Array of node objects: { id, x, y, elemCircle, elemText, isSource }
+    let edges = [];       // Array of edge objects: { from, to, weight, elemLine, elemText }
+    let nextNodeId = 0;   // Counter for unique node IDs
+
+    // Interaction Modes
+    let addNodeMode = false;
+    let addEdgeMode = false;
+    let deleteNodeMode = false;
+    let deleteEdgeMode = false;
+
+    // Helper for creating edges (stores first clicked node)
+    let edgeFirstNode = null;
+    let edgeSecondNode = null;
+
+    // Bellman-Ford Algorithm State
+    let bfSteps = [];     // Array of snapshots representing algorithm steps
+    let currentStepIndex = 0;
+
+    // Dragging State
+    let draggingNode = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    // ===== SVG COORDINATE UTILITY =====
+    // Converts mouse event coordinates to SVG coordinates
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX;
+      pt.y = evt.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // ===== EVENT LISTENERS: TOOLBAR =====
+
+    // Toggle Add Node Mode
+    addNodeBtn.addEventListener('click', () => {
+      addNodeMode = !addNodeMode;
+      if (addNodeMode) {
+        addNodeBtn.classList.add('active');
+        // Disable other modes
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelBF(); // Reset algorithm view if active
+      } else {
+        addNodeBtn.classList.remove('active');
+      }
+    });
+
+    // Toggle Add Edge Mode
+    addEdgeBtn.addEventListener('click', () => {
+      addEdgeMode = !addEdgeMode;
+      if (addEdgeMode) {
+        addEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelBF();
+      } else {
+        addEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+      }
+      drawGraph(); // Redraw to clear temporary highlights
+    });
+
+    // Toggle Delete Node Mode
+    deleteNodeBtn.addEventListener('click', () => {
+      deleteNodeMode = !deleteNodeMode;
+      if (deleteNodeMode) {
+        deleteNodeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelBF();
+      } else {
+        deleteNodeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    // Toggle Delete Edge Mode
+    deleteEdgeBtn.addEventListener('click', () => {
+      deleteEdgeMode = !deleteEdgeMode;
+      if (deleteEdgeMode) {
+        deleteEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelBF();
+      } else {
+        deleteEdgeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    // Generate Random Graph Button
+    generateBtn.addEventListener('click', () => {
+      const nInput = prompt("Enter number of nodes (>=2):");
+      const n = parseInt(nInput, 10);
+      if (isNaN(n) || n < 2) {
+        alert("Invalid number of nodes.");
+        return;
+      }
+      const maxEdges = n * (n - 1);
+      const minEdges = n - 1;
+      const eInput = prompt(`Enter number of edges (between ${minEdges} and ${maxEdges}):`);
+      const m = parseInt(eInput, 10);
+      if (isNaN(m) || m < minEdges || m > maxEdges) {
+        alert(`Invalid number of edges.`);
+        return;
+      }
+      generateGraph(n, m);
+    });
+
+    // Clear Graph Button
+    clearBtn.addEventListener('click', () => {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      edgeFirstNode = edgeSecondNode = null;
+      cancelBF();
+      drawGraph();
+      updateButtons();
+    });
+
+    // SVG Click Handler (for adding nodes)
+    svg.addEventListener('mousedown', evt => {
+      const pt = getSvgPoint(evt);
+      if (addNodeMode && evt.target === svg) {
+        const newNode = {
+          id: nextNodeId++,
+          x: pt.x,
+          y: pt.y,
+          elemCircle: null,
+          elemText: null,
+          isSource: false
+        };
+        nodes.push(newNode);
+        drawGraph();
+      }
+    });
+
+    // ===== DRAWING LOGIC =====
+
+    // Main render function for the graph
+    function drawGraph() {
+      // Clear existing SVG content except defs
+      Array.from(svg.childNodes).forEach(n => {
+        if (n.nodeName !== 'defs') svg.removeChild(n);
+      });
+
+      // Draw Edges first (so they are behind nodes)
+      edges.forEach((ed, idx) => {
+        const from = nodes.find(n => n.id === ed.from);
+        const to = nodes.find(n => n.id === ed.to);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", from.x);
+        line.setAttribute("y1", from.y);
+        line.setAttribute("x2", to.x);
+        line.setAttribute("y2", to.y);
+        line.setAttribute("class", "edge-line");
+        line.setAttribute("marker-end", "url(#arrow)");
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        // Draw Edge Weight Label
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2;
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", midX);
+        txt.setAttribute("y", midY - 5);
+        txt.setAttribute("class", "edge-weight");
+        txt.textContent = ed.weight;
+        svg.appendChild(txt);
+        ed.elemText = txt;
+
+        // Handle edge deletion click
+        line.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteEdgeMode) deleteEdge(idx);
+        });
+      });
+
+      // Draw Nodes
+      nodes.forEach(nd => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", nd.x);
+        circle.setAttribute("cy", nd.y);
+        circle.setAttribute("r", 16);
+        circle.setAttribute("class", "node-circle");
+        circle.dataset.id = nd.id; // Store ID for drag/click identification
+        if (nd.isSource) circle.classList.add('node-source');
+        svg.appendChild(circle);
+        nd.elemCircle = circle;
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", nd.x);
+        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("class", "node-text");
+        txt.setAttribute("text-anchor", "middle");
+        txt.textContent = nd.id;
+        svg.appendChild(txt);
+        nd.elemText = txt;
+
+        // Node Interaction Listeners
+        circle.addEventListener('mousedown', onNodeMouseDown);
+        circle.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteNodeMode) {
+            deleteNode(nd.id);
+          } else if (addEdgeMode) {
+            onNodeClickForEdge(nd.id);
+          } else {
+            // Default action: Set Source Node
+            const srcInput = prompt("Set this node as source? Type 'y' to confirm:");
+            if (srcInput === 'y') {
+              nodes.forEach(n => n.isSource = false);
+              nd.isSource = true;
+              drawGraph();
+            }
+          }
+        });
+      });
+      updateButtons();
+    }
+
+    // Update state of buttons based on graph content
+    function updateButtons() {
+      const hasNodes = nodes.length > 0;
+      const hasEdges = edges.length > 0;
+      const sourceExists = nodes.some(n => n.isSource);
+
+      addNodeBtn.disabled = false;
+      addEdgeBtn.disabled = !hasNodes;
+      deleteNodeBtn.disabled = !hasNodes;
+      deleteEdgeBtn.disabled = !hasEdges;
+      generateBtn.disabled = false;
+      // Algorithm requires edges and a source node
+      runBFBtn.disabled = !(hasEdges && sourceExists);
+      clearBtn.disabled = !(hasNodes || hasEdges);
+    }
+
+    // ===== DELETION LOGIC =====
+    function deleteNode(nodeId) {
+      nodes = nodes.filter(n => n.id !== nodeId);
+      // Remove any edges connected to this node
+      edges = edges.filter(e => e.from !== nodeId && e.to !== nodeId);
+      drawGraph();
+    }
+    function deleteEdge(idx) {
+      edges.splice(idx, 1);
+      drawGraph();
+    }
+
+    // ===== DRAGGING LOGIC =====
+    function onNodeMouseDown(evt) {
+      evt.stopPropagation();
+      const circle = evt.currentTarget;
+      const nodeId = parseInt(circle.dataset.id, 10);
+      const nd = nodes.find(n => n.id === nodeId);
+      if (!nd) return;
+      draggingNode = nd;
+      const pt = getSvgPoint(evt);
+      dragOffsetX = pt.x - nd.x;
+      dragOffsetY = pt.y - nd.y;
+      window.addEventListener('mousemove', onDrag);
+      window.addEventListener('mouseup', onDragEnd);
+    }
+    function onDrag(evt) {
+      if (!draggingNode) return;
+      const pt = getSvgPoint(evt);
+      draggingNode.x = pt.x - dragOffsetX;
+      draggingNode.y = pt.y - dragOffsetY;
+      drawGraph();
+      // If algorithm result is showing, keep highlighting
+      if (stepControls.style.display === 'block') {
+        highlightStep(currentStepIndex);
+      }
+    }
+    function onDragEnd() {
+      draggingNode = null;
+      window.removeEventListener('mousemove', onDrag);
+      window.removeEventListener('mouseup', onDragEnd);
+    }
+
+    // ===== EDGE CREATION LOGIC =====
+    function onNodeClickForEdge(nodeId) {
+      if (!addEdgeMode) return;
+
+      // Node selection state machine
+      if (edgeFirstNode === null) {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph(); // Could add visual feedback for selection here
+      } else if (edgeFirstNode === nodeId && edgeSecondNode === null) {
+        // Deselect if same node clicked
+        edgeFirstNode = null;
+        drawGraph();
+      } else if (edgeFirstNode !== null && edgeSecondNode === null) {
+        // Second node selected
+        edgeSecondNode = nodeId;
+        drawGraph();
+
+        // Prompt for weight
+        const wInput = prompt("Enter weight (integer):");
+        const w = parseInt(wInput, 10);
+        if (!isNaN(w) && edgeFirstNode !== edgeSecondNode) {
+          edges.push({
+            from: edgeFirstNode,
+            to: edgeSecondNode,
+            weight: w,
+            elemLine: null,
+            elemText: null
+          });
+        }
+        // Reset selection
+        edgeFirstNode = null;
+        edgeSecondNode = null;
+        drawGraph();
+      } else {
+        // Should not happen, but safe reset
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+    }
+
+    // ===== GRAPH GENERATION LOGIC =====
+    function generateGraph(n, m) {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      cancelBF();
+
+      // Layout nodes in a circle
+      const cx = 400, cy = 250, radius = 200;
+      for (let i = 0; i < n; i++) {
+        const angle = (2 * Math.PI / n) * i;
+        const x = cx + radius * Math.cos(angle);
+        const y = cy + radius * Math.sin(angle);
+        nodes.push({
+          id: nextNodeId++,
+          x,
+          y,
+          elemCircle: null,
+          elemText: null,
+          isSource: false
+        });
+      }
+
+      // Ensure connectivity: build a random spanning tree first
+      const verts = Array.from({ length: n }, (_, i) => i);
+      shuffleArray(verts);
+      for (let i = 1; i < n; i++) {
+        const u = verts[i];
+        const v = verts[Math.floor(Math.random() * i)];
+        const w = Math.floor(Math.random() * 20) - 10; // allow negative weights
+        edges.push({ from: v, to: u, weight: w, elemLine: null, elemText: null });
+      }
+
+      // Fill remaining edges randomly
+      let count = n - 1;
+      const possible = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          if (i === j) continue;
+          if (!edges.some(e => e.from === i && e.to === j)) {
+            possible.push({ from: i, to: j });
+          }
+        }
+      }
+      shuffleArray(possible);
+      while (count < m && possible.length) {
+        const e = possible.pop();
+        const w = Math.floor(Math.random() * 20) - 10;
+        edges.push({ from: e.from, to: e.to, weight: w, elemLine: null, elemText: null });
+        count++;
+      }
+      drawGraph();
+    }
+
+    // Fisher-Yates shuffle helper
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[r]] = [arr[r], arr[i]];
+      }
+    }
+
+    // ===== BELLMAN–FORD ALGORITHM & VISUALIZATION =====
+
+    runBFBtn.addEventListener('click', () => {
+      const srcNode = nodes.find(n => n.isSource);
+      if (!srcNode) {
+        alert("Please designate a source node first.");
+        return;
+      }
+      prepareBF(srcNode.id);
+    });
+
+    // Run the algorithm and record steps
+    function prepareBF(srcId) {
+      const n = nodes.length;
+      // Initialize distances and parents
+      const distInit = Array(n).fill(Infinity);
+      const parentInit = Array(n).fill(null);
+      distInit[srcId] = 0;
+
+      bfSteps = [];
+      // Step 0: Initial state
+      bfSteps.push({
+        dist: distInit.slice(),
+        parent: parentInit.slice(),
+        edgeIdx: null,
+        iteration: 0
+      });
+
+      // Relax edges up to |V|-1 times
+      for (let iter = 1; iter < n; iter++) {
+        let updated = false;
+        for (let eIdx = 0; eIdx < edges.length; eIdx++) {
+          const e = edges[eIdx];
+          const u = e.from, v = e.to, w = e.weight;
+          const distPrev = bfSteps[bfSteps.length - 1].dist.slice();
+          const parentPrev = bfSteps[bfSteps.length - 1].parent.slice();
+
+          // Snapshot BEFORE relaxing this specific edge
+          bfSteps.push({
+            dist: distPrev.slice(),
+            parent: parentPrev.slice(),
+            edgeIdx: eIdx,
+            iteration: iter
+          });
+
+          // Relaxation check
+          if (distPrev[u] !== Infinity && distPrev[u] + w < distPrev[v]) {
+            distPrev[v] = distPrev[u] + w;
+            parentPrev[v] = u;
+            updated = true;
+          }
+
+          // Snapshot AFTER relaxing this edge
+          bfSteps.push({
+            dist: distPrev.slice(),
+            parent: parentPrev.slice(),
+            edgeIdx: eIdx,
+            iteration: iter
+          });
+        }
+        // Optimization: If no distance was updated in an entire iteration, stop early
+        if (!updated) break;
+      }
+
+      // Final state snapshot
+      const finalDist = bfSteps[bfSteps.length - 1].dist.slice();
+      const finalParent = bfSteps[bfSteps.length - 1].parent.slice();
+      bfSteps.push({
+        dist: finalDist,
+        parent: finalParent,
+        edgeIdx: null,
+        iteration: n
+      });
+
+      currentStepIndex = 0;
+      showStepControls();
+      updateBFDisplay();
+    }
+
+    // Reset/Cancel Algorithm View
+    function cancelBF() {
+      bfSteps = [];
+      currentStepIndex = 0;
+      stepControls.style.display = 'none';
+      // Reset visual classes
+      nodes.forEach(n => {
+        n.elemCircle.classList.remove('node-current', 'node-source', 'node-infinite');
+        if (n.elemText) n.elemText.textContent = n.id;
+      });
+      edges.forEach(e => {
+        e.elemLine.classList.remove('edge-path');
+        e.elemText.textContent = e.weight;
+      });
+    }
+
+    // Step Navigation Handlers
+    prevStepBtn.addEventListener('click', () => {
+      if (currentStepIndex > 0) {
+        currentStepIndex--;
+        updateBFDisplay();
+      }
+    });
+    nextStepBtn.addEventListener('click', () => {
+      if (currentStepIndex < bfSteps.length - 1) {
+        currentStepIndex++;
+        updateBFDisplay();
+      }
+    });
+    finishStepBtn.addEventListener('click', () => {
+      if (bfSteps.length > 0) {
+        currentStepIndex = bfSteps.length - 1;
+        updateBFDisplay();
+      }
+    });
+    exitStepBtn.addEventListener('click', cancelBF);
+
+    // Show controls when algorithm starts
+    function showStepControls() {
+      stepControls.style.display = 'flex';
+      prevStepBtn.disabled = true;
+      nextStepBtn.disabled = (bfSteps.length <= 1);
+      finishStepBtn.disabled = (bfSteps.length <= 1);
+      exitStepBtn.disabled = true;
+    }
+
+    // Update visualization for currrent step
+    function updateBFDisplay() {
+      drawBellmanFord(bfSteps[currentStepIndex]);
+      prevStepBtn.disabled = (currentStepIndex === 0);
+      nextStepBtn.disabled = (currentStepIndex === bfSteps.length - 1);
+      finishStepBtn.disabled = (currentStepIndex === bfSteps.length - 1);
+      exitStepBtn.disabled = (currentStepIndex !== bfSteps.length - 1);
+    }
+
+    // Draw graph state based on snapshot
+    function drawBellmanFord(snapshot) {
+      const { dist, parent, edgeIdx, iteration } = snapshot;
+
+      // Clear SVG logic same as drawGraph but with BF specific styling
+      Array.from(svg.childNodes).forEach(n => {
+        if (n.nodeName !== 'defs') svg.removeChild(n);
+      });
+
+      // Draw edges
+      edges.forEach((ed, idx) => {
+        const from = nodes.find(n => n.id === ed.from);
+        const to = nodes.find(n => n.id === ed.to);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", from.x);
+        line.setAttribute("y1", from.y);
+        line.setAttribute("x2", to.x);
+        line.setAttribute("y2", to.y);
+        line.setAttribute("class", "edge-line");
+        line.setAttribute("marker-end", "url(#arrow)");
+        // Highlight edge being considered
+        if (idx === edgeIdx) line.classList.add('edge-path');
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2;
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", midX);
+        txt.setAttribute("y", midY - 5);
+        txt.setAttribute("class", "edge-weight");
+        txt.textContent = ed.weight;
+        svg.appendChild(txt);
+        ed.elemText = txt;
+      });
+
+      // Draw nodes with distance values
+      nodes.forEach(nd => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", nd.x);
+        circle.setAttribute("cy", nd.y);
+        circle.setAttribute("r", 16);
+        circle.setAttribute("class", "node-circle");
+        circle.dataset.id = nd.id;
+
+        if (nd.isSource) circle.classList.add('node-source');
+        if (dist[nd.id] === Infinity) circle.classList.add('node-infinite');
+
+        svg.appendChild(circle);
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", nd.x);
+        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("class", "node-text");
+        txt.setAttribute("text-anchor", "middle");
+        // Display distance instead of ID
+        txt.textContent = (dist[nd.id] === Infinity ? "∞" : dist[nd.id]);
+        svg.appendChild(txt);
+      });
+
+      // Update Info Text
+      if (edgeIdx !== null) {
+        const e = edges[edgeIdx];
+        stepInfo.textContent =
+          `Iter ${iteration}, relaxing edge ${e.from}→${e.to} (w=${e.weight}). ` +
+          `Distances: [${dist.map(d => d === Infinity ? "∞" : d).join(', ')}]`;
+      } else {
+        stepInfo.textContent =
+          `Final after Iter ${iteration}. ` +
+          `Distances: [${dist.map(d => d === Infinity ? "∞" : d).join(', ')}]`;
+      }
+    }
+
+    // Use initial draw
+    drawGraph();
+  </script>
+</body>
+
+</html>

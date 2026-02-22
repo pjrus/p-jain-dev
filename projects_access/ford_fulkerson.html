@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Flow Visualizer (Ford–Fulkerson w/ DFS)</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout for centering content */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* background-color: #f5f5f5; handled by theme.css */
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Toolbar container styling */
+    #toolbar {
+      margin-bottom: 10px;
+    }
+
+    /* Toolbar button default styles */
+    #toolbar button {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Active button state */
+    #toolbar button.active {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    /* Disabled button state */
+    #toolbar button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* Step control container (Flexbox) */
+    #stepControls {
+      margin-top: 8px;
+      width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      box-sizing: border-box;
+    }
+
+    /* Control buttons group */
+    #stepButtons {
+      display: flex;
+      gap: 8px;
+    }
+
+    #stepButtons button {
+      padding: 5px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* Step info text display */
+    #stepInfo {
+      font-size: 14px;
+      color: #333;
+      white-space: nowrap;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    /* SVG Canvas styling */
+    svg {
+      border: 1px solid #ccc;
+      background-color: white;
+      width: 800px;
+      height: 500px;
+      touch-action: none;
+      /* Allows touch dragging */
+    }
+
+    /* Arrow marker for directed edges */
+    marker#arrow {
+      overflow: visible;
+    }
+
+    marker#arrow path {
+      fill: #666;
+    }
+
+    /* Node Circle Styling */
+    .node-circle {
+      fill: #2196F3;
+      stroke: #1565C0;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .node-text {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* Source Node Highlight */
+    .node-source {
+      fill: #4CAF50 !important;
+    }
+
+    /* Sink Node Highlight */
+    .node-sink {
+      fill: #F44336 !important;
+    }
+
+    /* Edge Line Styling */
+    .edge-line {
+      stroke: #666;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    /* Augmenting Path Edge Highlight */
+    .edge-augment {
+      stroke: #e91e63 !important;
+      stroke-width: 4 !important;
+    }
+
+    /* Flow/Capacity Text Label on Edges */
+    .edge-flow {
+      fill: black;
+      font-size: 12px;
+      pointer-events: none;
+      background: white;
+      /* Note: background on text element isn't standard SVG, but fill/stroke works */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Network Flow Visualizer (Ford–Fulkerson w/ DFS)</h1>
+
+  <!-- Main Toolbar -->
+  <div id="toolbar">
+    <button id="addNodeBtn" disabled>Add Node</button>
+    <button id="addEdgeBtn" disabled>Add Edge</button>
+    <button id="deleteNodeBtn" disabled>Delete Node</button>
+    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button id="generateBtn" disabled>Generate Random Graph</button>
+    <button id="runFlowBtn" disabled>Run Max Flow</button>
+    <button id="clearBtn" disabled>Clear All</button>
+  </div>
+
+  <!-- Step controls (hidden until algorithm runs) -->
+  <div id="stepControls" style="display: none;">
+    <div id="stepButtons">
+      <button id="prevStepBtn" disabled>◀ Prev</button>
+      <button id="nextStepBtn" disabled>Next ▶</button>
+      <button id="finishStepBtn" disabled>Finish</button>
+      <button id="exitStepBtn" disabled>Exit</button>
+    </div>
+    <span id="stepInfo"></span>
+  </div>
+
+  <!-- SVG Canvas Area -->
+  <svg id="graphSvg">
+    <defs>
+      <!-- Arrowhead Marker Definition -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerUnits="strokeWidth" markerWidth="8"
+        markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z"></path>
+      </marker>
+    </defs>
+  </svg>
+
+  <script>
+    // ===== GLOBAL STATE & DOM ELEMENTS =====
+    const svg = document.getElementById('graphSvg');
+
+    // Toolbar Buttons
+    const addNodeBtn = document.getElementById('addNodeBtn');
+    const addEdgeBtn = document.getElementById('addEdgeBtn');
+    const deleteNodeBtn = document.getElementById('deleteNodeBtn');
+    const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const runFlowBtn = document.getElementById('runFlowBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Step Control Buttons
+    const prevStepBtn = document.getElementById('prevStepBtn');
+    const nextStepBtn = document.getElementById('nextStepBtn');
+    const finishStepBtn = document.getElementById('finishStepBtn');
+    const exitStepBtn = document.getElementById('exitStepBtn');
+    const stepInfo = document.getElementById('stepInfo');
+    const stepControls = document.getElementById('stepControls');
+
+    // Graph Data Structures
+    let nodes = [];     // Array of node objects: { id, x, y, elemCircle, elemText }
+    let edges = [];     // Array of edge objects: { from, to, capacity, flow, elemLine, elemText }
+    let nextNodeId = 0;
+
+    // Interaction Modes
+    let addNodeMode = false;
+    let addEdgeMode = false;
+    let deleteNodeMode = false;
+    let deleteEdgeMode = false;
+
+    // Edge Creation Temp State
+    let edgeFirstNode = null;
+    let edgeSecondNode = null;
+
+    // Source and Sink Node IDs
+    let sourceId = null;
+    let sinkId = null;
+
+    // Ford–Fulkerson Algorithm State
+    let ffSteps = [];   // Array of snapshots: { flow, parentMap, augmentPath, currentFlow }
+    let currentStepIndex = 0;
+    let nodeCount = 0;
+
+    // Dragging State
+    let draggingNode = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    // ===== SVG COORDINATE UTILITY =====
+    // Transforms mouse event coordinates to SVG coordinate system
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX;
+      pt.y = evt.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // ===== EVENT LISTENERS: TOOLBAR =====
+
+    // Add Node Mode Toggle
+    addNodeBtn.addEventListener('click', () => {
+      addNodeMode = !addNodeMode;
+      if (addNodeMode) {
+        addNodeBtn.classList.add('active');
+        // Reset other modes
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelFF();
+      } else {
+        addNodeBtn.classList.remove('active');
+      }
+    });
+
+    // Add Edge Mode Toggle
+    addEdgeBtn.addEventListener('click', () => {
+      addEdgeMode = !addEdgeMode;
+      if (addEdgeMode) {
+        addEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelFF();
+      } else {
+        addEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+      }
+      drawGraph();
+    });
+
+    // Delete Node Mode Toggle
+    deleteNodeBtn.addEventListener('click', () => {
+      deleteNodeMode = !deleteNodeMode;
+      if (deleteNodeMode) {
+        deleteNodeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelFF();
+      } else {
+        deleteNodeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    // Delete Edge Mode Toggle
+    deleteEdgeBtn.addEventListener('click', () => {
+      deleteEdgeMode = !deleteEdgeMode;
+      if (deleteEdgeMode) {
+        deleteEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelFF();
+      } else {
+        deleteEdgeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    // Generate Random Graph Button
+    generateBtn.addEventListener('click', () => {
+      const nInput = prompt("Enter number of nodes (>=2):");
+      const n = parseInt(nInput, 10);
+      if (isNaN(n) || n < 2) {
+        alert("Invalid number of nodes.");
+        return;
+      }
+      const maxEdges = n * (n - 1);
+      const minEdges = n - 1;
+      const eInput = prompt(`Enter number of edges (between ${minEdges} and ${maxEdges}):`);
+      const m = parseInt(eInput, 10);
+      if (isNaN(m) || m < minEdges || m > maxEdges) {
+        alert(`Invalid number of edges.`);
+        return;
+      }
+      generateGraph(n, m);
+    });
+
+    // Clear All Button
+    clearBtn.addEventListener('click', () => {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      addNodeBtn.classList.remove('active');
+      addEdgeBtn.classList.remove('active');
+      deleteNodeBtn.classList.remove('active');
+      deleteEdgeBtn.classList.remove('active');
+      sourceId = null;
+      sinkId = null;
+      cancelFF();
+      drawGraph();
+      updateButtons();
+    });
+
+    // SVG Click Handler (Add Node)
+    svg.addEventListener('mousedown', evt => {
+      const pt = getSvgPoint(evt);
+      if (addNodeMode && evt.target === svg) {
+        const newNode = { id: nextNodeId++, x: pt.x, y: pt.y, elemCircle: null, elemText: null };
+        nodes.push(newNode);
+        drawGraph();
+      }
+    });
+
+    // ===== DRAW GRAPH =====
+    function drawGraph() {
+      // Clear SVG content except defs
+      Array.from(svg.childNodes).forEach(n => {
+        if (n.nodeName !== 'defs') svg.removeChild(n);
+      });
+
+      // Draw Edges
+      edges.forEach((ed) => {
+        const from = nodes.find(n => n.id === ed.from);
+        const to = nodes.find(n => n.id === ed.to);
+        // Edge line
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", from.x);
+        line.setAttribute("y1", from.y);
+        line.setAttribute("x2", to.x);
+        line.setAttribute("y2", to.y);
+        line.setAttribute("class", "edge-line");
+        line.setAttribute("marker-end", "url(#arrow)");
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        // Flow/capacity label
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2;
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", midX);
+        txt.setAttribute("y", midY - 5);
+        txt.setAttribute("class", "edge-flow");
+        txt.textContent = `${ed.flow}/${ed.capacity}`;
+        svg.appendChild(txt);
+        ed.elemText = txt;
+
+        line.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteEdgeMode) deleteEdge(edges.indexOf(ed));
+        });
+      });
+
+      // Draw Nodes
+      nodes.forEach(nd => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", nd.x);
+        circle.setAttribute("cy", nd.y);
+        circle.setAttribute("r", 16);
+        circle.setAttribute("class", "node-circle");
+        circle.dataset.id = nd.id;
+
+        // Apply visual class for Source/Sink
+        if (nd.id === sourceId) circle.classList.add('node-source');
+        if (nd.id === sinkId) circle.classList.add('node-sink');
+
+        svg.appendChild(circle);
+        nd.elemCircle = circle;
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", nd.x);
+        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("class", "node-text");
+        txt.setAttribute("text-anchor", "middle");
+        txt.textContent = nd.id;
+        svg.appendChild(txt);
+        nd.elemText = txt;
+
+        // Node Event Listeners
+        circle.addEventListener('mousedown', onNodeMouseDown);
+        circle.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteNodeMode) {
+            deleteNode(nd.id);
+          } else if (addEdgeMode) {
+            onNodeClickForEdge(nd.id);
+          } else {
+            // Set Source/Sink Logic
+            const role = prompt("Type 's' for source, 't' for sink, or leave blank to cancel:");
+            if (role === 's') {
+              sourceId = nd.id;
+            } else if (role === 't') {
+              sinkId = nd.id;
+            }
+            drawGraph();
+          }
+        });
+      });
+
+      updateButtons();
+    }
+
+    // Update button states based on graph content
+    function updateButtons() {
+      const hasNodes = nodes.length > 0;
+      addNodeBtn.disabled = false;
+      addEdgeBtn.disabled = !hasNodes;
+      deleteNodeBtn.disabled = !hasNodes;
+      deleteEdgeBtn.disabled = edges.length === 0;
+      generateBtn.disabled = false;
+      // Need nodes, edges, source, and sink to run algorithm
+      runFlowBtn.disabled = !(hasNodes && edges.length > 0 && sourceId !== null && sinkId !== null);
+      clearBtn.disabled = !(hasNodes || edges.length > 0);
+    }
+
+    // ===== DELETE HELPERS =====
+    function deleteNode(nodeId) {
+      nodes = nodes.filter(n => n.id !== nodeId);
+      edges = edges.filter(e => e.from !== nodeId && e.to !== nodeId);
+      if (sourceId === nodeId) sourceId = null;
+      if (sinkId === nodeId) sinkId = null;
+      drawGraph();
+    }
+    function deleteEdge(idx) {
+      edges.splice(idx, 1);
+      drawGraph();
+    }
+
+    // ===== DRAGGING LOGIC =====
+    function onNodeMouseDown(evt) {
+      evt.stopPropagation();
+      const circle = evt.currentTarget;
+      const nodeId = parseInt(circle.dataset.id, 10);
+      const nd = nodes.find(n => n.id === nodeId);
+      if (!nd) return;
+      draggingNode = nd;
+      const pt = getSvgPoint(evt);
+      dragOffsetX = pt.x - nd.x;
+      dragOffsetY = pt.y - nd.y;
+      window.addEventListener('mousemove', onDrag);
+      window.addEventListener('mouseup', onDragEnd);
+    }
+    function onDrag(evt) {
+      if (!draggingNode) return;
+      const pt = getSvgPoint(evt);
+      draggingNode.x = pt.x - dragOffsetX;
+      draggingNode.y = pt.y - dragOffsetY;
+      drawGraph();
+      // Keep visualization updated while dragging
+      if (stepControls.style.display === 'flex') {
+        highlightStep(currentStepIndex);
+      }
+    }
+    function onDragEnd() {
+      draggingNode = null;
+      window.removeEventListener('mousemove', onDrag);
+      window.removeEventListener('mouseup', onDragEnd);
+    }
+
+    // ===== ADD EDGE LOGIC =====
+    function onNodeClickForEdge(nodeId) {
+      if (!addEdgeMode) return;
+      if (edgeFirstNode === null) {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      } else if (edgeFirstNode === nodeId && edgeSecondNode === null) {
+        edgeFirstNode = null;
+        drawGraph();
+      } else if (edgeFirstNode !== null && edgeSecondNode === null) {
+        edgeSecondNode = nodeId;
+        drawGraph();
+        // Prompt for Capacity
+        const capInput = prompt("Enter capacity (positive integer):");
+        const cap = parseInt(capInput, 10);
+        if (!isNaN(cap) && cap > 0 && edgeFirstNode !== edgeSecondNode) {
+          edges.push({
+            from: edgeFirstNode,
+            to: edgeSecondNode,
+            capacity: cap,
+            flow: 0,
+            elemLine: null,
+            elemText: null
+          });
+        }
+        edgeFirstNode = null;
+        edgeSecondNode = null;
+        drawGraph();
+      } else {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+    }
+
+    // ===== GENERATE RANDOM GRAPH =====
+    function generateGraph(n, m) {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      sourceId = null;
+      sinkId = null;
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      cancelFF();
+
+      // Layout nodes in a circle
+      const cx = 400, cy = 250, radius = 200;
+      for (let i = 0; i < n; i++) {
+        const angle = (2 * Math.PI / n) * i;
+        const x = cx + radius * Math.cos(angle);
+        const y = cy + radius * Math.sin(angle);
+        nodes.push({ id: nextNodeId++, x, y, elemCircle: null, elemText: null });
+      }
+
+      // Random spanning tree to ensure connectivity
+      const verts = Array.from({ length: n }, (_, i) => i);
+      shuffleArray(verts);
+      for (let i = 1; i < n; i++) {
+        const u = verts[i];
+        const v = verts[Math.floor(Math.random() * i)];
+        const cap = Math.floor(Math.random() * 10) + 1;
+        edges.push({ from: v, to: u, capacity: cap, flow: 0, elemLine: null, elemText: null });
+      }
+
+      // Fill remaining edges
+      let count = n - 1;
+      const maxE = n * (n - 1);
+      const possible = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          if (i === j) continue;
+          if (!edges.some(e => e.from === i && e.to === j)) {
+            possible.push({ from: i, to: j });
+          }
+        }
+      }
+      shuffleArray(possible);
+      while (count < m && possible.length) {
+        const e = possible.pop();
+        const cap = Math.floor(Math.random() * 10) + 1;
+        edges.push({ from: e.from, to: e.to, capacity: cap, flow: 0, elemLine: null, elemText: null });
+        count++;
+      }
+      drawGraph();
+    }
+
+    // Fisher-Yates Shuffle
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[r]] = [arr[r], arr[i]];
+      }
+    }
+
+    // ===== FORD–FULKERSON ALGORITHM (DFS Implementation) =====
+
+    runFlowBtn.addEventListener('click', () => {
+      if (sourceId === null || sinkId === null) {
+        alert("Please designate both source and sink.");
+        return;
+      }
+      prepareFF();
+    });
+
+    function prepareFF() {
+      nodeCount = nodes.length;
+      // Build capacity matrix for easy lookup
+      const capacity = Array.from({ length: nodeCount }, () => Array(nodeCount).fill(0));
+      edges.forEach(e => {
+        capacity[e.from][e.to] = e.capacity;
+      });
+
+      // Initialize flow matrix
+      const flow = Array.from({ length: nodeCount }, () => Array(nodeCount).fill(0));
+      let maxFlow = 0;
+      ffSteps = [];
+
+      // Snapshot 0: initial state, zero flow
+      ffSteps.push({
+        flow: JSON.parse(JSON.stringify(flow)),
+        parentMap: {},
+        augmentPath: [],
+        currentFlow: 0
+      });
+
+      // Repeat DFS to find augmenting paths in residual graph
+      while (true) {
+        const parent = {};
+        const visited = Array(nodeCount).fill(false);
+
+        // DFS Helper
+        function dfs(u) {
+          visited[u] = true;
+          if (u === sinkId) return true;
+          for (let v = 0; v < nodeCount; v++) {
+            // Check residual capacity: capacity - flow > 0
+            if (!visited[v] && capacity[u][v] - flow[u][v] > 0) {
+              parent[v] = u;
+              if (dfs(v)) return true;
+            }
+          }
+          return false;
+        }
+
+        // If no path found, break
+        if (!dfs(sourceId)) break;
+
+        // Reconstruct augmenting path from sink to source
+        let bottleneck = Infinity;
+        let v = sinkId;
+        const path = [];
+        while (v !== sourceId) {
+          const u = parent[v];
+          bottleneck = Math.min(bottleneck, capacity[u][v] - flow[u][v]);
+          path.push(v);
+          v = u;
+        }
+        path.push(sourceId);
+        path.reverse();
+
+        // Snapshot BEFORE applying augmentation (shows path and old flow)
+        ffSteps.push({
+          flow: JSON.parse(JSON.stringify(flow)),
+          parentMap: { ...parent },
+          augmentPath: path.slice(),
+          currentFlow: maxFlow
+        });
+
+        // Update flow along the path
+        v = sinkId;
+        while (v !== sourceId) {
+          const u = parent[v];
+          flow[u][v] += bottleneck;
+          flow[v][u] -= bottleneck; // Residual backward edge (conceptual)
+          v = u;
+        }
+        maxFlow += bottleneck;
+
+        // Snapshot AFTER applying augmentation (shows updated flow, path cleared)
+        ffSteps.push({
+          flow: JSON.parse(JSON.stringify(flow)),
+          parentMap: {},
+          augmentPath: [],
+          currentFlow: maxFlow
+        });
+      }
+
+      currentStepIndex = 0;
+      showStepControls();
+      updateFFDisplay();
+    }
+
+    // Reset Algorithm State
+    function cancelFF() {
+      ffSteps = [];
+      currentStepIndex = 0;
+      stepControls.style.display = 'none';
+      edges.forEach(e => {
+        e.flow = 0;
+      });
+      drawGraph();
+    }
+
+    // Step Navigation Handlers
+    prevStepBtn.addEventListener('click', () => {
+      if (currentStepIndex > 0) {
+        currentStepIndex--;
+        updateFFDisplay();
+      }
+    });
+    nextStepBtn.addEventListener('click', () => {
+      if (currentStepIndex < ffSteps.length - 1) {
+        currentStepIndex++;
+        updateFFDisplay();
+      }
+    });
+    finishStepBtn.addEventListener('click', () => {
+      if (ffSteps.length > 0) {
+        currentStepIndex = ffSteps.length - 1;
+        updateFFDisplay();
+      }
+    });
+    exitStepBtn.addEventListener('click', cancelFF);
+
+    function showStepControls() {
+      stepControls.style.display = 'flex';
+      prevStepBtn.disabled = true;
+      nextStepBtn.disabled = (ffSteps.length <= 1);
+      finishStepBtn.disabled = (ffSteps.length <= 1);
+      exitStepBtn.disabled = true;
+    }
+
+    function updateFFDisplay() {
+      drawFlow(ffSteps[currentStepIndex]);
+      prevStepBtn.disabled = (currentStepIndex === 0);
+      nextStepBtn.disabled = (currentStepIndex === ffSteps.length - 1);
+      finishStepBtn.disabled = (currentStepIndex === ffSteps.length - 1);
+      exitStepBtn.disabled = (currentStepIndex !== ffSteps.length - 1);
+    }
+
+    // Draw the state of the graph based on the snapshot
+    function drawFlow(snapshot) {
+      // Clear SVG except defs
+      Array.from(svg.childNodes).forEach(n => {
+        if (n.nodeName !== 'defs') svg.removeChild(n);
+      });
+
+      // 1) Draw edges
+      edges.forEach(ed => {
+        const from = nodes.find(n => n.id === ed.from);
+        const to = nodes.find(n => n.id === ed.to);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", from.x);
+        line.setAttribute("y1", from.y);
+        line.setAttribute("x2", to.x);
+        line.setAttribute("y2", to.y);
+
+        // Highlight if edge is part of current augmenting path
+        let isAugEdge = false;
+        for (let k = 0; k < snapshot.augmentPath.length - 1; k++) {
+          if (snapshot.augmentPath[k] === ed.from && snapshot.augmentPath[k + 1] === ed.to) {
+            isAugEdge = true;
+            break;
+          }
+        }
+        if (isAugEdge) {
+          line.setAttribute("class", "edge-line edge-augment");
+        } else {
+          line.setAttribute("class", "edge-line");
+        }
+        line.setAttribute("marker-end", "url(#arrow)");
+        svg.appendChild(line);
+
+        // Update stored flow to match snapshot
+        const displayedFlow = snapshot.flow[ed.from][ed.to];
+        ed.flow = displayedFlow;
+
+        // Update Label
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2;
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", midX);
+        txt.setAttribute("y", midY - 5);
+        txt.setAttribute("class", "edge-flow");
+        txt.textContent = `${displayedFlow}/${ed.capacity}`;
+        svg.appendChild(txt);
+      });
+
+      // 2) Draw nodes
+      nodes.forEach(nd => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", nd.x);
+        circle.setAttribute("cy", nd.y);
+        circle.setAttribute("r", 16);
+        circle.setAttribute("class", "node-circle");
+        circle.dataset.id = nd.id;
+
+        if (nd.id === sourceId) circle.classList.add('node-source');
+        if (nd.id === sinkId) circle.classList.add('node-sink');
+
+        svg.appendChild(circle);
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", nd.x);
+        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("class", "node-text");
+        txt.setAttribute("text-anchor", "middle");
+        txt.textContent = nd.id;
+        svg.appendChild(txt);
+      });
+
+      // 3) Update Step Info Text
+      if (snapshot.augmentPath.length > 0) {
+        const pathStr = snapshot.augmentPath.join(' → ');
+        stepInfo.textContent =
+          `Step ${currentStepIndex + 1} of ${ffSteps.length}  -  ` +
+          `Current Max Flow = ${snapshot.currentFlow}  -  ` +
+          `Augmenting Path: ${pathStr}`;
+      } else {
+        stepInfo.textContent =
+          `Step ${currentStepIndex + 1} of ${ffSteps.length}  -  ` +
+          `Current Max Flow = ${snapshot.currentFlow}  -  no augmenting path`;
+      }
+    }
+
+    // Initial Draw
+    drawGraph();
+  </script>
+  <script src="theme.js"></script>
+</body>
+
+</html>
