@@ -26,7 +26,6 @@
   /* Slate-300 - Much brighter than before */
 
   --color-primary: #38bdf8;
-  --color-main: #38bdf8;
   /* Sky-400 */
   --color-primary-glow: rgba(56, 189, 248, 0.15);
   --color-accent: #818cf8;
@@ -74,7 +73,6 @@
   /* Solid text in light mode too */
   --gradient-surface: #ffffff;
   --color-primary: #0284c7;
-  --color-main: #000000;
   /* Sky-600 */
 }
 
@@ -305,6 +303,10 @@ ul {
   background: rgba(0, 0, 0, 0.05);
 }
 
+[data-theme="light"] .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
 /* Buttons */
 .btn-group {
   display: flex;
@@ -355,6 +357,10 @@ ul {
   background: rgba(56, 189, 248, 0.1);
   transform: translateY(-2px);
   color: var(--color-text-main);
+}
+
+[data-theme="light"] .btn-primary {
+  color: white;
 }
 
 [data-theme="light"] .btn-primary {
@@ -503,29 +509,26 @@ ul {
   flex-direction: column;
 }
 
-.content-card {
+.portfolio-card {
+  height: 420px;
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
+  padding: 0;
   backdrop-filter: blur(10px);
   transition: var(--transition);
   position: relative;
   overflow: hidden;
 }
 
-.content-card:hover {
+.portfolio-card:hover {
   transform: translateY(-5px);
   border-color: rgba(56, 189, 248, 0.3);
   box-shadow: var(--shadow-lg), 0 0 30px rgba(56, 189, 248, 0.1);
   background: var(--color-bg-card-hover);
 }
-
-/* Ensure project-card can be used in carousels */
-.carousel-track .project-card {
-  flex: 0 0 350px;
-}
-
-
 
 /* Carousel & Project Cards Extension */
 .carousel-container {
@@ -555,7 +558,29 @@ ul {
   /* Chrome, Safari and Opera */
 }
 
+.carousel-card {
+  flex: 0 0 350px;
+  height: 520px;
+  /* Fixed height for all cards */
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 0;
+  /* padding applied to inner content instead */
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
 
+.carousel-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(56, 189, 248, 0.1);
+  background: var(--color-bg-card-hover);
+}
 
 .card-img-placeholder {
   width: 100%;
@@ -606,10 +631,8 @@ ul {
   margin-bottom: 1.5rem;
 }
 
-/* Base styles for project cards */
-.content-card .card-img-placeholder {
-  width: calc(100% + calc(2 * var(--card-padding)));
-  max-width: none;
+/* Base styles for project cards (both in grid-2 and grid-3) */
+.portfolio-card .card-img-placeholder {
   height: 200px;
   background: var(--color-bg-nav);
   display: flex;
@@ -617,20 +640,12 @@ ul {
   justify-content: center;
   font-size: 3rem;
   color: var(--color-primary);
-  /* Use a safe variable to always cover the card's padding */
-  margin: calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) 1rem calc(-1 * var(--card-padding));
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  border-bottom: none;
+  border-bottom: 1px solid var(--color-border);
   overflow: hidden;
 }
 
-.content-card .card-img-placeholder img {
-  border-radius: 0;
-  /* Let the parent container handle the top rounded corners */
-}
-
-.project-card .carousel-content {
-  padding: 0;
+.portfolio-card .carousel-content {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -643,18 +658,7 @@ ul {
   /* Hide bullets in cards */
   padding-left: 0;
   margin-bottom: 1rem;
-}
-
-/* Push the tech tags to the bottom of the project card */
-.project-card .carousel-content>div:last-of-type {
-  margin-top: auto;
-  padding-top: 1rem;
-}
-
-/* Fix flex to push ul if tech tags are above */
-.project-card .carousel-content>ul {
-  /* Removed margin-top: auto to align text to the top */
-  margin-top: 0;
+  flex: 1;
 }
 
 .content-card .carousel-content li {
@@ -725,7 +729,15 @@ ul {
     /* Hide buttons if they somehow still exist */
   }
 
-  .carousel-track .project-card {
+  .btn-left {
+    left: 0;
+  }
+
+  .btn-right {
+    right: 0;
+  }
+
+  .carousel-card {
     flex: 0 0 280px;
   }
 }
@@ -786,9 +798,22 @@ ul {
 }
 
 .content-card {
-  --card-padding: var(--spacing-md);
-  padding: var(--card-padding);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
   margin-bottom: var(--spacing-md);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(56, 189, 248, 0.1);
+  background: var(--color-bg-card-hover);
 }
 
 .content-card img {
@@ -1015,9 +1040,9 @@ textarea.form-control {
 
   :root {
     --header-height: 70px;
-    --spacing-sm: 0.75rem;
-    --spacing-md: 1.25rem;
-    --spacing-lg: 2rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2.5rem;
+    /* Reduced from 4rem */
   }
 
   .h-flex-container {
@@ -1037,20 +1062,7 @@ textarea.form-control {
   }
 
   .content-card {
-    --card-padding: var(--spacing-sm);
-    padding: var(--card-padding);
-  }
-
-  .carousel-content p {
-    font-size: 0.85rem;
-  }
-
-  .content-card .carousel-content li {
-    font-size: 0.85rem;
-  }
-
-  p {
-    font-size: 1rem;
+    padding: var(--spacing-sm);
   }
 
   #container {
@@ -1110,107 +1122,8 @@ textarea.form-control {
   }
 }
 
-/* Index Page & Shared Semantic Classes */
-.section-mt {
-  margin-top: 4rem;
-}
-
-.about-text {
-  font-size: 1.1rem;
-  color: var(--color-text-muted);
-}
-
-.about-text.mb-lg {
-  margin-bottom: 1.5rem;
-}
-
-.about-list {
-  list-style: disc;
-  padding-left: 1.5rem;
-  color: var(--color-text-muted);
-}
-
-.icon-heading {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: 1rem;
-}
-
-.icon-heading.mt-lg {
-  margin-top: 1.5rem;
-}
-
-.icon-heading i {
-  font-size: 1.5rem;
-  color: var(--color-primary);
-}
-
-.icon-heading h3 {
-  margin-bottom: 0;
-}
-
-.view-all-link {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
 /* About Page Specifics */
-.about-img-container {
-  float: right;
-  margin-left: 2rem;
-  margin-bottom: 1rem;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.about-img {
-  width: 100%;
-  height: 250px;
-  border-radius: var(--border-radius);
-  object-fit: cover;
-  border: 1px solid var(--color-border);
-  object-position: center;
-}
-
-.about-img-caption {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  margin-top: 0.75rem;
-  text-align: center;
-  font-style: italic;
-}
-
-.resume-container {
-  margin-top: 2rem;
-  clear: both;
-}
-
-.resume-btn {
-  display: inline-flex;
-  align-items: center;
-  background: var(--color-bg-social);
-  border: 1px solid var(--color-border);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  color: var(--color-text-muted);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-.resume-btn:hover {
-  color: var(--color-text-main);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.resume-btn i {
-  margin-right: 8px;
-}
+/* Narrative style uses default typography and layout */
 
 /* Scroll Offset Fix */
 #what-i-do {

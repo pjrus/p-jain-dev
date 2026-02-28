@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prim's MST Step-by-Step Visualizer</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* background-color: #f5f5f5; handled by theme.css */
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Toolbar button styling */
+    #toolbar button {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #toolbar button.active {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    #toolbar button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* Step control styling */
+    #stepControls button {
+      margin-right: 8px;
+      padding: 5px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    #stepInfo {
+      font-size: 14px;
+      color: #333;
+      vertical-align: middle;
+    }
+
+    /* SVG Canvas */
+    svg {
+      border: 1px solid #ccc;
+      background-color: white;
+      width: 800px;
+      height: 500px;
+      touch-action: none;
+    }
+
+    /* Node Styling */
+    .node-circle {
+      fill: #2196F3;
+      stroke: #1565C0;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .node-text {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    .node-visited {
+      fill: #4CAF50 !important;
+    }
+
+    /* Visited / In MST */
+    .node-current {
+      fill: #FFC107 !important;
+    }
+
+    /* Currently Processing */
+    .node-selected-1 {
+      fill: #FF5722 !important;
+    }
+
+    /* Source for new edge */
+    .node-selected-2 {
+      fill: #9C27B0 !important;
+    }
+
+    /* Dest for new edge */
+
+    /* Edge Styling */
+    .edge-line {
+      stroke: #666;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .edge-mst {
+      stroke: #e91e63 !important;
+      stroke-width: 4 !important;
+    }
+
+    /* Confirmed MST Edge */
+    .edge-current {
+      stroke: #FFC107 !important;
+      stroke-width: 4 !important;
+    }
+
+    /* Currently Processing Edge */
+    .edge-weight {
+      fill: black;
+      font-size: 12px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Prim's MST Step-by-Step Visualizer</h1>
+
+  <!-- Main Toolbar -->
+  <div id="toolbar">
+    <button id="addNodeBtn" disabled>Add Node</button>
+    <button id="addEdgeBtn" disabled>Add Edge</button>
+    <button id="deleteNodeBtn" disabled>Delete Node</button>
+    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button id="generateBtn" disabled>Generate Graph</button>
+    <button id="runPrimBtn" disabled>Run Prim's</button>
+    <button id="clearBtn" disabled>Clear All</button>
+  </div>
+
+  <!-- Step Navigation (hidden until algorithm runs) -->
+  <div id="stepControls" style="display: none;">
+    <button id="prevStepBtn" disabled>◀ Prev</button>
+    <button id="nextStepBtn" disabled>Next ▶</button>
+    <button id="finishStepBtn" disabled>Finish</button>
+    <button id="exitStepBtn" disabled>Exit</button>
+    <span id="stepInfo"></span>
+  </div>
+
+  <svg id="graphSvg"></svg>
+
+  <script>
+    // --- Global State & DOM Elements ---
+    const svg = document.getElementById('graphSvg');
+
+    // Toolbar
+    const addNodeBtn = document.getElementById('addNodeBtn');
+    const addEdgeBtn = document.getElementById('addEdgeBtn');
+    const deleteNodeBtn = document.getElementById('deleteNodeBtn');
+    const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const runPrimBtn = document.getElementById('runPrimBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Step Controls
+    const prevStepBtn = document.getElementById('prevStepBtn');
+    const nextStepBtn = document.getElementById('nextStepBtn');
+    const finishStepBtn = document.getElementById('finishStepBtn');
+    const exitStepBtn = document.getElementById('exitStepBtn');
+    const stepInfo = document.getElementById('stepInfo');
+    const stepControls = document.getElementById('stepControls');
+
+    // Graph Data
+    let nodes = [];      // { id, label, x, y, elemCircle, elemText }
+    let edges = [];      // { from, to, weight, elemLine, elemText }
+    let nextNodeId = 0;
+
+    // Interaction Modes
+    let addNodeMode = false,
+      addEdgeMode = false,
+      deleteNodeMode = false,
+      deleteEdgeMode = false,
+      edgeFirstNode = null,
+      edgeSecondNode = null;
+
+    // Algorithm & Dragging State
+    let primSteps = [], currentStepIndex = 0;
+    let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
+
+    // --- Utilities ---
+    // Get mouse position relative to SVG
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX; pt.y = evt.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // Initialize Toolbar State (Enable all)
+    [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn,
+      generateBtn, runPrimBtn, clearBtn].forEach(b => b.disabled = false);
+
+    // --- Drawing Logic ---
+    function drawGraph() {
+      // Clear all SVG child nodes (except defs if there were any)
+      Array.from(svg.childNodes)
+        .filter(n => n.nodeName !== 'defs')
+        .forEach(n => svg.removeChild(n));
+
+      // Draw Edges
+      edges.forEach((ed, idx) => {
+        const f = nodes.find(n => n.id === ed.from),
+          t = nodes.find(n => n.id === ed.to);
+        const line = document.createElementNS(svg.namespaceURI, 'line');
+        line.setAttribute('x1', f.x);
+        line.setAttribute('y1', f.y);
+        line.setAttribute('x2', t.x);
+        line.setAttribute('y2', t.y);
+        line.setAttribute('class', 'edge-line');
+        // Delete edge handler
+        line.addEventListener('click', e => {
+          e.stopPropagation();
+          if (deleteEdgeMode) {
+            edges.splice(idx, 1);
+            drawGraph();
+          }
+        });
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        // Draw Edge Weight
+        const midX = (f.x + t.x) / 2,
+          midY = (f.y + t.y) / 2;
+        const txt = document.createElementNS(svg.namespaceURI, 'text');
+        txt.setAttribute('x', midX);
+        txt.setAttribute('y', midY - 5);
+        txt.setAttribute('class', 'edge-weight');
+        txt.textContent = ed.weight;
+        svg.appendChild(txt);
+        ed.elemText = txt;
+      });
+
+      // Draw Nodes
+      nodes.forEach(nd => {
+        const c = document.createElementNS(svg.namespaceURI, 'circle');
+        c.setAttribute('cx', nd.x);
+        c.setAttribute('cy', nd.y);
+        c.setAttribute('r', 16);
+        c.setAttribute('class', 'node-circle');
+        c.dataset.id = nd.id;
+        svg.appendChild(c);
+        nd.elemCircle = c;
+
+        // Node Label
+        const t = document.createElementNS(svg.namespaceURI, 'text');
+        t.setAttribute('x', nd.x);
+        t.setAttribute('y', nd.y + 4);
+        t.setAttribute('class', 'node-text');
+        t.setAttribute('text-anchor', 'middle');
+        t.textContent = nd.label;
+        svg.appendChild(t);
+        nd.elemText = t;
+
+        // Node Interaction Handlers
+        c.addEventListener('mousedown', onNodeMouseDown);
+        c.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteNodeMode) {
+            // Delete Node & Incident Edges
+            nodes = nodes.filter(x => x.id !== nd.id);
+            edges = edges.filter(e => e.from !== nd.id && e.to !== nd.id);
+            drawGraph();
+          } else {
+            // Select for Edge Creation
+            onNodeClickForEdge(nd.id);
+          }
+        });
+        // Rename Node on Double Click
+        c.addEventListener('dblclick', evt => {
+          evt.stopPropagation();
+          if (!deleteNodeMode && !addEdgeMode) {
+            const nl = prompt('Enter new label for node:', nd.label);
+            if (nl !== null && nl.trim() !== '') {
+              nd.label = nl.trim();
+              drawGraph();
+            }
+          }
+        });
+      });
+
+      // Highlight nodes selected for new edge
+      nodes.forEach(nd => {
+        nd.elemCircle.classList.remove('node-selected-1', 'node-selected-2');
+        if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
+        if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
+      });
+    }
+
+    // --- Dragging Logic ---
+    function onNodeMouseDown(evt) {
+      if (addNodeMode || deleteNodeMode || addEdgeMode || deleteEdgeMode) return;
+      evt.stopPropagation();
+      const id = +evt.currentTarget.dataset.id;
+      const nd = nodes.find(n => n.id === id);
+      if (!nd) return;
+      draggingNode = nd;
+      const p = getSvgPoint(evt);
+      dragOffsetX = p.x - nd.x;
+      dragOffsetY = p.y - nd.y;
+      window.addEventListener('mousemove', onDrag);
+      window.addEventListener('mouseup', onDragEnd);
+    }
+    function onDrag(evt) {
+      if (!draggingNode) return;
+      const p = getSvgPoint(evt);
+      draggingNode.x = p.x - dragOffsetX;
+      draggingNode.y = p.y - dragOffsetY;
+      drawGraph();
+      // If visualizing, update highlights on drag
+      if (stepControls.style.display !== 'none') {
+        highlightPrimStep(currentStepIndex);
+      }
+    }
+    function onDragEnd() {
+      draggingNode = null;
+      window.removeEventListener('mousemove', onDrag);
+      window.removeEventListener('mouseup', onDragEnd);
+    }
+
+    // --- Node Addition Logic ---
+    svg.addEventListener('mousedown', e => {
+      const p = getSvgPoint(e);
+      if (addNodeMode && e.target === svg) {
+        nodes.push({
+          id: nextNodeId,
+          label: nextNodeId.toString(),
+          x: p.x,
+          y: p.y,
+          elemCircle: null,
+          elemText: null
+        });
+        nextNodeId++;
+        drawGraph();
+      }
+    });
+
+    // --- Toolbar Actions ---
+    addNodeBtn.onclick = () => {
+      addNodeMode = !addNodeMode;
+      if (addNodeMode) {
+        addNodeBtn.classList.add('active');
+        [addEdgeBtn, deleteNodeBtn, deleteEdgeBtn]
+          .forEach(b => b.classList.remove('active'));
+        addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelPrim();
+      } else addNodeBtn.classList.remove('active');
+    };
+
+    addEdgeBtn.onclick = () => {
+      addEdgeMode = !addEdgeMode;
+      if (addEdgeMode) {
+        addEdgeBtn.classList.add('active');
+        [addNodeBtn, deleteNodeBtn, deleteEdgeBtn]
+          .forEach(b => b.classList.remove('active'));
+        addNodeMode = deleteNodeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelPrim();
+      } else {
+        addEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+      }
+      drawGraph();
+    };
+
+    deleteNodeBtn.onclick = () => {
+      deleteNodeMode = !deleteNodeMode;
+      if (deleteNodeMode) {
+        deleteNodeBtn.classList.add('active');
+        [addNodeBtn, addEdgeBtn, deleteEdgeBtn]
+          .forEach(b => b.classList.remove('active'));
+        addNodeMode = addEdgeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelPrim();
+      } else deleteNodeBtn.classList.remove('active');
+      drawGraph();
+    };
+
+    deleteEdgeBtn.onclick = () => {
+      deleteEdgeMode = !deleteEdgeMode;
+      if (deleteEdgeMode) {
+        deleteEdgeBtn.classList.add('active');
+        [addNodeBtn, addEdgeBtn, deleteNodeBtn]
+          .forEach(b => b.classList.remove('active'));
+        addNodeMode = addEdgeMode = deleteNodeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelPrim();
+      } else deleteEdgeBtn.classList.remove('active');
+      drawGraph();
+    };
+
+    clearBtn.onclick = () => {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn]
+        .forEach(b => b.classList.remove('active'));
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      edgeFirstNode = edgeSecondNode = null;
+      cancelPrim();
+      drawGraph();
+    };
+
+    // --- Edge Creation Logic ---
+    function onNodeClickForEdge(nodeId) {
+      if (!addEdgeMode) return;
+      if (edgeFirstNode === null) {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+      else if (edgeFirstNode === nodeId && edgeSecondNode === null) {
+        edgeFirstNode = null;
+        drawGraph();
+      }
+      else if (edgeFirstNode !== null && edgeSecondNode === null) {
+        edgeSecondNode = nodeId;
+        drawGraph();
+        const w = prompt("Enter edge weight (positive integer):");
+        const weight = parseInt(w, 10);
+        if (!isNaN(weight) && weight > 0 && edgeFirstNode !== edgeSecondNode) {
+          const exists = edges.some(e =>
+            (e.from === edgeFirstNode && e.to === edgeSecondNode) ||
+            (e.from === edgeSecondNode && e.to === edgeFirstNode)
+          );
+          if (!exists) {
+            edges.push({
+              from: edgeFirstNode,
+              to: edgeSecondNode,
+              weight: weight,
+              elemLine: null,
+              elemText: null
+            });
+          }
+        }
+        edgeFirstNode = edgeSecondNode = null;
+        drawGraph();
+      } else {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+    }
+
+    // --- Random Graph Generation ---
+    generateBtn.onclick = () => {
+      const ns = prompt("Enter number of nodes (positive integer):");
+      const n = parseInt(ns, 10);
+      if (isNaN(n) || n <= 0) {
+        alert("Invalid number of nodes.");
+        return;
+      }
+      const es = prompt(`Enter number of edges (at least ${n - 1}, max ${Math.floor(n * (n - 1) / 2)}):`);
+      let m = parseInt(es, 10),
+        maxM = Math.floor(n * (n - 1) / 2);
+      if (isNaN(m) || m < n - 1) m = n - 1;
+      if (m > maxM) m = maxM;
+      generateGraph(n, m);
+    };
+
+    function generateGraph(n, m) {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      edgeFirstNode = edgeSecondNode = null;
+      [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn]
+        .forEach(b => b.classList.remove('active'));
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      cancelPrim();
+
+      const cx = 400, cy = 250, r = 200;
+      for (let i = 0; i < n; i++) {
+        const ang = 2 * Math.PI / n * i;
+        const x = cx + r * Math.cos(ang),
+          y = cy + r * Math.sin(ang);
+        nodes.push({
+          id: nextNodeId,
+          label: nextNodeId.toString(),
+          x, y,
+          elemCircle: null,
+          elemText: null
+        });
+        nextNodeId++;
+      }
+
+      const avail = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          avail.push([i, j]);
+        }
+      }
+      shuffle(avail);
+
+      // Ensure Connectivity (Random Spanning Tree)
+      for (let i = 1; i < n; i++) {
+        const j = Math.floor(Math.random() * i);
+        edges.push({
+          from: i,
+          to: j,
+          weight: Math.floor(Math.random() * 10) + 1,
+          elemLine: null,
+          elemText: null
+        });
+        const ix = avail.findIndex(p =>
+          p[0] === Math.min(i, j) && p[1] === Math.max(i, j));
+        if (ix >= 0) avail.splice(ix, 1);
+      }
+
+      // Add Random Edges to reach 'm'
+      shuffle(avail);
+      while (edges.length < m && avail.length) {
+        const [u, v] = avail.pop();
+        edges.push({
+          from: u,
+          to: v,
+          weight: Math.floor(Math.random() * 10) + 1,
+          elemLine: null,
+          elemText: null
+        });
+      }
+
+      drawGraph();
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[r]] = [arr[r], arr[i]];
+      }
+    }
+
+    // --- Prim's Algorithm Execution ---
+    runPrimBtn.onclick = () => {
+      if (!nodes.length) {
+        alert("No nodes in the graph.");
+        return;
+      }
+      const labels = nodes.map(n => n.label).join(', ');
+      const inp = prompt("Enter start node label (" + labels + "):");
+      if (inp === null) return;
+      const nd = nodes.find(n => n.label === inp.trim());
+      if (!nd) {
+        alert("Invalid start node.");
+        return;
+      }
+      preparePrim(nd.id);
+    };
+
+    function preparePrim(startId) {
+      // Build Adjacency List
+      const adj = {};
+      nodes.forEach(n => adj[n.id] = []);
+      edges.forEach((e, idx) => {
+        adj[e.from].push({ to: e.to, w: e.weight, idx });
+        adj[e.to].push({ to: e.from, w: e.weight, idx });
+      });
+
+      const visited = {};
+      nodes.forEach(n => visited[n.id] = false);
+      const mstEdges = new Set();
+      const candidates = []; // Priority Queue simulation
+
+      // Start Node
+      visited[startId] = true;
+      adj[startId].forEach(nb => {
+        candidates.push({ weight: nb.w, from: startId, to: nb.to, idx: nb.idx });
+      });
+
+      // Initial Snapshot
+      primSteps = [{
+        visited: { ...visited },
+        mstEdges: new Set(mstEdges),
+        currentEdge: null,
+        candidates: candidates.slice()
+      }];
+
+      while (mstEdges.size < nodes.length - 1) {
+        // Sort candidates by weight (ascending) for Priority Queue behavior
+        candidates.sort((a, b) => a.weight - b.weight);
+
+        // Find next valid edge (to unvisited node)
+        let chosen = null;
+        while (candidates.length) {
+          const c = candidates.shift();
+          if (visited[c.to] && visited[c.from]) continue; // Skip if internal edge
+          chosen = c;
+          break;
+        }
+        if (!chosen) break; // MST complete or disconnected
+
+        // Snapshot: Considering Edge
+        primSteps.push({
+          visited: { ...visited },
+          mstEdges: new Set(mstEdges),
+          currentEdge: chosen.idx,
+          candidates: candidates.slice()
+        });
+
+        // Add to MST
+        mstEdges.add(chosen.idx);
+        const newNode = visited[chosen.from] ? chosen.to : chosen.from;
+        visited[newNode] = true;
+
+        // Snapshot: Edge Added and Node Visited
+        primSteps.push({
+          visited: { ...visited },
+          mstEdges: new Set(mstEdges),
+          currentEdge: chosen.idx,
+          candidates: candidates.slice()
+        });
+
+        // Add new edges to candidates
+        adj[newNode].forEach(nb => {
+          if (!visited[nb.to]) {
+            candidates.push({ weight: nb.w, from: newNode, to: nb.to, idx: nb.idx });
+          }
+        });
+      }
+
+      currentStepIndex = 0;
+      showStepControls();
+      updateStepDisplay();
+    }
+
+    // Reset Algorithm State
+    function cancelPrim() {
+      primSteps = [];
+      currentStepIndex = 0;
+      stepControls.style.display = 'none';
+      nodes.forEach(n => {
+        n.elemCircle.classList.remove('node-visited', 'node-current');
+        n.elemText.textContent = n.label;
+      });
+      edges.forEach(e => {
+        e.elemLine.classList.remove('edge-mst', 'edge-current');
+      });
+    }
+
+    // --- Step Controls Handlers ---
+    prevStepBtn.onclick = () => { if (currentStepIndex > 0) { currentStepIndex--; updateStepDisplay(); } };
+    nextStepBtn.onclick = () => { if (currentStepIndex < primSteps.length - 1) { currentStepIndex++; updateStepDisplay(); } };
+    finishStepBtn.onclick = () => { currentStepIndex = primSteps.length - 1; updateStepDisplay(); };
+    exitStepBtn.onclick = cancelPrim;
+
+    function showStepControls() {
+      stepControls.style.display = 'inline-block';
+      prevStepBtn.disabled = true;
+      nextStepBtn.disabled = primSteps.length <= 1;
+      finishStepBtn.disabled = primSteps.length <= 1;
+      exitStepBtn.disabled = true;
+    }
+
+    // Update Visualization for Current Step
+    function updateStepDisplay() {
+      drawGraph();
+      highlightPrimStep(currentStepIndex);
+
+      prevStepBtn.disabled = (currentStepIndex === 0);
+      nextStepBtn.disabled = (currentStepIndex === primSteps.length - 1);
+      finishStepBtn.disabled = (currentStepIndex === primSteps.length - 1);
+      exitStepBtn.disabled = (currentStepIndex !== primSteps.length - 1);
+
+      stepInfo.textContent = ` Step ${currentStepIndex + 1} of ${primSteps.length}`;
+    }
+
+    function highlightPrimStep(idx) {
+      const snap = primSteps[idx];
+
+      // Clear visual state
+      nodes.forEach(n => n.elemCircle.classList.remove('node-visited', 'node-current'));
+      edges.forEach(e => e.elemLine.classList.remove('edge-mst', 'edge-current'));
+
+      // Highlight Visited Nodes
+      nodes.forEach(n => {
+        if (snap.visited[n.id]) n.elemCircle.classList.add('node-visited');
+      });
+
+      // Highlight Current Edge (Processing)
+      if (snap.currentEdge !== null) {
+        const e = edges.find((_, i) => i === snap.currentEdge); // edges[snap.currentEdge] might be spliced if logic differed, but here edges array is static during run
+        if (edges[snap.currentEdge] && edges[snap.currentEdge].elemLine) {
+          edges[snap.currentEdge].elemLine.classList.add('edge-current');
+        }
+      }
+
+      // Highlight MST Edges (Confirmed)
+      snap.mstEdges.forEach(i => {
+        if (i !== snap.currentEdge && edges[i] && edges[i].elemLine) {
+          edges[i].elemLine.classList.add('edge-mst');
+        }
+      });
+    }
+  </script>
+  <script src="theme.js"></script>
+</body>
+
+</html>

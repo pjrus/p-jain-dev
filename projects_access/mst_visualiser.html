@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimum Spanning Tree Visualizer</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* background-color: #f5f5f5; handled by theme.css */
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Toolbar container */
+    #toolbar {
+      margin-bottom: 10px;
+    }
+
+    /* Toolbar Button & Select Styles */
+    #toolbar button,
+    #toolbar select {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Active Button State */
+    #toolbar button.active {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    /* Disabled State */
+    #toolbar button:disabled,
+    #toolbar select:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* Step Navigation Controls (hidden until MST runs) */
+    #stepControls {
+      margin-top: 8px;
+      display: none;
+    }
+
+    #stepControls button {
+      margin-right: 8px;
+      padding: 5px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    #stepControls button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    #stepInfo {
+      font-size: 14px;
+      color: #333;
+      vertical-align: middle;
+    }
+
+    /* SVG Canvas */
+    svg {
+      border: 1px solid #ccc;
+      background-color: white;
+      width: 800px;
+      height: 500px;
+      touch-action: none;
+    }
+
+    /* Node Styles */
+    .node-circle {
+      fill: #2196F3;
+      stroke: #1565C0;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .node-text {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* Visualization Class States for Nodes */
+    .node-visited {
+      fill: #4caf50 !important;
+    }
+
+    /* In MST */
+    .node-current {
+      fill: #FFC107 !important;
+    }
+
+    /* Currently Processing */
+    .node-unprocessed {
+      fill: #e53935 !important;
+    }
+
+    /* Not reached */
+
+    /* Interaction Highlights */
+    .node-selected-1 {
+      fill: #FF5722 !important;
+    }
+
+    .node-selected-2 {
+      fill: #9C27B0 !important;
+    }
+
+    /* Edge Styles */
+    .edge-line {
+      stroke: #666;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .edge-weight {
+      fill: black;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* Visualization Class States for Edges */
+    .edge-mst {
+      stroke: #e91e63 !important;
+      /* Confirmed MST Edge */
+      stroke-width: 4 !important;
+    }
+
+    .edge-current {
+      stroke: #FFC107 !important;
+      /* Currently Considered Edge */
+      stroke-width: 4 !important;
+    }
+
+    .edge-candidate {
+      stroke: #FFEB3B !important;
+      /* Candidate Edge in Priority Queue */
+      stroke-width: 3 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Minimum Spanning Tree Visualizer</h1>
+
+  <!-- Main Toolbar -->
+  <div id="toolbar">
+    <button id="addNodeBtn">Add Node</button>
+    <button id="addEdgeBtn">Add Edge</button>
+    <button id="deleteNodeBtn">Delete Node</button>
+    <button id="deleteEdgeBtn">Delete Edge</button>
+    <button id="generateBtn">Generate Graph</button>
+
+    <!-- MST Algorithm Selection -->
+    <select id="algorithmSelect">
+      <option value="prims">Prim's</option>
+      <option value="kruskals">Kruskal's</option>
+    </select>
+
+    <button id="runMSTBtn">Run MST</button>
+    <button id="clearBtn">Clear All</button>
+  </div>
+
+  <!-- Step Controls -->
+  <div id="stepControls">
+    <button id="prevStepBtn">◀ Prev</button>
+    <button id="nextStepBtn">Next ▶</button>
+    <button id="finishStepBtn">Finish</button>
+    <button id="exitStepBtn">Exit</button>
+    <span id="stepInfo"></span>
+  </div>
+
+  <!-- SVG Canvas -->
+  <svg id="graphSvg"></svg>
+
+  <script>
+    // ===== GLOBAL STATE & DOM ELEMENTS =====
+    const svg = document.getElementById('graphSvg');
+
+    // Toolbar
+    const addNodeBtn = document.getElementById('addNodeBtn');
+    const addEdgeBtn = document.getElementById('addEdgeBtn');
+    const deleteNodeBtn = document.getElementById('deleteNodeBtn');
+    const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const algorithmSelect = document.getElementById('algorithmSelect');
+    const runMSTBtn = document.getElementById('runMSTBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Step Navigation
+    const prevStepBtn = document.getElementById('prevStepBtn');
+    const nextStepBtn = document.getElementById('nextStepBtn');
+    const finishStepBtn = document.getElementById('finishStepBtn');
+    const exitStepBtn = document.getElementById('exitStepBtn');
+    const stepInfo = document.getElementById('stepInfo');
+    const stepControls = document.getElementById('stepControls');
+
+    // Graph Data
+    let nodes = [];   // { id, label, x, y, elemCircle, elemText }
+    let edges = [];   // { from, to, weight, elemLine, elemText }
+    let nextNodeId = 0;
+
+    // Interaction Modes
+    let addNodeMode = false, addEdgeMode = false;
+    let deleteNodeMode = false, deleteEdgeMode = false;
+    let edgeFirstNode = null, edgeSecondNode = null;
+
+    // Algorithm State
+    let primSteps = [], kruskalSteps = [];
+    let currentStepIndex = 0;
+    let currentAlgorithm = 'prims';
+
+    // Dragging State
+    let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
+
+    // ===== UTILITIES =====
+    // Get Mouse Position in SVG Coordinates
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX; pt.y = evt.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // Fisher-Yates Shuffle
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        [a[i], a[r]] = [a[r], a[i]];
+      }
+    }
+
+    // ===== DRAWING LOGIC =====
+    function drawGraph() {
+      // Clear SVG content (preserve defs if any, though none currently used)
+      Array.from(svg.childNodes)
+        .filter(n => n.nodeName !== 'defs')
+        .forEach(n => svg.removeChild(n));
+
+      // Draw Edges
+      edges.forEach((ed, idx) => {
+        const f = nodes.find(n => n.id === ed.from);
+        const t = nodes.find(n => n.id === ed.to);
+        const line = document.createElementNS(svg.namespaceURI, 'line');
+        line.setAttribute('x1', f.x);
+        line.setAttribute('y1', f.y);
+        line.setAttribute('x2', t.x);
+        line.setAttribute('y2', t.y);
+        line.setAttribute('class', 'edge-line');
+        // Delete Edge Clicking
+        line.addEventListener('click', e => {
+          e.stopPropagation();
+          if (deleteEdgeMode) {
+            edges.splice(idx, 1);
+            drawGraph();
+          }
+        });
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        // Draw Weight Text
+        const midX = (f.x + t.x) / 2, midY = (f.y + t.y) / 2;
+        const wt = document.createElementNS(svg.namespaceURI, 'text');
+        wt.setAttribute('x', midX);
+        wt.setAttribute('y', midY - 5);
+        wt.setAttribute('class', 'edge-weight');
+        wt.textContent = ed.weight;
+        svg.appendChild(wt);
+        ed.elemText = wt;
+      });
+
+      // Draw Nodes
+      nodes.forEach(nd => {
+        const c = document.createElementNS(svg.namespaceURI, 'circle');
+        c.setAttribute('cx', nd.x);
+        c.setAttribute('cy', nd.y);
+        c.setAttribute('r', 16);
+        c.setAttribute('class', 'node-circle');
+        c.dataset.id = nd.id;
+        svg.appendChild(c);
+        nd.elemCircle = c;
+
+        // Node Label
+        const t = document.createElementNS(svg.namespaceURI, 'text');
+        t.setAttribute('x', nd.x);
+        t.setAttribute('y', nd.y + 4);
+        t.setAttribute('class', 'node-text');
+        t.setAttribute('text-anchor', 'middle');
+        t.textContent = nd.label;
+        svg.appendChild(t);
+        nd.elemText = t;
+
+        // Interaction Listeners
+        c.addEventListener('mousedown', onNodeMouseDown);
+        c.addEventListener('click', e => {
+          e.stopPropagation();
+          if (deleteNodeMode) {
+            // Delete Node & Associated Edges
+            nodes = nodes.filter(n => n.id !== nd.id);
+            edges = edges.filter(e2 => e2.from !== nd.id && e2.to !== nd.id);
+            drawGraph();
+          } else {
+            // Edge Creation Selection
+            onNodeClickForEdge(nd.id);
+          }
+        });
+        // Rename on Double Click
+        c.addEventListener('dblclick', e => {
+          e.stopPropagation();
+          if (!deleteNodeMode && !addEdgeMode) {
+            const nl = prompt('Enter new label:', nd.label);
+            if (nl !== null && nl.trim() !== '') {
+              nd.label = nl.trim();
+              drawGraph();
+            }
+          }
+        });
+      });
+
+      // Highlight Selection for Edge Creation
+      nodes.forEach(nd => {
+        nd.elemCircle.classList.remove('node-selected-1', 'node-selected-2');
+        if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
+        if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
+      });
+    }
+
+    // ===== TOOLBAR HANDLERS =====
+
+    // Toggle Add Node Mode
+    addNodeBtn.addEventListener('click', () => {
+      addNodeMode = !addNodeMode;
+      if (addNodeMode) {
+        addNodeBtn.classList.add('active');
+        [addEdgeBtn, deleteNodeBtn, deleteEdgeBtn].forEach(b => b.classList.remove('active'));
+        addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelMST();
+      } else addNodeBtn.classList.remove('active');
+    });
+
+    // Add Node on SVG Click
+    svg.addEventListener('mousedown', e => {
+      const p = getSvgPoint(e);
+      if (addNodeMode && e.target === svg) {
+        nodes.push({
+          id: nextNodeId,
+          label: nextNodeId.toString(),
+          x: p.x, y: p.y,
+          elemCircle: null, elemText: null
+        });
+        nextNodeId++;
+        drawGraph();
+      }
+    });
+
+    // Toggle Delete Node Mode
+    deleteNodeBtn.addEventListener('click', () => {
+      deleteNodeMode = !deleteNodeMode;
+      if (deleteNodeMode) {
+        deleteNodeBtn.classList.add('active');
+        [addNodeBtn, addEdgeBtn, deleteEdgeBtn].forEach(b => b.classList.remove('active'));
+        addNodeMode = addEdgeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelMST();
+      } else deleteNodeBtn.classList.remove('active');
+      drawGraph();
+    });
+
+    // Toggle Add Edge Mode
+    addEdgeBtn.addEventListener('click', () => {
+      addEdgeMode = !addEdgeMode;
+      if (addEdgeMode) {
+        addEdgeBtn.classList.add('active');
+        [addNodeBtn, deleteNodeBtn, deleteEdgeBtn].forEach(b => b.classList.remove('active'));
+        addNodeMode = deleteNodeMode = deleteEdgeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelMST();
+      } else {
+        addEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+      }
+      drawGraph();
+    });
+
+    // Handle Node Click for Edge Creation
+    function onNodeClickForEdge(id) {
+      if (!addEdgeMode) return;
+      if (edgeFirstNode === null) {
+        edgeFirstNode = id; edgeSecondNode = null; drawGraph();
+      }
+      else if (edgeFirstNode === id && edgeSecondNode === null) {
+        edgeFirstNode = null; drawGraph();
+      }
+      else if (edgeFirstNode !== null && edgeSecondNode === null) {
+        edgeSecondNode = id; drawGraph();
+        // Prompt for Weight
+        const w = prompt("Enter edge weight:");
+        const weight = parseInt(w, 10);
+        if (!isNaN(weight) && weight > 0 && edgeFirstNode !== edgeSecondNode) {
+          // Check for existence
+          const exists = edges.some(e => (
+            (e.from === edgeFirstNode && e.to === edgeSecondNode) ||
+            (e.from === edgeSecondNode && e.to === edgeFirstNode)
+          ));
+          if (!exists) {
+            edges.push({
+              from: edgeFirstNode, to: edgeSecondNode, weight,
+              elemLine: null, elemText: null
+            });
+          }
+        }
+        edgeFirstNode = edgeSecondNode = null;
+        drawGraph();
+      }
+      else {
+        edgeFirstNode = id; edgeSecondNode = null; drawGraph();
+      }
+    }
+
+    // Toggle Delete Edge Mode
+    deleteEdgeBtn.addEventListener('click', () => {
+      deleteEdgeMode = !deleteEdgeMode;
+      if (deleteEdgeMode) {
+        deleteEdgeBtn.classList.add('active');
+        [addNodeBtn, addEdgeBtn, deleteNodeBtn].forEach(b => b.classList.remove('active'));
+        addNodeMode = addEdgeMode = deleteNodeMode = false;
+        edgeFirstNode = edgeSecondNode = null;
+        cancelMST();
+      } else deleteEdgeBtn.classList.remove('active');
+      drawGraph();
+    });
+
+    // Generate Random Graph
+    generateBtn.addEventListener('click', () => {
+      const ns = prompt("Enter number of nodes:");
+      const n = parseInt(ns, 10);
+      if (isNaN(n) || n < 1) { alert("Invalid."); return; }
+      const es = prompt(`Enter edges (≥${n - 1}, ≤${Math.floor(n * (n - 1) / 2)}):`);
+      let m = parseInt(es, 10), maxM = Math.floor(n * (n - 1) / 2);
+      if (isNaN(m) || m < n - 1) m = n - 1;
+      if (m > maxM) m = maxM;
+      generateGraph(n, m);
+    });
+
+    function generateGraph(n, m) {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      // Reset Modes
+      [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn]
+        .forEach(b => b.classList.remove('active'));
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      edgeFirstNode = edgeSecondNode = null;
+      cancelMST();
+
+      // --- Generate nodes in a grid-like layout with jitter ---
+      const cols = Math.ceil(Math.sqrt(n));
+      const rows = Math.ceil(n / cols);
+      const paddingX = 60, paddingY = 60;
+      const width = 800 - 2 * paddingX;
+      const height = 500 - 2 * paddingY;
+      const cellW = width / (cols - 1 || 1);
+      const cellH = height / (rows - 1 || 1);
+
+      let idx = 0;
+      for (let r = 0; r < rows && idx < n; r++) {
+        for (let c = 0; c < cols && idx < n; c++) {
+          nodes.push({
+            id: nextNodeId,
+            label: nextNodeId.toString(),
+            x: paddingX + c * cellW + (Math.random() - 0.5) * 20, // small jitter
+            y: paddingY + r * cellH + (Math.random() - 0.5) * 20,
+            elemCircle: null,
+            elemText: null
+          });
+          nextNodeId++;
+          idx++;
+        }
+      }
+
+      // --- Generate edges ---
+      const avail = [];
+      for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) avail.push([i, j]);
+      shuffle(avail);
+
+      // Random Spanning Tree to ensure connectivity
+      for (let i = 1; i < n; i++) {
+        const j = Math.floor(Math.random() * i);
+        edges.push({
+          from: i,
+          to: j,
+          weight: Math.floor(Math.random() * 10) + 1,
+          elemLine: null,
+          elemText: null
+        });
+        // Remove used edge from available pool
+        const idx = avail.findIndex(p => p[0] === Math.min(i, j) && p[1] === Math.max(i, j));
+        if (idx >= 0) avail.splice(idx, 1);
+      }
+
+      // Fill remaining edges randomly
+      shuffle(avail);
+      while (edges.length < m && avail.length) {
+        const [u, v] = avail.pop();
+        edges.push({
+          from: u,
+          to: v,
+          weight: Math.floor(Math.random() * 10) + 1,
+          elemLine: null,
+          elemText: null
+        });
+      }
+
+      drawGraph();
+    }
+
+    // Clear Graph
+    clearBtn.addEventListener('click', () => {
+      nodes = []; edges = []; nextNodeId = 0;
+      [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn]
+        .forEach(b => b.classList.remove('active'));
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      edgeFirstNode = edgeSecondNode = null;
+      cancelMST();
+      drawGraph();
+    });
+
+    // ===== MST ALGORITHMS EXECUTION =====
+    runMSTBtn.addEventListener('click', () => {
+      if (!nodes.length) { alert("Graph empty."); return; }
+      currentAlgorithm = algorithmSelect.value;
+
+      // Disable controls during run
+      algorithmSelect.disabled = true;
+      runMSTBtn.disabled = true;
+
+      if (currentAlgorithm === 'prims') {
+        const labels = nodes.map(n => n.label).join(', ');
+        const inp = prompt("Start node label (" + labels + "):");
+        if (!inp) { algorithmSelect.disabled = false; runMSTBtn.disabled = false; return; }
+        const nd = nodes.find(n => n.label === inp.trim());
+        if (!nd) { alert("Invalid label."); algorithmSelect.disabled = false; runMSTBtn.disabled = false; return; }
+        preparePrim(nd.id);
+      } else {
+        prepareKruskal();
+      }
+    });
+
+    // --- PRIM'S ALGORITHM ---
+    function preparePrim(startId) {
+      const adj = {}, visited = {}, mst = new Set(), cand = [];
+      const dist = {};
+
+      nodes.forEach(n => {
+        adj[n.id] = [];
+        visited[n.id] = false;
+        dist[n.id] = Infinity;
+      });
+
+      edges.forEach((e, i) => {
+        adj[e.from].push({ to: e.to, w: e.weight, idx: i });
+        adj[e.to].push({ to: e.from, w: e.weight, idx: i });
+      });
+
+      // Initialize Start
+      visited[startId] = true;
+      dist[startId] = 0;
+      adj[startId].forEach(nb => {
+        cand.push({ weight: nb.w, from: startId, to: nb.to, idx: nb.idx });
+        if (nb.w < dist[nb.to]) dist[nb.to] = nb.w;
+      });
+
+      // Snapshot 0
+      primSteps = [{
+        visited: { ...visited },
+        mstEdges: new Set(mst),
+        currentEdge: null,
+        currentNode: startId,
+        candidates: cand.slice(),
+        dist: { ...dist }
+      }];
+
+      // Main Loop
+      while (mst.size < nodes.length - 1) {
+        cand.sort((a, b) => a.weight - b.weight);
+        let chosen = null;
+
+        // Find next valid edge
+        while (cand.length) {
+          const c = cand.shift();
+          // Snapshot: Checking edge
+          primSteps.push({
+            visited: { ...visited },
+            mstEdges: new Set(mst),
+            currentEdge: c.idx,
+            currentNode: null,
+            candidates: cand.slice(),
+            dist: { ...dist }
+          });
+          if (!(visited[c.from] && visited[c.to])) {
+            chosen = c;
+            break;
+          }
+          // Snapshot: Rejected edge (both visited)
+          primSteps.push({
+            visited: { ...visited },
+            mstEdges: new Set(mst),
+            currentEdge: null,
+            currentNode: null,
+            candidates: cand.slice(),
+            dist: { ...dist }
+          });
+        }
+        if (!chosen) break;
+
+        // Add to MST
+        mst.add(chosen.idx);
+        primSteps.push({
+          visited: { ...visited },
+          mstEdges: new Set(mst),
+          currentEdge: chosen.idx,
+          currentNode: null,
+          candidates: cand.slice(),
+          dist: { ...dist }
+        });
+
+        // Visit new node
+        const newN = visited[chosen.from] ? chosen.to : chosen.from;
+        visited[newN] = true;
+        // Snapshot: New node visited
+        primSteps.push({
+          visited: { ...visited },
+          mstEdges: new Set(mst),
+          currentEdge: null,
+          currentNode: newN,
+          candidates: cand.slice(),
+          dist: { ...dist }
+        });
+
+        // Add adjacent edges & update dist
+        adj[newN].forEach(nb => {
+          if (!visited[nb.to]) {
+            cand.push({ weight: nb.w, from: newN, to: nb.to, idx: nb.idx });
+            if (nb.w < dist[nb.to]) {
+              dist[nb.to] = nb.w;
+            }
+          }
+        });
+        // Snapshot: Candidates updated
+        primSteps.push({
+          visited: { ...visited },
+          mstEdges: new Set(mst),
+          currentEdge: null,
+          currentNode: null,
+          candidates: cand.slice(),
+          dist: { ...dist }
+        });
+      }
+
+      // Final Step
+      primSteps.push({
+        visited: { ...visited },
+        mstEdges: new Set(mst),
+        currentEdge: null,
+        currentNode: null,
+        candidates: [],
+        dist: { ...dist }
+      });
+
+      currentStepIndex = 0;
+      showStepControls();
+      updateStepDisplay();
+    }
+
+    // --- KRUSKAL'S ALGORITHM ---
+    function prepareKruskal() {
+      // Sort edges by weight
+      const list = edges.map((e, i) => ({ from: e.from, to: e.to, weight: e.weight, idx: i }));
+      list.sort((a, b) => a.weight - b.weight);
+
+      // Union-Find
+      const parent = {}; nodes.forEach(n => parent[n.id] = n.id);
+      function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+      function uni(a, b) { const pa = find(a), pb = find(b); if (pa !== pb) parent[pb] = pa; }
+
+      const mst = new Set();
+      kruskalSteps = [{ mstEdges: new Set(mst), currentEdge: null }];
+
+      list.forEach(eObj => {
+        // Snapshot: Considering edge
+        kruskalSteps.push({ mstEdges: new Set(mst), currentEdge: eObj.idx });
+
+        if (find(eObj.from) !== find(eObj.to)) {
+          uni(eObj.from, eObj.to);
+          mst.add(eObj.idx);
+          // Snapshot: Edge added to MST
+          kruskalSteps.push({ mstEdges: new Set(mst), currentEdge: eObj.idx });
+        }
+      });
+      currentStepIndex = 0;
+      showStepControls();
+      updateStepDisplay();
+    }
+
+    // Reset Visualization
+    function cancelMST() {
+      primSteps = []; kruskalSteps = []; currentStepIndex = 0;
+      stepControls.style.display = 'none';
+      algorithmSelect.disabled = false;
+      runMSTBtn.disabled = false;
+      // Clear visual states
+      nodes.forEach(n => {
+        n.elemCircle.classList.remove('node-visited', 'node-current', 'node-final', 'node-unprocessed');
+        n.elemCircle.style.fill = "";
+        n.elemText.textContent = n.label;
+      });
+      edges.forEach(e => {
+        e.elemLine.classList.remove('edge-mst', 'edge-current', 'edge-candidate');
+      });
+    }
+
+    // ===== STEP NAVIGATION =====
+    prevStepBtn.addEventListener('click', () => {
+      if (currentStepIndex > 0) { currentStepIndex--; updateStepDisplay(); }
+    });
+    nextStepBtn.addEventListener('click', () => {
+      const steps = currentAlgorithm === 'prims' ? primSteps : kruskalSteps;
+      if (currentStepIndex < steps.length - 1) { currentStepIndex++; updateStepDisplay(); }
+    });
+    finishStepBtn.addEventListener('click', () => {
+      const steps = currentAlgorithm === 'prims' ? primSteps : kruskalSteps;
+      currentStepIndex = steps.length - 1; updateStepDisplay();
+    });
+    exitStepBtn.addEventListener('click', cancelMST);
+
+    function showStepControls() {
+      stepControls.style.display = 'inline-block';
+      prevStepBtn.disabled = true;
+      const steps = currentAlgorithm === 'prims' ? primSteps : kruskalSteps;
+      nextStepBtn.disabled = steps.length <= 1;
+      finishStepBtn.disabled = steps.length <= 1;
+      exitStepBtn.disabled = true;
+    }
+
+    // ===== DRAGGING LOGIC =====
+    function onNodeMouseDown(evt) {
+      evt.stopPropagation();
+      const id = +evt.currentTarget.dataset.id;
+      const nd = nodes.find(n => n.id === id);
+      if (!nd) return;
+      draggingNode = nd;
+      const p = getSvgPoint(evt);
+      dragOffsetX = p.x - nd.x;
+      dragOffsetY = p.y - nd.y;
+      window.addEventListener('mousemove', onDrag);
+      window.addEventListener('mouseup', onDragEnd);
+    }
+    function onDrag(evt) {
+      if (!draggingNode) return;
+      const p = getSvgPoint(evt);
+      draggingNode.x = p.x - dragOffsetX;
+      draggingNode.y = p.y - dragOffsetY;
+      drawGraph();
+      if (stepControls.style.display === 'inline-block') {
+        updateStepDisplay();
+      }
+    }
+    function onDragEnd() {
+      draggingNode = null;
+      window.removeEventListener('mousemove', onDrag);
+      window.removeEventListener('mouseup', onDragEnd);
+    }
+
+    // ===== UPDATE DISPLAY BASED ON STEP =====
+    function updateStepDisplay() {
+      // Redraw base graph to clear previous frame's dynamic highlights
+      drawGraph();
+
+      const steps = currentAlgorithm === 'prims' ? primSteps : kruskalSteps;
+      const snap = steps[currentStepIndex];
+
+      prevStepBtn.disabled = (currentStepIndex === 0);
+      nextStepBtn.disabled = (currentStepIndex === steps.length - 1);
+      finishStepBtn.disabled = (currentStepIndex === steps.length - 1);
+      exitStepBtn.disabled = (currentStepIndex !== steps.length - 1);
+
+      // Reset dynamic edge classes (drawGraph clears them but let's be safe)
+      edges.forEach(e => {
+        e.elemLine.classList.remove('edge-mst', 'edge-current', 'edge-candidate');
+      });
+
+      if (currentAlgorithm === 'prims') {
+        nodes.forEach(n => {
+          n.elemCircle.classList.remove('node-visited', 'node-current', 'node-final', 'node-unprocessed');
+
+          // Highlight logic for Prim's
+          if (snap.currentNode === n.id) {
+            n.elemCircle.classList.add('node-final'); // Validated node
+          }
+          else if (snap.visited[n.id]) {
+            n.elemCircle.classList.add('node-visited'); // Previously active in MST
+          }
+          else {
+            n.elemCircle.style.fill = "#e53935"; // Unprocessed
+          }
+
+          // Show distance
+          if (snap.dist && typeof snap.dist[n.id] !== "undefined") {
+            const distVal = snap.dist[n.id];
+            n.elemText.textContent = `${n.label} (${distVal === Infinity ? "∞" : distVal})`;
+          } else {
+            n.elemText.textContent = n.label;
+          }
+        });
+
+        // Highlight MST Edges
+        snap.mstEdges.forEach(i => {
+          if (i !== snap.currentEdge) {
+            edges[i].elemLine.classList.add('edge-mst');
+          }
+        });
+
+        // Highlight Current Edge
+        if (snap.currentEdge !== null) {
+          edges[snap.currentEdge].elemLine.classList.add('edge-current');
+        }
+
+        // Highlight Candidates
+        snap.candidates && snap.candidates.forEach(c => {
+          if (c.idx !== snap.currentEdge) {
+            edges[c.idx].elemLine.classList.add('edge-candidate');
+          }
+        });
+
+      } else {
+        // Kruskal's Logic
+        nodes.forEach(n => {
+          n.elemCircle.classList.remove('node-visited', 'node-current', 'node-final');
+          n.elemCircle.style.fill = "";
+          n.elemText.textContent = n.label;
+        });
+
+        snap.mstEdges.forEach(i => {
+          edges[i].elemLine.classList.add('edge-mst');
+        });
+        if (snap.currentEdge !== null) {
+          edges[snap.currentEdge].elemLine.classList.add('edge-current');
+        }
+      }
+
+      stepInfo.textContent = ` Step ${currentStepIndex + 1} of ${steps.length}`;
+    }
+
+    // Initial Draw
+    drawGraph();
+  </script>
+  <script src="theme.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prefix-Trie Visualizer</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: transparent;
+      /* allow theme bg */
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    /* Controls container */
+    #controls {
+      margin-bottom: 20px;
+    }
+
+    /* Input field styling */
+    #controls input {
+      font-size: 16px;
+      padding: 4px;
+      width: 180px;
+    }
+
+    /* Button styling */
+    #controls button {
+      font-size: 16px;
+      padding: 6px 12px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    /* SVG Container Styling */
+    #svgContainer {
+      width: 800px;
+      height: 500px;
+      border: 1px solid #ccc;
+      background: #fafafa;
+      overflow: auto;
+      /* show scrollbars only if needed */
+    }
+
+    /* SVG Canvas Styling */
+    #svgCanvas {
+      display: block;
+      /* no inline-gap */
+    }
+
+    /* Trie Element Styles */
+    .edge {
+      stroke: #888;
+      stroke-width: 1.5px;
+    }
+
+    .node-letter {
+      fill: #8f8;
+      stroke: #333;
+      stroke-width: 2px;
+    }
+
+    .node-term {
+      fill: #fc0;
+      stroke: #333;
+      stroke-width: 2px;
+    }
+
+    .node-text {
+      font-size: 14px;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #000;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Prefix-Trie Visualizer</h1>
+  <div id="controls">
+    <input type="text" id="wordInput" placeholder="Enter lowercase word" />
+    <button id="insertBtn">Insert</button>
+    <button id="clearBtn">Clear</button>
+  </div>
+
+  <div id="svgContainer">
+    <svg id="svgCanvas" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <script>
+    // Constants
+    const NODE_RADIUS = 15;  // 30px diameter for nodes
+
+    // Trie Node Class
+    class TrieNode {
+      constructor(char = '') {
+        this.char = char;
+        this.children = {};
+        this.isTerminal = false; // Ends a valid word
+        this.x = 0;              // Visualization coordinates
+        this.y = 0;
+        this.termPos = null;     // Position for terminal marker ($)
+        this._size = 0;          // Subtree size estimation for layout
+      }
+    }
+
+    // Global Trie Root
+    const root = new TrieNode();
+    const container = document.getElementById('svgContainer');
+    const svg = document.getElementById('svgCanvas');
+
+    // ===== TRIE OPERATIONS =====
+
+    /**
+     * Inserts a word into the Trie
+     * @param {string} w - The word to insert
+     * @returns {boolean} - True if inserted, False if already exists
+     */
+    function insertWord(w) {
+      let n = root;
+      for (let ch of w) {
+        if (!n.children[ch]) n.children[ch] = new TrieNode(ch);
+        n = n.children[ch];
+      }
+      if (n.isTerminal) return false;
+      n.isTerminal = true;
+      return true;
+    }
+
+    // Clears the Trie
+    function clearTrie() {
+      root.children = {};
+      root.isTerminal = false;
+    }
+
+    // ===== VISUALIZATION LAYOUT LOGIC =====
+
+    /**
+     * Recursively computes the size of the subtree rooted at 'node'
+     * Used to allocate horizontal space.
+     */
+    function computeSizes(node) {
+      let tot = 0;
+      // Sort children alphabetically for consistent layout
+      for (let k of Object.keys(node.children).sort()) {
+        computeSizes(node.children[k]);
+        tot += node.children[k]._size;
+      }
+      // Terminal node adds to size (for the '$' marker)
+      if (node.isTerminal) tot++;
+      node._size = tot || 1;
+    }
+
+    /**
+     * Recursively assigns X and Y coordinates to nodes
+     * @param {TrieNode} node - Current node
+     * @param {number} depth - Current depth used for Y position
+     * @param {number} xOff - Current X offset (in logical units)
+     * @param {number} hGap - Horizontal spacing multiplier
+     * @param {number} vGap - Vertical spacing
+     * @returns {number} - The new X offset after this subtree
+     */
+    function assignPositions(node, depth = 0, xOff = 0, hGap = 100, vGap = 80) {
+      const keys = Object.keys(node.children).sort();
+      // Include terminal marker in layout if applicable
+      const kids = [...keys, ...(node.isTerminal ? ['$'] : [])];
+
+      // Leaf node placement
+      if (!kids.length) {
+        node.x = xOff * hGap + hGap / 2;
+        node.y = depth * vGap + NODE_RADIUS + 5;
+        return xOff + 1;
+      }
+
+      // Internal node placement: center above children
+      let curX = xOff, xs = [];
+      for (let k of kids) {
+        if (k === '$') {
+          // Terminal marker position
+          const cx = curX * hGap + hGap / 2;
+          const cy = (depth + 1) * vGap + NODE_RADIUS + 5;
+          node.termPos = { x: cx, y: cy };
+          xs.push(cx);
+          curX++;
+        } else {
+          // Recursive call for child
+          curX = assignPositions(node.children[k], depth + 1, curX, hGap, vGap);
+          xs.push(node.children[k].x);
+        }
+      }
+
+      // Center parent
+      node.x = (Math.min(...xs) + Math.max(...xs)) / 2;
+      node.y = depth * vGap + NODE_RADIUS + 5;
+      return curX;
+    }
+
+    // ===== RENDERING =====
+
+    function render() {
+      svg.innerHTML = ''; // Clear SVG
+
+      // 1) Calculate Sizes & Positions
+      computeSizes(root);
+      // Rough layout parameters: Horizontal Gap 100, Vertical Gap 80
+      assignPositions(root, 0, 0, 100, 80);
+
+      // 2) Determine Bounding Box
+      // Initial rough bounding box collection
+      let all = [];
+      (function collect(n) {
+        all.push({ x: n.x, y: n.y });
+        if (n.isTerminal) all.push(n.termPos);
+        for (let k in n.children) collect(n.children[k]);
+      })(root);
+
+      const maxX = Math.max(...all.map(p => p.x));
+      const maxY = Math.max(...all.map(p => p.y));
+
+      // 3) Center the Tree horizontally within the view
+      // If the tree is small, center it. If larger than container, align left.
+      const containerW = container.clientWidth;
+      const treeW = maxX;
+
+      // Simple offset: try to center root
+      // We want root.x + offset = containerW / 2
+      let offsetX = (containerW / 2) - root.x;
+      let offsetY = 20 - root.y; // 20px top padding
+
+      // Ensure we don't shift too far left if tree needs to scroll
+      // Or if tree is very wide, let it start at some positive x
+      // For simplicity here, we just use the calculated offset for centering.
+
+      // 4) Set SVG Dimensions to fit content + padding
+      // Ensure positive width/height
+      const contentW = maxX + NODE_RADIUS * 2 + Math.abs(offsetX);
+      const contentH = maxY + NODE_RADIUS * 2 + Math.abs(offsetY);
+
+      svg.setAttribute('width', Math.max(contentW, containerW));
+      svg.setAttribute('height', Math.max(contentH, 500));
+
+      // 5) Create a group for translation
+      const g = createSVGElement('g', { transform: `translate(${offsetX},${offsetY})` });
+      svg.appendChild(g);
+
+      // 6) Draw Edges (Depth First)
+      (function drawEdges(n) {
+        for (let k in n.children) {
+          const c = n.children[k];
+          g.appendChild(createSVGElement('line', {
+            x1: n.x, y1: n.y + NODE_RADIUS,
+            x2: c.x, y2: c.y - NODE_RADIUS,
+            class: 'edge'
+          }));
+          drawEdges(c);
+        }
+        // Edge to terminal marker
+        if (n.isTerminal) {
+          const t = n.termPos;
+          g.appendChild(createSVGElement('line', {
+            x1: n.x, y1: n.y + NODE_RADIUS,
+            x2: t.x, y2: t.y - NODE_RADIUS,
+            class: 'edge'
+          }));
+        }
+      })(root);
+
+      // 7) Draw Nodes (Depth First)
+      (function drawNodes(n) {
+        // Character Node
+        g.appendChild(createSVGElement('circle', {
+          cx: n.x, cy: n.y, r: NODE_RADIUS, class: 'node-letter'
+        }));
+
+        // Character Text (Root has empty char)
+        if (n.char) {
+          const t = createSVGElement('text', { x: n.x, y: n.y, class: 'node-text' });
+          t.textContent = n.char;
+          g.appendChild(t);
+        } else {
+          // Maybe a small root indicator or just empty
+        }
+
+        // Terminal Marker Node
+        if (n.isTerminal) {
+          const tpos = n.termPos;
+          g.appendChild(createSVGElement('circle', {
+            cx: tpos.x, cy: tpos.y, r: NODE_RADIUS, class: 'node-term'
+          }));
+          const t2 = createSVGElement('text', { x: tpos.x, y: tpos.y, class: 'node-text' });
+          t2.textContent = '$';
+          g.appendChild(t2);
+        }
+
+        for (let k in n.children) drawNodes(n.children[k]);
+      })(root);
+    }
+
+    /**
+     * Helper to create SVG elements with attributes
+     */
+    function createSVGElement(tag, attrs) {
+      const e = document.createElementNS(svg.namespaceURI, tag);
+      for (let k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    // ===== EVENT LISTENERS =====
+
+    document.getElementById('insertBtn').onclick = () => {
+      const input = document.getElementById('wordInput');
+      const w = input.value.trim().toLowerCase();
+      if (/^[a-z]+$/.test(w)) {
+        insertWord(w);
+      } else if (w.length > 0) {
+        alert("Please enter valid lowercase letters (a-z).");
+      }
+      input.value = '';
+      render();
+    };
+
+    document.getElementById('clearBtn').onclick = () => {
+      clearTrie();
+      render();
+    };
+
+    // Initial Render
+    render();
+  </script>
+  <script src="theme.js"></script>
+</body>
+
+</html>
