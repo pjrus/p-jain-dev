@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dijkstra Step-by-Step Visualizer (Directed/Undirected)</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Basic reset and flexbox layout for centering */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* background-color: #f5f5f5; handled by theme.css */
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Toolbar container */
+    #toolbar {
+      margin-bottom: 10px;
+    }
+
+    /* Toolbar button styles */
+    #toolbar button {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Active button state */
+    #toolbar button.active {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    /* Disabled button state */
+    #toolbar button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* Graph Type Selection Buttons */
+    #typeControls {
+      margin-bottom: 12px;
+    }
+
+    #typeControls button {
+      margin-right: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Selected graph type state */
+    #typeControls button.selected {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    #typeControls button:disabled {
+      background-color: #ddd;
+      color: #666;
+      cursor: default;
+    }
+
+    /* Step control buttons */
+    #stepControls {
+      margin-top: 8px;
+    }
+
+    #stepControls button {
+      margin-right: 8px;
+      padding: 5px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    #stepInfo {
+      font-size: 14px;
+      color: #333;
+      vertical-align: middle;
+    }
+
+    /* SVG Canvas styling */
+    svg {
+      border: 1px solid #ccc;
+      background-color: white;
+      width: 800px;
+      height: 500px;
+      touch-action: none;
+      /* allow dragging on touch devices */
+    }
+
+    /* Marker for directed edges */
+    marker#arrow {
+      overflow: visible;
+    }
+
+    marker#arrow path {
+      fill: #666;
+    }
+
+    /* Node styling */
+    .node-circle {
+      fill: #2196F3;
+      stroke: #1565C0;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .node-text {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* Highlighted nodes for Dijkstra */
+    .node-current {
+      fill: #FFC107 !important;
+      /* Current Node being processed */
+    }
+
+    .node-final {
+      fill: #4CAF50 !important;
+      /* Visited / Settled Node */
+    }
+
+    /* Highlighted nodes during “Add Edge” interaction */
+    .node-selected-1 {
+      fill: #FF5722 !important;
+      /* first node selected */
+    }
+
+    .node-selected-2 {
+      fill: #9C27B0 !important;
+      /* second node selected */
+    }
+
+    /* Edge styling */
+    .edge-line {
+      stroke: #666;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+
+    .edge-path {
+      stroke: #e91e63 !important;
+      /* highlight color for shortest-path tree edges */
+      stroke-width: 4 !important;
+    }
+
+    .edge-weight {
+      fill: black;
+      font-size: 12px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Dijkstra Step-by-Step Visualizer</h1>
+
+  <!-- Graph Type Selection -->
+  <div id="typeControls">
+    <button id="undirectedBtn">Undirected Graph</button>
+    <button id="directedBtn">Directed Graph</button>
+  </div>
+
+  <!-- Main Toolbar -->
+  <div id="toolbar">
+    <button id="addNodeBtn" disabled>Add Node</button>
+    <button id="addEdgeBtn" disabled>Add Edge</button>
+    <button id="deleteNodeBtn" disabled>Delete Node</button>
+    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button id="generateBtn" disabled>Generate Graph</button>
+    <button id="runDijkstraBtn" disabled>Run Dijkstra</button>
+    <button id="clearBtn" disabled>Clear All</button>
+  </div>
+
+  <!-- Step controls (hidden until Dijkstra is running) -->
+  <div id="stepControls" style="display: none;">
+    <button id="prevStepBtn" disabled>◀ Prev</button>
+    <button id="nextStepBtn" disabled>Next ▶</button>
+    <button id="finishStepBtn" disabled>Finish</button>
+    <button id="exitStepBtn" disabled>Exit</button>
+    <span id="stepInfo"></span>
+  </div>
+
+  <!-- SVG Canvas (with <defs> for arrow marker) -->
+  <svg id="graphSvg">
+    <defs>
+      <!-- Arrow marker definition for directed edges -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="20" refY="5" markerUnits="strokeWidth" markerWidth="8"
+        markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z"></path>
+      </marker>
+    </defs>
+  </svg>
+
+  <script>
+    // ================ GLOBALS & DOM ELEMENTS ================
+    const svg = document.getElementById('graphSvg');
+    const undirectedBtn = document.getElementById('undirectedBtn');
+    const directedBtn = document.getElementById('directedBtn');
+
+    // Toolbar Buttons
+    const addNodeBtn = document.getElementById('addNodeBtn');
+    const addEdgeBtn = document.getElementById('addEdgeBtn');
+    const deleteNodeBtn = document.getElementById('deleteNodeBtn');
+    const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const runDijkstraBtn = document.getElementById('runDijkstraBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Step Control Buttons
+    const prevStepBtn = document.getElementById('prevStepBtn');
+    const nextStepBtn = document.getElementById('nextStepBtn');
+    const finishStepBtn = document.getElementById('finishStepBtn');
+    const exitStepBtn = document.getElementById('exitStepBtn');
+    const stepInfo = document.getElementById('stepInfo');
+    const stepControls = document.getElementById('stepControls');
+
+    // Graph Data
+    let isDirected = false;
+    let nodes = [];      // { id, x, y, elemCircle, elemText }
+    let edges = [];      // { from: nodeId, to: nodeId, weight, elemLine, elemText }
+    let nextNodeId = 0;
+
+    // Interaction Modes
+    let addNodeMode = false;
+    let addEdgeMode = false;
+    let deleteNodeMode = false;
+    let deleteEdgeMode = false;
+
+    // Edge Creation State
+    let edgeFirstNode = null;
+    let edgeSecondNode = null;
+
+    // Dijkstra Algorithm State
+    let dijkstraSteps = []; // array of { dist, visited, current, parent }
+    let currentStepIndex = 0;
+
+    // Dragging state
+    let draggingNode = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    // ============== SVG COORDINATE UTILITY ==============
+    // Converts mouse event coordinates to SVG coordinates
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX;
+      pt.y = evt.clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // ============== INITIAL SETUP & GRAPH TYPE ==============
+    undirectedBtn.addEventListener('click', () => chooseGraphType(false));
+    directedBtn.addEventListener('click', () => chooseGraphType(true));
+
+    function chooseGraphType(directed) {
+      isDirected = directed;
+      undirectedBtn.classList.toggle('selected', !directed);
+      directedBtn.classList.toggle('selected', directed);
+      updateTypeButtons(); // disable toggles if edges exist
+      // Enable buttons
+      addNodeBtn.disabled = false;
+      addEdgeBtn.disabled = false;
+      deleteNodeBtn.disabled = false;
+      deleteEdgeBtn.disabled = false;
+      generateBtn.disabled = false;
+      runDijkstraBtn.disabled = false;
+      clearBtn.disabled = false;
+    }
+
+    function updateTypeButtons() {
+      // Allow switching only if no edges exist to ensure consistency
+      const canSwitch = (edges.length === 0);
+      undirectedBtn.disabled = !canSwitch;
+      directedBtn.disabled = !canSwitch;
+    }
+
+    // ============== NODE & EDGE RENDERING ==============
+    function drawGraph() {
+      // Clean SVG
+      Array.from(svg.childNodes).forEach(node => {
+        if (node.nodeName !== 'defs') svg.removeChild(node);
+      });
+
+      // 1) Draw edges first (background)
+      edges.forEach((ed, idx) => {
+        const from = nodes.find(n => n.id === ed.from);
+        const to = nodes.find(n => n.id === ed.to);
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", from.x);
+        line.setAttribute("y1", from.y);
+        line.setAttribute("x2", to.x);
+        line.setAttribute("y2", to.y);
+        line.setAttribute("class", "edge-line");
+        if (isDirected) line.setAttribute("marker-end", "url(#arrow)");
+        svg.appendChild(line);
+        ed.elemLine = line;
+
+        // If deleteEdgeMode is active, clicking this line deletes it
+        line.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteEdgeMode) {
+            deleteEdge(idx);
+          }
+        });
+
+        // Weight label at midpoint
+        const midX = (from.x + to.x) / 2;
+        const midY = (from.y + to.y) / 2;
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", midX);
+        txt.setAttribute("y", midY - 5);
+        txt.setAttribute("class", "edge-weight");
+        txt.textContent = ed.weight;
+        svg.appendChild(txt);
+        ed.elemText = txt;
+      });
+
+      // 2) Draw nodes on top
+      nodes.forEach(nd => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", nd.x);
+        circle.setAttribute("cy", nd.y);
+        circle.setAttribute("r", 16);
+        circle.setAttribute("class", "node-circle");
+        circle.dataset.id = nd.id; // Store ID for logic
+        svg.appendChild(circle);
+        nd.elemCircle = circle;
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", nd.x);
+        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("class", "node-text");
+        txt.setAttribute("text-anchor", "middle");
+        txt.textContent = nd.id;
+        svg.appendChild(txt);
+        nd.elemText = txt;
+
+        // Node click / drag handlers
+        circle.addEventListener('mousedown', onNodeMouseDown);
+        circle.addEventListener('click', evt => {
+          evt.stopPropagation();
+          if (deleteNodeMode) {
+            deleteNode(nd.id);
+          } else {
+            onNodeClickForEdge(nd.id);
+          }
+        });
+      });
+
+      // 3) Highlight “Add Edge” selections
+      nodes.forEach(nd => {
+        nd.elemCircle.classList.remove('node-selected-1', 'node-selected-2');
+        if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
+        if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
+      });
+    }
+
+    // ============== BUTTON LOGIC Handlers ==============
+
+    addNodeBtn.addEventListener('click', () => {
+      addNodeMode = !addNodeMode;
+      if (addNodeMode) {
+        addNodeBtn.classList.add('active');
+        // Reset other modes
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelDijkstra();
+      } else {
+        addNodeBtn.classList.remove('active');
+      }
+    });
+
+    addEdgeBtn.addEventListener('click', () => {
+      addEdgeMode = !addEdgeMode;
+      if (addEdgeMode) {
+        addEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelDijkstra();
+      } else {
+        addEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+      }
+      drawGraph();
+    });
+
+    deleteNodeBtn.addEventListener('click', () => {
+      deleteNodeMode = !deleteNodeMode;
+      if (deleteNodeMode) {
+        deleteNodeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteEdgeMode = false; deleteEdgeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelDijkstra();
+      } else {
+        deleteNodeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    deleteEdgeBtn.addEventListener('click', () => {
+      deleteEdgeMode = !deleteEdgeMode;
+      if (deleteEdgeMode) {
+        deleteEdgeBtn.classList.add('active');
+        addNodeMode = false; addNodeBtn.classList.remove('active');
+        addEdgeMode = false; addEdgeBtn.classList.remove('active');
+        deleteNodeMode = false; deleteNodeBtn.classList.remove('active');
+        edgeFirstNode = edgeSecondNode = null;
+        cancelDijkstra();
+      } else {
+        deleteEdgeBtn.classList.remove('active');
+      }
+      drawGraph();
+    });
+
+    generateBtn.addEventListener('click', () => {
+      const input = prompt("Enter number of nodes (positive integer):");
+      const n = parseInt(input, 10);
+      if (isNaN(n) || n <= 0) {
+        alert("Invalid number of nodes.");
+        return;
+      }
+      generateGraph(n);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      addNodeBtn.classList.remove('active');
+      addEdgeBtn.classList.remove('active');
+      deleteNodeBtn.classList.remove('active');
+      deleteEdgeBtn.classList.remove('active');
+      generateBtn.classList.remove('active');
+      edgeFirstNode = edgeSecondNode = null;
+      cancelDijkstra();
+      updateTypeButtons();
+      drawGraph();
+    });
+
+    // Add node on click
+    svg.addEventListener('mousedown', svgMouseDown);
+    function svgMouseDown(evt) {
+      const pt = getSvgPoint(evt);
+      if (addNodeMode && evt.target === svg) {
+        const newNode = {
+          id: nextNodeId++,
+          x: pt.x,
+          y: pt.y,
+          elemCircle: null,
+          elemText: null
+        };
+        nodes.push(newNode);
+        drawGraph();
+      }
+    }
+
+    // ============== GENERATE GRAPH HELPER ==============
+    function generateGraph(n) {
+      nodes = [];
+      edges = [];
+      nextNodeId = 0;
+      edgeFirstNode = edgeSecondNode = null;
+      addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      addNodeBtn.classList.remove('active');
+      addEdgeBtn.classList.remove('active');
+      deleteNodeBtn.classList.remove('active');
+      deleteEdgeBtn.classList.remove('active');
+      cancelDijkstra();
+
+      // Place n nodes evenly on a circle
+      const cx = 400, cy = 250, radius = 200;
+      for (let i = 0; i < n; i++) {
+        const angle = (2 * Math.PI / n) * i;
+        const x = cx + radius * Math.cos(angle);
+        const y = cy + radius * Math.sin(angle);
+        nodes.push({ id: nextNodeId++, x, y, elemCircle: null, elemText: null });
+      }
+
+      // Build a simple spanning tree (n-1 edges) to ensure connectivity
+      for (let i = 0; i < n - 1; i++) {
+        edges.push({
+          from: i,
+          to: i + 1,
+          weight: Math.floor(Math.random() * 10) + 1,
+          elemLine: null,
+          elemText: null
+        });
+      }
+
+      // Determine desired edge count:
+      let desired;
+      if (n <= 5) {
+        // Just the spanning tree suffices for small graphs
+        desired = n - 1;
+      } else {
+        // For n>5, pick at random between n and n+5, capped at max possible
+        const maxPossible = isDirected ? n * (n - 1) : (n * (n - 1)) / 2;
+        const minEdges = n;
+        const maxEdges = Math.min(n + 5, maxPossible);
+        // Uniformly choose an integer in [minEdges, maxEdges]
+        const range = maxEdges - minEdges + 1;
+        desired = minEdges + Math.floor(Math.random() * range);
+      }
+
+      // Collect all remaining possible edges not yet in the tree
+      const possibleEdges = [];
+      if (isDirected) {
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n; j++) {
+            if (i === j) continue;
+            if (j === i + 1) continue; // skip the spanning‐tree edge
+            possibleEdges.push({ from: i, to: j });
+          }
+        }
+      } else {
+        for (let i = 0; i < n; i++) {
+          for (let j = i + 1; j < n; j++) {
+            if (j === i + 1) continue; // skip spanning‐tree edge
+            possibleEdges.push({ from: i, to: j });
+          }
+        }
+      }
+
+      // Shuffle possibleEdges
+      for (let i = possibleEdges.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        [possibleEdges[i], possibleEdges[r]] = [possibleEdges[r], possibleEdges[i]];
+      }
+
+      // Keep adding until we reach the desired count
+      while (edges.length < desired && possibleEdges.length > 0) {
+        const e = possibleEdges.pop();
+        edges.push({
+          from: e.from,
+          to: e.to,
+          weight: Math.floor(Math.random() * 10) + 1, // random 1–10
+          elemLine: null,
+          elemText: null
+        });
+      }
+
+      updateTypeButtons();
+      drawGraph();
+    }
+
+    // ============== DELETE NODE HELPER ==============
+    function deleteNode(nodeId) {
+      nodes = nodes.filter(n => n.id !== nodeId);
+      edges = edges.filter(e => e.from !== nodeId && e.to !== nodeId);
+      updateTypeButtons();
+      drawGraph();
+    }
+
+    // ============== DELETE EDGE HELPER ==============
+    function deleteEdge(edgeIndex) {
+      edges.splice(edgeIndex, 1);
+      updateTypeButtons();
+      drawGraph();
+    }
+
+    // ============== DRAGGING EXISTING NODES ==============
+    function onNodeMouseDown(evt) {
+      evt.stopPropagation();
+      const circle = evt.currentTarget;
+      const nodeId = parseInt(circle.dataset.id, 10);
+      const nd = nodes.find(n => n.id === nodeId);
+      if (!nd) return;
+
+      draggingNode = nd;
+      const pt = getSvgPoint(evt);
+      dragOffsetX = pt.x - nd.x;
+      dragOffsetY = pt.y - nd.y;
+
+      window.addEventListener('mousemove', onDrag);
+      window.addEventListener('mouseup', onDragEnd);
+    }
+
+    function onDrag(evt) {
+      if (!draggingNode) return;
+      const pt = getSvgPoint(evt);
+      draggingNode.x = pt.x - dragOffsetX;
+      draggingNode.y = pt.y - dragOffsetY;
+      drawGraph();
+      if (stepControls.style.display === 'block') {
+        highlightStep(currentStepIndex);
+      }
+    }
+
+    function onDragEnd(evt) {
+      draggingNode = null;
+      window.removeEventListener('mousemove', onDrag);
+      window.removeEventListener('mouseup', onDragEnd);
+    }
+
+    // ============== ADD EDGE LOGIC ==============
+    function onNodeClickForEdge(nodeId) {
+      if (!addEdgeMode) return;
+
+      // Node selection state machine
+      if (edgeFirstNode === null) {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+      else if (edgeFirstNode === nodeId && edgeSecondNode === null) {
+        edgeFirstNode = null;
+        drawGraph();
+      }
+      else if (edgeFirstNode !== null && edgeSecondNode === null) {
+        edgeSecondNode = nodeId;
+        drawGraph();
+
+        const w = prompt("Enter edge weight (positive integer):");
+        const weight = parseInt(w, 10);
+        if (!isNaN(weight) && weight > 0 && edgeFirstNode !== edgeSecondNode) {
+          edges.push({
+            from: edgeFirstNode,
+            to: edgeSecondNode,
+            weight: weight,
+            elemLine: null,
+            elemText: null
+          });
+          updateTypeButtons();
+        }
+        edgeFirstNode = null;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+      else {
+        edgeFirstNode = nodeId;
+        edgeSecondNode = null;
+        drawGraph();
+      }
+    }
+
+    // ============== RUN DIJKSTRA & STEPPING ==============
+    runDijkstraBtn.addEventListener('click', () => {
+      if (nodes.length === 0) {
+        alert("No nodes in the graph.");
+        return;
+      }
+      const sid = prompt("Enter start node ID (0… " + (nextNodeId - 1) + "):");
+      const startId = parseInt(sid, 10);
+      if (isNaN(startId) || !nodes.some(n => n.id === startId)) {
+        alert("Invalid start node.");
+        return;
+      }
+      prepareDijkstra(startId);
+    });
+
+    // Run Dijkstra's Algorithm
+    function prepareDijkstra(startId) {
+      // Create adj list
+      const adj = {};
+      nodes.forEach(n => { adj[n.id] = []; });
+      edges.forEach(e => {
+        adj[e.from].push({ to: e.to, w: e.weight });
+        // Treat as undirected if needed
+        if (!isDirected) adj[e.to].push({ to: e.from, w: e.weight });
+      });
+
+      // Init distance, visited, parent
+      const dist = {}, visited = {}, parent = {};
+      nodes.forEach(n => {
+        dist[n.id] = Infinity;
+        visited[n.id] = false;
+        parent[n.id] = null;
+      });
+      dist[startId] = 0;
+
+      // Initial snapshot
+      dijkstraSteps = [];
+      dijkstraSteps.push({
+        dist: { ...dist },
+        visited: { ...visited },
+        current: null,
+        parent: { ...parent }
+      });
+
+      const N = nodes.length;
+      for (let i = 0; i < N; i++) {
+        // Find unvisited node with smallest distance
+        let u = null, best = Infinity;
+        nodes.forEach(n => {
+          if (!visited[n.id] && dist[n.id] < best) {
+            best = dist[n.id];
+            u = n.id;
+          }
+        });
+
+        // If no reachable nodes left, stop
+        if (u === null) break;
+
+        // Mark as visited
+        visited[u] = true;
+
+        // Snapshot: Node u is selected
+        dijkstraSteps.push({
+          dist: { ...dist },
+          visited: { ...visited },
+          current: u,
+          parent: { ...parent }
+        });
+
+        // Relax neighbors
+        adj[u].forEach(ne => {
+          if (!visited[ne.to] && dist[u] + ne.w < dist[ne.to]) {
+            dist[ne.to] = dist[u] + ne.w;
+            parent[ne.to] = u;
+            // Snapshot: Neighbor updated
+            dijkstraSteps.push({
+              dist: { ...dist },
+              visited: { ...visited },
+              current: u,
+              parent: { ...parent }
+            });
+          }
+        });
+      }
+
+      currentStepIndex = 0;
+      showStepControls();
+      updateStepDisplay();
+    }
+
+    // Reset visualization
+    function cancelDijkstra() {
+      dijkstraSteps = [];
+      currentStepIndex = 0;
+      stepControls.style.display = 'none';
+      nodes.forEach(n => {
+        n.elemCircle.classList.remove('node-current', 'node-final');
+        if (n.elemText) n.elemText.textContent = n.id;
+      });
+      edges.forEach(e => e.elemLine.classList.remove('edge-path'));
+    }
+
+    // Step navigation
+    prevStepBtn.addEventListener('click', () => {
+      if (currentStepIndex > 0) {
+        currentStepIndex--;
+        updateStepDisplay();
+      }
+    });
+    nextStepBtn.addEventListener('click', () => {
+      if (currentStepIndex < dijkstraSteps.length - 1) {
+        currentStepIndex++;
+        updateStepDisplay();
+      }
+    });
+    finishStepBtn.addEventListener('click', () => {
+      if (dijkstraSteps.length > 0) {
+        currentStepIndex = dijkstraSteps.length - 1;
+        updateStepDisplay();
+      }
+    });
+    exitStepBtn.addEventListener('click', () => {
+      cancelDijkstra();
+    });
+
+    function showStepControls() {
+      stepControls.style.display = 'inline-block';
+      prevStepBtn.disabled = true;
+      nextStepBtn.disabled = (dijkstraSteps.length <= 1);
+      finishStepBtn.disabled = (dijkstraSteps.length <= 1);
+      exitStepBtn.disabled = true;
+    }
+
+    function updateStepDisplay() {
+      drawGraph();
+      highlightStep(currentStepIndex);
+      prevStepBtn.disabled = (currentStepIndex === 0);
+      nextStepBtn.disabled = (currentStepIndex === dijkstraSteps.length - 1);
+      finishStepBtn.disabled = (currentStepIndex === dijkstraSteps.length - 1);
+      exitStepBtn.disabled = (currentStepIndex !== dijkstraSteps.length - 1);
+      stepInfo.textContent = ` Step ${currentStepIndex + 1} of ${dijkstraSteps.length}`;
+    }
+
+    // Draw current step's highlights
+    function highlightStep(idx) {
+      const snap = dijkstraSteps[idx];
+      // Reset highlights
+      nodes.forEach(n => n.elemCircle.classList.remove('node-current', 'node-final'));
+      edges.forEach(e => e.elemLine.classList.remove('edge-path'));
+
+      // Apply highlights
+      nodes.forEach(n => {
+        if (snap.visited[n.id]) n.elemCircle.classList.add('node-final');
+        if (snap.current === n.id) n.elemCircle.classList.add('node-current');
+        // Update label to show distance
+        if (n.elemText) {
+          n.elemText.textContent = n.id + " (" +
+            (snap.dist[n.id] === Infinity ? "∞" : snap.dist[n.id]) + ")";
+        }
+      });
+
+      // Highlight shortest-path tree edges
+      Object.keys(snap.parent).forEach(childIdStr => {
+        const childId = parseInt(childIdStr, 10);
+        const par = snap.parent[childId];
+        if (par !== null) {
+          const eObj = edges.find(e =>
+            (e.from === par && e.to === childId) ||
+            (!isDirected && e.from === childId && e.to === par)
+          );
+          if (eObj && eObj.elemLine) eObj.elemLine.classList.add('edge-path');
+        }
+      });
+    }
+
+    // Initial draw
+    drawGraph();
+  </script>
+  <script src="theme.js"></script>
+</body>
+
+</html>
