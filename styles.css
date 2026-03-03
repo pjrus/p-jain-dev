@@ -55,7 +55,7 @@
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 20px var(--color-primary-glow);
   --backdrop-blur: blur(12px);
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="light"] {
@@ -82,6 +82,12 @@
 [data-theme="light"] body {
   background-image: none;
   background-color: var(--color-bg-main);
+}
+
+[data-theme="light"] .content-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: #ffffff;
 }
 
 /* Base Reset & Typography */
@@ -382,6 +388,7 @@ ul {
   font-size: 1.5rem;
   animation: bounce 2s infinite;
   opacity: 0.7;
+  will-change: transform;
 }
 
 @keyframes bounce {
@@ -391,15 +398,15 @@ ul {
   50%,
   80%,
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translate3d(-50%, 0, 0);
   }
 
   40% {
-    transform: translateX(-50%) translateY(-10px);
+    transform: translate3d(-50%, -10px, 0);
   }
 
   60% {
-    transform: translateX(-50%) translateY(-5px);
+    transform: translate3d(-50%, -5px, 0);
   }
 }
 
@@ -454,6 +461,7 @@ ul {
   box-shadow: 0 0 40px var(--color-primary-glow);
   animation: morph 8s ease-in-out infinite;
   transition: var(--transition);
+  will-change: border-radius;
 }
 
 .hero-img:hover {
@@ -508,6 +516,7 @@ ul {
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: var(--transition);
   position: relative;
   overflow: hidden;
@@ -1092,7 +1101,10 @@ textarea.form-control {
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Responsive Design */
@@ -1179,6 +1191,15 @@ textarea.form-control {
   .d-flex.align-center.gap-2 {
     /* Keep row for icons+titles unless very small */
     flex-direction: row;
+  }
+
+  .about-img-container {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 0;
+    margin-bottom: 1.5rem;
   }
 
   img {
@@ -1271,7 +1292,9 @@ textarea.form-control {
   float: right;
   margin-left: 2rem;
   margin-bottom: 1rem;
-  width: 400px;
+  width: 40%;
+  min-width: 250px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1465,4 +1488,68 @@ textarea.form-control {
 
 [data-theme="light"] .hamburger-btn:hover {
   background: rgba(0, 0, 0, 0.05);
+}
+
+/* Timeline Layout */
+.timeline {
+  position: relative;
+  margin: 1.5rem 0 1.5rem 1rem;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  left: 5px;
+  width: 2px;
+  background-color: var(--color-primary);
+  opacity: 0.5;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 4px;
+  left: -2rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-bg-card);
+  box-shadow: 0 0 8px var(--color-primary-glow);
+  transform: translateX(1px);
+}
+
+.timeline-year {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timeline-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.timeline-desc {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
 }
