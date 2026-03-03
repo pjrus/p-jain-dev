@@ -20,7 +20,7 @@
 
     h1 {
       margin: 20px 0 10px;
-      font-size: 24px;
+      font-size: 28px;
     }
 
     /* Toolbar container */
@@ -41,7 +41,8 @@
     /* STEP CONTROLS: Flex container to align buttons and info text */
     #stepControls {
       margin-top: 8px;
-      width: 800px;
+      width: 90vw;
+      max-width: 1200px;
       /* matches SVG width */
       display: flex;
       justify-content: space-between;
@@ -72,7 +73,8 @@
 
     /* SVG Canvas styling */
     svg {
-      width: 800px;
+      width: 90vw;
+      max-width: 1200px;
       height: 500px;
       touch-action: none;
       /* border/bg handled by theme.css */
@@ -91,7 +93,7 @@
     }
 
     .node-text {
-      font-size: 12px;
+      font-size: 14px;
       pointer-events: none;
     }
 
@@ -131,6 +133,7 @@
   <script src="theme.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="prompt-modal.js" defer></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -143,22 +146,22 @@
 
   <!-- Top Toolbar for Graph Editing and Algorithm Control -->
   <div id="toolbar">
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runBFBtn" disabled>Run Bellman–Ford</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runBFBtn" disabled>Run Bellman–Ford</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step Execution Controls (Hidden until algorithm runs) -->
   <div id="stepControls" style="display: none;">
     <div id="stepButtons">
-      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
-      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
-      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
-      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
     </div>
     <span id="stepInfo"></span>
   </div>
@@ -296,8 +299,9 @@
     });
 
     // Generate Random Graph Button
-    generateBtn.addEventListener('click', () => {
-      const nInput = prompt("Enter number of nodes (>=2):");
+    generateBtn.addEventListener('click', async () => {
+      const nInput = await customPrompt("Enter number of nodes (>=2):");
+      if (nInput === null) return;
       const n = parseInt(nInput, 10);
       if (isNaN(n) || n < 2) {
         alert("Invalid number of nodes.");
@@ -305,7 +309,8 @@
       }
       const maxEdges = n * (n - 1);
       const minEdges = n - 1;
-      const eInput = prompt(`Enter number of edges (between ${minEdges} and ${maxEdges}):`);
+      const eInput = await customPrompt(`Enter number of edges (between ${minEdges} and ${maxEdges}):`);
+      if (eInput === null) return;
       const m = parseInt(eInput, 10);
       if (isNaN(m) || m < minEdges || m > maxEdges) {
         alert(`Invalid number of edges.`);
@@ -407,7 +412,7 @@
 
         // Node Interaction Listeners
         circle.addEventListener('mousedown', onNodeMouseDown);
-        circle.addEventListener('click', evt => {
+        circle.addEventListener('click', async (evt) => {
           evt.stopPropagation();
           if (deleteNodeMode) {
             deleteNode(nd.id);
@@ -415,7 +420,7 @@
             onNodeClickForEdge(nd.id);
           } else {
             // Default action: Set Source Node
-            const srcInput = prompt("Set this node as source? Type 'y' to confirm:");
+            const srcInput = await customPrompt("Set this node as source? Type 'y' to confirm:");
             if (srcInput === 'y') {
               nodes.forEach(n => n.isSource = false);
               nd.isSource = true;
@@ -487,7 +492,7 @@
     }
 
     // ===== EDGE CREATION LOGIC =====
-    function onNodeClickForEdge(nodeId) {
+    async function onNodeClickForEdge(nodeId) {
       if (!addEdgeMode) return;
 
       // Node selection state machine
@@ -505,7 +510,8 @@
         drawGraph();
 
         // Prompt for weight
-        const wInput = prompt("Enter weight (integer):");
+        const wInput = await customPrompt("Enter weight (integer):");
+        if (wInput === null) { edgeFirstNode = edgeSecondNode = null; drawGraph(); return; }
         const w = parseInt(wInput, 10);
         if (!isNaN(w) && edgeFirstNode !== edgeSecondNode) {
           edges.push({
@@ -765,14 +771,13 @@
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", nd.x);
         circle.setAttribute("cy", nd.y);
-        circle.setAttribute("r", 16);
+        circle.setAttribute("r", 16.8); // 16 * 1.05
         circle.setAttribute("class", "node-circle");
         circle.dataset.id = nd.id;
-
+        svg.appendChild(circle);
+        nd.elemCircle = circle;
         if (nd.isSource) circle.classList.add('node-source');
         if (dist[nd.id] === Infinity) circle.classList.add('node-infinite');
-
-        svg.appendChild(circle);
 
         const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
         txt.setAttribute("x", nd.x);
@@ -799,6 +804,7 @@
 
     // Use initial draw
     drawGraph();
+    chooseGraphType(false);
   </script>
 </body>
 

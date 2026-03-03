@@ -20,7 +20,7 @@
 
     h1 {
       margin: 20px 0 10px;
-      font-size: 24px;
+      font-size: 28px;
     }
 
     /* Toolbar container */
@@ -71,7 +71,8 @@
 
     /* SVG Canvas styling */
     svg {
-      width: 800px;
+      width: 90vw;
+      max-width: 1200px;
       height: 500px;
       touch-action: none;
       /* border/bg handled by theme.css */
@@ -90,7 +91,7 @@
     }
 
     .node-text {
-      font-size: 12px;
+      font-size: 14px;
       pointer-events: none;
     }
 
@@ -129,12 +130,13 @@
     }
 
     .edge-weight {
-      font-size: 12px;
+      font-size: 14px;
       pointer-events: none;
     }
   </style>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="prompt-modal.js" defer></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -147,27 +149,27 @@
 
   <!-- Graph Type Selection -->
   <div id="typeControls">
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="undirectedBtn">Undirected Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="directedBtn">Directed Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="undirectedBtn">Undirected Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="directedBtn">Directed Graph</button>
   </div>
 
   <!-- Main Toolbar -->
   <div id="toolbar">
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runDijkstraBtn" disabled>Run Dijkstra</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runDijkstraBtn" disabled>Run Dijkstra</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step controls (hidden until Dijkstra is running) -->
   <div id="stepControls" style="display: none;">
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
     <span id="stepInfo"></span>
   </div>
 
@@ -312,7 +314,7 @@
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", nd.x);
         circle.setAttribute("cy", nd.y);
-        circle.setAttribute("r", 16);
+        circle.setAttribute("r", 16.8); // 16 * 1.05
         circle.setAttribute("class", "node-circle");
         circle.dataset.id = nd.id; // Store ID for logic
         svg.appendChild(circle);
@@ -410,8 +412,9 @@
       drawGraph();
     });
 
-    generateBtn.addEventListener('click', () => {
-      const input = prompt("Enter number of nodes (positive integer):");
+    generateBtn.addEventListener('click', async () => {
+      const input = await customPrompt("Enter number of nodes (positive integer):");
+      if (input === null) return;
       const n = parseInt(input, 10);
       if (isNaN(n) || n <= 0) {
         alert("Invalid number of nodes.");
@@ -592,7 +595,7 @@
     }
 
     // ============== ADD EDGE LOGIC ==============
-    function onNodeClickForEdge(nodeId) {
+    async function onNodeClickForEdge(nodeId) {
       if (!addEdgeMode) return;
 
       // Node selection state machine
@@ -605,11 +608,12 @@
         edgeFirstNode = null;
         drawGraph();
       }
-      else if (edgeFirstNode !== null && edgeSecondNode === null) {
+      else if (edgeFirstNode !== null && edgeSecondNode === null) { // async branch
         edgeSecondNode = nodeId;
         drawGraph();
 
-        const w = prompt("Enter edge weight (positive integer):");
+        const w = await customPrompt("Enter edge weight (positive integer):");
+        if (w === null) { edgeFirstNode = edgeSecondNode = null; drawGraph(); return; }
         const weight = parseInt(w, 10);
         if (!isNaN(weight) && weight > 0 && edgeFirstNode !== edgeSecondNode) {
           edges.push({
@@ -633,12 +637,13 @@
     }
 
     // ============== RUN DIJKSTRA & STEPPING ==============
-    runDijkstraBtn.addEventListener('click', () => {
+    runDijkstraBtn.addEventListener('click', async () => {
       if (nodes.length === 0) {
         alert("No nodes in the graph.");
         return;
       }
-      const sid = prompt("Enter start node ID (0… " + (nextNodeId - 1) + "):");
+      const sid = await customPrompt("Enter start node ID (0… " + (nextNodeId - 1) + "):");
+      if (sid === null) return;
       const startId = parseInt(sid, 10);
       if (isNaN(startId) || !nodes.some(n => n.id === startId)) {
         alert("Invalid start node.");
@@ -809,6 +814,7 @@
 
     // Initial draw
     drawGraph();
+    chooseGraphType(false);
   </script>
   <script src="theme.js"></script>
 </body>

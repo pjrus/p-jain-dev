@@ -21,6 +21,7 @@
 
     h1 {
       margin-bottom: 10px;
+      font-size: 28px;
     }
 
     /* Controls container */
@@ -45,7 +46,8 @@
 
     /* SVG Container Styling */
     #svgContainer {
-      width: 800px;
+      width: 90vw;
+      max-width: 1200px;
       height: 500px;
       overflow: auto;
       /* show scrollbars only if needed */
@@ -96,8 +98,8 @@
   <h1>Prefix-Trie Visualizer</h1>
   <div id="controls">
     <input type="text" id="wordInput" placeholder="Enter lowercase word" />
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="insertBtn">Insert</button>
-    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn">Clear</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="insertBtn">Insert</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn">Clear</button>
   </div>
 
   <div id="svgContainer">
@@ -286,7 +288,7 @@
       (function drawNodes(n) {
         // Character Node
         g.appendChild(createSVGElement('circle', {
-          cx: n.x, cy: n.y, r: NODE_RADIUS, class: 'node-letter'
+          cx: n.x, cy: n.y, r: NODE_RADIUS * 1.05, class: 'node-letter'
         }));
 
         // Character Text (Root has empty char)
@@ -302,7 +304,7 @@
         if (n.isTerminal) {
           const tpos = n.termPos;
           g.appendChild(createSVGElement('circle', {
-            cx: tpos.x, cy: tpos.y, r: NODE_RADIUS, class: 'node-term'
+            cx: tpos.x, cy: tpos.y, r: NODE_RADIUS * 1.05, class: 'node-term'
           }));
           const t2 = createSVGElement('text', { x: tpos.x, y: tpos.y, class: 'node-text' });
           t2.textContent = '$';

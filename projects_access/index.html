@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Algorithm Visualizers Index</title>
+  <title>Algorithm Visualisers Index</title>
   <link rel="stylesheet" href="theme.css">
   <style>
     /* Global styles */
@@ -37,12 +37,12 @@
 
     header h1 {
       font-size: 2.5rem;
-      color: #444;
+      color: var(--color-text-main);
       margin-bottom: 10px;
     }
 
     header p {
-      color: #666;
+      color: var(--color-text-muted);
       font-size: 1rem;
     }
 
@@ -57,39 +57,42 @@
 
     /* Individual Card Styling */
     .card {
-      background: #fff;
+      background: var(--color-bg-card);
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
       overflow: hidden;
+      border: 1px solid var(--color-border);
     }
 
     /* Card Hover Effect */
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-color: var(--color-primary);
     }
 
     /* Link Styling inside Cards */
     .card a {
       display: block;
-      color: #1a73e8;
+      color: var(--color-text-main);
       text-decoration: none;
       padding: 20px;
       font-size: 1.1rem;
       font-weight: 500;
       text-align: center;
+      transition: color 0.3s;
     }
 
     .card a:hover {
-      color: #0048a8;
+      color: var(--color-primary);
     }
 
     /* Footer Styling */
     footer {
       text-align: center;
       margin-top: 40px;
-      color: #777;
+      color: var(--color-text-muted);
       font-size: 0.9rem;
     }
 

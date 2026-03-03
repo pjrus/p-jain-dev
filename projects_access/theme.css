@@ -1,4 +1,12 @@
+/* Google Font — Inter for better legibility */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
+    /* New Button Theme Spec (Dark Mode Default) */
+    --color-btn-bg: #334155;     /* slate-700 */
+    --color-btn-text: #f8fafc;   /* slate-50 */
+    --color-btn-hover: #475569;  /* slate-600 */
+
     /* Default Dark Theme (Matches Main Site) */
     --color-bg-main: #0f172a;
     /* Slate-950 */
@@ -39,6 +47,12 @@
 }
 
 [data-theme="light"] {
+    /* New Button Theme Spec (Light Mode Variables) */
+    --color-button-text: #ffffff;
+    --color-btn-bg: #e2e8f0;     /* slate-200 */
+    --color-btn-text: #0f172a;   /* slate-900 */
+    --color-btn-hover: #cbd5e1;  /* slate-300 */
+
     --color-bg-main: #f8fafc;
     /* Slate-50 */
     --color-bg-card: #ffffff;
@@ -76,6 +90,7 @@
 }
 
 body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
     background-color: var(--color-bg-main) !important;
     color: var(--color-text-main) !important;
     transition: background-color 0.3s, color 0.3s;
@@ -87,6 +102,12 @@ h3,
 label,
 span {
     color: var(--color-text-main) !important;
+}
+
+h1 {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
 }
 
 /* Note text */
@@ -108,11 +129,15 @@ select {
 svg {
     background-color: var(--color-graph-bg) !important;
     border-color: var(--color-border) !important;
+    width: 90vw !important;
+    max-width: 1200px !important;
 }
 
 #svgContainer {
     background-color: var(--color-svg-bg) !important;
     border-color: var(--color-border) !important;
+    width: 90vw !important;
+    max-width: 1200px !important;
 }
 
 /* Arrow markers */
@@ -177,6 +202,7 @@ marker#arrow path {
 /* Node Text */
 .node-text {
     fill: var(--color-node-text) !important;
+    font-size: 14px !important;
     font-weight: bold;
 }
 
@@ -191,6 +217,8 @@ marker#arrow path {
 .edge-flow,
 .node-text-small {
     fill: var(--color-text-muted) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
 }
 
 /* Trie node overrides */
@@ -266,4 +294,29 @@ marker#arrow path {
 .edge-candidate {
     stroke: #fbbf24 !important;
     stroke-width: 3px !important;
+}
+
+/* =========================================
+   Button Active / Selected States
+   High specificity to override Tailwind utilities
+   ========================================= */
+
+/* Selected state — used for Directed/Undirected graph type toggle */
+button.selected,
+button.selected.selected {
+    background-color: var(--color-primary) !important;
+    color: var(--color-button-text) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Active state — used for toolbar mode toggles (Add Node, Add Edge, etc.) */
+button.active,
+button.active.active {
+    background-color: var(--color-primary) !important;
+    color: var(--color-button-text) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
+    transform: translateY(-1px) !important;
 }
