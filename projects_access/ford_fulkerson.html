@@ -70,11 +70,8 @@
       flex-shrink: 0;
     }
 
-    /* SVG Canvas styling */
+    /* SVG Canvas styling handled by theme.css */
     svg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
       touch-action: none;
     }
 
@@ -220,11 +217,16 @@
     let dragOffsetY = 0;
 
     // ===== SVG COORDINATE UTILITY =====
-    // Transforms mouse event coordinates to SVG coordinate system
+    // Transforms mouse/touch event coordinates to SVG coordinate system
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      pt.x = evt.clientX;
-      pt.y = evt.clientY;
+      if (evt.touches && evt.touches.length) {
+        pt.x = evt.touches[0].clientX;
+        pt.y = evt.touches[0].clientY;
+      } else {
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+      }
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     }
 
@@ -334,14 +336,17 @@
     });
 
     // SVG Click Handler (Add Node)
-    svg.addEventListener('mousedown', evt => {
-      const pt = getSvgPoint(evt);
+    svg.addEventListener('mousedown', handleSvgDown);
+    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+
+    function handleSvgDown(evt) {
       if (addNodeMode && evt.target === svg) {
+        const pt = getSvgPoint(evt);
         const newNode = { id: nextNodeId++, x: pt.x, y: pt.y, elemCircle: null, elemText: null };
         nodes.push(newNode);
         drawGraph();
       }
-    });
+    }
 
     // ===== DRAW GRAPH =====
     function drawGraph() {
@@ -409,6 +414,8 @@
 
         // Node Event Listeners
         circle.addEventListener('mousedown', onNodeMouseDown);
+        circle.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+
         circle.addEventListener('click', async (evt) => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -418,7 +425,7 @@
           } else {
             // Set Source/Sink Logic
             const role = await customPrompt("Type 's' for source, 't' for sink, or leave blank to cancel:");
-            if (role === 's') {
+             if (role === 's') {
               sourceId = nd.id;
             } else if (role === 't') {
               sinkId = nd.id;
@@ -459,6 +466,7 @@
 
     // ===== DRAGGING LOGIC =====
     function onNodeMouseDown(evt) {
+      if (evt.type === 'touchstart') evt.preventDefault();
       evt.stopPropagation();
       const circle = evt.currentTarget;
       const nodeId = parseInt(circle.dataset.id, 10);
@@ -468,8 +476,11 @@
       const pt = getSvgPoint(evt);
       dragOffsetX = pt.x - nd.x;
       dragOffsetY = pt.y - nd.y;
+
       window.addEventListener('mousemove', onDrag);
       window.addEventListener('mouseup', onDragEnd);
+      window.addEventListener('touchmove', onDrag, { passive: false });
+      window.addEventListener('touchend', onDragEnd);
     }
     function onDrag(evt) {
       if (!draggingNode) return;
@@ -486,6 +497,8 @@
       draggingNode = null;
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', onDragEnd);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== ADD EDGE LOGIC =====

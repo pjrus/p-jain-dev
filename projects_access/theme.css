@@ -129,15 +129,24 @@ select {
 svg {
     background-color: var(--color-graph-bg) !important;
     border-color: var(--color-border) !important;
-    width: 90vw !important;
+    width: 95vw !important;
     max-width: 1200px !important;
+    height: 60vh !important;
+    min-height: 350px !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 #svgContainer {
     background-color: var(--color-svg-bg) !important;
     border-color: var(--color-border) !important;
-    width: 90vw !important;
+    width: 95vw !important;
     max-width: 1200px !important;
+    height: 60vh !important;
+    min-height: 350px !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 8px;
 }
 
 /* Arrow markers */
@@ -309,6 +318,64 @@ button.selected.selected {
     border-color: var(--color-primary) !important;
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
     transform: translateY(-1px) !important;
+}
+/* Responsive Controls Container */
+.controls-container,
+#typeControls,
+#toolbar,
+#stepControls {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+    padding: 0 10px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+}
+
+#typeControls button,
+#toolbar button,
+#toolbar select,
+#stepControls button {
+    margin-right: 0 !important;
+    flex: 0 1 auto !important;
+}
+
+/* Media Queries for Mobile */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 22px !important;
+        margin: 15px 0 !important;
+        text-align: center;
+    }
+
+    #theme-toggle-btn {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .back-link {
+        top: 15px;
+        left: 10px;
+        font-size: 13px;
+    }
+
+    /* Stack buttons more aggressively on small screens */
+    #typeControls button,
+    #toolbar button,
+    #toolbar select,
+    #stepControls button {
+        padding: 5px 10px !important;
+        font-size: 13px !important;
+    }
+
+    svg, #svgContainer {
+        height: 50vh !important;
+        min-height: 300px !important;
+    }
 }
 
 /* Active state — used for toolbar mode toggles (Add Node, Add Edge, etc.) */

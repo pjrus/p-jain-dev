@@ -61,11 +61,8 @@
       margin-left: 12px;
     }
 
-    /* SVG Canvas */
+    /* SVG Canvas handled by theme.css */
     svg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
       touch-action: none;
     }
 
@@ -223,11 +220,16 @@
 
     // ===== UTILITIES =====
 
-    // Get Mouse Position in SVG Coordinates
+    // Get Point in SVG Coordinates (handles both Mouse and Touch)
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      pt.x = evt.clientX;
-      pt.y = evt.clientY;
+      if (evt.touches && evt.touches.length) {
+        pt.x = evt.touches[0].clientX;
+        pt.y = evt.touches[0].clientY;
+      } else {
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+      }
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     }
 
@@ -316,32 +318,40 @@
 
         // Node Interaction
         c.addEventListener('mousedown', onNodeMouseDown);
+        c.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+
         c.addEventListener('click', e => {
           e.stopPropagation();
-          if (deleteNodeMode) {
-            // Delete Node & Incident Edges
-            nodes = nodes.filter(x => x.id !== nd.id);
-            edges = edges.filter(e2 => e2.from !== nd.id && e2.to !== nd.id);
-            chooseGraphType(isDirected); // re-eval disable state
-            drawGraph();
-          } else {
-            // Edge Creation Selection
-            onNodeClickForEdge(nd.id);
-          }
+          handleNodeInteraction(nd.id);
         });
 
-        // Relabel on double-click
+        // Relabel on double-click (Desktop) or Long Press hint
         c.addEventListener('dblclick', async (e) => {
           e.stopPropagation();
-          if (!deleteNodeMode && !addEdgeMode) {
-            const nl = await customPrompt('New label:', nd.label);
-            if (nl !== null && nl.trim() !== '') {
-              nd.label = nl.trim();
-              drawGraph();
-            }
-          }
+          relabelNode(nd);
         });
       });
+
+      function handleNodeInteraction(id) {
+        if (deleteNodeMode) {
+          nodes = nodes.filter(x => x.id !== id);
+          edges = edges.filter(e2 => e2.from !== id && e2.to !== id);
+          chooseGraphType(isDirected);
+          drawGraph();
+        } else {
+          onNodeClickForEdge(id);
+        }
+      }
+
+      async function relabelNode(nd) {
+        if (!deleteNodeMode && !addEdgeMode) {
+          const nl = await customPrompt('New label:', nd.label);
+          if (nl !== null && nl.trim() !== '') {
+            nd.label = nl.trim();
+            drawGraph();
+          }
+        }
+      }
 
       // Highlight selected nodes for edge creation
       nodes.forEach(nd => {
@@ -366,14 +376,17 @@
     };
 
     // Add Node on SVG Click
-    svg.addEventListener('mousedown', e => {
-      const p = getSvgPoint(e);
+    svg.addEventListener('mousedown', handleSvgDown);
+    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+
+    function handleSvgDown(e) {
       if (addNodeMode && e.target === svg) {
+        const p = getSvgPoint(e);
         nodes.push({ id: nextNodeId, label: nextNodeId.toString(), x: p.x, y: p.y });
         nextNodeId++;
         drawGraph();
       }
-    });
+    }
 
     // Toggle Delete Node Mode
     deleteNodeBtn.onclick = () => {
@@ -519,6 +532,7 @@
 
     // ===== DRAGGING LOGIC =====
     function onNodeMouseDown(evt) {
+      if (evt.type === 'touchstart') evt.preventDefault();
       evt.stopPropagation();
       const id = +evt.currentTarget.dataset.id;
       const nd = nodes.find(n => n.id === id);
@@ -526,8 +540,11 @@
       draggingNode = nd;
       const p = getSvgPoint(evt);
       dragOffsetX = p.x - nd.x; dragOffsetY = p.y - nd.y;
+
       window.addEventListener('mousemove', onDrag);
       window.addEventListener('mouseup', onDragEnd);
+      window.addEventListener('touchmove', onDrag, { passive: false });
+      window.addEventListener('touchend', onDragEnd);
     }
     function onDrag(evt) {
       if (!draggingNode) return;
@@ -543,6 +560,8 @@
       draggingNode = null;
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', onDragEnd);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== ALGORITHM EXECUTION =====

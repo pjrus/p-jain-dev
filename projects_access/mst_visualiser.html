@@ -59,11 +59,8 @@
       vertical-align: middle;
     }
 
-    /* SVG Canvas */
+    /* SVG Canvas styling handled by theme.css */
     svg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
       touch-action: none;
     }
 
@@ -217,10 +214,15 @@
     let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
 
     // ===== UTILITIES =====
-    // Get Mouse Position in SVG Coordinates
+    // Get Mouse/Touch Position in SVG Coordinates
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      pt.x = evt.clientX; pt.y = evt.clientY;
+      if (evt.touches && evt.touches.length) {
+        pt.x = evt.touches[0].clientX;
+        pt.y = evt.touches[0].clientY;
+      } else {
+        pt.x = evt.clientX; pt.y = evt.clientY;
+      }
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     }
 
@@ -294,6 +296,8 @@
 
         // Interaction Listeners
         c.addEventListener('mousedown', onNodeMouseDown);
+        c.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+
         c.addEventListener('click', e => {
           e.stopPropagation();
           if (deleteNodeMode) {
@@ -342,9 +346,12 @@
     });
 
     // Add Node on SVG Click
-    svg.addEventListener('mousedown', e => {
-      const p = getSvgPoint(e);
+    svg.addEventListener('mousedown', handleSvgDown);
+    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+
+    function handleSvgDown(e) {
       if (addNodeMode && e.target === svg) {
+        const p = getSvgPoint(e);
         nodes.push({
           id: nextNodeId,
           label: nextNodeId.toString(),
@@ -354,7 +361,7 @@
         nextNodeId++;
         drawGraph();
       }
-    });
+    }
 
     // Toggle Delete Node Mode
     deleteNodeBtn.addEventListener('click', () => {
@@ -750,6 +757,7 @@
 
     // ===== DRAGGING LOGIC =====
     function onNodeMouseDown(evt) {
+      if (evt.type === 'touchstart') evt.preventDefault();
       evt.stopPropagation();
       const id = +evt.currentTarget.dataset.id;
       const nd = nodes.find(n => n.id === id);
@@ -758,8 +766,11 @@
       const p = getSvgPoint(evt);
       dragOffsetX = p.x - nd.x;
       dragOffsetY = p.y - nd.y;
+
       window.addEventListener('mousemove', onDrag);
       window.addEventListener('mouseup', onDragEnd);
+      window.addEventListener('touchmove', onDrag, { passive: false });
+      window.addEventListener('touchend', onDragEnd);
     }
     function onDrag(evt) {
       if (!draggingNode) return;
@@ -775,6 +786,8 @@
       draggingNode = null;
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', onDragEnd);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== UPDATE DISPLAY BASED ON STEP =====

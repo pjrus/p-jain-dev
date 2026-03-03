@@ -42,7 +42,8 @@
       border: 1px solid var(--color-border, rgba(148,163,184,0.15));
       border-radius: 12px;
       padding: 24px 28px;
-      min-width: 340px;
+      width: 90%;
+      min-width: 280px;
       max-width: 420px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       animation: promptFadeIn 0.15s ease-out;

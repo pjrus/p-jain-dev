@@ -65,11 +65,9 @@
       margin-left: 12px;
     }
 
-    /* SVG container */
+    /* SVG container handled by theme.css */
     #rbtSvg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
+      display: block;
     }
 
     /* Responsive adjustment */
@@ -115,7 +113,7 @@
   </div>
 
   <!-- SVG Visualization Area -->
-  <div id="treesContainer">
+  <div id="treesContainer" class="svg-container">
     <svg id="rbtSvg" viewBox="0 0 500 500"></svg>
   </div>
 

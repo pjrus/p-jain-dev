@@ -46,11 +46,8 @@
       vertical-align: middle;
     }
 
-    /* SVG Canvas */
+    /* SVG Canvas styling handled by theme.css */
     svg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
       touch-action: none;
     }
 
@@ -182,10 +179,15 @@
     let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
 
     // --- Utilities ---
-    // Get mouse position relative to SVG
+    // Get Mouse/Touch position relative to SVG
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      pt.x = evt.clientX; pt.y = evt.clientY;
+      if (evt.touches && evt.touches.length) {
+        pt.x = evt.touches[0].clientX;
+        pt.y = evt.touches[0].clientY;
+      } else {
+        pt.x = evt.clientX; pt.y = evt.clientY;
+      }
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     }
 
@@ -256,6 +258,8 @@
 
         // Node Interaction Handlers
         c.addEventListener('mousedown', onNodeMouseDown);
+        c.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+
         c.addEventListener('click', evt => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -291,6 +295,7 @@
 
     // --- Dragging Logic ---
     function onNodeMouseDown(evt) {
+      if (evt.type === 'touchstart') evt.preventDefault();
       if (addNodeMode || deleteNodeMode || addEdgeMode || deleteEdgeMode) return;
       evt.stopPropagation();
       const id = +evt.currentTarget.dataset.id;
@@ -302,6 +307,8 @@
       dragOffsetY = p.y - nd.y;
       window.addEventListener('mousemove', onDrag);
       window.addEventListener('mouseup', onDragEnd);
+      window.addEventListener('touchmove', onDrag, { passive: false });
+      window.addEventListener('touchend', onDragEnd);
     }
     function onDrag(evt) {
       if (!draggingNode) return;
@@ -318,12 +325,17 @@
       draggingNode = null;
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', onDragEnd);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', onDragEnd);
     }
 
     // --- Node Addition Logic ---
-    svg.addEventListener('mousedown', e => {
-      const p = getSvgPoint(e);
+    svg.addEventListener('mousedown', handleSvgDown);
+    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+
+    function handleSvgDown(e) {
       if (addNodeMode && e.target === svg) {
+        const p = getSvgPoint(e);
         nodes.push({
           id: nextNodeId,
           label: nextNodeId.toString(),
@@ -335,7 +347,7 @@
         nextNodeId++;
         drawGraph();
       }
-    });
+    }
 
     // --- Toolbar Actions ---
     addNodeBtn.onclick = () => {

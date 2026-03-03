@@ -63,11 +63,9 @@
       font-size: 14px;
     }
 
-    /* SVG visualization area */
+    /* SVG visualization area handled by theme.css */
     #avlSvg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
+      display: block;
     }
 
     /* Responsive adjustment for smaller screens */
@@ -122,7 +120,9 @@
   </div>
 
   <!-- SVG Container for the tree -->
-  <svg id="avlSvg" viewBox="0 0 500 500"></svg>
+  <div class="svg-container">
+    <svg id="avlSvg" viewBox="0 0 500 500"></svg>
+  </div>
 
   <!-- Controls for navigating through steps -->
   <div id="stepControls">

@@ -71,13 +71,9 @@
       overflow-x: auto;
     }
 
-    /* SVG Canvas styling */
+    /* SVG Canvas styling handled by theme.css */
     svg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 500px;
       touch-action: none;
-      /* border/bg handled by theme.css */
     }
 
     /* Arrow marker for directed edges */
@@ -223,11 +219,16 @@
     let dragOffsetY = 0;
 
     // ===== SVG COORDINATE UTILITY =====
-    // Converts mouse event coordinates to SVG coordinates
+    // Converts mouse/touch event coordinates to SVG coordinates
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      pt.x = evt.clientX;
-      pt.y = evt.clientY;
+      if (evt.touches && evt.touches.length) {
+        pt.x = evt.touches[0].clientX;
+        pt.y = evt.touches[0].clientY;
+      } else {
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+      }
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     }
 
@@ -332,9 +333,12 @@
     });
 
     // SVG Click Handler (for adding nodes)
-    svg.addEventListener('mousedown', evt => {
-      const pt = getSvgPoint(evt);
+    svg.addEventListener('mousedown', handleSvgDown);
+    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+
+    function handleSvgDown(evt) {
       if (addNodeMode && evt.target === svg) {
+        const pt = getSvgPoint(evt);
         const newNode = {
           id: nextNodeId++,
           x: pt.x,
@@ -346,7 +350,7 @@
         nodes.push(newNode);
         drawGraph();
       }
-    });
+    }
 
     // ===== DRAWING LOGIC =====
 
@@ -412,6 +416,8 @@
 
         // Node Interaction Listeners
         circle.addEventListener('mousedown', onNodeMouseDown);
+        circle.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+
         circle.addEventListener('click', async (evt) => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -462,6 +468,7 @@
 
     // ===== DRAGGING LOGIC =====
     function onNodeMouseDown(evt) {
+      if (evt.type === 'touchstart') evt.preventDefault();
       evt.stopPropagation();
       const circle = evt.currentTarget;
       const nodeId = parseInt(circle.dataset.id, 10);
@@ -471,8 +478,11 @@
       const pt = getSvgPoint(evt);
       dragOffsetX = pt.x - nd.x;
       dragOffsetY = pt.y - nd.y;
+
       window.addEventListener('mousemove', onDrag);
       window.addEventListener('mouseup', onDragEnd);
+      window.addEventListener('touchmove', onDrag, { passive: false });
+      window.addEventListener('touchend', onDragEnd);
     }
     function onDrag(evt) {
       if (!draggingNode) return;
@@ -489,6 +499,8 @@
       draggingNode = null;
       window.removeEventListener('mousemove', onDrag);
       window.removeEventListener('mouseup', onDragEnd);
+      window.removeEventListener('touchmove', onDrag);
+      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== EDGE CREATION LOGIC =====

@@ -54,11 +54,9 @@
       cursor: pointer;
     }
 
-    /* SVG Canvas */
+    /* SVG Canvas styling handled by theme.css */
     #treeSvg {
-      width: 90vw;
-      max-width: 1200px;
-      height: 400px;
+      display: block;
     }
 
     /* Step Navigation */
@@ -126,7 +124,9 @@
   </div>
 
   <!-- Drawing Area -->
-  <svg id="treeSvg" viewBox="0 0 500 500"></svg>
+  <div class="svg-container">
+    <svg id="treeSvg" viewBox="0 0 500 500"></svg>
+  </div>
 
   <!-- Step Controls (Hidden by Default) -->
   <div id="stepControls">
