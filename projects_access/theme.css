@@ -22,6 +22,20 @@
     --color-node-bg: #38bdf8;
     --color-node-text: #0f172a;
     --color-edge: #94a3b8;
+
+    /* Tree/Trie Visualiser Specifics */
+    --color-svg-bg: #1e293b;
+    --color-tree-line: #cbd5e1;
+    --color-tree-text: #f1f5f9;
+    --color-tree-node-default: #f1f5f9;
+    --color-tree-node-stroke: #cbd5e1;
+    --color-trie-letter: #4ade80;
+    --color-trie-letter-stroke: #166534;
+    --color-trie-term: #facc15;
+    --color-trie-term-stroke: #713f12;
+    --color-rect-fill: rgba(30, 41, 59, 0.8);
+    --color-arrow-fill: #cbd5e1;
+    --color-tree-node-text: #0f172a;
 }
 
 [data-theme="light"] {
@@ -45,6 +59,20 @@
     --color-node-bg: #0ea5e9;
     --color-node-text: #ffffff;
     --color-edge: #64748b;
+
+    /* Tree/Trie Visualiser Specifics */
+    --color-svg-bg: #fafafa;
+    --color-tree-line: #334155;
+    --color-tree-text: #0f172a;
+    --color-tree-node-default: #ffffff;
+    --color-tree-node-stroke: #334155;
+    --color-trie-letter: #86efac;
+    --color-trie-letter-stroke: #334155;
+    --color-trie-term: #fcd34d;
+    --color-trie-term-stroke: #334155;
+    --color-rect-fill: #e8e0f0;
+    --color-arrow-fill: #666666;
+    --color-tree-node-text: #0f172a;
 }
 
 body {
@@ -61,6 +89,11 @@ span {
     color: var(--color-text-main) !important;
 }
 
+/* Note text */
+.note {
+    color: var(--color-text-muted) !important;
+}
+
 /* Common Controls Styling */
 input,
 select {
@@ -71,39 +104,20 @@ select {
     border-radius: 6px;
 }
 
-button {
-    background-color: var(--color-primary) !important;
-    color: var(--color-button-text) !important;
-    border: none !important;
-    border-radius: 6px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform 0.1s, background-color 0.2s;
-}
-
-button:hover {
-    background-color: var(--color-accent) !important;
-    color: white !important;
-}
-
-button.active,
-button.selected {
-    background-color: var(--color-accent) !important;
-    color: white !important;
-}
-
-button:disabled {
-    background-color: var(--color-border) !important;
-    color: var(--color-text-muted) !important;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* SVG Containers usually have white background in original files */
+/* SVG Containers — covers both <svg> and wrapper divs */
 svg {
     background-color: var(--color-graph-bg) !important;
     border-color: var(--color-border) !important;
+}
+
+#svgContainer {
+    background-color: var(--color-svg-bg) !important;
+    border-color: var(--color-border) !important;
+}
+
+/* Arrow markers */
+marker#arrow path {
+    fill: var(--color-arrow-fill) !important;
 }
 
 /* Theme Toggle Button Fixed Position */
@@ -179,6 +193,17 @@ svg {
     fill: var(--color-text-muted) !important;
 }
 
+/* Trie node overrides */
+.node-letter {
+    fill: var(--color-trie-letter) !important;
+    stroke: var(--color-trie-letter-stroke) !important;
+}
+
+.node-term {
+    fill: var(--color-trie-term) !important;
+    stroke: var(--color-trie-term-stroke) !important;
+}
+
 /* Specific State Overrides (Ensure visibility on dark bg) */
 /* We keep original colors but might need slight adjustments if they clash */
 
@@ -211,6 +236,18 @@ svg {
     stroke: #431407 !important;
 }
 
+/* Infinite / Unreachable (Red) */
+.node-infinite {
+    fill: #ef4444 !important;
+    stroke: #7f1d1d !important;
+}
+
+/* Unprocessed (Red) */
+.node-unprocessed {
+    fill: #ef4444 !important;
+    stroke: #7f1d1d !important;
+}
+
 /* MST / Path Edges (Pink/Magenta) */
 .edge-mst,
 .edge-path,
@@ -223,4 +260,10 @@ svg {
 /* Current Edge (Yellow) */
 .edge-current {
     stroke: #eab308 !important;
+}
+
+/* Candidate Edge */
+.edge-candidate {
+    stroke: #fbbf24 !important;
+    stroke-width: 3px !important;
 }

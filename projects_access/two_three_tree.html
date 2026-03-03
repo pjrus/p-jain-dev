@@ -21,7 +21,6 @@
     h1 {
       margin: 0 0 20px;
       text-align: center;
-      color: #333;
     }
 
     /* Control Settings */
@@ -56,8 +55,6 @@
 
     /* SVG Canvas */
     #treeSvg {
-      border: 1px solid #ccc;
-      background: #fafafa;
       width: 100%;
       max-width: 1200px;
       height: 400px;
@@ -78,7 +75,6 @@
 
     #stepInfo {
       font-size: 14px;
-      color: #333;
       vertical-align: middle;
     }
 
@@ -101,6 +97,13 @@
       cursor: pointer;
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
@@ -117,8 +120,8 @@
   <div id="manualControls">
     <label for="keyInput">Key:</label>
     <input type="number" id="keyInput" placeholder="e.g. 42">
-    <button id="insertBtn">Insert</button>
-    <button id="removeBtn">Remove</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="insertBtn">Insert</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="removeBtn">Remove</button>
   </div>
 
   <!-- Drawing Area -->
@@ -126,9 +129,9 @@
 
   <!-- Step Controls (Hidden by Default) -->
   <div id="stepControls">
-    <button id="prevStepBtn">◀ Prev</button>
-    <button id="nextStepBtn">Next ▶</button>
-    <button id="finishStepBtn">Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn">◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn">Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn">Finish</button>
     <span id="stepInfo"></span>
   </div>
 
@@ -136,7 +139,7 @@
   <div id="randomControls">
     <label for="randomSizeInput">Random Size (1–100):</label>
     <input type="number" id="randomSizeInput" min="1" max="100" placeholder="e.g. 10">
-    <button id="generateRandomBtn">Generate Random</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateRandomBtn">Generate Random</button>
   </div>
 
   <script>
@@ -271,18 +274,18 @@
       const l = document.createElementNS(svg.namespaceURI, "line");
       l.setAttribute("x1", x1); l.setAttribute("y1", y1);
       l.setAttribute("x2", x2); l.setAttribute("y2", y2);
-      l.setAttribute("stroke", "#000"); l.setAttribute("stroke-width", "1.5");
+      l.setAttribute("stroke", "var(--color-tree-line)"); l.setAttribute("stroke-width", "1.5");
       svg.appendChild(l);
     }
     function drawRect(svg, x, y, w, h) {
       const r = document.createElementNS(svg.namespaceURI, "rect");
       r.setAttribute("x", x); r.setAttribute("y", y);
       r.setAttribute("width", w); r.setAttribute("height", h);
-      r.setAttribute("fill", "lavender");
-      r.setAttribute("stroke", "#000"); r.setAttribute("rx", "4");
+      r.setAttribute("fill", "var(--color-rect-fill)");
+      r.setAttribute("stroke", "var(--color-tree-node-stroke)"); r.setAttribute("rx", "4");
       svg.appendChild(r);
     }
-    function drawText(svg, text, x, y, color = "#000", size = 12) {
+    function drawText(svg, text, x, y, color = "var(--color-tree-text)", size = 12) {
       const t = document.createElementNS(svg.namespaceURI, "text");
       t.setAttribute("x", x); t.setAttribute("y", y);
       t.setAttribute("fill", color);
@@ -305,7 +308,7 @@
 
       const { map, count } = computePositions(root);
       if (count === 0) {
-        drawText(svg, "2-3 Tree", SVG_SIZE / 2, MARG_Y / 2, "#333", 16);
+        drawText(svg, "2-3 Tree", SVG_SIZE / 2, MARG_Y / 2, "var(--color-tree-text)", 16);
         return;
       }
 
@@ -370,7 +373,7 @@
         }
       });
 
-      drawText(svg, "2-3 Tree", SVG_SIZE / 2, MARG_Y / 2, "#333", 16);
+      drawText(svg, "2-3 Tree", SVG_SIZE / 2, MARG_Y / 2, "var(--color-tree-text)", 16);
     }
 
     // --- Step Control Logic ---

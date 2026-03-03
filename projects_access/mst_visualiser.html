@@ -21,7 +21,6 @@
     h1 {
       margin: 20px 0 10px;
       font-size: 24px;
-      color: #333;
     }
 
     /* Toolbar container */
@@ -38,19 +37,7 @@
       cursor: pointer;
     }
 
-    /* Active Button State */
-    #toolbar button.active {
-      background-color: #4caf50;
-      color: white;
-    }
-
-    /* Disabled State */
-    #toolbar button:disabled,
-    #toolbar select:disabled {
-      background-color: #ddd;
-      color: #666;
-      cursor: default;
-    }
+    /* Active/disabled states handled by theme.css */
 
     /* Step Navigation Controls (hidden until MST runs) */
     #stepControls {
@@ -65,22 +52,15 @@
       cursor: pointer;
     }
 
-    #stepControls button:disabled {
-      background-color: #ddd;
-      color: #666;
-      cursor: default;
-    }
+    /* Step control disabled states handled by theme.css */
 
     #stepInfo {
       font-size: 14px;
-      color: #333;
       vertical-align: middle;
     }
 
     /* SVG Canvas */
     svg {
-      border: 1px solid #ccc;
-      background-color: white;
       width: 800px;
       height: 500px;
       touch-action: none;
@@ -88,14 +68,10 @@
 
     /* Node Styles */
     .node-circle {
-      fill: #2196F3;
-      stroke: #1565C0;
-      stroke-width: 2;
       cursor: pointer;
     }
 
     .node-text {
-      fill: white;
       font-size: 12px;
       pointer-events: none;
     }
@@ -128,13 +104,11 @@
 
     /* Edge Styles */
     .edge-line {
-      stroke: #666;
       stroke-width: 2;
       cursor: pointer;
     }
 
     .edge-weight {
-      fill: black;
       font-size: 12px;
       pointer-events: none;
     }
@@ -158,6 +132,13 @@
       stroke-width: 3 !important;
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
@@ -165,11 +146,11 @@
 
   <!-- Main Toolbar -->
   <div id="toolbar">
-    <button id="addNodeBtn">Add Node</button>
-    <button id="addEdgeBtn">Add Edge</button>
-    <button id="deleteNodeBtn">Delete Node</button>
-    <button id="deleteEdgeBtn">Delete Edge</button>
-    <button id="generateBtn">Generate Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn">Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn">Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn">Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn">Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn">Generate Graph</button>
 
     <!-- MST Algorithm Selection -->
     <select id="algorithmSelect">
@@ -177,16 +158,16 @@
       <option value="kruskals">Kruskal's</option>
     </select>
 
-    <button id="runMSTBtn">Run MST</button>
-    <button id="clearBtn">Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runMSTBtn">Run MST</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn">Clear All</button>
   </div>
 
   <!-- Step Controls -->
   <div id="stepControls">
-    <button id="prevStepBtn">◀ Prev</button>
-    <button id="nextStepBtn">Next ▶</button>
-    <button id="finishStepBtn">Finish</button>
-    <button id="exitStepBtn">Exit</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn">◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn">Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn">Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn">Exit</button>
     <span id="stepInfo"></span>
   </div>
 

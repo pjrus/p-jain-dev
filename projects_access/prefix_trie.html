@@ -47,8 +47,6 @@
     #svgContainer {
       width: 800px;
       height: 500px;
-      border: 1px solid #ccc;
-      background: #fafafa;
       overflow: auto;
       /* show scrollbars only if needed */
     }
@@ -61,19 +59,19 @@
 
     /* Trie Element Styles */
     .edge {
-      stroke: #888;
+      stroke: var(--color-tree-line);
       stroke-width: 1.5px;
     }
 
     .node-letter {
-      fill: #8f8;
-      stroke: #333;
+      fill: var(--color-trie-letter);
+      stroke: var(--color-trie-letter-stroke);
       stroke-width: 2px;
     }
 
     .node-term {
-      fill: #fc0;
-      stroke: #333;
+      fill: var(--color-trie-term);
+      stroke: var(--color-trie-term-stroke);
       stroke-width: 2px;
     }
 
@@ -81,18 +79,25 @@
       font-size: 14px;
       text-anchor: middle;
       dominant-baseline: middle;
-      fill: #000;
+      fill: var(--color-tree-text);
       pointer-events: none;
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
   <h1>Prefix-Trie Visualizer</h1>
   <div id="controls">
     <input type="text" id="wordInput" placeholder="Enter lowercase word" />
-    <button id="insertBtn">Insert</button>
-    <button id="clearBtn">Clear</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="insertBtn">Insert</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn">Clear</button>
   </div>
 
   <div id="svgContainer">

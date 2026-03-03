@@ -69,15 +69,12 @@
 
     #stepInfo {
       font-size: 14px;
-      color: #333;
     }
 
     /* SVG Container */
     #svgContainer {
       width: 800px;
       height: 500px;
-      border: 1px solid #ccc;
-      background: #fafafa;
       overflow: auto;
     }
 
@@ -87,19 +84,19 @@
 
     /* Node & Edge Styling */
     .edge {
-      stroke: #888;
+      stroke: var(--color-tree-line);
       stroke-width: 1.5px;
     }
 
     .node-circle {
-      fill: #8f8;
-      stroke: #333;
+      fill: var(--color-trie-letter);
+      stroke: var(--color-trie-letter-stroke);
       stroke-width: 2px;
     }
 
     .node-term {
-      fill: #fc0;
-      stroke: #333;
+      fill: var(--color-trie-term);
+      stroke: var(--color-trie-term-stroke);
       stroke-width: 2px;
     }
 
@@ -107,17 +104,24 @@
       font-size: 12px;
       text-anchor: middle;
       dominant-baseline: middle;
-      fill: #000;
+      fill: var(--color-tree-text);
       pointer-events: none;
     }
 
     /* Highlight class for merging nodes during compression */
     .node-highlight {
       fill: yellow !important;
-      stroke: #333;
+      stroke: var(--color-trie-letter-stroke);
       stroke-width: 2px;
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
@@ -126,21 +130,21 @@
   <!-- Inputs for Building Trie -->
   <div id="buildControls">
     <input id="strInput" placeholder="Enter text (e.g. banana)" />
-    <button id="buildBtn">Build Trie</button>
-    <button id="clearBtn">Clear</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="buildBtn">Build Trie</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn">Clear</button>
   </div>
 
   <!-- Compression Controls -->
   <div id="compressControls">
     <label><input type="checkbox" id="stepCheckbox" /> Step-by-step</label>
-    <button id="compressBtn">Compress</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="compressBtn">Compress</button>
   </div>
 
   <!-- Step Navigation (Visible only during step-by-step compression) -->
   <div id="stepControls">
-    <button id="prevStepBtn">◀ Prev</button>
-    <button id="nextStepBtn">Next ▶</button>
-    <button id="finishStepBtn">Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn">◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn">Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn">Finish</button>
     <span id="stepInfo"></span>
   </div>
 

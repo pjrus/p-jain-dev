@@ -21,7 +21,6 @@
     h1 {
       margin: 20px 0 10px;
       font-size: 24px;
-      color: #333;
     }
 
     /* Toolbar container styling */
@@ -37,18 +36,7 @@
       cursor: pointer;
     }
 
-    /* Active button state */
-    #toolbar button.active {
-      background-color: #4caf50;
-      color: white;
-    }
-
-    /* Disabled button state */
-    #toolbar button:disabled {
-      background-color: #ddd;
-      color: #666;
-      cursor: default;
-    }
+    /* Active/disabled states handled by theme.css */
 
     /* Step control container (Flexbox) */
     #stepControls {
@@ -76,7 +64,6 @@
     /* Step info text display */
     #stepInfo {
       font-size: 14px;
-      color: #333;
       white-space: nowrap;
       overflow-x: auto;
       flex-shrink: 0;
@@ -84,12 +71,9 @@
 
     /* SVG Canvas styling */
     svg {
-      border: 1px solid #ccc;
-      background-color: white;
       width: 800px;
       height: 500px;
       touch-action: none;
-      /* Allows touch dragging */
     }
 
     /* Arrow marker for directed edges */
@@ -97,20 +81,14 @@
       overflow: visible;
     }
 
-    marker#arrow path {
-      fill: #666;
-    }
+    /* marker arrow fill handled by theme.css */
 
     /* Node Circle Styling */
     .node-circle {
-      fill: #2196F3;
-      stroke: #1565C0;
-      stroke-width: 2;
       cursor: pointer;
     }
 
     .node-text {
-      fill: white;
       font-size: 12px;
       pointer-events: none;
     }
@@ -127,7 +105,6 @@
 
     /* Edge Line Styling */
     .edge-line {
-      stroke: #666;
       stroke-width: 2;
       cursor: pointer;
     }
@@ -140,13 +117,17 @@
 
     /* Flow/Capacity Text Label on Edges */
     .edge-flow {
-      fill: black;
       font-size: 12px;
       pointer-events: none;
-      background: white;
-      /* Note: background on text element isn't standard SVG, but fill/stroke works */
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
@@ -154,22 +135,22 @@
 
   <!-- Main Toolbar -->
   <div id="toolbar">
-    <button id="addNodeBtn" disabled>Add Node</button>
-    <button id="addEdgeBtn" disabled>Add Edge</button>
-    <button id="deleteNodeBtn" disabled>Delete Node</button>
-    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button id="generateBtn" disabled>Generate Random Graph</button>
-    <button id="runFlowBtn" disabled>Run Max Flow</button>
-    <button id="clearBtn" disabled>Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Random Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runFlowBtn" disabled>Run Max Flow</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step controls (hidden until algorithm runs) -->
   <div id="stepControls" style="display: none;">
     <div id="stepButtons">
-      <button id="prevStepBtn" disabled>◀ Prev</button>
-      <button id="nextStepBtn" disabled>Next ▶</button>
-      <button id="finishStepBtn" disabled>Finish</button>
-      <button id="exitStepBtn" disabled>Exit</button>
+      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
+      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
+      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
+      <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
     </div>
     <span id="stepInfo"></span>
   </div>

@@ -62,7 +62,6 @@
 
     #stepInfo {
       margin-left: 12px;
-      color: #333;
     }
 
     /* SVG container */
@@ -70,8 +69,6 @@
       width: 100%;
       max-width: 700px;
       height: 500px;
-      border: 1px solid #ccc;
-      background: #fafafa;
     }
 
     /* Responsive adjustment */
@@ -81,6 +78,13 @@
       }
     }
   </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false }
+    }
+  </script>
 </head>
 
 <body>
@@ -97,15 +101,15 @@
   <div id="controls">
     <label for="keyInput">Key:</label>
     <input type="number" id="keyInput" placeholder="e.g. 15" />
-    <button id="insertBtn">Insert</button>
-    <button id="removeBtn">Remove</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="insertBtn">Insert</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="removeBtn">Remove</button>
   </div>
 
   <!-- Stepping Controls -->
   <div id="stepControls">
-    <button id="prevStepBtn">◀ Prev</button>
-    <button id="nextStepBtn">Next ▶</button>
-    <button id="finishStepBtn">Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn">◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn">Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-3 py-1.5 border-none shadow-sm transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-accent)] hover:text-white disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-muted)] disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn">Finish</button>
     <span id="stepInfo"></span>
   </div>
 
@@ -243,7 +247,7 @@
       }));
     }
 
-    function drawLine(svg, x1, y1, x2, y2, color = '#000', width = 1) {
+    function drawLine(svg, x1, y1, x2, y2, color = 'var(--color-tree-line)', width = 1) {
       svg.appendChild(createSVG('line', {
         x1, y1, x2, y2,
         stroke: color,
@@ -277,7 +281,7 @@
       });
       marker.appendChild(createSVG('polygon', {
         points: '0 0,10 3.5,0 7',
-        fill: '#000'
+        fill: 'var(--color-arrow-fill)'
       }));
       defs.appendChild(marker);
       svg.appendChild(defs);
@@ -358,7 +362,7 @@
       }
 
       // Title
-      drawText(svg, 'LLRB Tree', SVG_SIZE / 2, MARG_Y / 2, '#333', 16);
+      drawText(svg, 'LLRB Tree', SVG_SIZE / 2, MARG_Y / 2, 'var(--color-tree-text)', 16);
     }
 
     // ───── Snapshot Logic for Step-by-Step ───────────────────
