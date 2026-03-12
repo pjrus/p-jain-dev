@@ -1,4 +1,22 @@
 (function () {
+    // Active Link Highlighting Logic
+    (function highlightActiveLink() {
+        var currentPath = window.location.pathname;
+        var navLinks = document.querySelectorAll('#nav-bar .nav-link');
+        
+        navLinks.forEach(function(link) {
+            // Remove any hardcoded active classes first to ensure consistency
+            link.classList.remove('active');
+            
+            var href = link.getAttribute('href');
+            
+            // Check for exact match or index home case (root or subfolder)
+            if (currentPath.endsWith(href) || (currentPath.endsWith('/') && href === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
+    })();
+
     var MQ = 768;
     var initialized = false;
 

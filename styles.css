@@ -1282,10 +1282,11 @@ textarea.form-control {
   margin-bottom: 0;
 }
 
-.view-all-link {
+.view-all-btn {
   font-size: 0.9rem;
-  font-weight: 500;
-}
+  padding: 0.5rem 1.25rem;
+  border-width: 1px;
+}  
 
 /* About Page Specifics */
 .about-img-container {
