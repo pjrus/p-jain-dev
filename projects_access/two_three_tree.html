@@ -99,6 +99,8 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    const PAGE_STATE_KEY = `visualizerState:${window.location.pathname}`;
+
     tailwind.config = {
       corePlugins: { preflight: false }
     }
@@ -157,6 +159,46 @@
     let currentStep = 0;
     let stepping = false;
     let currentTT;   // Active TwoThreeTree instance
+
+    function savePageState() {
+      try {
+        const state = {
+          keyList: [...keyList],
+          stepEnabled: document.getElementById('stepCheckbox').checked
+        };
+        localStorage.setItem(PAGE_STATE_KEY, JSON.stringify(state));
+      } catch {
+        // no-op
+      }
+    }
+
+    function restorePageState() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(PAGE_STATE_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const state = JSON.parse(raw);
+        keyList = Array.isArray(state.keyList)
+          ? state.keyList.filter(v => typeof v === 'number' && !Number.isNaN(v))
+          : [];
+        document.getElementById('stepCheckbox').checked = !!state.stepEnabled;
+
+        snapshots = [];
+        currentStep = 0;
+        stepping = false;
+        document.getElementById('stepControls').style.display = 'none';
+
+        currentTT = new TwoThreeTree();
+        keyList.forEach(k => currentTT.insert(k));
+      } catch {
+        localStorage.removeItem(PAGE_STATE_KEY);
+      }
+    }
 
     // --- 2-3 Tree Classes ---
 
@@ -417,6 +459,7 @@
         document.getElementById("stepControls").style.display = "none";
         redraw();
       }
+      savePageState();
     };
 
     // --- Insert / Remove Handlers ---
@@ -476,6 +519,7 @@
         updateStepInfo(); redraw();
       }
       document.getElementById("keyInput").value = ""; document.getElementById("keyInput").focus();
+      savePageState();
     };
 
     document.getElementById("removeBtn").onclick = () => {
@@ -505,6 +549,7 @@
         updateStepInfo(); redraw();
       }
       document.getElementById("keyInput").value = ""; document.getElementById("keyInput").focus();
+      savePageState();
     };
 
     // --- Random Generator ---
@@ -530,13 +575,18 @@
 
       document.getElementById("stepCheckbox").checked = was; // Restore setting
       redraw();
+      savePageState();
     };
 
     // --- Initialization ---
     window.onload = () => {
-      currentTT = new TwoThreeTree();
+      restorePageState();
+      if (!currentTT) currentTT = new TwoThreeTree();
       redraw();
     };
+    window.addEventListener('pagehide', savePageState);
+    window.addEventListener('beforeunload', savePageState);
+    setInterval(savePageState, 1000);
   </script>
   <script src="theme.js"></script>
 </body>

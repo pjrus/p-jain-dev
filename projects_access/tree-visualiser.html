@@ -80,6 +80,8 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    const PAGE_STATE_KEY = `visualizerState:${window.location.pathname}`;
+
     tailwind.config = {
       corePlugins: { preflight: false }
     }
@@ -224,6 +226,46 @@
     let snapshots = [];
     let currentStep = 0;
     let stepping = false;
+
+    function savePageState() {
+      try {
+        const state = {
+          keyList: [...keyList],
+          stepEnabled: document.getElementById('stepCheckbox').checked
+        };
+        localStorage.setItem(PAGE_STATE_KEY, JSON.stringify(state));
+      } catch {
+        // no-op
+      }
+    }
+
+    function restorePageState() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(PAGE_STATE_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const state = JSON.parse(raw);
+        keyList = Array.isArray(state.keyList)
+          ? state.keyList.filter(v => typeof v === 'number' && !Number.isNaN(v))
+          : [];
+        document.getElementById('stepCheckbox').checked = !!state.stepEnabled;
+
+        snapshots = [];
+        currentStep = 0;
+        stepping = false;
+        hideStepControls();
+
+        rbTree = new LeftLeaningRB();
+        keyList.forEach(k => rbTree.insert(k));
+      } catch {
+        localStorage.removeItem(PAGE_STATE_KEY);
+      }
+    }
 
     // Layout Constants
     const SVG_SIZE = 500;
@@ -512,6 +554,7 @@
 
       document.getElementById('keyInput').value = '';
       document.getElementById('keyInput').focus();
+      savePageState();
     };
 
     document.getElementById('removeBtn').onclick = () => {
@@ -537,6 +580,7 @@
       redrawTrees();
       document.getElementById('keyInput').value = '';
       document.getElementById('keyInput').focus();
+      savePageState();
     };
 
     // Step Controls
@@ -574,6 +618,7 @@
         hideStepControls();
         redrawTrees();
       }
+      savePageState();
     };
 
     function updateStepInfo() {
@@ -593,8 +638,12 @@
     }
 
     window.onload = () => {
+      restorePageState();
       redrawTrees();
     };
+    window.addEventListener('pagehide', savePageState);
+    window.addEventListener('beforeunload', savePageState);
+    setInterval(savePageState, 1000);
   </script>
   <script src="theme.js"></script>
 </body>

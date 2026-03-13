@@ -153,6 +153,8 @@
   </div>
 
   <script>
+    const PAGE_STATE_KEY = `visualizerState:${window.location.pathname}`;
+
     const NS = "http://www.w3.org/2000/svg";
     // Layout Constants
     const BASE_R = 15, H_GAP = 100, V_GAP = 80, PADDING = 20;
@@ -172,6 +174,56 @@
     // --- Global State ---
     const root = new TrieNode();
     let snapshots = [], currentStep = 0, inStepMode = false;
+    let sourceText = "";
+    let isCompressed = false;
+
+    function savePageState() {
+      try {
+        const state = {
+          sourceText,
+          isCompressed,
+          stepEnabled: document.getElementById("stepCheckbox").checked
+        };
+        localStorage.setItem(PAGE_STATE_KEY, JSON.stringify(state));
+      } catch {
+        // no-op
+      }
+    }
+
+    function restorePageState() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(PAGE_STATE_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const state = JSON.parse(raw);
+        const text = typeof state.sourceText === 'string' ? state.sourceText : "";
+        const compressed = !!state.isCompressed;
+        const stepEnabled = !!state.stepEnabled;
+
+        document.getElementById("strInput").value = text;
+        document.getElementById("stepCheckbox").checked = stepEnabled;
+
+        sourceText = text;
+        isCompressed = compressed;
+
+        if (sourceText) {
+          const prevStep = document.getElementById("stepCheckbox").checked;
+          document.getElementById("stepCheckbox").checked = false;
+          buildSuffixTrie(sourceText);
+          if (isCompressed) compressTrie();
+          document.getElementById("stepCheckbox").checked = prevStep;
+          inStepMode = false;
+          hideStepControls();
+        }
+      } catch {
+        localStorage.removeItem(PAGE_STATE_KEY);
+      }
+    }
 
     // --- Operations ---
     function clearTrie() {
@@ -409,12 +461,29 @@
 
     // --- Interaction ---
     document.getElementById("buildBtn").onclick =
-      () => buildSuffixTrie(document.getElementById("strInput").value);
+      () => {
+        sourceText = document.getElementById("strInput").value;
+        isCompressed = false;
+        buildSuffixTrie(sourceText);
+        savePageState();
+      };
 
     document.getElementById("clearBtn").onclick =
-      () => { clearTrie(); inStepMode = false; hideStepControls(); render(); };
+      () => {
+        clearTrie();
+        sourceText = "";
+        isCompressed = false;
+        inStepMode = false;
+        hideStepControls();
+        render();
+        savePageState();
+      };
 
-    document.getElementById("compressBtn").onclick = compressTrie;
+    document.getElementById("compressBtn").onclick = () => {
+      compressTrie();
+      isCompressed = true;
+      savePageState();
+    };
 
     // Step Navigation Handlers
     document.getElementById("prevStepBtn").onclick =
@@ -430,8 +499,14 @@
     document.getElementById("finishStepBtn").onclick =
       () => { inStepMode = false; hideStepControls(); render(); };
 
+    document.getElementById("stepCheckbox").onchange = savePageState;
+
     // Initial Render
+    restorePageState();
     render();
+    window.addEventListener('pagehide', savePageState);
+    window.addEventListener('beforeunload', savePageState);
+    setInterval(savePageState, 1000);
   </script>
   <script src="theme.js"></script>
 </body>

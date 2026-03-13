@@ -4,6 +4,25 @@
 
     // 2. Inject Toggle Button and Back Link
     document.addEventListener('DOMContentLoaded', () => {
+        const controlButtonSelector = '#typeControls button, #toolbar button, #stepControls button, #manualControls button, #randomControls button, #controls button, #buildControls button, #compressControls button';
+        const lightModeButtonClasses = [
+            '!bg-slate-50',
+            '!text-slate-950',
+            '!border-slate-300',
+            '!shadow-sm',
+            'hover:!bg-slate-100',
+            'hover:!border-slate-400'
+        ];
+
+        function applyButtonThemeClasses(isLight) {
+            const buttons = document.querySelectorAll(controlButtonSelector);
+            buttons.forEach(button => {
+                lightModeButtonClasses.forEach(className => {
+                    button.classList.toggle(className, isLight);
+                });
+            });
+        }
+
         // Create Toggle Button
         const btn = document.createElement('button');
         btn.id = 'theme-toggle-btn';
@@ -33,10 +52,12 @@
                 html.setAttribute('data-theme', 'light');
                 btn.innerHTML = '🌙'; // Icon to switch to dark
                 localStorage.setItem('theme', 'light');
+                applyButtonThemeClasses(true);
             } else {
                 html.removeAttribute('data-theme');
                 btn.innerHTML = '☀️'; // Icon to switch to light
                 localStorage.setItem('theme', 'dark');
+                applyButtonThemeClasses(false);
             }
         }
 
@@ -44,5 +65,13 @@
             const isLight = html.getAttribute('data-theme') === 'light';
             setTheme(isLight ? 'dark' : 'light');
         });
+
+        const isVisualizerPage = document.querySelector('svg') !== null;
+        if (isVisualizerPage && !document.querySelector('.visualizer-footer')) {
+            const footer = document.createElement('footer');
+            footer.className = 'visualizer-footer mt-6 mb-4 text-center text-sm';
+            footer.innerHTML = 'Built for interactive learning • Practice by creating your own examples';
+            document.body.appendChild(footer);
+        }
     });
 })();

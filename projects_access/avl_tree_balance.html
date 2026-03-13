@@ -140,6 +140,8 @@
   </div>
 
   <script>
+    const PAGE_STATE_KEY = `visualizerState:${window.location.pathname}`;
+
     // Global state for stepping through visualizations
     let currentStep = 0, inSteppingMode = false;
 
@@ -466,16 +468,67 @@
     // Instantiate AVL Tree
     const avl = new AVLTree();
 
+    function collectAVLKeys(node, result = []) {
+      if (!node) return result;
+      collectAVLKeys(node.left, result);
+      result.push(node.key);
+      collectAVLKeys(node.right, result);
+      return result;
+    }
+
+    function savePageState() {
+      try {
+        const state = {
+          keys: collectAVLKeys(avl.root, []),
+          stepEnabled: document.getElementById('stepCheckbox').checked
+        };
+        localStorage.setItem(PAGE_STATE_KEY, JSON.stringify(state));
+      } catch {
+        // no-op
+      }
+    }
+
+    function restorePageState() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(PAGE_STATE_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const state = JSON.parse(raw);
+        const keys = Array.isArray(state.keys) ? state.keys : [];
+        document.getElementById('stepCheckbox').checked = !!state.stepEnabled;
+
+        inSteppingMode = false;
+        hideStepControls();
+        avl.root = null;
+        avl.snapshots = [];
+
+        keys.forEach(k => {
+          if (typeof k === 'number' && !Number.isNaN(k)) {
+            avl.root = avl._insertRec(avl.root, k);
+          }
+        });
+      } catch {
+        localStorage.removeItem(PAGE_STATE_KEY);
+      }
+    }
+
     // Event listeners for manually adding/removing nodes
     document.getElementById('insertBtn').addEventListener('click', () => {
       const v = parseInt(document.getElementById('keyInput').value, 10);
       if (!isNaN(v)) avl.insert(v);
       document.getElementById('keyInput').value = '';
+      savePageState();
     });
     document.getElementById('removeBtn').addEventListener('click', () => {
       const v = parseInt(document.getElementById('keyInput').value, 10);
       if (!isNaN(v)) avl.remove(v);
       document.getElementById('keyInput').value = '';
+      savePageState();
     });
 
     // Generate a random tree
@@ -500,6 +553,7 @@
 
       document.getElementById('stepCheckbox').checked = was;
       redraw();
+      savePageState();
     });
 
     // Step navigation listeners
@@ -521,9 +575,16 @@
       if (!document.getElementById('stepCheckbox').checked && inSteppingMode) {
         inSteppingMode = false; hideStepControls(); redraw();
       }
+      savePageState();
     });
 
-    window.onload = () => { redraw(); };
+    window.onload = () => {
+      restorePageState();
+      redraw();
+    };
+    window.addEventListener('pagehide', savePageState);
+    window.addEventListener('beforeunload', savePageState);
+    setInterval(savePageState, 1000);
   </script>
   <script src="theme.js"></script>
 </body>

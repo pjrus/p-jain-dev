@@ -104,6 +104,8 @@
   </div>
 
   <script>
+    const PAGE_STATE_KEY = `visualizerState:${window.location.pathname}`;
+
     // Constants
     const NODE_RADIUS = 15;  // 30px diameter for nodes
 
@@ -122,8 +124,39 @@
 
     // Global Trie Root
     const root = new TrieNode();
+    let insertedWords = [];
     const container = document.getElementById('svgContainer');
     const svg = document.getElementById('svgCanvas');
+
+    function savePageState() {
+      try {
+        localStorage.setItem(PAGE_STATE_KEY, JSON.stringify({ insertedWords: [...insertedWords] }));
+      } catch {
+        // no-op
+      }
+    }
+
+    function restorePageState() {
+      let raw = null;
+      try {
+        raw = localStorage.getItem(PAGE_STATE_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const state = JSON.parse(raw);
+        insertedWords = Array.isArray(state.insertedWords)
+          ? state.insertedWords.filter(w => typeof w === 'string' && /^[a-z]+$/.test(w))
+          : [];
+
+        clearTrie();
+        insertedWords.forEach(w => insertWord(w));
+      } catch {
+        localStorage.removeItem(PAGE_STATE_KEY);
+      }
+    }
 
     // ===== TRIE OPERATIONS =====
 
@@ -327,21 +360,30 @@
       const input = document.getElementById('wordInput');
       const w = input.value.trim().toLowerCase();
       if (/^[a-z]+$/.test(w)) {
-        insertWord(w);
+        if (insertWord(w)) {
+          insertedWords.push(w);
+        }
       } else if (w.length > 0) {
         alert("Please enter valid lowercase letters (a-z).");
       }
       input.value = '';
       render();
+      savePageState();
     };
 
     document.getElementById('clearBtn').onclick = () => {
       clearTrie();
+      insertedWords = [];
       render();
+      savePageState();
     };
 
     // Initial Render
+    restorePageState();
     render();
+    window.addEventListener('pagehide', savePageState);
+    window.addEventListener('beforeunload', savePageState);
+    setInterval(savePageState, 1000);
   </script>
   <script src="theme.js"></script>
 </body>
