@@ -201,8 +201,13 @@
               I'm currently looking for new opportunities. Whether you have a question or just want to say hi, send me a
               message!
             </p>
-            <form action="mailto:paarangatj@gmail.com" method="POST" enctype="text/plain"
+            <form action="https://api.web3forms.com/submit" method="POST" id="form"
               style="display: flex; flex-direction: column; gap: 1rem;">
+              <input type="hidden" name="access_key" value="c6ab9aa9-d687-4042-b147-e3bf263fdda4">
+              <input type="hidden" name="subject" value="New Contact Form Submission from p-jain.dev">
+              <input type="hidden" name="from_name" value="Portfolio Contact Form">
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
               <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" class="form-control" required placeholder="John Doe">
@@ -217,6 +222,7 @@
                 <textarea id="message" name="message" class="form-control" required
                   placeholder="Your message here..."></textarea>
               </div>
+              <div id="result" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
               <button type="submit" class="btn btn-primary"
                 style="align-self: flex-start; margin-top: 0.5rem; padding: 0.75rem 2rem;">
                 Send Message <i class="fas fa-paper-plane" style="margin-left: 0.5rem;"></i>
@@ -282,6 +288,49 @@
       const currentTheme = html.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    // Web3Forms AJAX Submission
+    const form = document.getElementById('form');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+      result.innerHTML = "Please wait...";
+
+        fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    result.innerHTML = "Success! Message sent.";
+                    result.style.color = "var(--color-success, #28a745)";
+                } else {
+                    console.log(response);
+                    result.innerHTML = json.message;
+                    result.style.color = "var(--color-error, #dc3545)";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                result.innerHTML = "Something went wrong!";
+                result.style.color = "var(--color-error, #dc3545)";
+            })
+            .then(function() {
+                form.reset();
+                setTimeout(() => {
+                    result.style.display = "none";
+                }, 3000);
+            });
     });
   </script>
   <script src="mobile-menu.js"></script>
