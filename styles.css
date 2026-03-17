@@ -20,10 +20,12 @@
   --color-bg-social: rgba(255, 255, 255, 0.05);
 
   /* Improved Text Contrast */
-  --color-text-main: #f1f5f9;
+  --color-text-main: #ffffff;
   /* Slate-100 */
-  --color-text-muted: #cbd5e1;
+  --color-text-muted: #ffffff;
   /* Slate-300 - Much brighter than before */
+  --color-text-hero: #e2e8f0;
+  /* Slate-200 - Brighter hero text */
 
   --color-primary: #38bdf8;
   --color-main: #38bdf8;
