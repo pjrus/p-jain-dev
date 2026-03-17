@@ -21,7 +21,12 @@ This project serves as my digital business card and portfolio. It serves to high
 -   `index.html`: Main landing page (Home).
 -   `about.html`: Detailed biography.
 -   `portfolio.html`: Showcase of projects.
--   `styles.css`: Centralized stylesheet with variable-based theming.
+-   `playground.html`: Interactive algorithm visualizers.
+-   **Stylesheets** (`styles/` folder):
+    -   `styles.css`: Main stylesheet (imports all partials in cascade order).
+    -   `styles/theme.css`: CSS variables and theme definitions (dark/light mode).
+    -   `styles/core.css`: Base resets, typography, layout, navigation, components, and animations.
+    -   `styles/pages.css`: Page-specific styles, semantic classes, and responsive overrides.
 
 ## Deployment
 This website is design to be a static site.

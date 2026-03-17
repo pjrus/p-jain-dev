@@ -1,0 +1,143 @@
+/* Modern Premium Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette - Premium Dark Theme - Softened */
+  --primary-hue: 215;
+  --primary-sat: 90%;
+  --primary-light: 60%;
+
+  /* Softened Backgrounds (Slate/Gray instead of Void Black) */
+  --color-bg-main: #0f172a;
+  /* Slate-950 */
+  --color-bg-card: rgba(30, 41, 59, 0.7);
+  /* Slate-800 with alpha */
+  --color-bg-card-hover: rgba(51, 65, 85, 0.8);
+  /* Slate-700 with alpha */
+  --color-bg-nav: rgba(15, 23, 42, 0.9);
+  /* Slate-950 with alpha */
+  --color-bg-footer: #0f172a;
+  --color-bg-social: rgba(255, 255, 255, 0.05);
+
+  /* Improved Text Contrast */
+  --color-text-main: #ffffff;
+  /* Slate-100 */
+  --color-text-muted: #ffffff;
+  /* Slate-300 - Much brighter than before */
+  --color-text-hero: #e2e8f0;
+  /* Slate-200 - Brighter hero text */
+
+  --color-primary: #38bdf8;
+  --color-main: #38bdf8;
+  /* Sky-400 */
+  --color-primary-glow: rgba(56, 189, 248, 0.15);
+  --color-accent: #818cf8;
+  /* Indigo-400 */
+  --color-border: rgba(148, 163, 184, 0.15);
+  /* Slate border */
+
+  /* Solidiated Gradients */
+  --gradient-primary: var(--color-text-main);
+  --gradient-surface: var(--color-bg-card);
+
+  /* Spacing & Layout */
+
+  /* Spacing & Layout */
+  --container-width: 1400px;
+  /* Increased from 1200px */
+  --header-height: 80px;
+  --border-radius: 16px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+
+  /* Effects */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px var(--color-primary-glow);
+  --backdrop-blur: blur(12px);
+  --transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+  --color-bg-main: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f8fafc;
+  --color-bg-nav: rgba(255, 255, 255, 0.9);
+  --color-bg-footer: #f8fafc;
+  --color-bg-social: rgba(0, 0, 0, 0.05);
+  --color-text-main: #0f172a;
+  --color-text-muted: #0f172a;
+  --color-border: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-glow: none;
+  --color-primary-glow: transparent;
+  --gradient-primary: #0f172a;
+  /* Solid text in light mode too */
+  --gradient-surface: #ffffff;
+  --color-primary: #0284c7;
+  --color-main: #000000;
+  /* Sky-600 */
+}
+
+/* Light mode background - kept clean */
+[data-theme="light"] body {
+  background-image: none;
+  background-color: var(--color-bg-main);
+}
+
+/* Dark mode: apply backdrop blur on cards for frosted glass effect */
+:root .content-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Nested content-cards (e.g. project cards inside a content-card) don't need blur */
+.content-card .content-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+[data-theme="light"] .content-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  overflow: visible;
+}
+
+/* Project cards still need overflow:hidden for images with negative margins */
+[data-theme="light"] .content-card.project-card {
+  overflow: hidden;
+}
+
+[data-theme="light"] .content-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .hero-img {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hero-img:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .social-link:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .skill-badge {
+  background: #f8fafc;
+}
+
+[data-theme="light"] .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
