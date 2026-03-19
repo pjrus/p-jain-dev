@@ -91,38 +91,10 @@
       pointer-events: none;
     }
 
-    /* Highlighted nodes for Dijkstra */
-    .node-current {
-      fill: #FFC107 !important;
-      /* Current Node being processed */
-    }
-
-    .node-final {
-      fill: #4CAF50 !important;
-      /* Visited / Settled Node */
-    }
-
-    /* Highlighted nodes during “Add Edge” interaction */
-    .node-selected-1 {
-      fill: #FF5722 !important;
-      /* first node selected */
-    }
-
-    .node-selected-2 {
-      fill: #9C27B0 !important;
-      /* second node selected */
-    }
-
     /* Edge styling */
     .edge-line {
       stroke-width: 2;
       cursor: pointer;
-    }
-
-    .edge-path {
-      stroke: #e91e63 !important;
-      /* highlight color for shortest-path tree edges */
-      stroke-width: 4 !important;
     }
 
     .edge-weight {
@@ -133,6 +105,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
+  <script src="visualizer-mobile.js" defer></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -145,27 +118,27 @@
 
   <!-- Graph Type Selection -->
   <div id="typeControls">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="undirectedBtn">Undirected Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="directedBtn">Directed Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="undirectedBtn">Undirected Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="directedBtn">Directed Graph</button>
   </div>
 
   <!-- Main Toolbar -->
   <div id="toolbar">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runDijkstraBtn" disabled>Run Dijkstra</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runDijkstraBtn" disabled>Run Dijkstra</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step controls (hidden until Dijkstra is running) -->
   <div id="stepControls" style="display: none;">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
     <span id="stepInfo"></span>
   </div>
 
@@ -232,19 +205,48 @@
     // Converts mouse/touch event coordinates to SVG coordinates
     function getSvgPoint(evt) {
       const pt = svg.createSVGPoint();
-      if (evt.touches && evt.touches.length) {
-        pt.x = evt.touches[0].clientX;
-        pt.y = evt.touches[0].clientY;
+      let x, y;
+      
+      if (evt.clientX !== undefined) {
+        x = evt.clientX;
+        y = evt.clientY;
+      } else if (evt.touches && evt.touches.length > 0) {
+        x = evt.touches[0].clientX;
+        y = evt.touches[0].clientY;
+      } else if (evt.changedTouches && evt.changedTouches.length > 0) {
+        x = evt.changedTouches[0].clientX;
+        y = evt.changedTouches[0].clientY;
       } else {
-        pt.x = evt.clientX;
-        pt.y = evt.clientY;
+        return { x: 0, y: 0 };
       }
-      return pt.matrixTransform(svg.getScreenCTM().inverse());
+      
+      pt.x = x;
+      pt.y = y;
+      
+      try {
+        const matrix = svg.getScreenCTM().inverse();
+        return pt.matrixTransform(matrix);
+      } catch (e) {
+        return { x: pt.x, y: pt.y };
+      }
     }
 
     // ============== INITIAL SETUP & GRAPH TYPE ==============
-    undirectedBtn.addEventListener('click', () => chooseGraphType(false));
-    directedBtn.addEventListener('click', () => chooseGraphType(true));
+    window.addEventListener('DOMContentLoaded', () => {
+      // Initialize Mobile Optimization
+      MobileVisualizer.init(svg, drawGraph);
+      
+      undirectedBtn.addEventListener('click', () => chooseGraphType(false));
+      directedBtn.addEventListener('click', () => chooseGraphType(true));
+      
+      // Default type (undirected)
+      chooseGraphType(false);
+      
+      // Seed some initial nodes if it's a first visit
+      if (nodes.length === 0) {
+        generateGraph(5); 
+      }
+    });
 
     function chooseGraphType(directed) {
       isDirected = directed;
@@ -311,11 +313,12 @@
       });
 
       // 2) Draw nodes on top
+      const metrics = MobileVisualizer.getAdaptiveMetrics();
       nodes.forEach(nd => {
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", nd.x);
         circle.setAttribute("cy", nd.y);
-        circle.setAttribute("r", 16.8); // 16 * 1.05
+        circle.setAttribute("r", metrics.nodeRadius);
         circle.setAttribute("class", "node-circle");
         circle.dataset.id = nd.id; // Store ID for logic
         svg.appendChild(circle);
@@ -323,16 +326,16 @@
 
         const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
         txt.setAttribute("x", nd.x);
-        txt.setAttribute("y", nd.y + 4);
+        txt.setAttribute("y", nd.y + (metrics.fontSize / 3));
         txt.setAttribute("class", "node-text");
         txt.setAttribute("text-anchor", "middle");
+        txt.style.fontSize = `${metrics.fontSize}px`;
         txt.textContent = nd.id;
         svg.appendChild(txt);
         nd.elemText = txt;
 
         // Node Interaction Listeners
-        circle.addEventListener('mousedown', onNodeMouseDown);
-        circle.addEventListener('touchstart', onNodeMouseDown, { passive: false });
+        circle.addEventListener('pointerdown', onNodeMouseDown);
 
         circle.addEventListener('click', evt => {
           evt.stopPropagation();
@@ -443,8 +446,7 @@
     });
 
     // Add node on click
-    svg.addEventListener('mousedown', handleSvgDown);
-    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+    svg.addEventListener('pointerdown', handleSvgDown);
 
     function handleSvgDown(evt) {
       if (addNodeMode && evt.target === svg) {
@@ -475,7 +477,11 @@
       cancelDijkstra();
 
       // Place n nodes evenly on a circle
-      const cx = 400, cy = 250, radius = 200;
+      const rect = svg.getBoundingClientRect();
+      const cx = rect.width / 2 || 400;
+      const cy = rect.height / 2 || 250;
+      const radius = Math.min(rect.width, rect.height) * 0.35 || 200;
+      
       for (let i = 0; i < n; i++) {
         const angle = (2 * Math.PI / n) * i;
         const x = cx + radius * Math.cos(angle);
@@ -567,7 +573,6 @@
 
     // ============== DRAGGING EXISTING NODES ==============
     function onNodeMouseDown(evt) {
-      if (evt.type === 'touchstart') evt.preventDefault();
       evt.stopPropagation();
       const circle = evt.currentTarget;
       const nodeId = parseInt(circle.dataset.id, 10);
@@ -579,10 +584,8 @@
       dragOffsetX = pt.x - nd.x;
       dragOffsetY = pt.y - nd.y;
 
-      window.addEventListener('mousemove', onDrag);
-      window.addEventListener('mouseup', onDragEnd);
-      window.addEventListener('touchmove', onDrag, { passive: false });
-      window.addEventListener('touchend', onDragEnd);
+      window.addEventListener('pointermove', onDrag);
+      window.addEventListener('pointerup', onDragEnd);
     }
 
     function onDrag(evt) {
@@ -598,10 +601,8 @@
 
     function onDragEnd() {
       draggingNode = null;
-      window.removeEventListener('mousemove', onDrag);
-      window.removeEventListener('mouseup', onDragEnd);
-      window.removeEventListener('touchmove', onDrag);
-      window.removeEventListener('touchend', onDragEnd);
+      window.removeEventListener('pointermove', onDrag);
+      window.removeEventListener('pointerup', onDragEnd);
     }
 
     // ============== ADD EDGE LOGIC ==============
@@ -823,8 +824,7 @@
     }
 
     // Initial draw
-    drawGraph();
-    chooseGraphType(false);
+    // (Handled by MobileVisualizer.init)
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>

@@ -109,32 +109,41 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
   <script>
+    // Critical: Apply theme BEFORE first paint to prevent FOUC
+    (function() {
+      const storedTheme = localStorage.getItem('theme');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (storedTheme === 'light' || (!storedTheme && !systemDark)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+
     tailwind.config = {
       corePlugins: { preflight: false }
     }
   </script>
 </head>
 
-<body>
+<body class="no-transitions">
   <h1>Prim's MST Step-by-Step Visualiser</h1>
 
   <!-- Main Toolbar -->
   <div id="toolbar">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runPrimBtn" disabled>Run Prim's</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
+    <button id="addNodeBtn" disabled>Add Node</button>
+    <button id="addEdgeBtn" disabled>Add Edge</button>
+    <button id="deleteNodeBtn" disabled>Delete Node</button>
+    <button id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button id="generateBtn" disabled>Generate Graph</button>
+    <button id="runPrimBtn" disabled>Run Prim's</button>
+    <button id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step Navigation (hidden until algorithm runs) -->
   <div id="stepControls" style="display: none;">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
+    <button id="prevStepBtn" disabled>◀ Prev</button>
+    <button id="nextStepBtn" disabled>Next ▶</button>
+    <button id="finishStepBtn" disabled>Finish</button>
+    <button id="exitStepBtn" disabled>Exit</button>
     <span id="stepInfo"></span>
   </div>
 
@@ -291,6 +300,11 @@
         if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
         if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
       });
+
+      // Update text contrast
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // --- Dragging Logic ---
@@ -712,6 +726,14 @@
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>
+  <script>
+    // Enable transitions after initial load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.body.classList.remove('no-transitions');
+      }, 100);
+    });
+  </script>
 </body>
 
 </html>

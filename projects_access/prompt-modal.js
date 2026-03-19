@@ -39,13 +39,13 @@
     }
     #promptModalBox {
       background: var(--color-bg-card, #1e293b);
-      border: 1px solid var(--color-border, rgba(148,163,184,0.15));
+      border: 2px solid var(--color-btn-border, #ffffff);
       border-radius: 12px;
       padding: 24px 28px;
       width: 90%;
       min-width: 280px;
       max-width: 420px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: none !important;
       animation: promptFadeIn 0.15s ease-out;
     }
     @keyframes promptFadeIn {
@@ -86,13 +86,14 @@
       font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
-      border: 1px solid var(--color-border, rgba(148,163,184,0.15));
+      border: 2px solid var(--color-btn-border, #ffffff);
       transition: background 0.15s, transform 0.1s;
+      box-shadow: none !important;
     }
     #promptModalOk {
       background: var(--color-primary, #38bdf8);
       color: #0f172a;
-      border-color: transparent;
+      border-color: var(--color-btn-border, #ffffff) !important;
     }
     #promptModalOk:hover {
       filter: brightness(1.1);

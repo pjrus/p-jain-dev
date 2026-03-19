@@ -93,32 +93,10 @@
       pointer-events: none;
     }
 
-    /* Special node states */
-    .node-source {
-      fill: #4CAF50 !important;
-      /* Source node color */
-    }
-
-    .node-infinite {
-      fill: #F44336 !important;
-      /* Unreachable node color */
-    }
-
-    .node-current {
-      fill: #FFC107 !important;
-      /* Currently processing node color */
-    }
-
     /* Edge visual styles */
     .edge-line {
       stroke-width: 2;
       cursor: pointer;
-    }
-
-    .edge-path {
-      stroke: #e91e63 !important;
-      /* Highlighted path/edge color */
-      stroke-width: 4 !important;
     }
 
     .edge-weight {
@@ -142,22 +120,22 @@
 
   <!-- Top Toolbar for Graph Editing and Algorithm Control -->
   <div id="toolbar">
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runBFBtn" disabled>Run Bellman–Ford</button>
-    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addNodeBtn" disabled>Add Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="addEdgeBtn" disabled>Add Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteNodeBtn" disabled>Delete Node</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="deleteEdgeBtn" disabled>Delete Edge</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="generateBtn" disabled>Generate Graph</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="runBFBtn" disabled>Run Bellman–Ford</button>
+    <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="clearBtn" disabled>Clear All</button>
   </div>
 
   <!-- Step Execution Controls (Hidden until algorithm runs) -->
   <div id="stepControls" style="display: none;">
     <div id="stepButtons">
-      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
-      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
-      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
-      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border border-[var(--color-border)] shadow-md transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="prevStepBtn" disabled>◀ Prev</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="nextStepBtn" disabled>Next ▶</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="finishStepBtn" disabled>Finish</button>
+      <button class="cursor-pointer font-semibold rounded-md px-6 py-2.5 border-2 border-[var(--color-btn-border)] transition-all duration-200 transform hover:-translate-y-0.5 bg-[var(--color-btn-bg)] text-[var(--color-btn-text)] hover:bg-[var(--color-btn-hover)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:-translate-y-0 disabled:hover:shadow-none" id="exitStepBtn" disabled>Exit</button>
     </div>
     <span id="stepInfo"></span>
   </div>
