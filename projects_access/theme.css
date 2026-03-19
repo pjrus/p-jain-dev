@@ -3,53 +3,49 @@
 
 :root {
     /* New Button Theme Spec (Dark Mode Default) */
-    --color-btn-bg: #1e293b;     /* slate-800 */
+    --color-btn-bg: #334155;     /* slate-700 */
     --color-btn-text: #f8fafc;   /* slate-50 */
-    --color-btn-hover: #334155;  /* slate-700 */
+    --color-btn-hover: #475569;  /* slate-600 */
+    --color-btn-border: #64748b; /* slate-500 */
 
     /* Default Dark Theme (Matches Main Site) */
-    --color-bg-main: #020617;    /* Slate-950 - Deep dark */
-    --color-bg-card: rgba(15, 23, 42, 0.8);
-    --color-text-main: #f1f5f9;  /* Slate-100 */
-    --color-text-muted: #94a3b8;  /* Slate-400 */
-    --color-primary: #38bdf8;    /* Sky-400 */
-    --color-accent: #818cf8;     /* Indigo-400 */
+    --color-bg-main: #0f172a;
+    /* Slate-950 */
+    --color-bg-card: rgba(30, 41, 59, 0.7);
+    /* Slate-800 alpha */
+    --color-text-main: #f1f5f9;
+    /* Slate-100 */
+    --color-text-muted: #cbd5e1;
+    /* Slate-300 */
+    --color-primary: #38bdf8;
+    /* Sky-400 */
+    --color-accent: #6366f1;
+    /* Indigo-400 */
     --color-border: rgba(148, 163, 184, 0.15);
-    --color-input-bg: rgba(15, 23, 42, 0.9);
-    --color-button-text: #020617;
+    --color-input-bg: rgba(15, 23, 42, 0.6);
+    --color-button-text: #f8fafc; 
 
     /* Graph/Visualizer Specifics */
-    --color-graph-bg: #0f172a;   /* Slate-900 */
-    --color-node-bg: #1e293b;
+    --color-graph-bg: #1e293b;
+    /* Slate-800 */
+    --color-node-bg: #2563eb;
     --color-node-text: #f8fafc;
-    --color-edge: #475569;       /* Slate-600 */
+    --color-node-stroke: var(--color-primary);
+    --color-edge: #94a3b8;
 
     /* Tree/Trie Visualiser Specifics */
-    --color-svg-bg: #020617;
-    --color-tree-line: #334155;
+    --color-svg-bg: #1e293b;
+    --color-tree-line: #cbd5e1;
     --color-tree-text: #f1f5f9;
-    --color-tree-node-default: #1e293b;
-    --color-tree-node-stroke: #38bdf8;
-    --color-trie-letter: #22c55e;
-    --color-trie-letter-stroke: #052e16;
-    --color-trie-term: #eab308;
-    --color-trie-term-stroke: #422006;
-    --color-rect-fill: rgba(15, 23, 42, 0.9);
-    --color-arrow-fill: #94a3b8;
-    --color-tree-node-text: #f1f5f9;
-
-    /* Glows */
-    --glow-primary: 0 0 15px rgba(56, 189, 248, 0.4);
-    --glow-success: 0 0 15px rgba(34, 197, 94, 0.4);
-    --glow-highlight: 0 0 15px rgba(234, 179, 8, 0.4);
-
-    --color-btn-border: #ffffff;
-
-    /* Responsive Scaling Variables */
-    --node-radius: 20px;
-    --edge-stroke-width: 2px;
-    --font-size-base: 14px;
-    --font-size-small: 12px;
+    --color-tree-node-default: #f1f5f9;
+    --color-tree-node-stroke: #cbd5e1;
+    --color-trie-letter: #4ade80;
+    --color-trie-letter-stroke: #166534;
+    --color-trie-term: #facc15;
+    --color-trie-term-stroke: #713f12;
+    --color-rect-fill: rgba(30, 41, 59, 0.8);
+    --color-arrow-fill: #cbd5e1;
+    --color-tree-node-text: #0f172a;
 }
 
 [data-theme="light"] {
@@ -58,6 +54,7 @@
     --color-btn-bg: #f8fafc;     /* slate-50 */
     --color-btn-text: #020617;   /* slate-950 */
     --color-btn-hover: #f1f5f9;  /* slate-100 */
+    --color-btn-border: #cbd5e1; /* slate-300 */
 
     --color-bg-main: #f8fafc;
     /* Slate-50 */
@@ -76,8 +73,9 @@
 
     /* Graph/Visualizer Specifics */
     --color-graph-bg: #ffffff;
-    --color-node-bg: #ffffff;
-    --color-node-text: #000000;
+    --color-node-bg: #0ea5e9;
+    --color-node-text: #ffffff;
+    --color-node-stroke: var(--color-primary);
     --color-edge: #64748b;
 
     /* Tree/Trie Visualiser Specifics */
@@ -93,7 +91,6 @@
     --color-rect-fill: #e8e0f0;
     --color-arrow-fill: #666666;
     --color-tree-node-text: #0f172a;
-    --color-btn-border: #000000;
 }
 
 body {
@@ -101,10 +98,6 @@ body {
     background-color: var(--color-bg-main) !important;
     color: var(--color-text-main) !important;
     transition: background-color 0.3s, color 0.3s;
-}
-
-body.no-transitions * {
-    transition: none !important;
 }
 
 h1,
@@ -142,12 +135,11 @@ svg {
     border-color: var(--color-border) !important;
     width: 95vw !important;
     max-width: 1200px !important;
-    height: 65vh !important;
+    height: 60vh !important;
     min-height: 350px !important;
     border: 1px solid var(--color-border) !important;
     border-radius: 8px;
-    box-shadow: none !important;
-    touch-action: none; /* Prevents browser handling of touch gestures */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 #svgContainer {
@@ -159,7 +151,6 @@ svg {
     min-height: 350px !important;
     border: 1px solid var(--color-border) !important;
     border-radius: 8px;
-    box-shadow: none !important;
 }
 
 /* Arrow markers */
@@ -176,7 +167,7 @@ marker#arrow path {
     height: 40px;
     border-radius: 50%;
     background: var(--color-bg-card) !important;
-    border: 2px solid var(--color-btn-border) !important;
+    border: 1px solid var(--color-border) !important;
     color: var(--color-text-main) !important;
     font-size: 20px;
     display: flex;
@@ -184,7 +175,7 @@ marker#arrow path {
     justify-content: center;
     cursor: pointer;
     z-index: 9999;
-    box-shadow: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #theme-toggle-btn:hover {
@@ -215,29 +206,23 @@ marker#arrow path {
    ========================================= */
 
 /* Default Node Styling */
-.node-circle, circle {
+.node-circle {
     fill: var(--color-node-bg) !important;
-    stroke: var(--color-tree-node-stroke) !important;
+    stroke: var(--color-node-stroke) !important;
     stroke-width: 2px;
-    
-    transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
 /* Node Text */
-.node-text, text {
-    fill: var(--color-tree-node-text) !important;
-    font-size: var(--font-size-base) !important;
-    font-weight: 700 !important;
-    text-shadow: none !important;
-    pointer-events: none;
-    transition: fill 0.3s ease, font-size 0.3s ease;
+.node-text {
+    fill: var(--color-node-text) !important;
+    font-size: 14px !important;
+    font-weight: bold;
 }
 
 /* Default Edge Styling */
-.edge-line, .edge, line {
-    stroke: var(--color-tree-line) !important;
-    stroke-opacity: 0.6;
-    transition: stroke 0.3s ease, stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+.edge-line,
+.edge {
+    stroke: var(--color-edge) !important;
 }
 
 /* Edge Weights/Labels */
@@ -245,7 +230,7 @@ marker#arrow path {
 .edge-flow,
 .node-text-small {
     fill: var(--color-text-muted) !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
 }
 
@@ -253,32 +238,34 @@ marker#arrow path {
 .node-letter {
     fill: var(--color-trie-letter) !important;
     stroke: var(--color-trie-letter-stroke) !important;
-    
 }
 
 .node-term {
     fill: var(--color-trie-term) !important;
     stroke: var(--color-trie-term-stroke) !important;
-    
 }
 
 /* Specific State Overrides (Ensure visibility on dark bg) */
+/* We keep original colors but might need slight adjustments if they clash */
 
 /* Visited / Source (Green) */
 .node-visited,
 .node-source,
 .node-final {
     fill: #22c55e !important;
+    /* Tailwind green-500 */
     stroke: #14532d !important;
-    
+    /* Tailwind green-900 */
 }
 
 /* Current / Processing (Amber/Yellow) */
 .node-current,
 .node-highlight {
     fill: #eab308 !important;
+    /* Tailwind yellow-500 */
     stroke: #422006 !important;
-    
+    /* yellow-950 */
+    color: #422006 !important;
 }
 
 /* Selected / Target (Orange/Red) */
@@ -286,16 +273,20 @@ marker#arrow path {
 .node-selected-2,
 .node-sink {
     fill: #f97316 !important;
+    /* Tailwind orange-500 */
     stroke: #431407 !important;
-    
 }
 
 /* Infinite / Unreachable (Red) */
-.node-infinite,
+.node-infinite {
+    fill: #ef4444 !important;
+    stroke: #7f1d1d !important;
+}
+
+/* Unprocessed (Red) */
 .node-unprocessed {
     fill: #ef4444 !important;
     stroke: #7f1d1d !important;
-    
 }
 
 /* MST / Path Edges (Pink/Magenta) */
@@ -303,16 +294,18 @@ marker#arrow path {
 .edge-path,
 .edge-augment {
     stroke: #ec4899 !important;
-    stroke-opacity: 1 !important;
+    /* Tailwind pink-500 */
     stroke-width: 4px !important;
-    
 }
 
 /* Current Edge (Yellow) */
-.edge-current,
-.edge-candidate {
+.edge-current {
     stroke: #eab308 !important;
-    stroke-opacity: 1 !important;
+}
+
+/* Candidate Edge */
+.edge-candidate {
+    stroke: #fbbf24 !important;
     stroke-width: 3px !important;
 }
 
@@ -330,6 +323,12 @@ button.selected.selected {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
     transform: translateY(-1px) !important;
 }
+
+button.selected:disabled,
+button.selected.selected:disabled {
+    opacity: 1 !important;
+    filter: none !important;
+}
 /* Responsive Controls Container */
 .controls-container,
 #typeControls,
@@ -338,8 +337,8 @@ button.selected.selected {
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    gap: 8px !important;
-    margin-bottom: 12px !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
     padding: 0 10px !important;
     width: 100% !important;
     max-width: 1200px !important;
@@ -349,9 +348,8 @@ button.selected.selected {
 #toolbar button,
 #toolbar select,
 #stepControls button {
-    margin: 0 !important;
+    margin-right: 0 !important;
     flex: 0 1 auto !important;
-    white-space: nowrap !important;
 }
 
 /* Media Queries for Mobile */
@@ -375,45 +373,18 @@ button.selected.selected {
         font-size: 13px;
     }
 
-    /* Mobile Specific Layout */
-    #typeControls,
-    #toolbar,
-    #stepControls {
-        gap: 6px !important;
-        margin-bottom: 10px !important;
-    }
-
+    /* Stack buttons more aggressively on small screens */
     #typeControls button,
     #toolbar button,
     #toolbar select,
     #stepControls button {
-        padding: 6px 10px !important;
-        font-size: 12px !important;
-        border-width: 1px !important; /* Thinner border for small UI components */
+        padding: 5px 10px !important;
+        font-size: 13px !important;
     }
 
     svg, #svgContainer {
-        height: 60vh !important;
-        min-height: 280px !important;
-    }
-
-    /* Adjust labels for small screens */
-    .edge-weight, .edge-flow {
-        font-size: 10px !important;
-    }
-}
-
-/* Landscape orientation optimization */
-@media screen and (max-height: 600px) and (orientation: landscape) {
-    h1 {
-        display: none; /* Hide H1 to save vertical space on landscape mobile */
-    }
-    svg, #svgContainer {
-        height: 55vh !important;
-        min-height: 200px !important;
-    }
-    .back-link, #theme-toggle-btn {
-        padding: 5px !important;
+        height: 50vh !important;
+        min-height: 300px !important;
     }
 }
 
@@ -427,36 +398,7 @@ button.active.active {
     transform: translateY(-1px) !important;
 }
 
-/* Global Button Refining */
-button,
-#typeControls button,
-#toolbar button,
-#stepControls button,
-#manualControls button,
-#randomControls button,
-#controls button,
-#buildControls button,
-#compressControls button {
-    border: 2px solid var(--color-btn-border) !important;
-    box-shadow: none !important;
-    transition: all 0.2s ease-in-out !important;
-}
-
-button:hover,
-#typeControls button:hover,
-#toolbar button:hover,
-#stepControls button:hover,
-#manualControls button:hover,
-#randomControls button:hover,
-#controls button:hover,
-#buildControls button:hover,
-#compressControls button:hover {
-    box-shadow: none !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Light mode overrides */
-[data-theme="light"] button,
+/* Light mode: very white-gray, black text, defined borders + subtle depth */
 [data-theme="light"] #typeControls button,
 [data-theme="light"] #toolbar button,
 [data-theme="light"] #stepControls button,
@@ -467,10 +409,10 @@ button:hover,
 [data-theme="light"] #compressControls button {
     background-color: #f8fafc !important;
     color: #020617 !important;
-    border-color: #000000 !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 1px 0 rgba(2, 6, 23, 0.08), 0 3px 8px rgba(15, 23, 42, 0.08) !important;
 }
 
-[data-theme="light"] button:hover,
 [data-theme="light"] #typeControls button:hover,
 [data-theme="light"] #toolbar button:hover,
 [data-theme="light"] #stepControls button:hover,
@@ -480,13 +422,7 @@ button:hover,
 [data-theme="light"] #buildControls button:hover,
 [data-theme="light"] #compressControls button:hover {
     background-color: #f1f5f9 !important;
-    border-color: #000000 !important;
-}
-
-/* Dark mode overrides (fallback for specificity) */
-[data-theme="dark"] button,
-button:not([data-theme="light"]) {
-    border-color: #ffffff !important;
+    border-color: #94a3b8 !important;
 }
 
 /* Shared visualizer footer */

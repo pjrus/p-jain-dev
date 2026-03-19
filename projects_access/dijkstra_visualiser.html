@@ -7,6 +7,21 @@
   <title>Dijkstra Step-by-Step Visualizer (Directed/Undirected)</title>
   <link rel="stylesheet" href="theme.css">
   <style>
+    /* Dijkstra-specific node palette: monochrome by theme */
+    :root {
+      /* Dark mode (default): black nodes, white border/text */
+      --color-node-bg: #000000;
+      --color-node-text: #ffffff;
+      --color-node-stroke: #ffffff;
+    }
+
+    [data-theme="light"] {
+      /* Light mode: white nodes, black border/text */
+      --color-node-bg: #ffffff;
+      --color-node-text: #000000;
+      --color-node-stroke: #000000;
+    }
+
     /* Basic reset and flexbox layout for centering */
     body {
       font-family: Arial, sans-serif;
@@ -353,6 +368,10 @@
         if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
         if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
       });
+
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // ============== BUTTON LOGIC Handlers ==============
@@ -748,6 +767,10 @@
         if (n.elemText) n.elemText.textContent = n.id;
       });
       edges.forEach(e => e.elemLine.classList.remove('edge-path'));
+
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // Step navigation
@@ -821,6 +844,10 @@
           if (eObj && eObj.elemLine) eObj.elemLine.classList.add('edge-path');
         }
       });
+
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // Initial draw
