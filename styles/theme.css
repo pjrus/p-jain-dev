@@ -11,8 +11,8 @@
   /* Page-level backgrounds for the app shell and major layout regions. */
   --color-bg-main: #171719;
   --color-bg-card: #171719;
-  --color-bg-card-hover: rgba(255, 255, 255, 0.04);
-  --color-bg-nav: rgba(21, 22, 24, 0.92);
+  --color-bg-card-hover: #1b1b1d;
+  --color-bg-nav: #171719;
   --color-bg-footer: #161719;
   --color-bg-social: rgba(244, 247, 250, 0.045);
 
@@ -27,9 +27,9 @@
   --color-primary-glow: rgba(214, 217, 223, 0.12); /* Focus rings and subtle glow effects. */
   --color-accent: #9fb4cc; /* Secondary accent for badges, markers, and highlights. */
   --color-border: rgba(214, 217, 223, 0.12); /* Default border color across components. */
-  --color-panel: #1d1f23; /* Standard panel and input background. */
-  --color-panel-hover: #26292d; /* Hover or active fill for panel-like surfaces. */
-  --color-panel-strong: #30343a; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
+  --color-panel: #171719; /* Standard panel and input background. */
+  --color-panel-hover: rgba(23,23,25, 0.2);; /* Hover or active fill for panel-like surfaces. */
+  --color-panel-strong: #171719; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
   --color-border-soft: rgba(214, 217, 223, 0.1); /* Low-contrast border for quiet separation. */
   --color-border-strong: rgba(214, 217, 223, 0.16); /* Stronger border for emphasis or hover states. */
   --color-overlay-soft: rgba(255, 255, 255, 0.032); /* Subtle overlay tint for pressed or selected states. */
