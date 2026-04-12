@@ -29,7 +29,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: linear-gradient(180deg, var(--color-surface-1) 0%, color-mix(in srgb, var(--color-surface-1) 70%, var(--color-bg-social)) 100%);
+  background: var(--color-surface-1);
   color: var(--color-text-main);
   font-size: 1.2rem;
   transition: var(--transition);
@@ -38,9 +38,9 @@
 }
 
 .social-link:hover {
-  background: var(--gradient-primary);
-  color: white;
+  background: var(--color-surface-2);
+  color: var(--color-text-main);
   transform: translateY(-3px) rotate(5deg);
-  border-color: transparent;
-  box-shadow: 0 5px 15px color-mix(in srgb, var(--color-primary) 36%, transparent);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 18px 32px -24px rgba(0, 0, 0, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }

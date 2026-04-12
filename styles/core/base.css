@@ -65,22 +65,13 @@ strong {
 
 a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn),
 a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn):visited {
-  color: #ffffff;
+  color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: var(--transition);
 }
 
 a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn):hover {
-  color: #ffffff;
-}
-
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn),
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn):visited {
-  color: var(--color-accent);
-}
-
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) a:not(.btn):not(.nav-link):not(.side-drawer-link):not(.social-link):not(.social-btn):not(.resume-btn):hover {
   color: var(--color-text-main);
 }
 

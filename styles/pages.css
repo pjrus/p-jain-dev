@@ -68,7 +68,7 @@
   padding: 1rem 1.1rem;
   border-radius: 14px;
   border: 1px solid var(--color-border-soft);
-  background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-bg-card) 100%);
+  background: var(--color-surface-1);
   color: var(--color-text-muted);
   font-size: 0.9rem;
   min-width: 12rem;
@@ -82,7 +82,7 @@
 }
 
 .theme-preview-card {
-  background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-bg-card) 100%);
+  background: var(--color-surface-1);
   border: 1px solid var(--color-border-soft);
   border-radius: 24px;
   padding: 1.25rem;
@@ -294,7 +294,7 @@
 .resume-btn {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(180deg, var(--color-surface-1) 0%, color-mix(in srgb, var(--color-surface-1) 72%, var(--color-bg-social)) 100%);
+  background: var(--color-surface-1);
   border: 1px solid var(--color-border-soft);
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -309,21 +309,11 @@
 
 .resume-btn:hover {
   color: var(--color-text-main);
-  background: color-mix(in srgb, var(--color-surface-2) 90%, var(--color-overlay-soft));
+  background: var(--color-surface-2);
 }
 
 .resume-btn i {
   margin-right: 8px;
-}
-
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) .theme-lab-note,
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) .theme-preview-card,
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) .resume-btn {
-  background: var(--color-surface-1);
-}
-
-:root[data-theme-scheme="dark"]:not([data-theme="light"]) .resume-btn:hover {
-  background: var(--color-surface-2);
 }
 
 /* Scroll Offset Fix */

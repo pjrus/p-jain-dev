@@ -68,7 +68,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: var(--gradient-primary);
+  background: var(--color-text-main);
   transition: var(--transition);
   border-radius: 2px;
 }
