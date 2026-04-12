@@ -39,7 +39,7 @@
 }
 
 .btn-outline {
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   color: var(--color-text-main);
   border: 1px solid var(--color-primary);
   /* Make it pop */
@@ -48,7 +48,7 @@
 
 .btn-outline:hover {
   border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-2));
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-panel-hover));
   transform: translateY(-2px);
   color: var(--color-text-main);
 }

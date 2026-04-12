@@ -51,7 +51,7 @@
   height: 3rem;
   border-radius: 50%;
   border: 1px solid var(--color-border-soft);
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   box-shadow: var(--shadow-card), var(--shadow-inset-soft);
   transition: var(--transition);
   /* Make sure click area is good */
@@ -60,7 +60,7 @@
 .scroll-indicator a:hover {
   color: var(--color-text-main);
   border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-2));
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-panel-hover));
 }
 
 .hero-content {

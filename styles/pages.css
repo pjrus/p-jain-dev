@@ -68,7 +68,7 @@
   padding: 1rem 1.1rem;
   border-radius: 14px;
   border: 1px solid var(--color-border-soft);
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   color: var(--color-text-muted);
   font-size: 0.9rem;
   min-width: 12rem;
@@ -82,7 +82,7 @@
 }
 
 .theme-preview-card {
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   border: 1px solid var(--color-border-soft);
   border-radius: 24px;
   padding: 1.25rem;
@@ -112,7 +112,7 @@
   width: fit-content;
   padding: 0.45rem 0.8rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-surface-2) 76%, var(--color-overlay-soft));
+  background: color-mix(in srgb, var(--color-panel-hover) 76%, var(--color-overlay-soft));
   border: 1px solid var(--color-border-soft);
   color: var(--color-text-muted);
   font-size: 0.85rem;
@@ -294,7 +294,7 @@
 .resume-btn {
   display: inline-flex;
   align-items: center;
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   border: 1px solid var(--color-border-soft);
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -309,7 +309,7 @@
 
 .resume-btn:hover {
   color: var(--color-text-main);
-  background: var(--color-surface-2);
+  background: var(--color-panel-hover);
 }
 
 .resume-btn i {
@@ -330,7 +330,7 @@
   width: 40px;
   height: 40px;
   padding: 8px;
-  background: var(--color-surface-1);
+  background: var(--color-panel);
   border: 1px solid var(--color-border-soft);
   border-radius: 8px;
   cursor: pointer;
@@ -362,7 +362,7 @@
 
 .hamburger-btn:hover {
   border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-surface-2) 92%, var(--color-overlay-soft));
+  background: color-mix(in srgb, var(--color-panel-hover) 92%, var(--color-overlay-soft));
 }
 
 @media (max-width: 768px) {
@@ -458,12 +458,12 @@
 .side-drawer-link:hover,
 .side-drawer-link.active {
   color: var(--color-text-main);
-  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-1));
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-panel));
 }
 
 .side-drawer-link.active {
   color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface-2));
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-panel-hover));
 }
 
 [data-theme="light"] .side-drawer {

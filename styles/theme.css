@@ -3,10 +3,12 @@
 
 :root {
   /* Default Dark Palette */
+  /* Base HSL values for derived theme experiments and palette tweaks. */
   --primary-hue: 220;
   --primary-sat: 12%;
   --primary-light: 86%;
 
+  /* Page-level backgrounds for the app shell and major layout regions. */
   --color-bg-main: #171719;
   --color-bg-card: #171719;
   --color-bg-card-hover: rgba(255, 255, 255, 0.04);
@@ -14,49 +16,49 @@
   --color-bg-footer: #161719;
   --color-bg-social: rgba(244, 247, 250, 0.045);
 
+  /* Text colors for primary copy, secondary copy, and hero treatments. */
   --color-text-main: #f5f7fa;
   --color-text-muted: #d5dae1;
   --color-text-hero: #eef2f6;
 
+  /* Core interactive palette used by buttons, links, and emphasis states. */
   --color-primary: #d6d9df;
-  --color-main: #d6d9df;
-  --color-primary-glow: rgba(214, 217, 223, 0.12);
-  --color-accent: #9fb4cc;
-  --color-border: rgba(214, 217, 223, 0.12);
-  --color-surface-1: #1d1f23;
-  --color-surface-2: #26292d;
-  --color-surface-3: #30343a;
-  --color-border-soft: rgba(214, 217, 223, 0.1);
-  --color-border-strong: rgba(214, 217, 223, 0.16);
-  --color-overlay-soft: rgba(255, 255, 255, 0.032);
+  --color-main: #d6d9df; /* Legacy alias used where "main" text/accent is expected. */
+  --color-primary-glow: rgba(214, 217, 223, 0.12); /* Focus rings and subtle glow effects. */
+  --color-accent: #9fb4cc; /* Secondary accent for badges, markers, and highlights. */
+  --color-border: rgba(214, 217, 223, 0.12); /* Default border color across components. */
+  --color-panel: #1d1f23; /* Standard panel and input background. */
+  --color-panel-hover: #26292d; /* Hover or active fill for panel-like surfaces. */
+  --color-panel-strong: #30343a; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
+  --color-border-soft: rgba(214, 217, 223, 0.1); /* Low-contrast border for quiet separation. */
+  --color-border-strong: rgba(214, 217, 223, 0.16); /* Stronger border for emphasis or hover states. */
+  --color-overlay-soft: rgba(255, 255, 255, 0.032); /* Subtle overlay tint for pressed or selected states. */
   --color-success: #10b981; /* Emerald-500 */
   --color-error: #ef4444; /* Red-500 */
 
-  /* Spacing & Layout */
+  /* Shared sizing tokens for layout rhythm and component shapes. */
+  --container-width: 1400px; /* Max width for centered page content. */
+  --header-height: 80px; /* Reserved height for the fixed navigation bar. */
+  --border-radius: 16px; /* Default large radius for cards and surfaces. */
+  --spacing-xs: 0.5rem; /* Tight spacing for small gaps. */
+  --spacing-sm: 1rem; /* Default compact spacing between related elements. */
+  --spacing-md: 2rem; /* Standard section and card padding unit. */
+  --spacing-lg: 4rem; /* Large spacing for section separation. */
+  --hero-padding-top: 1rem; /* Additional top breathing room in the hero section. */
 
-  /* Spacing & Layout */
-  --container-width: 1400px;
-  /* Increased from 1200px */
-  --header-height: 80px;
-  --border-radius: 16px;
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 4rem;
-  --hero-padding-top: 1rem;
-
-  /* Effects */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-  --shadow-card: 0 20px 40px -34px rgba(0, 0, 0, 0.92), 0 1px 0 rgba(255, 255, 255, 0.025);
-  --shadow-card-hover: 0 28px 54px -36px rgba(0, 0, 0, 0.96), 0 1px 0 rgba(255, 255, 255, 0.04);
-  --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.045);
-  --shadow-glow: 0 0 20px var(--color-primary-glow);
-  --backdrop-blur: blur(12px);
-  --transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Reusable visual effects for elevation, glassmorphism, and animation. */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Small elevation. */
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1); /* Large floating surfaces. */
+  --shadow-card: 0 20px 40px -34px rgba(0, 0, 0, 0.92), 0 1px 0 rgba(255, 255, 255, 0.025); /* Resting card shadow. */
+  --shadow-card-hover: 0 28px 54px -36px rgba(0, 0, 0, 0.96), 0 1px 0 rgba(255, 255, 255, 0.04); /* Elevated hover state. */
+  --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.045); /* Inner highlight for glassy surfaces. */
+  --shadow-glow: 0 0 20px var(--color-primary-glow); /* Accent glow for focus/interactive emphasis. */
+  --backdrop-blur: blur(12px); /* Shared backdrop blur for frosted surfaces. */
+  --transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Default component transition stack. */
 }
 
 [data-theme="light"] {
+  /* Light theme overrides preserve token meaning while swapping values. */
   --color-bg-main: #ffffff;
   --color-bg-card: #ffffff;
   --color-bg-card-hover: #f8fafc;
@@ -66,9 +68,9 @@
   --color-text-main: #0f172a;
   --color-text-muted: #0f172a;
   --color-border: #e2e8f0;
-  --color-surface-1: #ffffff;
-  --color-surface-2: #f8fafc;
-  --color-surface-3: #eef2f7;
+  --color-panel: #ffffff;
+  --color-panel-hover: #f8fafc;
+  --color-panel-strong: #eef2f7;
   --color-border-soft: #e2e8f0;
   --color-border-strong: #cbd5e1;
   --color-overlay-soft: rgba(15, 23, 42, 0.04);
@@ -81,9 +83,8 @@
   --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   --shadow-glow: none;
   --color-primary-glow: transparent;
-  --color-primary: #0284c7;
-  --color-main: #000000;
-  /* Sky-600 */
+  --color-primary: #0284c7; /* Sky-600 for primary actions in light mode. */
+  --color-main: #000000; /* Legacy alias kept in sync for light mode. */
 }
 
 /* Light mode background - kept clean */
