@@ -28,8 +28,15 @@
         <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
         <li><a href="playground.html" class="nav-link">Playground</a></li>
       </ul>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
-          class="bi bi-sun-fill"></i></button>
+      <div class="nav-actions">
+        <select id="theme-scheme-select" class="theme-scheme-select" aria-label="Select Site Aesthetic">
+          <option value="light">Light</option>
+          <option value="soft-ash">Soft Ash</option>
+          <option value="gunmetal-frost">Gunmetal Frost</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
+            class="bi bi-sun-fill"></i></button>
+      </div>
     </div>
   </nav>
   <div id="container">
@@ -147,21 +154,21 @@
         <h2>Projects</h2>
         <div class="grid-3">
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/ressie.png" alt="Ressie Resume Builder"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Ressie</h3>
-              <ul>
-                <li>Built a local-first web app for creating and editing LaTeX resumes through a structured form UI without requiring LaTeX knowledge.</li>
-                <li>Implemented a live PDF preview that auto-compiles after typing stops, with a full-screen viewer for distraction-free review.</li>
-                <li>Added support for multiple templates including Jake's Resume, Awesome-CV, and an app-adapted Deedy Resume.</li>
-                <li>Designed a dashboard workflow for creating, searching, duplicating, pinning, archiving, and tagging resumes with localStorage persistence.</li>
-                <li>Prioritised privacy by keeping resume editing in-browser and running compilation on a local backend (localhost) without third-party tracking.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Built a local-first web app for creating and editing LaTeX resumes through a structured form UI without requiring LaTeX knowledge.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Implemented a live PDF preview that auto-compiles after typing stops, with a full-screen viewer for distraction-free review.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Added support for multiple templates including Jake's Resume, Awesome-CV, and an app-adapted Deedy Resume.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Designed a dashboard workflow for creating, searching, duplicating, pinning, archiving, and tagging resumes with localStorage persistence.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Prioritised privacy by keeping resume editing in-browser and running compilation on a local backend (localhost) without third-party tracking.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">React</span>
                 <span class="tech-tag">Vite</span>
                 <span class="tech-tag">Node.js</span>
@@ -171,21 +178,21 @@
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/skill-issue.png" alt="Skill-Issue Platform"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Skill-Issue (Skilliton)</h3>
-              <ul>
-                <li>Built Skill-Issue at UniHack 2026: a peer-to-peer skill exchange platform for university students.</li>
-                <li>Implemented AI-powered matching and real-time Skilliton chat using Firebase Genkit and Google Gemini.</li>
-                <li>Integrated Firebase Authentication (Email + Google), Firestore, and Storage for complete user/profile flows.</li>
-                <li>Added booking workflows with Google Meet link generation and downloadable .ics calendar events.</li>
-                <li><a href="https://studio--studio-818276670-ce8c7.us-central1.hosted.app" target="_blank">View Project</a></li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Built Skill-Issue at UniHack 2026: a peer-to-peer skill exchange platform for university students.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Implemented AI-powered matching and real-time Skilliton chat using Firebase Genkit and Google Gemini.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Integrated Firebase Authentication (Email + Google), Firestore, and Storage for complete user/profile flows.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Added booking workflows with Google Meet link generation and downloadable .ics calendar events.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text"><a href="https://studio--studio-818276670-ce8c7.us-central1.hosted.app" target="_blank">View Project</a></span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">Next.js</span>
                 <span class="tech-tag">Firebase</span>
                 <span class="tech-tag">TypeScript</span>
@@ -194,64 +201,59 @@
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/portfolio.png" alt="Personal Portfolio Website"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Personal Portfolio Website</h3>
-              <ul>
-                <li>Developed and maintain portfolio website at <a href="https://www.p-jain.dev"
-                    target="_blank">www.p-jain.dev</a>.</li>
-                <li>Deployed on Virtual Private Server (VPS) with custom domain configuration.</li>
-                <li>Designed a responsive layout ensuring compatibility across mobile, tablet, and desktop devices.</li>
-                <li>Implemented a custom dark/light mode toggle with persistent local storage state management.</li>
-                <li>Utilised semantic HTML and accessibility best practices for better screen reader support.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Developed and maintain portfolio website at <a href="https://www.p-jain.dev" target="_blank">www.p-jain.dev</a>.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Deployed on Virtual Private Server (VPS) with custom domain configuration.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Designed a responsive layout ensuring compatibility across mobile, tablet, and desktop devices.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Implemented a custom dark/light mode toggle with persistent local storage state management.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Utilised semantic HTML and accessibility best practices for better screen reader support.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">Web Dev</span>
                 <span class="tech-tag">VPS</span>
               </div>
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/tactile-display-project.png" alt="Tactile Display Project"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Tactile Display Project</h3>
-              <ul>
-                <li>Contributed to open-source project developing low-cost refreshable braille displays.</li>
-                <li>Developed React Native application to interact with Tactile Display.</li>
-                <li>Utilised Figma to develop mock prototypes to create an accessible website.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Contributed to open-source project developing low-cost refreshable braille displays.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Developed React Native application to interact with Tactile Display.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Utilised Figma to develop mock prototypes to create an accessible website.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">React Native</span>
                 <span class="tech-tag">Hardware</span>
               </div>
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/braille-quiz-app.png" alt="Braille Character Quiz Game"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Braille Character Quiz Game</h3>
-              <ul>
-                <li>Developed an interactive web-based game for learning and practicing Braille characters at <a
-                    href="https://pjrus.github.io/braille-quiz-game"
-                    target="_blank">pjrus.github.io/braille-quiz-game</a>.</li>
-                <li>Implemented real-time feedback, scoring system, and streak tracking utilising RxJS for reactive
-                  state management.</li>
-                <li>Designed a modern, responsive, and accessible interface with timed challenges and custom
-                  animations.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Developed an interactive web-based game for learning and practicing Braille characters at <a href="https://pjrus.github.io/braille-quiz-game" target="_blank">pjrus.github.io/braille-quiz-game</a>.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Implemented real-time feedback, scoring system, and streak tracking utilising RxJS for reactive state management.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Designed a modern, responsive, and accessible interface with timed challenges and custom animations.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">React</span>
                 <span class="tech-tag">TypeScript</span>
                 <span class="tech-tag">RxJS</span>
@@ -259,19 +261,19 @@
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/appointment-booking-system.png" alt="Appointment Booking System"
                 style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Appointment Booking System</h3>
-              <ul>
-                <li>Developed a comprehensive appointment scheduling platform initially using PHP and MySQL.</li>
-                <li>Modernised the application to a robust Next.js and MongoDB stack for improved scalability and performance.</li>
-                <li>Features include real-time slot availability, user authentication, and admin dashboard for intuitive management.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Developed a comprehensive appointment scheduling platform initially using PHP and MySQL.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Modernised the application to a robust Next.js and MongoDB stack for improved scalability and performance.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Features include real-time slot availability, user authentication, and admin dashboard for intuitive management.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">Next.js</span>
                 <span class="tech-tag">MongoDB</span>
                 <span class="tech-tag">PHP</span>
@@ -280,19 +282,19 @@
             </div>
           </div>
 
-          <div class="content-card project-card">
+          <div class="project-card">
             <div class="card-img-placeholder" style="background: none;">
               <img src="images/pomo-app.jpeg" alt="Pomodoro Timer App"
                 style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-            <div class="carousel-content">
+            <div class="project-card-body">
               <h3>Pomodoro Timer App</h3>
-              <ul>
-                <li>Developed full-featured iOS productivity app with unique liquid animation timer.</li>
-                <li>Integrated glassmorphism UI design, ambient sound playback, and haptic feedback.</li>
-                <li>Designed modular component architecture with file-based routing and persistent storage.</li>
+              <ul class="project-card-list">
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Developed full-featured iOS productivity app with unique liquid animation timer.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Integrated glassmorphism UI design, ambient sound playback, and haptic feedback.</span></li>
+                <li class="project-card-point"><span class="project-card-marker" aria-hidden="true">&#9656;</span><span class="project-card-point-text">Designed modular component architecture with file-based routing and persistent storage.</span></li>
               </ul>
-              <div style="margin-bottom: 0.5rem;">
+              <div class="project-card-tags">
                 <span class="tech-tag">React Native</span>
                 <span class="tech-tag">Expo</span>
                 <span class="tech-tag">TypeScript</span>
@@ -340,40 +342,8 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
+  <script src="theme-manager.js"></script>
   <script src="mobile-menu.js"></script>
-
 </body>
-<script>
-  const toggleButton = document.getElementById('theme-toggle');
-  const icon = toggleButton.querySelector('i');
-  const html = document.documentElement;
-
-  function setTheme(theme) {
-    if (theme === 'light') {
-      html.setAttribute('data-theme', 'light');
-      icon.className = 'bi bi-moon-fill';
-      localStorage.setItem('theme', 'light');
-    } else {
-      html.removeAttribute('data-theme');
-      icon.className = 'bi bi-sun-fill';
-      localStorage.setItem('theme', 'dark');
-    }
-  }
-
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    setTheme(savedTheme);
-  } else {
-    setTheme('dark');
-  }
-
-  toggleButton.addEventListener('click', () => {
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-  });
-</script>
-
-
 
 </html>

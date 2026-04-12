@@ -29,8 +29,15 @@
                 <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
                 <li><a href="playground.html" class="nav-link active">Playground</a></li>
             </ul>
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
-                    class="bi bi-sun-fill"></i></button>
+            <div class="nav-actions">
+                <select id="theme-scheme-select" class="theme-scheme-select" aria-label="Select Site Aesthetic">
+                    <option value="light">Light</option>
+                    <option value="soft-ash">Soft Ash</option>
+                    <option value="gunmetal-frost">Gunmetal Frost</option>
+                </select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
+                        class="bi bi-sun-fill"></i></button>
+            </div>
         </div>
     </nav>
 
@@ -45,6 +52,88 @@
                 <span style="font-size: 0.9rem; opacity: 0.8;"><i class="fas fa-info-circle"></i> Note: Visualisers open
                     in a new tab and may currently use a different theme.</span>
             </p>
+
+            <section class="fade-in-up theme-lab-section" style="animation-delay: 0.1s;">
+                <div class="theme-lab-heading">
+                    <div>
+                        <h2>Dark Mode Theme Lab</h2>
+                        <p class="theme-lab-intro">
+                            Two flat dark-mode ideas with no gradients, built around a restrained, polished dark portfolio feel.
+                            Each card shows a background, surface, primary accent, secondary accent, and text colour.
+                        </p>
+                    </div>
+                    <div class="theme-lab-note">
+                        <span>2 ideas</span>
+                        <span>No gradients</span>
+                    </div>
+                </div>
+
+                <div class="theme-preview-grid">
+                    <article class="theme-preview-card" data-scheme="gunmetal-frost">
+                        <div class="theme-preview-meta">
+                            <div>
+                                <p class="theme-preview-kicker">Crisp / restrained</p>
+                                <h3>Gunmetal Frost</h3>
+                            </div>
+                            <span class="theme-preview-pill">Deep gunmetal with icy silver-blue contrast</span>
+                        </div>
+                        <div class="theme-preview-swatches" aria-label="Gunmetal Frost palette">
+                            <span style="background: #0f1318;"></span>
+                            <span style="background: #1a2028;"></span>
+                            <span style="background: #cbd5e1;"></span>
+                            <span style="background: #8ec5ff;"></span>
+                            <span style="background: #f8fbff;"></span>
+                        </div>
+                        <div class="scheme-preview">
+                            <div class="scheme-preview-shell">
+                                <div class="scheme-preview-nav"><span></span><span></span><span></span></div>
+                                <div class="scheme-preview-body">
+                                    <p class="scheme-preview-label">Dark portfolio</p>
+                                    <h4>Minimal, cool, and sharper in contrast.</h4>
+                                    <p class="scheme-preview-copy">A cool, polished option with a crisp studio-monitor feel and slightly sharper contrast.</p>
+                                    <div class="scheme-preview-actions">
+                                        <span class="scheme-preview-btn primary">Primary</span>
+                                        <span class="scheme-preview-btn secondary">Surface</span>
+                                    </div>
+                                    <div class="scheme-preview-tags"><span>crisp</span><span>cool</span><span>clean</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="theme-preview-card" data-scheme="soft-ash">
+                        <div class="theme-preview-meta">
+                            <div>
+                                <p class="theme-preview-kicker">Neutral / soft</p>
+                                <h3>Soft Ash</h3>
+                            </div>
+                            <span class="theme-preview-pill">Charcoal neutrals with a muted powder-blue accent</span>
+                        </div>
+                        <div class="theme-preview-swatches" aria-label="Soft Ash palette">
+                            <span style="background: #141414;"></span>
+                            <span style="background: #212225;"></span>
+                            <span style="background: #d6d9df;"></span>
+                            <span style="background: #9fb4cc;"></span>
+                            <span style="background: #f5f7fa;"></span>
+                        </div>
+                        <div class="scheme-preview">
+                            <div class="scheme-preview-shell">
+                                <div class="scheme-preview-nav"><span></span><span></span><span></span></div>
+                                <div class="scheme-preview-body">
+                                    <p class="scheme-preview-label">Dark portfolio</p>
+                                    <h4>Monochrome-first with a gentler accent.</h4>
+                                    <p class="scheme-preview-copy">The calmest option in the set if you want a softer grayscale mood without going fully plain.</p>
+                                    <div class="scheme-preview-actions">
+                                        <span class="scheme-preview-btn primary">Primary</span>
+                                        <span class="scheme-preview-btn secondary">Surface</span>
+                                    </div>
+                                    <div class="scheme-preview-tags"><span>soft</span><span>neutral</span><span>quiet</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
 
 
             <section class="fade-in-up">
@@ -217,36 +306,7 @@
         <p>&copy; 2025 Paarangat Jain. All rights reserved.</p>
     </footer>
 
-    <script>
-        const toggleButton = document.getElementById('theme-toggle');
-        const icon = toggleButton.querySelector('i');
-        const html = document.documentElement;
-
-        function setTheme(theme) {
-            if (theme === 'light') {
-                html.setAttribute('data-theme', 'light');
-                icon.className = 'bi bi-moon-fill';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.removeAttribute('data-theme');
-                icon.className = 'bi bi-sun-fill';
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            setTheme(savedTheme);
-        } else {
-            setTheme('dark');
-        }
-
-        toggleButton.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            setTheme(newTheme);
-        });
-    </script>
+    <script src="theme-manager.js"></script>
     <script src="mobile-menu.js"></script>
 </body>
 

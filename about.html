@@ -28,8 +28,15 @@
         <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
         <li><a href="playground.html" class="nav-link">Playground</a></li>
       </ul>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
-          class="bi bi-sun-fill"></i></button>
+      <div class="nav-actions">
+        <select id="theme-scheme-select" class="theme-scheme-select" aria-label="Select Site Aesthetic">
+          <option value="light">Light</option>
+          <option value="soft-ash">Soft Ash</option>
+          <option value="gunmetal-frost">Gunmetal Frost</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i
+            class="bi bi-sun-fill"></i></button>
+      </div>
     </div>
   </nav>
   <div id="container">
@@ -128,36 +135,7 @@
     </div>
     <p>&copy; 2025 Paarangat Jain. All rights reserved.</p>
   </footer>
-  <script>
-    const toggleButton = document.getElementById('theme-toggle');
-    const icon = toggleButton.querySelector('i');
-    const html = document.documentElement;
-
-    function setTheme(theme) {
-      if (theme === 'light') {
-        html.setAttribute('data-theme', 'light');
-        icon.className = 'bi bi-moon-fill';
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.removeAttribute('data-theme');
-        icon.className = 'bi bi-sun-fill';
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme('dark');
-    }
-
-    toggleButton.addEventListener('click', () => {
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  </script>
+  <script src="theme-manager.js"></script>
   <script src="mobile-menu.js"></script>
 </body>
 
