@@ -25,7 +25,8 @@ This project serves as my digital business card and portfolio. It serves to high
 -   **Stylesheets** (`styles/` folder):
     -   `styles.css`: Main stylesheet (imports all partials in cascade order).
     -   `styles/theme.css`: CSS variables and theme definitions (dark/light mode).
-    -   `styles/core.css`: Base resets, typography, layout, navigation, components, and animations.
+    -   `styles/core.css`: Shared-style manifest that imports the split core partials.
+    -   `styles/core/`: Focused shared partials for base, layout, navigation, buttons, hero, cards, sections, footer, animations, and responsive rules.
     -   `styles/pages.css`: Page-specific styles, semantic classes, and responsive overrides.
 
 ## Deployment

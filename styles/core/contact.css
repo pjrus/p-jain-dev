@@ -1,0 +1,106 @@
+/* Contact Section */
+.contact-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacing-md);
+  text-align: left;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--color-surface-1) 0%, color-mix(in srgb, var(--color-surface-1) 86%, var(--color-bg-main)) 100%);
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-text-main);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-inset-soft);
+}
+
+.form-control::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: linear-gradient(180deg, var(--color-surface-2) 0%, color-mix(in srgb, var(--color-surface-1) 84%, var(--color-bg-main)) 100%);
+  box-shadow: var(--shadow-inset-soft), 0 0 0 3px color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-bg-card-hover) 100%);
+  border: 1px solid var(--color-border-soft);
+  transition: var(--transition);
+  text-decoration: none;
+  box-shadow: var(--shadow-card), var(--shadow-inset-soft);
+}
+
+.social-btn i {
+  font-size: 1.5rem;
+}
+
+.social-btn.linkedin:hover {
+  background: #0077b5;
+  color: white;
+  border-color: #0077b5;
+  transform: translateY(-2px);
+}
+
+.social-btn.github:hover {
+  background: #333;
+  color: white;
+  border-color: #333;
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .social-btn.github:hover {
+  background: #24292e;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}

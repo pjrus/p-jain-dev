@@ -1,6 +1,6 @@
 (function () {
   var DEFAULT_THEME = 'dark';
-  var DEFAULT_SCHEME = 'soft-ash';
+  var DEFAULT_SCHEME = 'dark';
   var LIGHT_AESTHETIC = 'light';
   var STORAGE_THEME = 'theme';
   var STORAGE_SCHEME = 'theme-scheme';

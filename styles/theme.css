@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Default Dark Palette - Soft Ash */
+  /* Default Dark Palette */
   --primary-hue: 220;
   --primary-sat: 12%;
   --primary-light: 86%;
@@ -59,26 +59,10 @@
   --transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-:root[data-theme-scheme="gunmetal-frost"]:not([data-theme="light"]) {
-  --color-bg-main: #0f1318;
-  --color-bg-card: #1a2028;
-  --color-bg-card-hover: #242b35;
-  --color-bg-nav: rgba(17, 22, 28, 0.94);
-  --color-bg-footer: #0f1318;
-  --color-text-main: #f8fbff;
-  --color-text-muted: #ced7e2;
-  --color-text-hero: #eef4fb;
-  --color-primary: #cbd5e1;
-  --color-main: #cbd5e1;
-  --color-primary-glow: rgba(203, 213, 225, 0.16);
-  --color-accent: #8ec5ff;
-  --color-border: rgba(203, 213, 225, 0.14);
-}
-
-:root[data-theme-scheme="soft-ash"]:not([data-theme="light"]) {
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) {
   --color-bg-main: #171719;
-  --color-bg-card: #222427;
-  --color-bg-card-hover: #2a2d31;
+  --color-bg-card: #171719;
+  --color-bg-card-hover: rgba(255, 255, 255, 0.04);
   --color-bg-nav: rgba(21, 22, 24, 0.92);
   --color-bg-footer: #161719;
   --color-bg-social: rgba(244, 247, 250, 0.045);
@@ -96,19 +80,19 @@
   --color-border-soft: rgba(214, 217, 223, 0.1);
   --color-border-strong: rgba(214, 217, 223, 0.16);
   --color-overlay-soft: rgba(255, 255, 255, 0.032);
-  --gradient-surface: linear-gradient(180deg, #272a2e 0%, #222427 100%);
+  --gradient-surface: #222427;
   --shadow-card: 0 20px 40px -34px rgba(0, 0, 0, 0.92), 0 1px 0 rgba(255, 255, 255, 0.025);
   --shadow-card-hover: 0 28px 54px -36px rgba(0, 0, 0, 0.96), 0 1px 0 rgba(255, 255, 255, 0.04);
   --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
-:root[data-theme-scheme="soft-ash"]:not([data-theme="light"]) .social-link {
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .social-link {
   background: var(--color-surface-1);
   border-color: var(--color-border-soft);
   box-shadow: 0 14px 28px -24px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-:root[data-theme-scheme="soft-ash"]:not([data-theme="light"]) .social-link:hover {
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .social-link:hover {
   background: var(--color-surface-2);
   color: var(--color-text-main);
   border-color: var(--color-border-strong);

@@ -1,0 +1,277 @@
+/* Grids & Cards Extension */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-card,
+.content-card {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card), var(--shadow-inset-soft);
+}
+
+.project-card:hover,
+.content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover), var(--shadow-inset-soft);
+  border-color: var(--color-border-strong);
+  background: linear-gradient(180deg, var(--color-bg-card-hover) 0%, var(--color-bg-card) 100%);
+}
+
+.card-img-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-surface-1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-border-soft);
+  box-shadow: var(--shadow-inset-soft);
+}
+
+.card-img-placeholder i {
+  font-size: 4rem;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.project-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+
+.project-card p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Base styles for project cards */
+.content-card .card-img-placeholder,
+.project-card .card-img-placeholder {
+  width: calc(100% + calc(2 * var(--card-padding)));
+  max-width: none;
+  height: 200px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-2) 88%, black) 0%, var(--color-surface-1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--color-primary);
+  /* Use a safe variable to always cover the card's padding */
+  margin: calc(-1 * var(--card-padding)) calc(-1 * var(--card-padding)) 1rem calc(-1 * var(--card-padding));
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border-bottom: 1px solid var(--color-border-soft);
+  overflow: hidden;
+}
+
+.content-card .card-img-placeholder img,
+.project-card .card-img-placeholder img {
+  border-radius: 0;
+  /* Let the parent container handle the top rounded corners */
+}
+
+.project-card {
+  --card-padding: var(--spacing-md);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.project-card > :not(.card-img-placeholder):not(.project-card-body) {
+  width: 100%;
+}
+
+.project-card-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.85rem 0 0;
+  flex: 1;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-3) transparent;
+}
+
+.project-card-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-card-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-card-list::-webkit-scrollbar-thumb {
+  background: var(--color-surface-3);
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+}
+
+.project-card-point {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 0.8rem minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: start;
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.project-card-point:last-child {
+  margin-bottom: 0;
+}
+
+.project-card-marker {
+  color: var(--color-accent);
+  line-height: 1.6;
+}
+
+.project-card-point-text {
+  min-width: 0;
+}
+
+/* Push the tech tags to the bottom of the project card */
+.project-card > div:last-child:not(.project-card-body),
+.project-card-tags {
+  margin-top: auto;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--color-border-soft);
+  margin-bottom: 0;
+}
+
+.tech-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-1));
+  color: var(--color-text-main);
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, var(--color-border-soft));
+  box-shadow: var(--shadow-inset-soft);
+}
+
+/* Skills Section */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.skill-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-bg-card) 100%);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 12px;
+  color: var(--color-text-main);
+  font-weight: 500;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card), var(--shadow-inset-soft);
+}
+
+.skill-badge:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-bg-card-hover) 100%);
+  box-shadow: var(--shadow-card-hover), var(--shadow-inset-soft);
+}
+
+.skill-badge i {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+}
+
+/* Components */
+.title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  /* Solid color */
+  margin-bottom: var(--spacing-xs);
+  display: inline-block;
+}
+
+.project-card,
+.content-card {
+  --card-padding: var(--spacing-md);
+  padding: calc(var(--card-padding) - 0.35rem) var(--card-padding) var(--card-padding);
+  margin-bottom: var(--spacing-md);
+}
+
+.content-card .content-card,
+.content-card .project-card {
+  background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-bg-card) 100%);
+  border-color: var(--color-border-soft);
+  box-shadow: var(--shadow-inset-soft);
+}
+
+.content-card .content-card:hover,
+.content-card .project-card:hover {
+  transform: none;
+  background: linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-bg-card) 100%);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-inset-soft);
+}
+
+.content-card img,
+.project-card img {
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.content-card img:hover,
+.project-card img:hover {
+  transform: scale(1.02);
+}
+
+.content-card ul {
+  list-style: disc;
+  margin-top: 0.5rem;
+}
+
+.content-card li {
+  padding-left: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-muted);
+}
+
+.content-card li::marker {
+  color: var(--color-accent);
+}

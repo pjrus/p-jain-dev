@@ -149,18 +149,7 @@
   box-shadow: 0 22px 50px -24px var(--scheme-shadow);
 }
 
-.theme-preview-card[data-scheme="gunmetal-frost"] .scheme-preview {
-  --scheme-bg: #0f1318;
-  --scheme-surface: #1a2028;
-  --scheme-nav: #11161c;
-  --scheme-text: #f8fbff;
-  --scheme-muted: #ced7e2;
-  --scheme-primary: #cbd5e1;
-  --scheme-accent: #8ec5ff;
-  --scheme-border: rgba(203, 213, 225, 0.18);
-}
-
-.theme-preview-card[data-scheme="soft-ash"] .scheme-preview {
+.theme-preview-card[data-scheme="dark"] .scheme-preview {
   --scheme-bg: #141414;
   --scheme-surface: #212225;
   --scheme-nav: #161618;
@@ -325,6 +314,16 @@
 
 .resume-btn i {
   margin-right: 8px;
+}
+
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .theme-lab-note,
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .theme-preview-card,
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .resume-btn {
+  background: var(--color-surface-1);
+}
+
+:root[data-theme-scheme="dark"]:not([data-theme="light"]) .resume-btn:hover {
+  background: var(--color-surface-2);
 }
 
 /* Scroll Offset Fix */

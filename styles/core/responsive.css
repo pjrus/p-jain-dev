@@ -1,0 +1,147 @@
+/* Responsive Design */
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--spacing-sm) 0 5rem;
+    /* Increased bottom padding to clear the scroll indicator */
+    gap: var(--spacing-md);
+  }
+
+  .hero-img-container {
+    order: -1;
+  }
+
+  .hero-content {
+    margin-top: 0;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  /* ... existing mobile styles ... */
+  .project-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+    gap: 0.5rem;
+  }
+
+  .theme-scheme-select {
+    display: none;
+  }
+
+  :root {
+    --header-height: 70px;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1.25rem;
+    --spacing-lg: 2rem;
+  }
+
+  .h-flex-container {
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .content-card {
+    --card-padding: var(--spacing-sm);
+    padding: var(--card-padding);
+  }
+
+  .project-card p {
+    font-size: 0.85rem;
+  }
+
+  .project-card-point {
+    font-size: 0.85rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  #container {
+    padding: 0 var(--spacing-sm);
+    padding-top: calc(var(--header-height) + var(--spacing-sm));
+    margin-bottom: 2rem;
+    /* Reduced bottom margin */
+  }
+
+  .d-flex.flex-row.gap-2 {
+    flex-direction: column;
+  }
+
+  /* Utilities fixes for mobile */
+  .d-flex.align-center.gap-2 {
+    /* Keep row for icons+titles unless very small */
+    flex-direction: row;
+  }
+
+  .about-img-container {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  img {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  /* Fix Hero Image specific override if needed */
+  .hero-img {
+    width: 280px !important;
+    height: 280px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Nav bar adjustments - mobile: hide links, show hamburger */
+  #nav-bar ul {
+    display: none;
+  }
+
+  .nav-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  #nav-bar ul {
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.35rem;
+  }
+}
