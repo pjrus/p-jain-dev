@@ -7,14 +7,9 @@
   <title>AVL Tree Visualiser with Step-by-Step Insert & Delete</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic page reset and layout */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: transparent;
     }
 
     h1 {
@@ -147,7 +142,7 @@
 
     // Show the step navigation controls
     function showStepControls() {
-      document.getElementById('stepControls').style.display = 'block';
+      document.getElementById('stepControls').style.display = 'flex';
       updateStepInfo();
     }
 

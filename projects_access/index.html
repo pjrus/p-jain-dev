@@ -4,134 +4,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Algorithm Visualisers Index</title>
+  <title>Algorithm Visualizers</title>
   <link rel="stylesheet" href="theme.css">
-  <style>
-    /* Global styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Base Body Styling */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* background: #f0f2f5; theme.css handles this */
-      /* color: #333; theme.css handles this */
-      line-height: 1.6;
-    }
-
-    /* Container for centralized content */
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    /* Header Styling */
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      color: var(--color-text-main);
-      margin-bottom: 10px;
-    }
-
-    header p {
-      color: var(--color-text-muted);
-      font-size: 1rem;
-    }
-
-    /* Grid Layout for Visualizer Cards */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
-
-    /* Individual Card Styling */
-    .card {
-      background: var(--color-bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 16px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
-      border: 2px solid var(--color-border);
-      display: flex;
-      box-shadow: none !important;
-    }
-
-    /* Card Hover Effect */
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: none !important;
-      border-color: var(--color-primary);
-      background: rgba(30, 41, 59, 0.9);
-    }
-
-    /* Link Styling inside Cards */
-    .card a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      color: var(--color-text-main);
-      text-decoration: none;
-      padding: 32px 24px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .card a:hover {
-      color: var(--color-primary);
-    }
-
-    /* Footer Styling */
-    footer {
-      text-align: center;
-      margin-top: 80px;
-      padding-bottom: 40px;
-      color: var(--color-text-muted);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--color-border);
-      padding-top: 20px;
-    }
-  </style>
 </head>
 
-<body>
-  <div class="container">
-    <!-- Main Header -->
-    <header>
-      <h1>Algorithm Visualizers</h1>
-      <p>Interactive playground for exploring data structures and algorithms.</p>
+<body class="projects-index-page">
+  <a class="back-link" href="../playground.html"><i class="bi bi-arrow-left"></i><span>Playground</span></a>
+
+  <div class="projects-index-shell">
+    <header class="projects-index-hero">
+      <div class="projects-index-kicker"><i class="bi bi-stars"></i><span>Projects Access</span></div>
+      <h1 class="projects-index-title">Algorithm visualizers rebuilt for the main-site dark palette.</h1>
+      <p class="projects-index-description">
+        Open each app from here to explore data structures, graph algorithms, and step-by-step visual explanations in a
+        shared interface that now matches the rest of the website.
+      </p>
     </header>
 
-    <!-- Visualizer Links Grid -->
-    <div class="grid">
-      <div class="card"><a href="avl_tree_balance.html">AVL Tree Balance</a></div>
-      <div class="card"><a href="bellman_ford.html">Bellman-Ford Algorithm</a></div>
-      <div class="card"><a href="graph_traversal_visualiser.html">Graph Traversals (BFS/DFS)</a></div>
-      <div class="card"><a href="mst_visualiser.html">Minimum Spanning Tree</a></div>
-      <div class="card"><a href="dijkstra_visualiser.html">Dijkstra's Shortest Path</a></div>
-      <div class="card"><a href="ford_fulkerson.html">Ford-Fulkerson Max Flow</a></div>
-      <div class="card"><a href="prefix_trie.html">Prefix Trie</a></div>
-      <div class="card"><a href="suffix_trie.html">Suffix Trie</a></div>
-      <div class="card"><a href="tree-visualiser.html">Red Black & 2-3 Tree</a></div>
-    </div>
+    <section class="projects-index-grid" aria-label="Algorithm visualizer apps">
+      <article class="projects-index-card">
+        <a href="avl_tree_balance.html">
+          <span class="projects-index-tag">Trees</span>
+          <h2>AVL Tree Balance</h2>
+          <p>Insert and remove keys while watching rotations and balance updates unfold.</p>
+        </a>
+      </article>
 
-    <!-- Footer -->
-    <footer>
-      &copy; 2025 Algorithm Visualizers • Built by Paarangat Jain
+      <article class="projects-index-card">
+        <a href="two_three_tree.html">
+          <span class="projects-index-tag">Trees</span>
+          <h2>2-3 Tree Visualiser</h2>
+          <p>Practice inserts, removals, and random generation in a 2-3 tree workspace.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="tree-visualiser.html">
+          <span class="projects-index-tag">Trees</span>
+          <h2>Left-Leaning Red-Black Tree</h2>
+          <p>Step through the operations that mirror 2-3 tree balancing using red-black links.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="prefix_trie.html">
+          <span class="projects-index-tag">Tries</span>
+          <h2>Prefix Trie</h2>
+          <p>Build a trie from lowercase words and inspect how prefixes share branches.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="suffix_trie.html">
+          <span class="projects-index-tag">Tries</span>
+          <h2>Compressed Suffix Trie</h2>
+          <p>Compare the raw and compressed versions of a suffix trie for sample strings.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="graph_traversal_visualiser.html">
+          <span class="projects-index-tag">Traversals</span>
+          <h2>Graph Traversals</h2>
+          <p>Switch between BFS and DFS in a graph builder designed for quick experimentation.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="dfs_visualiser.html">
+          <span class="projects-index-tag">Traversals</span>
+          <h2>DFS Step-by-Step</h2>
+          <p>Focus specifically on DFS with explicit step controls and graph editing actions.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="dijkstra_visualiser.html">
+          <span class="projects-index-tag">Shortest Paths</span>
+          <h2>Dijkstra Visualiser</h2>
+          <p>Track distance updates, current nodes, and path choices as the frontier expands.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="bellman_ford.html">
+          <span class="projects-index-tag">Shortest Paths</span>
+          <h2>Bellman-Ford</h2>
+          <p>Inspect repeated edge relaxations and path updates in weighted directed graphs.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="ford_fulkerson.html">
+          <span class="projects-index-tag">Flows</span>
+          <h2>Ford-Fulkerson Max Flow</h2>
+          <p>Build a network and watch augmenting paths push flow from source to sink.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="mst_visualiser.html">
+          <span class="projects-index-tag">Minimum Spanning Trees</span>
+          <h2>MST Visualiser</h2>
+          <p>Compare Prim and Kruskal in one graph workspace with shared controls.</p>
+        </a>
+      </article>
+
+      <article class="projects-index-card">
+        <a href="prims_algorithm.html">
+          <span class="projects-index-tag">Minimum Spanning Trees</span>
+          <h2>Prim's Algorithm</h2>
+          <p>Step through Prim's MST workflow in a dedicated single-algorithm view.</p>
+        </a>
+      </article>
+    </section>
+
+    <footer class="projects-index-footer">
+      Each app keeps its original algorithm logic and interactive controls while sharing the refreshed project shell and
+      dark-mode palette.
     </footer>
   </div>
+
   <script src="theme.js"></script>
 </body>
 

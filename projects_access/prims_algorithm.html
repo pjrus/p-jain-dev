@@ -7,15 +7,9 @@
   <title>Prim's MST Step-by-Step Visualiser</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic reset and flexbox layout */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* background-color: #f5f5f5; handled by theme.css */
+      background-color: transparent;
     }
 
     h1 {
@@ -61,42 +55,10 @@
       pointer-events: none;
     }
 
-    .node-visited {
-      fill: #4CAF50 !important;
-    }
-
-    /* Visited / In MST */
-    .node-current {
-      fill: #FFC107 !important;
-    }
-
-    /* Currently Processing */
-    .node-selected-1 {
-      fill: #FF5722 !important;
-    }
-
-    /* Source for new edge */
-    .node-selected-2 {
-      fill: #9C27B0 !important;
-    }
-
-    /* Dest for new edge */
-
     /* Edge Styling */
     .edge-line {
       stroke-width: 2;
       cursor: pointer;
-    }
-
-    .edge-mst {
-      stroke: #e91e63 !important;
-      stroke-width: 4 !important;
-    }
-
-    /* Confirmed MST Edge */
-    .edge-current {
-      stroke: #FFC107 !important;
-      stroke-width: 4 !important;
     }
 
     /* Currently Processing Edge */
@@ -251,6 +213,9 @@
         c.setAttribute('cy', nd.y);
         c.setAttribute('r', 16.8);
         c.setAttribute('class', 'node-circle');
+        c.setAttribute('fill', 'var(--color-node-bg)');
+        c.setAttribute('stroke', 'var(--color-node-stroke)');
+        c.setAttribute('stroke-width', '2');
         c.dataset.id = nd.id;
         svg.appendChild(c);
         nd.elemCircle = c;
@@ -675,7 +640,7 @@
     exitStepBtn.onclick = cancelPrim;
 
     function showStepControls() {
-      stepControls.style.display = 'inline-block';
+      stepControls.style.display = 'flex';
       prevStepBtn.disabled = true;
       nextStepBtn.disabled = primSteps.length <= 1;
       finishStepBtn.disabled = primSteps.length <= 1;

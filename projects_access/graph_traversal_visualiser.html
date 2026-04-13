@@ -7,15 +7,9 @@
   <title>Graph Traversal Visualiser (BFS & DFS)</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic reset and flexbox layout */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* background: #f5f5f5; handled by theme.css */
+      background-color: transparent;
     }
 
     h1 {
@@ -275,6 +269,9 @@
         c.setAttribute('cy', nd.y);
         c.setAttribute('r', 16.8);
         c.setAttribute('class', 'node-circle');
+        c.setAttribute('fill', 'var(--color-node-bg)');
+        c.setAttribute('stroke', 'var(--color-node-stroke)');
+        c.setAttribute('stroke-width', '2');
         c.dataset.id = nd.id;
         svg.appendChild(c);
         nd.elemCircle = c;
@@ -331,6 +328,10 @@
         if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
         if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
       });
+
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // ===== TOOLBAR HANDLERS =====
@@ -524,7 +525,7 @@
       draggingNode.x = p.x - dragOffsetX;
       draggingNode.y = p.y - dragOffsetY;
       drawGraph();
-      if (stepControls.style.display === 'block') {
+      if (stepControls.style.display === 'flex') {
         highlightStep(currentStepIndex);
       }
     }
@@ -701,7 +702,7 @@
     exitBtn.onclick = cancelTraversal;
 
     function showStepControls() {
-      stepControls.style.display = 'inline-block';
+      stepControls.style.display = 'flex';
       prevBtn.disabled = true;
       nextBtn.disabled = traversalSteps.length <= 1;
       finishBtn.disabled = traversalSteps.length <= 1;

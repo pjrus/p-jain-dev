@@ -7,15 +7,9 @@
   <title>Left-Leaning Red-Black Tree Visualiser</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic Styling */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* theme-handled background */
+      background-color: transparent;
     }
 
     h1 {
@@ -629,7 +623,7 @@
     }
 
     function showStepControls() {
-      document.getElementById('stepControls').style.display = 'block';
+      document.getElementById('stepControls').style.display = 'flex';
       updateStepInfo();
     }
 

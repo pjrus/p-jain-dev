@@ -7,30 +7,9 @@
   <title>Dijkstra Step-by-Step Visualizer (Directed/Undirected)</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Dijkstra-specific node palette: monochrome by theme */
-    :root {
-      /* Dark mode (default): black nodes, white border/text */
-      --color-node-bg: #000000;
-      --color-node-text: #ffffff;
-      --color-node-stroke: #ffffff;
-    }
-
-    [data-theme="light"] {
-      /* Light mode: white nodes, black border/text */
-      --color-node-bg: #ffffff;
-      --color-node-text: #000000;
-      --color-node-stroke: #000000;
-    }
-
-    /* Basic reset and flexbox layout for centering */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* background-color: #f5f5f5; handled by theme.css */
+      background-color: transparent;
     }
 
     h1 {
@@ -285,6 +264,15 @@
       directedBtn.disabled = !canSwitch;
     }
 
+    function applyBaseNodePaint(circle) {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const fill = rootStyles.getPropertyValue('--color-node-bg').trim() || '#d6d9df';
+      const stroke = rootStyles.getPropertyValue('--color-node-stroke').trim() || '#f5f7fa';
+      circle.style.fill = fill;
+      circle.style.stroke = stroke;
+      circle.style.strokeWidth = '2px';
+    }
+
     // ============== NODE & EDGE RENDERING ==============
     function drawGraph() {
       // Clean SVG
@@ -335,6 +323,7 @@
         circle.setAttribute("cy", nd.y);
         circle.setAttribute("r", metrics.nodeRadius);
         circle.setAttribute("class", "node-circle");
+        applyBaseNodePaint(circle);
         circle.dataset.id = nd.id; // Store ID for logic
         svg.appendChild(circle);
         nd.elemCircle = circle;
@@ -613,7 +602,7 @@
       draggingNode.x = pt.x - dragOffsetX;
       draggingNode.y = pt.y - dragOffsetY;
       drawGraph();
-      if (stepControls.style.display === 'block') {
+      if (stepControls.style.display === 'flex') {
         highlightStep(currentStepIndex);
       }
     }
@@ -797,7 +786,7 @@
     });
 
     function showStepControls() {
-      stepControls.style.display = 'inline-block';
+      stepControls.style.display = 'flex';
       prevStepBtn.disabled = true;
       nextStepBtn.disabled = (dijkstraSteps.length <= 1);
       finishStepBtn.disabled = (dijkstraSteps.length <= 1);
@@ -855,6 +844,16 @@
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      if (nodes.length > 0) {
+        drawGraph();
+        if (dijkstraSteps.length > 0 && stepControls.style.display === 'flex') {
+          highlightStep(currentStepIndex);
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

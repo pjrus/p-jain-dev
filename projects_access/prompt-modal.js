@@ -28,8 +28,8 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px);
+      background: rgba(8, 10, 14, 0.62);
+      backdrop-filter: blur(10px);
       z-index: 100000;
       justify-content: center;
       align-items: center;
@@ -38,15 +38,15 @@
       display: flex;
     }
     #promptModalBox {
-      background: var(--color-bg-card, #1e293b);
-      border: 2px solid var(--color-btn-border, #ffffff);
-      border-radius: 12px;
-      padding: 24px 28px;
+      background: var(--color-bg-card, #171719);
+      border: 1px solid var(--color-border, rgba(214, 217, 223, 0.12));
+      border-radius: 20px;
+      padding: 24px 24px 22px;
       width: 90%;
       min-width: 280px;
       max-width: 420px;
-      box-shadow: none !important;
-      animation: promptFadeIn 0.15s ease-out;
+      box-shadow: var(--shadow-card, 0 24px 60px -38px rgba(0, 0, 0, 0.9));
+      animation: promptFadeIn 0.18s ease-out;
     }
     @keyframes promptFadeIn {
       from { opacity: 0; transform: scale(0.95) translateY(-8px); }
@@ -55,24 +55,26 @@
     #promptModalMsg {
       margin: 0 0 14px;
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--color-text-main, #f1f5f9);
       line-height: 1.5;
     }
     #promptModalInput {
       width: 100%;
       box-sizing: border-box;
-      padding: 10px 12px;
+      min-height: 46px;
+      padding: 0 14px;
       font-size: 15px;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid var(--color-border, rgba(148,163,184,0.15));
       background: var(--color-input-bg, rgba(15,23,42,0.6));
       color: var(--color-text-main, #f1f5f9);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     #promptModalInput:focus {
-      border-color: var(--color-primary, #38bdf8);
+      border-color: var(--color-border-strong, rgba(214, 217, 223, 0.2));
+      box-shadow: 0 0 0 4px var(--color-focus-ring, rgba(159, 180, 204, 0.28));
     }
     #promptModalBtns {
       display: flex;
@@ -81,30 +83,32 @@
       margin-top: 18px;
     }
     #promptModalOk, #promptModalCancel {
-      padding: 8px 20px;
+      min-height: 42px;
+      padding: 0 18px;
       font-size: 14px;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: 999px;
       cursor: pointer;
-      border: 2px solid var(--color-btn-border, #ffffff);
-      transition: background 0.15s, transform 0.1s;
-      box-shadow: none !important;
+      border: 1px solid var(--color-btn-border, rgba(214, 217, 223, 0.15));
+      transition: background 0.15s, transform 0.1s, border-color 0.15s;
+      box-shadow: var(--shadow-sm, 0 10px 28px -24px rgba(0, 0, 0, 0.7)) !important;
     }
     #promptModalOk {
-      background: var(--color-primary, #38bdf8);
-      color: #0f172a;
-      border-color: var(--color-btn-border, #ffffff) !important;
+      background: var(--color-primary, #d6d9df);
+      color: var(--color-button-text, #111214);
+      border-color: var(--color-primary, #d6d9df) !important;
     }
     #promptModalOk:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.02);
       transform: translateY(-1px);
     }
     #promptModalCancel {
-      background: var(--color-btn-bg, #334155);
+      background: var(--color-btn-bg, rgba(255, 255, 255, 0.04));
       color: var(--color-btn-text, #f8fafc);
     }
     #promptModalCancel:hover {
-      background: var(--color-btn-hover, #475569);
+      background: var(--color-btn-hover, rgba(255, 255, 255, 0.08));
+      border-color: var(--color-border-strong, rgba(214, 217, 223, 0.2));
       transform: translateY(-1px);
     }
   `;

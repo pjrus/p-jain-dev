@@ -7,15 +7,9 @@
   <title>DFS Step-by-Step Visualiser (Directed/Undirected)</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic reset and flexbox layout for centering */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* background-color: #f5f5f5; handled by theme.css */
+      background-color: transparent;
     }
 
     h1 {
@@ -90,38 +84,10 @@
       pointer-events: none;
     }
 
-    /* Highlighted nodes for DFS */
-    .node-current {
-      fill: #FFC107 !important;
-      /* Current Node being visited */
-    }
-
-    .node-final {
-      fill: #4CAF50 !important;
-      /* Fully visited node */
-    }
-
-    /* Highlighted nodes during “Add Edge” interaction */
-    .node-selected-1 {
-      fill: #FF5722 !important;
-      /* first node selected */
-    }
-
-    .node-selected-2 {
-      fill: #9C27B0 !important;
-      /* second node selected */
-    }
-
     /* Edge styling */
     .edge-line {
       stroke-width: 2;
       cursor: pointer;
-    }
-
-    .edge-path {
-      stroke: #e91e63 !important;
-      /* highlight color for DFS‐tree edges */
-      stroke-width: 4 !important;
     }
 
     .edge-weight {
@@ -315,6 +281,9 @@
         circle.setAttribute("cy", nd.y);
         circle.setAttribute("r", 16.8); // 16 * 1.05
         circle.setAttribute("class", "node-circle");
+        circle.setAttribute("fill", "var(--color-node-bg)");
+        circle.setAttribute("stroke", "var(--color-node-stroke)");
+        circle.setAttribute("stroke-width", "2");
         circle.dataset.id = nd.id; // Store ID for lookup
         svg.appendChild(circle);
         nd.elemCircle = circle;
@@ -348,6 +317,10 @@
         if (edgeFirstNode === nd.id) nd.elemCircle.classList.add('node-selected-1');
         if (edgeSecondNode === nd.id) nd.elemCircle.classList.add('node-selected-2');
       });
+
+      if (typeof window.updateNodeTextContrast === 'function') {
+        window.updateNodeTextContrast();
+      }
     }
 
     // ===== BUTTON LOGIC Handlers =====
@@ -612,7 +585,7 @@
       draggingNode.x = pt.x - dragOffsetX;
       draggingNode.y = pt.y - dragOffsetY;
       drawGraph();
-      if (stepControls.style.display === 'block') {
+      if (stepControls.style.display === 'flex') {
         highlightStep(currentStepIndex);
       }
     }
@@ -794,7 +767,7 @@
     exitStepBtn.addEventListener('click', cancelDFS);
 
     function showStepControls() {
-      stepControls.style.display = 'inline-block';
+      stepControls.style.display = 'flex';
       prevStepBtn.disabled = true;
       nextStepBtn.disabled = (dfsSteps.length <= 1);
       finishStepBtn.disabled = (dfsSteps.length <= 1);

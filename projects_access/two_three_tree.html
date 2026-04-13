@@ -7,15 +7,9 @@
   <title>2-3 Tree Visualiser</title>
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* Basic Layout */
+    /* Shared shell handles page layout */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* background: #f5f5f5; handled by theme.css */
+      background-color: transparent;
     }
 
     h1 {
@@ -515,7 +509,7 @@
         keyList.push(v); keyList.sort((a, b) => a - b);
 
         stepping = true;
-        document.getElementById("stepControls").style.display = "block";
+        document.getElementById("stepControls").style.display = "flex";
         updateStepInfo(); redraw();
       }
       document.getElementById("keyInput").value = ""; document.getElementById("keyInput").focus();
@@ -545,7 +539,7 @@
         recordSnapshot("After removal");
 
         stepping = true;
-        document.getElementById("stepControls").style.display = "block";
+        document.getElementById("stepControls").style.display = "flex";
         updateStepInfo(); redraw();
       }
       document.getElementById("keyInput").value = ""; document.getElementById("keyInput").focus();
