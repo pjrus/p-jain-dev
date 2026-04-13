@@ -40,14 +40,18 @@
   --tech-tag-bg: #171719; /* Primary fill for technology tags. */
   --tech-tag-border: #00bfff; /* Border colour for technology tags. */
   --tech-tag-text: #f5f7fa; /* Text colour for technology tags. */
-  --project-link-primary-bg: #00bfff; /* Stronger filled project action button. */
-  --project-link-primary-bg-hover: #24c8ff; /* Hover fill for the primary project action. */
-  --project-link-primary-border: #00bfff; /* Border for the primary project action. */
-  --project-link-primary-text: #052033; /* Text colour for the primary project action. */
-  --project-link-secondary-bg: #171719; /* Secondary project action button fill. */
-  --project-link-secondary-bg-hover: #1f2023; /* Hover fill for the secondary project action. */
-  --project-link-secondary-border: #00bfff; /* Border for the secondary project action. */
-  --project-link-secondary-text: #f5f7fa; /* Text colour for the secondary project action. */
+  --project-link-github-bg: #20242b; /* Neutral GitHub button fill for dark mode. */
+  --project-link-github-bg-hover: #2a3038; /* Hover fill for the GitHub project action. */
+  --project-link-github-border: #3b4450; /* Border for the GitHub project action. */
+  --project-link-github-text: #f5f7fa; /* Text colour for the GitHub project action. */
+  --project-link-github-icon-bg: #2d353f; /* Icon chip fill for the GitHub project action. */
+  --project-link-github-icon: #f5f7fa; /* Icon colour for the GitHub project action. */
+  --project-link-visit-bg: #00bfff; /* Primary Visit button fill for dark mode. */
+  --project-link-visit-bg-hover: #24c8ff; /* Hover fill for the Visit project action. */
+  --project-link-visit-border: #00bfff; /* Border for the Visit project action. */
+  --project-link-visit-text: #052033; /* Text colour for the Visit project action. */
+  --project-link-visit-icon-bg: #052033; /* Icon chip fill for the Visit project action. */
+  --project-link-visit-icon: #f5f7fa; /* Icon colour for the Visit project action. */
 
   /* Shared sizing tokens for layout rhythm and component shapes. */
   --container-width: 1400px; /* Max width for centered page content. */
@@ -93,14 +97,18 @@
   --tech-tag-bg: #f0f9ff; /* Soft tag fill tuned for light surfaces. */
   --tech-tag-border: #7dd3fc; /* Border colour for technology tags in light mode. */
   --tech-tag-text: #075985; /* Text colour for technology tags in light mode. */
-  --project-link-primary-bg: #00bfff; /* Stronger filled project action button in light mode. */
-  --project-link-primary-bg-hover: #24c8ff; /* Hover fill for the primary project action in light mode. */
-  --project-link-primary-border: #00bfff; /* Border for the primary project action in light mode. */
-  --project-link-primary-text: #052033; /* Text colour for the primary project action in light mode. */
-  --project-link-secondary-bg: #ffffff; /* Secondary project action button fill in light mode. */
-  --project-link-secondary-bg-hover: #f8fafc; /* Hover fill for the secondary project action in light mode. */
-  --project-link-secondary-border: #00bfff; /* Border for the secondary project action in light mode. */
-  --project-link-secondary-text: #0f172a; /* Text colour for the secondary project action in light mode. */
+  --project-link-github-bg: #ffffff; /* Neutral GitHub button fill for light mode. */
+  --project-link-github-bg-hover: #f8fafc; /* Hover fill for the GitHub project action in light mode. */
+  --project-link-github-border: #cbd5e1; /* Border for the GitHub project action in light mode. */
+  --project-link-github-text: #0f172a; /* Text colour for the GitHub project action in light mode. */
+  --project-link-github-icon-bg: #e2e8f0; /* Icon chip fill for the GitHub project action in light mode. */
+  --project-link-github-icon: #0f172a; /* Icon colour for the GitHub project action in light mode. */
+  --project-link-visit-bg: #0284c7; /* Primary Visit button fill for light mode. */
+  --project-link-visit-bg-hover: #0369a1; /* Hover fill for the Visit project action in light mode. */
+  --project-link-visit-border: #0284c7; /* Border for the Visit project action in light mode. */
+  --project-link-visit-text: #f8fafc; /* Text colour for the Visit project action in light mode. */
+  --project-link-visit-icon-bg: #e0f2fe; /* Icon chip fill for the Visit project action in light mode. */
+  --project-link-visit-icon: #075985; /* Icon colour for the Visit project action in light mode. */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
   --shadow-card: 0 10px 24px -18px rgba(15, 23, 42, 0.12);
