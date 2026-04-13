@@ -90,9 +90,9 @@
   --color-success: #059669; /* Emerald-600 */
   --color-error: #dc2626; /* Red-600 */
   --btn-outline-border: 1px solid var(--color-border); /* Keep outline button borders softer in light mode. */
-  --tech-tag-bg: #171719; /* Keep technology tags visually consistent in light mode. */
-  --tech-tag-border: #00bfff; /* Border colour for technology tags in light mode. */
-  --tech-tag-text: #f5f7fa; /* Text colour for technology tags in light mode. */
+  --tech-tag-bg: #f0f9ff; /* Soft tag fill tuned for light surfaces. */
+  --tech-tag-border: #7dd3fc; /* Border colour for technology tags in light mode. */
+  --tech-tag-text: #075985; /* Text colour for technology tags in light mode. */
   --project-link-primary-bg: #00bfff; /* Stronger filled project action button in light mode. */
   --project-link-primary-bg-hover: #24c8ff; /* Hover fill for the primary project action in light mode. */
   --project-link-primary-border: #00bfff; /* Border for the primary project action in light mode. */
