@@ -33,6 +33,7 @@
 
 .btn-primary:hover {
   background: var(--color-accent);
+  border: var(--btn-outline-border);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px var(--color-primary-glow);
   color: #0f172a;
@@ -41,17 +42,17 @@
 .btn-outline {
   background: var(--color-panel);
   color: var(--color-text-main);
-  border: 1px solid var(--color-primary);
+  border: var(--btn-outline-border);
   /* Make it pop */
   box-shadow: var(--shadow-inset-soft);
 }
-
+ 
 .btn-outline:hover {
-  border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-panel-hover));
+  border: var(--btn-outline-border);
+  /* background: color-mix(in srgb, var(--color-primary) 10%, var(--color-panel-hover)); */
   transform: translateY(-2px);
   color: var(--color-text-main);
-}
+} 
 
 .btn:focus,
 .btn:focus-visible,
@@ -67,7 +68,6 @@ button:focus-visible {
 
 [data-theme="light"] .btn-outline {
   color: var(--color-text-main);
-  border-color: var(--color-border);
   background: #ffffff;
 }
 

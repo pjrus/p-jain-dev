@@ -80,6 +80,10 @@
     font-size: 0.85rem;
   }
 
+  .project-card-link {
+    flex-basis: 100%;
+  }
+
   p {
     font-size: 1rem;
   }

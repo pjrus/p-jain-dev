@@ -25,9 +25,9 @@
   --color-primary: #d6d9df;
   --color-main: #d6d9df; /* Legacy alias used where "main" text/accent is expected. */
   --color-primary-glow: rgba(214, 217, 223, 0.12); /* Focus rings and subtle glow effects. */
-  --color-accent: #00bfff; /* Secondary accent for badges, markers, and highlights. */
+  --color-accent: #9fb4cc; /* Secondary accent for badges, markers, and highlights. */
   --color-hero-ring: #00bfff; /* Dedicated hero portrait ring color. */
-  --color-border: #00bfff; /* Default border color across components. */
+  --color-border: rgba(214, 217, 223, 0.12); /* Default border color across components. */
   --color-panel: #171719; /* Standard panel and input background. */
   --color-panel-hover: rgba(23,23,25, 0.2);; /* Hover or active fill for panel-like surfaces. */
   --color-panel-strong: #171719; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
@@ -36,6 +36,18 @@
   --color-overlay-soft: rgba(255, 255, 255, 0.032); /* Subtle overlay tint for pressed or selected states. */
   --color-success: #10b981; /* Emerald-500 */
   --color-error: #ef4444; /* Red-500 */
+  --btn-outline-border: 1px solid #00bfff; /* Default border for outline buttons. */
+  --tech-tag-bg: #171719; /* Primary fill for technology tags. */
+  --tech-tag-border: #00bfff; /* Border colour for technology tags. */
+  --tech-tag-text: #f5f7fa; /* Text colour for technology tags. */
+  --project-link-primary-bg: #00bfff; /* Stronger filled project action button. */
+  --project-link-primary-bg-hover: #24c8ff; /* Hover fill for the primary project action. */
+  --project-link-primary-border: #00bfff; /* Border for the primary project action. */
+  --project-link-primary-text: #052033; /* Text colour for the primary project action. */
+  --project-link-secondary-bg: #171719; /* Secondary project action button fill. */
+  --project-link-secondary-bg-hover: #1f2023; /* Hover fill for the secondary project action. */
+  --project-link-secondary-border: #00bfff; /* Border for the secondary project action. */
+  --project-link-secondary-text: #f5f7fa; /* Text colour for the secondary project action. */
 
   /* Shared sizing tokens for layout rhythm and component shapes. */
   --container-width: 1400px; /* Max width for centered page content. */
@@ -77,6 +89,18 @@
   --color-overlay-soft: rgba(15, 23, 42, 0.04);
   --color-success: #059669; /* Emerald-600 */
   --color-error: #dc2626; /* Red-600 */
+  --btn-outline-border: 1px solid var(--color-border); /* Keep outline button borders softer in light mode. */
+  --tech-tag-bg: #171719; /* Keep technology tags visually consistent in light mode. */
+  --tech-tag-border: #00bfff; /* Border colour for technology tags in light mode. */
+  --tech-tag-text: #f5f7fa; /* Text colour for technology tags in light mode. */
+  --project-link-primary-bg: #00bfff; /* Stronger filled project action button in light mode. */
+  --project-link-primary-bg-hover: #24c8ff; /* Hover fill for the primary project action in light mode. */
+  --project-link-primary-border: #00bfff; /* Border for the primary project action in light mode. */
+  --project-link-primary-text: #052033; /* Text colour for the primary project action in light mode. */
+  --project-link-secondary-bg: #ffffff; /* Secondary project action button fill in light mode. */
+  --project-link-secondary-bg-hover: #f8fafc; /* Hover fill for the secondary project action in light mode. */
+  --project-link-secondary-border: #00bfff; /* Border for the secondary project action in light mode. */
+  --project-link-secondary-text: #0f172a; /* Text colour for the secondary project action in light mode. */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
   --shadow-card: 0 10px 24px -18px rgba(15, 23, 42, 0.12);
@@ -178,12 +202,6 @@
 
 [data-theme="light"] .social-link:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="light"] .skill-badge {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-  box-shadow: none;
 }
 
 [data-theme="light"] .form-control:focus {
