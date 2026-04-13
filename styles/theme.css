@@ -31,7 +31,7 @@
   --color-panel: #171719; /* Standard panel and input background. */
   --color-panel-hover: rgba(23,23,25, 0.2);; /* Hover or active fill for panel-like surfaces. */
   --color-panel-strong: #171719; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
-  --color-border-soft: rgba(214, 217, 223, 0.1); /* Low-contrast border for quiet separation. */
+  --color-border-soft: #00bfff; /* Low-contrast border for quiet separation. */
   --color-border-strong: rgba(214, 217, 223, 0.16); /* Stronger border for emphasis or hover states. */
   --color-overlay-soft: rgba(255, 255, 255, 0.032); /* Subtle overlay tint for pressed or selected states. */
   --color-success: #10b981; /* Emerald-500 */
