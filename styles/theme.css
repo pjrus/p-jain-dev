@@ -27,7 +27,7 @@
   --color-primary-glow: rgba(214, 217, 223, 0.12); /* Focus rings and subtle glow effects. */
   --color-accent: #9fb4cc; /* Secondary accent for badges, markers, and highlights. */
   --color-hero-ring: #00bfff; /* Dedicated hero portrait ring color. */
-  --color-border: rgba(214, 217, 223, 0.12); /* Default border color across components. */
+  --color-border: #00bfff; /* Default border color across components. */
   --color-panel: #171719; /* Standard panel and input background. */
   --color-panel-hover: rgba(23,23,25, 0.2);; /* Hover or active fill for panel-like surfaces. */
   --color-panel-strong: #171719; /* Higher-contrast panel shade for chrome like scrollbar thumbs. */
