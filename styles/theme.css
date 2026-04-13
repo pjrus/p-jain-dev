@@ -25,7 +25,7 @@
   --color-primary: #d6d9df;
   --color-main: #d6d9df; /* Legacy alias used where "main" text/accent is expected. */
   --color-primary-glow: rgba(214, 217, 223, 0.12); /* Focus rings and subtle glow effects. */
-  --color-accent: #9fb4cc; /* Secondary accent for badges, markers, and highlights. */
+  --color-accent: #00bfff; /* Secondary accent for badges, markers, and highlights. */
   --color-hero-ring: #00bfff; /* Dedicated hero portrait ring color. */
   --color-border: #00bfff; /* Default border color across components. */
   --color-panel: #171719; /* Standard panel and input background. */
