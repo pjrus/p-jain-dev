@@ -99,6 +99,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
+  <script src="visualizer-mobile.js"></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -188,25 +189,6 @@
     // DFS Algorithm State
     let dfsSteps = [];   // Array of steps: { visited, stack, current, parent }
     let currentStepIndex = 0;
-
-    // Dragging State
-    let draggingNode = null;
-    let dragOffsetX = 0;
-    let dragOffsetY = 0;
-
-    // ===== SVG COORD UTILITY =====
-    // Converts mouse/touch event coordinates to SVG coordinates
-    function getSvgPoint(evt) {
-      const pt = svg.createSVGPoint();
-      if (evt.touches && evt.touches.length) {
-        pt.x = evt.touches[0].clientX;
-        pt.y = evt.touches[0].clientY;
-      } else {
-        pt.x = evt.clientX;
-        pt.y = evt.clientY;
-      }
-      return pt.matrixTransform(svg.getScreenCTM().inverse());
-    }
 
     // ===== INITIAL SETUP & MODE SWITCHING =====
     undirectedBtn.addEventListener('click', () => chooseGraphType(false));
@@ -298,9 +280,6 @@
         nd.elemText = txt;
 
         // Node Interaction Listeners
-        circle.addEventListener('mousedown', onNodeMouseDown);
-        circle.addEventListener('touchstart', onNodeMouseDown, { passive: false });
-
         circle.addEventListener('click', evt => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -322,6 +301,35 @@
         window.updateNodeTextContrast();
       }
     }
+
+    function createNodeAt(point) {
+      const newNode = {
+        id: nextNodeId++,
+        x: point.x,
+        y: point.y,
+        elemCircle: null,
+        elemText: null
+      };
+      nodes.push(newNode);
+      drawGraph();
+    }
+
+    function refreshDFSOverlay() {
+      if (stepControls.style.display === 'flex') {
+        highlightStep(currentStepIndex);
+      }
+    }
+
+    const graphViewportController = MobileVisualizer.createGraphController({
+      svg,
+      getNodes: () => nodes,
+      draw: drawGraph,
+      createNodeAt,
+      isAddNodeMode: () => addNodeMode,
+      afterInteractiveRedraw: refreshDFSOverlay
+    });
+
+    window.graphViewportController = graphViewportController;
 
     // ===== BUTTON LOGIC Handlers =====
 
@@ -430,31 +438,14 @@
       generateBtn.classList.remove('active');
       edgeFirstNode = edgeSecondNode = null;
       cancelDFS();
+      graphViewportController.resetViewport();
       updateTypeButtons();
       drawGraph();
     });
 
-    // Node addition handler
-    svg.addEventListener('mousedown', handleSvgDown);
-    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
-
-    function handleSvgDown(evt) {
-      if (addNodeMode && evt.target === svg) {
-        const pt = getSvgPoint(evt);
-        const newNode = {
-          id: nextNodeId++,
-          x: pt.x,
-          y: pt.y,
-          elemCircle: null,
-          elemText: null
-        };
-        nodes.push(newNode);
-        drawGraph();
-      }
-    }
-
     // ===== GENERATE RANDOM GRAPH =====
     function generateGraph(n, m) {
+      graphViewportController.resetViewport();
       nodes = [];
       edges = [];
       nextNodeId = 0;
@@ -467,7 +458,10 @@
       cancelDFS();
 
       // Place nodes evenly on a circle
-      const cx = 400, cy = 250, radius = 200;
+      const viewport = graphViewportController.captureViewport();
+      const cx = viewport.x + viewport.width / 2;
+      const cy = viewport.y + viewport.height / 2;
+      const radius = Math.min(viewport.width, viewport.height) * 0.33;
       for (let i = 0; i < n; i++) {
         const angle = (2 * Math.PI / n) * i;
         const x = cx + radius * Math.cos(angle);
@@ -557,45 +551,6 @@
       edges.splice(idx, 1);
       updateTypeButtons();
       drawGraph();
-    }
-
-    // ===== DRAGGING LOGIC =====
-    function onNodeMouseDown(evt) {
-      if (evt.type === 'touchstart') evt.preventDefault();
-      evt.stopPropagation();
-      const circle = evt.currentTarget;
-      const nodeId = parseInt(circle.dataset.id, 10);
-      const nd = nodes.find(n => n.id === nodeId);
-      if (!nd) return;
-
-      draggingNode = nd;
-      const pt = getSvgPoint(evt);
-      dragOffsetX = pt.x - nd.x;
-      dragOffsetY = pt.y - nd.y;
-
-      window.addEventListener('mousemove', onDrag);
-      window.addEventListener('mouseup', onDragEnd);
-      window.addEventListener('touchmove', onDrag, { passive: false });
-      window.addEventListener('touchend', onDragEnd);
-    }
-
-    function onDrag(evt) {
-      if (!draggingNode) return;
-      const pt = getSvgPoint(evt);
-      draggingNode.x = pt.x - dragOffsetX;
-      draggingNode.y = pt.y - dragOffsetY;
-      drawGraph();
-      if (stepControls.style.display === 'flex') {
-        highlightStep(currentStepIndex);
-      }
-    }
-
-    function onDragEnd() {
-      draggingNode = null;
-      window.removeEventListener('mousemove', onDrag);
-      window.removeEventListener('mouseup', onDragEnd);
-      window.removeEventListener('touchmove', onDrag);
-      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== ADD EDGE LOGIC =====

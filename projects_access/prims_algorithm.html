@@ -70,6 +70,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
+  <script src="visualizer-mobile.js"></script>
   <script>
     // Critical: Apply theme BEFORE first paint to prevent FOUC
     (function() {
@@ -147,21 +148,6 @@
 
     // Algorithm & Dragging State
     let primSteps = [], currentStepIndex = 0;
-    let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
-
-    // --- Utilities ---
-    // Get Mouse/Touch position relative to SVG
-    function getSvgPoint(evt) {
-      const pt = svg.createSVGPoint();
-      if (evt.touches && evt.touches.length) {
-        pt.x = evt.touches[0].clientX;
-        pt.y = evt.touches[0].clientY;
-      } else {
-        pt.x = evt.clientX; pt.y = evt.clientY;
-      }
-      return pt.matrixTransform(svg.getScreenCTM().inverse());
-    }
-
     // Initialize Toolbar State (Enable all)
     [addNodeBtn, addEdgeBtn, deleteNodeBtn, deleteEdgeBtn,
       generateBtn, runPrimBtn, clearBtn].forEach(b => b.disabled = false);
@@ -231,9 +217,6 @@
         nd.elemText = t;
 
         // Node Interaction Handlers
-        c.addEventListener('mousedown', onNodeMouseDown);
-        c.addEventListener('touchstart', onNodeMouseDown, { passive: false });
-
         c.addEventListener('click', evt => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -272,61 +255,36 @@
       }
     }
 
-    // --- Dragging Logic ---
-    function onNodeMouseDown(evt) {
-      if (evt.type === 'touchstart') evt.preventDefault();
-      if (addNodeMode || deleteNodeMode || addEdgeMode || deleteEdgeMode) return;
-      evt.stopPropagation();
-      const id = +evt.currentTarget.dataset.id;
-      const nd = nodes.find(n => n.id === id);
-      if (!nd) return;
-      draggingNode = nd;
-      const p = getSvgPoint(evt);
-      dragOffsetX = p.x - nd.x;
-      dragOffsetY = p.y - nd.y;
-      window.addEventListener('mousemove', onDrag);
-      window.addEventListener('mouseup', onDragEnd);
-      window.addEventListener('touchmove', onDrag, { passive: false });
-      window.addEventListener('touchend', onDragEnd);
-    }
-    function onDrag(evt) {
-      if (!draggingNode) return;
-      const p = getSvgPoint(evt);
-      draggingNode.x = p.x - dragOffsetX;
-      draggingNode.y = p.y - dragOffsetY;
+    function createNodeAt(point) {
+      nodes.push({
+        id: nextNodeId,
+        label: nextNodeId.toString(),
+        x: point.x,
+        y: point.y,
+        elemCircle: null,
+        elemText: null
+      });
+      nextNodeId++;
       drawGraph();
-      // If visualizing, update highlights on drag
-      if (stepControls.style.display !== 'none') {
+    }
+
+    function refreshPrimOverlay() {
+      if (stepControls.style.display !== 'none' && primSteps.length > 0) {
         highlightPrimStep(currentStepIndex);
       }
     }
-    function onDragEnd() {
-      draggingNode = null;
-      window.removeEventListener('mousemove', onDrag);
-      window.removeEventListener('mouseup', onDragEnd);
-      window.removeEventListener('touchmove', onDrag);
-      window.removeEventListener('touchend', onDragEnd);
-    }
 
-    // --- Node Addition Logic ---
-    svg.addEventListener('mousedown', handleSvgDown);
-    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
+    const graphViewportController = MobileVisualizer.createGraphController({
+      svg,
+      getNodes: () => nodes,
+      draw: drawGraph,
+      createNodeAt,
+      isAddNodeMode: () => addNodeMode,
+      afterInteractiveRedraw: refreshPrimOverlay,
+      canDragNode: () => !(addNodeMode || deleteNodeMode || addEdgeMode || deleteEdgeMode)
+    });
 
-    function handleSvgDown(e) {
-      if (addNodeMode && e.target === svg) {
-        const p = getSvgPoint(e);
-        nodes.push({
-          id: nextNodeId,
-          label: nextNodeId.toString(),
-          x: p.x,
-          y: p.y,
-          elemCircle: null,
-          elemText: null
-        });
-        nextNodeId++;
-        drawGraph();
-      }
-    }
+    window.graphViewportController = graphViewportController;
 
     // --- Toolbar Actions ---
     addNodeBtn.onclick = () => {
@@ -392,6 +350,7 @@
       addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
       edgeFirstNode = edgeSecondNode = null;
       cancelPrim();
+      graphViewportController.resetViewport();
       drawGraph();
     };
 
@@ -456,6 +415,7 @@
     };
 
     function generateGraph(n, m) {
+      graphViewportController.resetViewport();
       nodes = [];
       edges = [];
       nextNodeId = 0;
@@ -465,7 +425,10 @@
       addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
       cancelPrim();
 
-      const cx = 400, cy = 250, r = 200;
+      const viewport = graphViewportController.captureViewport();
+      const cx = viewport.x + viewport.width / 2;
+      const cy = viewport.y + viewport.height / 2;
+      const r = Math.min(viewport.width, viewport.height) * 0.33;
       for (let i = 0; i < n; i++) {
         const ang = 2 * Math.PI / n * i;
         const x = cx + r * Math.cos(ang),
@@ -650,7 +613,6 @@
     // Update Visualization for Current Step
     function updateStepDisplay() {
       drawGraph();
-    chooseGraphType(false);
       highlightPrimStep(currentStepIndex);
 
       prevStepBtn.disabled = (currentStepIndex === 0);

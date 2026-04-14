@@ -2,6 +2,8 @@
   const storageKey = `visualizerState:${window.location.pathname}`;
   let lastSnapshot = '';
   let isApplyingState = false;
+  let pendingViewport = null;
+  const restoredStateRegistry = window.__visualizerStateRestoredPaths || (window.__visualizerStateRestoredPaths = {});
 
   function hasGraphBindings() {
     return typeof nodes !== 'undefined' && Array.isArray(nodes)
@@ -52,6 +54,13 @@
       state.sinkId = sinkId;
     }
 
+    if (window.graphViewportController && typeof window.graphViewportController.captureViewport === 'function') {
+      const viewport = window.graphViewportController.captureViewport();
+      if (viewport) {
+        state.viewport = viewport;
+      }
+    }
+
     return state;
   }
 
@@ -99,9 +108,27 @@
       if (typeof drawGraph === 'function') {
         drawGraph();
       }
+
+      if (state.viewport) {
+        if (window.graphViewportController && typeof window.graphViewportController.restoreViewport === 'function') {
+          window.graphViewportController.restoreViewport(state.viewport);
+          pendingViewport = null;
+        } else {
+          pendingViewport = { ...state.viewport };
+        }
+      }
     } finally {
       isApplyingState = false;
     }
+  }
+
+  function applyPendingViewport() {
+    if (!pendingViewport || !window.graphViewportController || typeof window.graphViewportController.restoreViewport !== 'function') {
+      return;
+    }
+
+    window.graphViewportController.restoreViewport(pendingViewport);
+    pendingViewport = null;
   }
 
   function tryRestoreState() {
@@ -115,6 +142,8 @@
     try {
       const parsed = JSON.parse(raw);
       applyRestoredState(parsed);
+      applyPendingViewport();
+      restoredStateRegistry[window.location.pathname] = true;
       lastSnapshot = JSON.stringify(captureState());
     } catch {
       localStorage.removeItem(storageKey);
@@ -144,4 +173,5 @@
   setInterval(persistState, 800);
   window.addEventListener('pagehide', persistState);
   window.addEventListener('beforeunload', persistState);
+  window.addEventListener('load', applyPendingViewport);
 })();

@@ -99,7 +99,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
-  <script src="visualizer-mobile.js" defer></script>
+  <script src="visualizer-mobile.js"></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -190,55 +190,16 @@
     let dijkstraSteps = []; // array of { dist, visited, current, parent }
     let currentStepIndex = 0;
 
-    // Dragging state
-    let draggingNode = null;
-    let dragOffsetX = 0;
-    let dragOffsetY = 0;
-
-    // ============== SVG COORDINATE UTILITY ==============
-    // Converts mouse/touch event coordinates to SVG coordinates
-    function getSvgPoint(evt) {
-      const pt = svg.createSVGPoint();
-      let x, y;
-      
-      if (evt.clientX !== undefined) {
-        x = evt.clientX;
-        y = evt.clientY;
-      } else if (evt.touches && evt.touches.length > 0) {
-        x = evt.touches[0].clientX;
-        y = evt.touches[0].clientY;
-      } else if (evt.changedTouches && evt.changedTouches.length > 0) {
-        x = evt.changedTouches[0].clientX;
-        y = evt.changedTouches[0].clientY;
-      } else {
-        return { x: 0, y: 0 };
-      }
-      
-      pt.x = x;
-      pt.y = y;
-      
-      try {
-        const matrix = svg.getScreenCTM().inverse();
-        return pt.matrixTransform(matrix);
-      } catch (e) {
-        return { x: pt.x, y: pt.y };
-      }
-    }
-
     // ============== INITIAL SETUP & GRAPH TYPE ==============
     window.addEventListener('DOMContentLoaded', () => {
-      // Initialize Mobile Optimization
-      MobileVisualizer.init(svg, drawGraph);
-      
       undirectedBtn.addEventListener('click', () => chooseGraphType(false));
       directedBtn.addEventListener('click', () => chooseGraphType(true));
-      
-      // Default type (undirected)
-      chooseGraphType(false);
-      
-      // Seed some initial nodes if it's a first visit
-      if (nodes.length === 0) {
-        generateGraph(5); 
+
+      chooseGraphType(isDirected);
+
+      const restoredStateRegistry = window.__visualizerStateRestoredPaths || {};
+      if (!restoredStateRegistry[window.location.pathname] && nodes.length === 0 && edges.length === 0) {
+        generateGraph(5);
       }
     });
 
@@ -339,8 +300,6 @@
         nd.elemText = txt;
 
         // Node Interaction Listeners
-        circle.addEventListener('pointerdown', onNodeMouseDown);
-
         circle.addEventListener('click', evt => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -362,6 +321,35 @@
         window.updateNodeTextContrast();
       }
     }
+
+    function createNodeAt(point) {
+      const newNode = {
+        id: nextNodeId++,
+        x: point.x,
+        y: point.y,
+        elemCircle: null,
+        elemText: null
+      };
+      nodes.push(newNode);
+      drawGraph();
+    }
+
+    function refreshDijkstraOverlay() {
+      if (stepControls.style.display === 'flex' && dijkstraSteps.length > 0) {
+        highlightStep(currentStepIndex);
+      }
+    }
+
+    const graphViewportController = MobileVisualizer.createGraphController({
+      svg,
+      getNodes: () => nodes,
+      draw: drawGraph,
+      createNodeAt,
+      isAddNodeMode: () => addNodeMode,
+      afterInteractiveRedraw: refreshDijkstraOverlay
+    });
+
+    window.graphViewportController = graphViewportController;
 
     // ============== BUTTON LOGIC Handlers ==============
 
@@ -449,30 +437,14 @@
       generateBtn.classList.remove('active');
       edgeFirstNode = edgeSecondNode = null;
       cancelDijkstra();
+      graphViewportController.resetViewport();
       updateTypeButtons();
       drawGraph();
     });
 
-    // Add node on click
-    svg.addEventListener('pointerdown', handleSvgDown);
-
-    function handleSvgDown(evt) {
-      if (addNodeMode && evt.target === svg) {
-        const pt = getSvgPoint(evt);
-        const newNode = {
-          id: nextNodeId++,
-          x: pt.x,
-          y: pt.y,
-          elemCircle: null,
-          elemText: null
-        };
-        nodes.push(newNode);
-        drawGraph();
-      }
-    }
-
     // ============== GENERATE GRAPH HELPER ==============
     function generateGraph(n) {
+      graphViewportController.resetViewport();
       nodes = [];
       edges = [];
       nextNodeId = 0;
@@ -485,10 +457,10 @@
       cancelDijkstra();
 
       // Place n nodes evenly on a circle
-      const rect = svg.getBoundingClientRect();
-      const cx = rect.width / 2 || 400;
-      const cy = rect.height / 2 || 250;
-      const radius = Math.min(rect.width, rect.height) * 0.35 || 200;
+      const viewport = graphViewportController.captureViewport();
+      const cx = viewport.x + viewport.width / 2;
+      const cy = viewport.y + viewport.height / 2;
+      const radius = Math.min(viewport.width, viewport.height) * 0.35;
       
       for (let i = 0; i < n; i++) {
         const angle = (2 * Math.PI / n) * i;
@@ -577,40 +549,6 @@
       edges.splice(edgeIndex, 1);
       updateTypeButtons();
       drawGraph();
-    }
-
-    // ============== DRAGGING EXISTING NODES ==============
-    function onNodeMouseDown(evt) {
-      evt.stopPropagation();
-      const circle = evt.currentTarget;
-      const nodeId = parseInt(circle.dataset.id, 10);
-      const nd = nodes.find(n => n.id === nodeId);
-      if (!nd) return;
-
-      draggingNode = nd;
-      const pt = getSvgPoint(evt);
-      dragOffsetX = pt.x - nd.x;
-      dragOffsetY = pt.y - nd.y;
-
-      window.addEventListener('pointermove', onDrag);
-      window.addEventListener('pointerup', onDragEnd);
-    }
-
-    function onDrag(evt) {
-      if (!draggingNode) return;
-      const pt = getSvgPoint(evt);
-      draggingNode.x = pt.x - dragOffsetX;
-      draggingNode.y = pt.y - dragOffsetY;
-      drawGraph();
-      if (stepControls.style.display === 'flex') {
-        highlightStep(currentStepIndex);
-      }
-    }
-
-    function onDragEnd() {
-      draggingNode = null;
-      window.removeEventListener('pointermove', onDrag);
-      window.removeEventListener('pointerup', onDragEnd);
     }
 
     // ============== ADD EDGE LOGIC ==============
@@ -839,8 +777,7 @@
       }
     }
 
-    // Initial draw
-    // (Handled by MobileVisualizer.init)
+    // Initial draw is handled by state restore or first-run seeding.
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>

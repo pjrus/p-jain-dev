@@ -82,6 +82,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
+  <script src="visualizer-mobile.js"></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -159,21 +160,7 @@
     let currentStepIndex = 0;
     let currentAlgorithm = 'prims';
 
-    // Dragging State
-    let draggingNode = null, dragOffsetX = 0, dragOffsetY = 0;
-
     // ===== UTILITIES =====
-    // Get Mouse/Touch Position in SVG Coordinates
-    function getSvgPoint(evt) {
-      const pt = svg.createSVGPoint();
-      if (evt.touches && evt.touches.length) {
-        pt.x = evt.touches[0].clientX;
-        pt.y = evt.touches[0].clientY;
-      } else {
-        pt.x = evt.clientX; pt.y = evt.clientY;
-      }
-      return pt.matrixTransform(svg.getScreenCTM().inverse());
-    }
 
     // Fisher-Yates Shuffle
     function shuffle(a) {
@@ -247,9 +234,6 @@
         nd.elemText = t;
 
         // Interaction Listeners
-        c.addEventListener('mousedown', onNodeMouseDown);
-        c.addEventListener('touchstart', onNodeMouseDown, { passive: false });
-
         c.addEventListener('click', e => {
           e.stopPropagation();
           if (deleteNodeMode) {
@@ -287,6 +271,36 @@
       }
     }
 
+    function createNodeAt(point) {
+      nodes.push({
+        id: nextNodeId,
+        label: nextNodeId.toString(),
+        x: point.x,
+        y: point.y,
+        elemCircle: null,
+        elemText: null
+      });
+      nextNodeId++;
+      drawGraph();
+    }
+
+    function refreshMSTOverlay() {
+      if (stepControls.style.display === 'flex') {
+        updateStepDisplay();
+      }
+    }
+
+    const graphViewportController = MobileVisualizer.createGraphController({
+      svg,
+      getNodes: () => nodes,
+      draw: drawGraph,
+      createNodeAt,
+      isAddNodeMode: () => addNodeMode,
+      afterInteractiveRedraw: refreshMSTOverlay
+    });
+
+    window.graphViewportController = graphViewportController;
+
     // ===== TOOLBAR HANDLERS =====
 
     // Toggle Add Node Mode
@@ -300,24 +314,6 @@
         cancelMST();
       } else addNodeBtn.classList.remove('active');
     });
-
-    // Add Node on SVG Click
-    svg.addEventListener('mousedown', handleSvgDown);
-    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
-
-    function handleSvgDown(e) {
-      if (addNodeMode && e.target === svg) {
-        const p = getSvgPoint(e);
-        nodes.push({
-          id: nextNodeId,
-          label: nextNodeId.toString(),
-          x: p.x, y: p.y,
-          elemCircle: null, elemText: null
-        });
-        nextNodeId++;
-        drawGraph();
-      }
-    }
 
     // Toggle Delete Node Mode
     deleteNodeBtn.addEventListener('click', () => {
@@ -412,6 +408,7 @@
     });
 
     function generateGraph(n, m) {
+      graphViewportController.resetViewport();
       nodes = [];
       edges = [];
       nextNodeId = 0;
@@ -423,11 +420,13 @@
       cancelMST();
 
       // --- Generate nodes in a grid-like layout with jitter ---
+      const viewport = graphViewportController.captureViewport();
       const cols = Math.ceil(Math.sqrt(n));
       const rows = Math.ceil(n / cols);
-      const paddingX = 60, paddingY = 60;
-      const width = 800 - 2 * paddingX;
-      const height = 500 - 2 * paddingY;
+      const paddingX = Math.max(60, viewport.width * 0.08);
+      const paddingY = Math.max(60, viewport.height * 0.1);
+      const width = Math.max(viewport.width - 2 * paddingX, 120);
+      const height = Math.max(viewport.height - 2 * paddingY, 120);
       const cellW = width / (cols - 1 || 1);
       const cellH = height / (rows - 1 || 1);
 
@@ -437,8 +436,8 @@
           nodes.push({
             id: nextNodeId,
             label: nextNodeId.toString(),
-            x: paddingX + c * cellW + (Math.random() - 0.5) * 20, // small jitter
-            y: paddingY + r * cellH + (Math.random() - 0.5) * 20,
+            x: viewport.x + paddingX + c * cellW + (Math.random() - 0.5) * 20,
+            y: viewport.y + paddingY + r * cellH + (Math.random() - 0.5) * 20,
             elemCircle: null,
             elemText: null
           });
@@ -491,6 +490,7 @@
       addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
       edgeFirstNode = edgeSecondNode = null;
       cancelMST();
+      graphViewportController.resetViewport();
       drawGraph();
     });
 
@@ -711,41 +711,6 @@
       exitStepBtn.disabled = true;
     }
 
-    // ===== DRAGGING LOGIC =====
-    function onNodeMouseDown(evt) {
-      if (evt.type === 'touchstart') evt.preventDefault();
-      evt.stopPropagation();
-      const id = +evt.currentTarget.dataset.id;
-      const nd = nodes.find(n => n.id === id);
-      if (!nd) return;
-      draggingNode = nd;
-      const p = getSvgPoint(evt);
-      dragOffsetX = p.x - nd.x;
-      dragOffsetY = p.y - nd.y;
-
-      window.addEventListener('mousemove', onDrag);
-      window.addEventListener('mouseup', onDragEnd);
-      window.addEventListener('touchmove', onDrag, { passive: false });
-      window.addEventListener('touchend', onDragEnd);
-    }
-    function onDrag(evt) {
-      if (!draggingNode) return;
-      const p = getSvgPoint(evt);
-      draggingNode.x = p.x - dragOffsetX;
-      draggingNode.y = p.y - dragOffsetY;
-      drawGraph();
-      if (stepControls.style.display === 'flex') {
-        updateStepDisplay();
-      }
-    }
-    function onDragEnd() {
-      draggingNode = null;
-      window.removeEventListener('mousemove', onDrag);
-      window.removeEventListener('mouseup', onDragEnd);
-      window.removeEventListener('touchmove', onDrag);
-      window.removeEventListener('touchend', onDragEnd);
-    }
-
     // ===== UPDATE DISPLAY BASED ON STEP =====
     function updateStepDisplay() {
       // Redraw base graph to clear previous frame's dynamic highlights
@@ -828,7 +793,6 @@
 
     // Initial Draw
     drawGraph();
-    chooseGraphType(false);
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>

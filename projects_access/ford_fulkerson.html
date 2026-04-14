@@ -101,6 +101,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="prompt-modal.js" defer></script>
+  <script src="visualizer-mobile.js"></script>
   <script>
     tailwind.config = {
       corePlugins: { preflight: false }
@@ -188,25 +189,6 @@
     let ffSteps = [];   // Array of snapshots: { flow, parentMap, augmentPath, currentFlow }
     let currentStepIndex = 0;
     let nodeCount = 0;
-
-    // Dragging State
-    let draggingNode = null;
-    let dragOffsetX = 0;
-    let dragOffsetY = 0;
-
-    // ===== SVG COORDINATE UTILITY =====
-    // Transforms mouse/touch event coordinates to SVG coordinate system
-    function getSvgPoint(evt) {
-      const pt = svg.createSVGPoint();
-      if (evt.touches && evt.touches.length) {
-        pt.x = evt.touches[0].clientX;
-        pt.y = evt.touches[0].clientY;
-      } else {
-        pt.x = evt.clientX;
-        pt.y = evt.clientY;
-      }
-      return pt.matrixTransform(svg.getScreenCTM().inverse());
-    }
 
     // ===== EVENT LISTENERS: TOOLBAR =====
 
@@ -309,22 +291,10 @@
       sourceId = null;
       sinkId = null;
       cancelFF();
+      graphViewportController.resetViewport();
       drawGraph();
       updateButtons();
     });
-
-    // SVG Click Handler (Add Node)
-    svg.addEventListener('mousedown', handleSvgDown);
-    svg.addEventListener('touchstart', handleSvgDown, { passive: false });
-
-    function handleSvgDown(evt) {
-      if (addNodeMode && evt.target === svg) {
-        const pt = getSvgPoint(evt);
-        const newNode = { id: nextNodeId++, x: pt.x, y: pt.y, elemCircle: null, elemText: null };
-        nodes.push(newNode);
-        drawGraph();
-      }
-    }
 
     // ===== DRAW GRAPH =====
     function drawGraph() {
@@ -394,9 +364,6 @@
         nd.elemText = txt;
 
         // Node Event Listeners
-        circle.addEventListener('mousedown', onNodeMouseDown);
-        circle.addEventListener('touchstart', onNodeMouseDown, { passive: false });
-
         circle.addEventListener('click', async (evt) => {
           evt.stopPropagation();
           if (deleteNodeMode) {
@@ -423,6 +390,29 @@
       }
     }
 
+    function createNodeAt(point) {
+      const newNode = { id: nextNodeId++, x: point.x, y: point.y, elemCircle: null, elemText: null };
+      nodes.push(newNode);
+      drawGraph();
+    }
+
+    function refreshFlowOverlay() {
+      if (stepControls.style.display === 'flex' && ffSteps.length > 0) {
+        updateFFDisplay();
+      }
+    }
+
+    const graphViewportController = MobileVisualizer.createGraphController({
+      svg,
+      getNodes: () => nodes,
+      draw: drawGraph,
+      createNodeAt,
+      isAddNodeMode: () => addNodeMode,
+      afterInteractiveRedraw: refreshFlowOverlay
+    });
+
+    window.graphViewportController = graphViewportController;
+
     // Update button states based on graph content
     function updateButtons() {
       const hasNodes = nodes.length > 0;
@@ -447,43 +437,6 @@
     function deleteEdge(idx) {
       edges.splice(idx, 1);
       drawGraph();
-    }
-
-    // ===== DRAGGING LOGIC =====
-    function onNodeMouseDown(evt) {
-      if (evt.type === 'touchstart') evt.preventDefault();
-      evt.stopPropagation();
-      const circle = evt.currentTarget;
-      const nodeId = parseInt(circle.dataset.id, 10);
-      const nd = nodes.find(n => n.id === nodeId);
-      if (!nd) return;
-      draggingNode = nd;
-      const pt = getSvgPoint(evt);
-      dragOffsetX = pt.x - nd.x;
-      dragOffsetY = pt.y - nd.y;
-
-      window.addEventListener('mousemove', onDrag);
-      window.addEventListener('mouseup', onDragEnd);
-      window.addEventListener('touchmove', onDrag, { passive: false });
-      window.addEventListener('touchend', onDragEnd);
-    }
-    function onDrag(evt) {
-      if (!draggingNode) return;
-      const pt = getSvgPoint(evt);
-      draggingNode.x = pt.x - dragOffsetX;
-      draggingNode.y = pt.y - dragOffsetY;
-      drawGraph();
-      // Keep visualization updated while dragging
-      if (stepControls.style.display === 'flex') {
-        highlightStep(currentStepIndex);
-      }
-    }
-    function onDragEnd() {
-      draggingNode = null;
-      window.removeEventListener('mousemove', onDrag);
-      window.removeEventListener('mouseup', onDragEnd);
-      window.removeEventListener('touchmove', onDrag);
-      window.removeEventListener('touchend', onDragEnd);
     }
 
     // ===== ADD EDGE LOGIC =====
@@ -525,16 +478,25 @@
 
     // ===== GENERATE RANDOM GRAPH =====
     function generateGraph(n, m) {
+      graphViewportController.resetViewport();
       nodes = [];
       edges = [];
       nextNodeId = 0;
       sourceId = null;
       sinkId = null;
       addNodeMode = addEdgeMode = deleteNodeMode = deleteEdgeMode = false;
+      addNodeBtn.classList.remove('active');
+      addEdgeBtn.classList.remove('active');
+      deleteNodeBtn.classList.remove('active');
+      deleteEdgeBtn.classList.remove('active');
+      edgeFirstNode = edgeSecondNode = null;
       cancelFF();
 
       // Layout nodes in a circle
-      const cx = 400, cy = 250, radius = 200;
+      const viewport = graphViewportController.captureViewport();
+      const cx = viewport.x + viewport.width / 2;
+      const cy = viewport.y + viewport.height / 2;
+      const radius = Math.min(viewport.width, viewport.height) * 0.33;
       for (let i = 0; i < n; i++) {
         const angle = (2 * Math.PI / n) * i;
         const x = cx + radius * Math.cos(angle);
@@ -815,7 +777,6 @@
 
     // Initial Draw
     drawGraph();
-    chooseGraphType(false);
   </script>
   <script src="theme.js"></script>
   <script src="visualizer-state.js"></script>
