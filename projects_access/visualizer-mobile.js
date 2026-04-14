@@ -70,6 +70,32 @@
     }
   }
 
+  function getClientPoint(svg, evt) {
+    if (typeof evt.clientX === 'number' && typeof evt.clientY === 'number') {
+      return { x: evt.clientX, y: evt.clientY };
+    }
+
+    const rect = svg.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    };
+  }
+
+  function normaliseWheelDelta(evt) {
+    const deltaMode = typeof evt.deltaMode === 'number' ? evt.deltaMode : 0;
+
+    if (deltaMode === 1) {
+      return evt.deltaY * 16;
+    }
+
+    if (deltaMode === 2) {
+      return evt.deltaY * window.innerHeight;
+    }
+
+    return evt.deltaY;
+  }
+
   const MobileVisualizer = {
     config: {
       minNodeRadius: 12,
@@ -78,7 +104,8 @@
       baseHeight: 600,
       mobileBreakpoint: 768,
       minZoomWidth: 120,
-      maxZoomWidth: 5000
+      maxZoomWidth: 5000,
+      wheelZoomIntensity: 0.0025
     },
 
     getAdaptiveMetrics: function () {
@@ -109,6 +136,7 @@
         pointerCaptureTargets: new Map(),
         primaryInteraction: null,
         pinchState: null,
+        gestureState: null,
         suppressClick: false,
         defaultViewBox: null,
         pendingViewport: null,
@@ -132,6 +160,10 @@
           svg.addEventListener('pointerup', this.handlePointerUp.bind(this));
           svg.addEventListener('pointercancel', this.handlePointerUp.bind(this));
           svg.addEventListener('click', this.handleClickCapture.bind(this), true);
+          svg.addEventListener('wheel', this.handleWheelZoom.bind(this), { passive: false });
+          svg.addEventListener('gesturestart', this.handleGestureStart.bind(this), { passive: false });
+          svg.addEventListener('gesturechange', this.handleGestureChange.bind(this), { passive: false });
+          svg.addEventListener('gestureend', this.handleGestureEnd.bind(this), { passive: false });
 
           window.addEventListener('resize', this.handleResize.bind(this));
 
@@ -254,6 +286,47 @@
           }
 
           this.releasePointer(evt.pointerId);
+        },
+
+        handleWheelZoom: function (evt) {
+          if (!evt.ctrlKey) return;
+
+          evt.preventDefault();
+
+          const deltaY = normaliseWheelDelta(evt);
+          if (!deltaY) return;
+
+          const multiplier = Math.exp(-deltaY * MobileVisualizer.config.wheelZoomIntensity);
+          this.applyZoom(multiplier, evt.clientX, evt.clientY);
+        },
+
+        handleGestureStart: function (evt) {
+          evt.preventDefault();
+          this.primaryInteraction = null;
+          this.gestureState = {
+            scale: typeof evt.scale === 'number' && evt.scale > 0 ? evt.scale : 1
+          };
+        },
+
+        handleGestureChange: function (evt) {
+          evt.preventDefault();
+
+          const scale = typeof evt.scale === 'number' && evt.scale > 0 ? evt.scale : 1;
+          const clientPoint = getClientPoint(this.svg, evt);
+
+          if (!this.gestureState) {
+            this.gestureState = { scale };
+            return;
+          }
+
+          const multiplier = scale / this.gestureState.scale;
+          this.applyZoom(multiplier, clientPoint.x, clientPoint.y);
+          this.gestureState.scale = scale;
+        },
+
+        handleGestureEnd: function (evt) {
+          evt.preventDefault();
+          this.gestureState = null;
         },
 
         startNodeInteraction: function (evt, nodeTarget) {

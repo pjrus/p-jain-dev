@@ -1,0 +1,116 @@
+svg,
+#svgContainer,
+.svg-container,
+#treesContainer {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+svg {
+  display: block;
+  min-height: 360px !important;
+  height: min(68vh, 720px) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: calc(var(--radius-md) - 4px);
+  background: var(--color-graph-bg) !important;
+}
+
+#svgContainer,
+.svg-container,
+#treesContainer {
+  overflow: auto;
+  border-radius: calc(var(--radius-md) - 4px);
+}
+
+#svgContainer {
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-svg-bg) !important;
+}
+
+#svgCanvas {
+  width: 100%;
+  min-width: 720px;
+  min-height: 360px;
+}
+
+marker#arrow path {
+  fill: var(--color-arrow-fill) !important;
+}
+
+.node-circle {
+  fill: var(--color-node-bg) !important;
+  stroke: var(--color-node-stroke) !important;
+  stroke-width: 2px;
+}
+
+.node-text {
+  fill: var(--color-node-text) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.edge-line,
+.edge {
+  stroke: var(--color-edge) !important;
+}
+
+.edge-weight,
+.edge-flow,
+.node-text-small {
+  fill: var(--color-text-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.node-letter {
+  fill: var(--color-trie-letter) !important;
+  stroke: var(--color-trie-letter-stroke) !important;
+}
+
+.node-term {
+  fill: var(--color-trie-term) !important;
+  stroke: var(--color-trie-term-stroke) !important;
+}
+
+.node-visited,
+.node-source,
+.node-final {
+  fill: #22c55e !important;
+  stroke: #14532d !important;
+}
+
+.node-current,
+.node-highlight {
+  fill: #facc15 !important;
+  stroke: #713f12 !important;
+  color: #713f12 !important;
+}
+
+.node-selected-1,
+.node-selected-2,
+.node-sink {
+  fill: #fb923c !important;
+  stroke: #7c2d12 !important;
+}
+
+.node-infinite,
+.node-unprocessed {
+  fill: #ef4444 !important;
+  stroke: #7f1d1d !important;
+}
+
+.edge-mst,
+.edge-path,
+.edge-augment {
+  stroke: #f472b6 !important;
+  stroke-width: 4px !important;
+}
+
+.edge-current {
+  stroke: #facc15 !important;
+}
+
+.edge-candidate {
+  stroke: #fbbf24 !important;
+  stroke-width: 3px !important;
+}
