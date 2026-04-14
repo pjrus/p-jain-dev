@@ -82,18 +82,18 @@
     };
   }
 
-  function normaliseWheelDelta(evt) {
-    const deltaMode = typeof evt.deltaMode === 'number' ? evt.deltaMode : 0;
+  function normaliseWheelDelta(delta, deltaMode) {
+    const mode = typeof deltaMode === 'number' ? deltaMode : 0;
 
-    if (deltaMode === 1) {
-      return evt.deltaY * 16;
+    if (mode === 1) {
+      return delta * 16;
     }
 
-    if (deltaMode === 2) {
-      return evt.deltaY * window.innerHeight;
+    if (mode === 2) {
+      return delta * window.innerHeight;
     }
 
-    return evt.deltaY;
+    return delta;
   }
 
   const MobileVisualizer = {
@@ -289,15 +289,22 @@
         },
 
         handleWheelZoom: function (evt) {
-          if (!evt.ctrlKey) return;
+          const deltaX = normaliseWheelDelta(evt.deltaX, evt.deltaMode);
+          const deltaY = normaliseWheelDelta(evt.deltaY, evt.deltaMode);
+
+          if (evt.ctrlKey) {
+            evt.preventDefault();
+            if (!deltaY) return;
+
+            const multiplier = Math.exp(-deltaY * MobileVisualizer.config.wheelZoomIntensity);
+            this.applyZoom(multiplier, evt.clientX, evt.clientY);
+            return;
+          }
+
+          if (!deltaX && !deltaY) return;
 
           evt.preventDefault();
-
-          const deltaY = normaliseWheelDelta(evt);
-          if (!deltaY) return;
-
-          const multiplier = Math.exp(-deltaY * MobileVisualizer.config.wheelZoomIntensity);
-          this.applyZoom(multiplier, evt.clientX, evt.clientY);
+          this.applyPan(-deltaX, -deltaY);
         },
 
         handleGestureStart: function (evt) {
