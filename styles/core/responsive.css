@@ -10,6 +10,7 @@
 
   .hero-img-container {
     order: -1;
+    flex: 0 0 auto;
   }
 
   .hero-content {
@@ -28,7 +29,7 @@
 
 @media (max-width: 768px) {
   .hero-section {
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 
   .grid-3 {
