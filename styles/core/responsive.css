@@ -90,15 +90,15 @@
   }
 
   #container {
-    padding: 0 0.5rem;
+    padding: 0 0.75rem;
     padding-top: calc(var(--header-height) + var(--spacing-sm));
     margin-bottom: 2rem;
     /* Reduced bottom margin */
   }
 
   .padding {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
   }
 
   .d-flex.flex-row.gap-2 {
@@ -204,13 +204,13 @@
 
 @media (max-width: 480px) {
   #container {
-    padding-left: 0.35rem;
-    padding-right: 0.35rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
   }
 
   .padding {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
   }
 
   .about-intro-card {
