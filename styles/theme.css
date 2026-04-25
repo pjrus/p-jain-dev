@@ -104,14 +104,15 @@
   --tech-tag-text: #075985; /* Text colour for technology tags in light mode. */
   --project-link-github-bg: #ffffff; /* Neutral GitHub button fill for light mode. */
   --project-link-github-bg-hover: #f8fafc; /* Hover fill for the GitHub project action in light mode. */
-  --project-link-github-border: #cbd5e1; /* Border for the GitHub project action in light mode. */
+  --project-link-github-border: #0284c7; /* Border for the GitHub project action in light mode. */
   --project-link-github-text: #0f172a; /* Text colour for the GitHub project action in light mode. */
   --project-link-github-icon-bg: #e2e8f0; /* Icon chip fill for the GitHub project action in light mode. */
+
   --project-link-github-icon: #0f172a; /* Icon colour for the GitHub project action in light mode. */
-  --project-link-visit-bg: #0284c7; /* Primary Visit button fill for light mode. */
-  --project-link-visit-bg-hover: #0369a1; /* Hover fill for the Visit project action in light mode. */
+  --project-link-visit-bg: #ffffff; /* Primary Visit button fill for light mode. */
+  --project-link-visit-bg-hover: #f8fafc; /* Hover fill for the Visit project action in light mode. */
   --project-link-visit-border: #0284c7; /* Border for the Visit project action in light mode. */
-  --project-link-visit-text: #f8fafc; /* Text colour for the Visit project action in light mode. */
+  --project-link-visit-text: #0f172a; /* Text colour for the Visit project action in light mode. */
   --project-link-visit-icon-bg: #e0f2fe; /* Icon chip fill for the Visit project action in light mode. */
   --project-link-visit-icon: #075985; /* Icon colour for the Visit project action in light mode. */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
