@@ -92,6 +92,8 @@ export const stack = [
   },
 ];
 
+export const highlights = stack.flatMap((group) => group.items);
+
 export const experience = [
   {
     period: 'Jun 2026 — present',

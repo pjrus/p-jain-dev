@@ -201,7 +201,7 @@ h3 {
 }
 
 em {
-  color: var(--primary);
+  color: var(--ink);
   font-style: normal;
 }
 
@@ -615,6 +615,58 @@ em {
 }
 
 /* ---------------------------------------------------------------------- */
+/* Skills and experience marquee                                          */
+/* ---------------------------------------------------------------------- */
+
+.credential-marquee {
+  border-block: 1px solid var(--line);
+  background: var(--background);
+}
+
+.marquee-window {
+  display: flex;
+  min-width: 0;
+  min-height: 3.75rem;
+  overflow: hidden;
+  align-items: center;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+  will-change: transform;
+}
+
+.marquee-list {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-right: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+.marquee-list li {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.marquee-label {
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
 /* Controls                                                                */
 /* ---------------------------------------------------------------------- */
 
@@ -798,6 +850,8 @@ em {
 /* Single post ----------------------------------------------------------- */
 
 .post-header {
+  width: min(100%, 42rem);
+  margin-inline: auto;
   padding-bottom: var(--stack-space);
   border-bottom: 1px solid var(--line);
 }
@@ -833,8 +887,10 @@ em {
    are scoped to .prose and are the only place raw tags are styled. */
 
 .prose {
-  max-width: var(--measure);
+  width: min(100%, 42rem);
+  max-width: 42rem;
   margin-top: var(--stack-space);
+  margin-inline: auto;
   font-size: 1.1rem;
   line-height: 1.7;
 }
@@ -1598,6 +1654,10 @@ em {
     width: min(82vw, 22rem);
   }
 
+  .marquee-window {
+    min-height: 3.5rem;
+  }
+
   .project-summary {
     grid-template-columns: 1fr;
   }
@@ -1645,4 +1705,18 @@ em {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+
+  .marquee-window {
+    overflow-x: auto;
+  }
+
+  .marquee-track {
+    animation: none;
+    will-change: auto;
+  }
+
+  .marquee-track .marquee-list[aria-hidden='true'] {
+    display: none;
+  }
+
 }
