@@ -40,14 +40,13 @@
 <a class="skip-link" href="#main-content">Skip to content</a>
 <SiteHeader />
 
-<main id="main-content">
+<main id="main-content" class="content-scale">
   {#if route.path === '/blog'}
     <BlogPage />
   {:else}
   <section class="hero shell" id="top">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="status-dot"></span> Melbourne · Open to opportunities</p>
-      <h1>Hi, I’m <em>Paarangat Jain.</em></h1>
+      <h1><em>Paarangat Jain</em></h1>
       <p class="hero-role">Developer &amp; computer science student</p>
       <p class="hero-intro">
         I build practical software across full-stack web, mobile and assistive technology — from production healthcare tools to low-cost tactile displays designed with blind and low-vision users.
@@ -69,7 +68,7 @@
     </div>
   </section>
 
-  <section class="projects section content-scale" id="projects">
+  <section class="projects section" id="projects">
     <div class="shell">
       <SectionHeading
         title="Projects"
@@ -85,7 +84,7 @@
     </div>
   </section>
 
-  <section class="stack shell section content-scale" id="stack">
+  <section class="stack shell section" id="stack">
     <SectionHeading
       title="What I build with."
       summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
@@ -103,7 +102,7 @@
     </div>
   </section>
 
-  <section class="experience shell section content-scale" id="experience">
+  <section class="experience shell section" id="experience">
     <div class="experience-heading">
       <span class="experience-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
@@ -134,7 +133,7 @@
     </div>
   </section>
 
-  <section class="contact section content-scale" id="contact" aria-labelledby="contact-title">
+  <section class="contact section" id="contact" aria-labelledby="contact-title">
     <div class="contact-inner">
       <header class="contact-intro">
         <h2 id="contact-title">Let’s make something useful.</h2>
