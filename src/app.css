@@ -1076,16 +1076,25 @@ em {
   border-top: 1px solid var(--line);
 }
 
+.projects .section-heading {
+  margin-bottom: clamp(1.75rem, 3vw, 3rem);
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto);
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .project-card {
-  display: flex;
-  flex-direction: column;
+  /* Share summary and detail tracks across cards so variable copy does not
+     shift the stack or action row out of alignment. */
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
   min-width: 0;
+  row-gap: 0;
   border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -1632,7 +1641,7 @@ em {
   }
 
   .project-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .hero {
