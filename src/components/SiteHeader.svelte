@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import IconGithub from './IconGithub.svelte';
+  import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
 
   let isDark = false;
@@ -32,6 +34,24 @@
     </nav>
 
     <div class="header-actions">
+      <a
+        class="header-social"
+        href="https://github.com/pjrus"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="GitHub profile"
+      >
+        <IconGithub />
+      </a>
+      <a
+        class="header-social"
+        href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="LinkedIn profile"
+      >
+        <IconLinkedin />
+      </a>
       <button
         class="theme-toggle"
         type="button"

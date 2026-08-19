@@ -9,6 +9,13 @@
   --primary: #315ed6;
   --primary-ink: #ffffff;
   --accent: #ed6a4b;
+
+  /* The accent at a lightness that clears 4.5:1 on white and on the canvas.
+     Small text and focus rings use this; the plain accent stays reserved for
+     graphics, where its lighter coral carries the brand without a contrast
+     obligation. */
+  --accent-strong: #d13813;
+
   --tint: #e5edfb;
   --line: #d9e0ea;
 
@@ -27,6 +34,15 @@
   --panel-ink: #ffffff;
   --panel-edge: transparent;
 
+  /* Secondary text on the panel, tinted from the panel's own hue. An explicit
+     value rather than an alpha, so its contrast does not depend on whatever
+     happens to sit behind the panel. */
+  --panel-muted: #e5edfb;
+
+  /* The accent cannot reach 3:1 on the blue panel, so the ring inverts here.
+     Dark mode keeps the coral, where it has contrast to spare. */
+  --panel-focus: #ffffff;
+
   /* Plinth behind the portrait. */
   --frame: #182238;
   --frame-ink: #ffffff;
@@ -42,8 +58,11 @@
   --header-h: 4.5rem;
 
   /* Vertical rhythm ------------------------------------------------------ */
-  --section-space: clamp(6rem, 11vw, 10rem);
-  --heading-space: clamp(3.5rem, 7vw, 6rem);
+  /* Sections carry this as symmetric padding-block, so the interval a visitor
+     actually sees between two of them is twice this value. Read it as a
+     half-interval when tuning. */
+  --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
+  --heading-space: clamp(2.25rem, 4vw, 3.75rem);
   --eyebrow-space: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
 
@@ -101,6 +120,8 @@
   --primary: #7ba2ff;
   --primary-ink: #0a0a0a;
   --accent: #ff8a6c;
+  /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
+  --accent-strong: #ff8a6c;
 
   --line: #34343a;
   --line-strong: #6a6a6d;
@@ -110,6 +131,8 @@
      a light slab this large would glare on a dark page. */
   --panel: #1a1a1d;
   --panel-ink: #f3f3f3;
+  --panel-muted: #a5a5a7;
+  --panel-focus: #ff8a6c;
   --panel-edge: #35353b;
 
   --frame: #000000;
@@ -208,8 +231,12 @@ em {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--accent-strong);
   outline-offset: 4px;
+}
+
+.contact :focus-visible {
+  outline-color: var(--panel-focus);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -306,7 +333,7 @@ em {
 }
 
 .brand span {
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .site-header nav {
@@ -317,6 +344,7 @@ em {
 }
 
 .site-header nav a,
+.header-social,
 .theme-toggle,
 .header-contact {
   font-size: 0.8rem;
@@ -344,6 +372,7 @@ em {
   gap: 0.5rem;
 }
 
+.header-social,
 .theme-toggle,
 .header-contact {
   display: inline-flex;
@@ -357,8 +386,9 @@ em {
   cursor: pointer;
 }
 
-/* Icon-only, so it is square rather than label-width. The accessible name
-   lives on the button's aria-label. */
+/* Icon-only controls: square rather than glyph-width, and identical to each
+   other so the header reads as one set. Each carries its name on aria-label. */
+.header-social,
 .theme-toggle {
   width: var(--control-h-sm);
   padding: 0;
@@ -366,6 +396,7 @@ em {
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 
+.header-social:hover,
 .theme-toggle:hover {
   border-color: var(--ink);
   color: var(--ink);
@@ -589,7 +620,7 @@ em {
 }
 
 .capabilities li span {
-  color: var(--accent);
+  color: var(--accent-strong);
   font-family: var(--font-mono);
   font-size: 0.7rem;
 }
@@ -647,7 +678,7 @@ em {
 
 .project-kicker {
   margin-bottom: 1rem;
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .project-body h3 span {
@@ -794,7 +825,7 @@ em {
 /* Item text lands on the same x as the heading text (icon + gap). */
 .experience-item {
   position: relative;
-  padding: 0 0 clamp(4rem, 7vw, 6rem) calc(var(--exp-icon) / 2 + var(--exp-gap) - 0.5px);
+  padding: 0 0 clamp(2rem, 3vw, 3rem) calc(var(--exp-icon) / 2 + var(--exp-gap) - 0.5px);
 }
 
 .experience-item:last-child {
@@ -884,8 +915,7 @@ em {
 }
 
 .contact .eyebrow {
-  color: var(--panel-ink);
-  opacity: 0.75;
+  color: var(--panel-muted);
 }
 
 .contact-action {
@@ -986,8 +1016,8 @@ em {
 @media (max-width: 700px) {
   :root {
     --header-h: 0rem;
-    --section-space: 5rem;
-    --heading-space: clamp(2.5rem, 9vw, 3.5rem);
+    --section-space: 3.25rem;
+    --heading-space: clamp(1.75rem, 7vw, 2.75rem);
     --exp-icon: 2.5rem;
     --exp-gap: 0.75rem;
     --card-pad-lg: clamp(1.75rem, 7vw, 2.5rem);
