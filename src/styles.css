@@ -1,5 +1,7 @@
 :root {
   color-scheme: light;
+
+  /* Core palette --------------------------------------------------------- */
   --background: #f6f8fc;
   --surface: #ffffff;
   --ink: #182238;
@@ -9,7 +11,26 @@
   --accent: #ed6a4b;
   --tint: #e5edfb;
   --line: #d9e0ea;
-  --navy: #182238;
+
+  /* The boundary of an interactive control, kept separate from the
+     decorative hairline so each theme can meet the 3:1 non-text minimum
+     without darkening every divider on the page. */
+  --line-strong: #d9e0ea;
+
+  /* The floating header is its own plane. Light mode shares the canvas
+     colour; dark mode lifts the header off it. */
+  --header-surface: #f6f8fc;
+
+  /* Contact call to action, addressed as a role rather than as "the primary
+     colour" so each theme can compose the panel independently. */
+  --panel: #315ed6;
+  --panel-ink: #ffffff;
+  --panel-edge: transparent;
+
+  /* Plinth behind the portrait. */
+  --frame: #182238;
+  --frame-ink: #ffffff;
+
   --shadow: 0 14px 30px rgba(24, 34, 56, 0.09);
   --font-display: 'Bricolage Grotesque', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -64,23 +85,46 @@
   --exp-marker: 0.85rem;
 }
 
+/* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
+   surface lightness rather than by tinting the greys toward the brand hue,
+   so blue and coral only ever appear as action, state or emphasis. */
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --background: #101725;
-  --surface: #182238;
-  --ink: #f7f9fc;
-  --muted: #b5bdca;
-  --primary: #83a7ff;
-  --primary-ink: #111827;
+
+  /* Elevation ladder: canvas -> card -> chip, each step readable on the last. */
+  --background: #0a0a0a;
+  --surface: #151517;
+  --tint: #202024;
+
+  --ink: #f3f3f3;
+  --muted: #a5a5a7;
+  --primary: #7ba2ff;
+  --primary-ink: #0a0a0a;
   --accent: #ff8a6c;
-  --tint: #202d46;
-  --line: #354159;
-  --navy: #0b111d;
-  --shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+
+  --line: #34343a;
+  --line-strong: #6a6a6d;
+  --header-surface: #151517;
+
+  /* The panel stays black and lets its near-white button carry the emphasis;
+     a light slab this large would glare on a dark page. */
+  --panel: #1a1a1d;
+  --panel-ink: #f3f3f3;
+  --panel-edge: #35353b;
+
+  --frame: #000000;
+
+  /* Deep enough to register against a near-black canvas. */
+  --shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
 }
 
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-ink);
 }
 
 html {
@@ -243,8 +287,8 @@ em {
   gap: 2rem;
   padding-inline: var(--control-pad-x);
   border: 1px solid var(--line);
-  background: var(--background);
-  background: color-mix(in srgb, var(--background) 85%, transparent);
+  background: var(--header-surface);
+  background: color-mix(in srgb, var(--header-surface) 85%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: var(--shadow);
@@ -306,11 +350,25 @@ em {
   align-items: center;
   justify-content: center;
   min-height: var(--control-h-sm);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   padding: 0 0.75rem;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
+}
+
+/* Icon-only, so it is square rather than label-width. The accessible name
+   lives on the button's aria-label. */
+.theme-toggle {
+  width: var(--control-h-sm);
+  padding: 0;
+  color: var(--muted);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 .header-contact {
@@ -394,7 +452,7 @@ em {
 
 .portrait-card {
   width: min(100%, 21.5rem);
-  background: var(--navy);
+  background: var(--frame);
   box-shadow: var(--shadow);
 }
 
@@ -407,7 +465,7 @@ em {
 
 .portrait-card figcaption {
   padding: 0.9rem 1rem;
-  color: #ffffff;
+  color: var(--frame-ink);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
@@ -441,10 +499,11 @@ em {
   box-shadow: var(--shadow);
 }
 
+/* Sits on the contact panel, so it inverts against that surface. */
 .button-light {
-  border-color: var(--primary-ink);
-  background: var(--primary-ink);
-  color: var(--primary);
+  border-color: var(--panel-ink);
+  background: var(--panel-ink);
+  color: var(--panel);
 }
 
 /* Matches button height so both align in a row, while the rule stays
@@ -626,7 +685,7 @@ em {
 .project-links a {
   min-height: var(--control-h-md);
   padding: 0 0.9rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   font-family: var(--font-mono);
   font-size: 0.88rem;
 }
@@ -817,15 +876,15 @@ em {
   grid-template-columns: var(--split-cols);
   margin-bottom: var(--section-space);
   padding: var(--card-pad-lg);
-  background: var(--primary);
-  color: var(--primary-ink);
-  box-shadow: var(--shadow);
+  background: var(--panel);
+  color: var(--panel-ink);
+  box-shadow: inset 0 0 0 1px var(--panel-edge), var(--shadow);
   gap: var(--split-gap);
   scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .contact .eyebrow {
-  color: var(--primary-ink);
+  color: var(--panel-ink);
   opacity: 0.75;
 }
 

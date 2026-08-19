@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import ThemeIcon from './ThemeIcon.svelte';
 
   let isDark = false;
 
@@ -31,8 +32,14 @@
     </nav>
 
     <div class="header-actions">
-      <button class="theme-toggle" type="button" onclick={toggleTheme} aria-label={`Use ${isDark ? 'light' : 'dark'} theme`}>
-        {isDark ? 'Light' : 'Dark'}
+      <button
+        class="theme-toggle"
+        type="button"
+        onclick={toggleTheme}
+        aria-label={`Use ${isDark ? 'light' : 'dark'} theme`}
+        aria-pressed={isDark}
+      >
+        <ThemeIcon dark={isDark} />
       </button>
       <a class="header-contact" href="mailto:paarangatj@gmail.com">Let’s talk</a>
     </div>
