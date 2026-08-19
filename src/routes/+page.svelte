@@ -61,7 +61,7 @@
 
   <figure class="about-figure">
     <img
-      src="/images/dharamshala.jpg"
+      src={`${base}/images/dharamshala.jpg`}
       alt="Dharamshala beneath the Dhauladhar mountain range in India"
     />
     <figcaption>Dharamshala, India · a favourite place</figcaption>
