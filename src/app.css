@@ -511,12 +511,6 @@ em {
   gap: 1rem;
 }
 
-.mobile-menu-social {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .mobile-menu-contact {
   flex-shrink: 0;
 }
@@ -1645,11 +1639,47 @@ em {
   }
 
   .hero {
-    gap: clamp(2.5rem, 5vw, 3.5rem);
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  /* On mobile, lead with the portrait and centre the hero content while
+     keeping the desktop two-column composition unchanged. */
+  .hero-copy {
+    display: contents;
   }
 
   .hero-visual {
-    justify-content: flex-start;
+    order: 1;
+    justify-content: center;
+  }
+
+  .hero-copy > h1 {
+    order: 2;
+  }
+
+  .hero-role {
+    order: 3;
+    margin-top: 0;
+  }
+
+  .hero-intro {
+    order: 4;
+    margin-inline: auto;
+    margin-top: 0;
+  }
+
+  .hero-actions {
+    order: 5;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .hero-facts {
+    order: 6;
+    justify-content: center;
+    margin-top: 0;
+    text-align: left;
   }
 
   .portrait-card {
@@ -1717,6 +1747,7 @@ em {
 
   .hero-facts {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
 

@@ -160,30 +160,15 @@
       <nav class="mobile-menu-nav" aria-label="Mobile">
         <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser size={18} /> About</a>
         <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
+        <a href="https://github.com/pjrus" target="_blank" rel="noreferrer" onclick={closeMenu}>
+          <IconGithub size={18} /> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer" onclick={closeMenu}>
+          <IconLinkedin size={18} /> LinkedIn
+        </a>
       </nav>
 
       <div class="mobile-menu-foot">
-        <div class="mobile-menu-social">
-          <a
-            class="header-social"
-            href="https://github.com/pjrus"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub profile"
-          >
-            <IconGithub size={20} />
-          </a>
-          <a
-            class="header-social"
-            href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn profile"
-          >
-            <IconLinkedin size={20} />
-          </a>
-        </div>
-
         <a class="button button-primary mobile-menu-contact" href="mailto:paarangatj@gmail.com" onclick={closeMenu}>
           Let’s talk
         </a>
