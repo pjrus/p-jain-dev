@@ -1,0 +1,86 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "0.95rem",
+        "createdAt": "2026-08-19T08:02:06.495Z",
+        "reason": "user asked to make the header nav menu buttons (About/Projects/Experience) larger; 0.95rem is the intentional new size for .site-header nav a"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.67rem",
+        "createdAt": "2026-08-19T08:18:31.972Z",
+        "reason": "tag-list chips: tuned a hair under the label-xs (0.7rem) step for their tighter container; documented as The Tuned-Step Rule in DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.68rem",
+        "createdAt": "2026-08-19T08:18:32.022Z",
+        "reason": "portrait-card figcaption: tuned a hair under the label-xs (0.7rem) step; documented as The Tuned-Step Rule in DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "clamp(1.02rem, 1.3vw, 1.15rem)",
+        "createdAt": "2026-08-19T08:18:32.070Z",
+        "reason": "hero-intro: scales within the body-lg (1.1rem) band per its own column width; documented in DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.05rem",
+        "createdAt": "2026-08-19T08:18:32.115Z",
+        "reason": "experience-summary: scales within the body-lg (1.1rem) band per its own column width; documented in DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.85rem",
+        "createdAt": "2026-08-19T08:18:32.164Z",
+        "reason": "footer-inner: small sans caption text, a Tuned-Step variant near label-md's value but not mono/metadata; documented in DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "clamp(2.4rem, 11vw, 3.2rem)",
+        "createdAt": "2026-08-19T08:18:32.210Z",
+        "reason": "mobile h1 override: Display role's documented sub-700px clamp, see DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.15rem",
+        "createdAt": "2026-08-19T08:19:21.672Z",
+        "reason": "hero-intro clamp's wide-viewport endpoint: scales within the body-lg (1.1rem) band per its own column width; documented in DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "2.4rem",
+        "createdAt": "2026-08-19T08:19:21.714Z",
+        "reason": "mobile h1 clamp's narrow-viewport endpoint: Display role's documented sub-700px clamp, see DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "3.2rem",
+        "createdAt": "2026-08-19T08:19:21.755Z",
+        "reason": "mobile h1 clamp's wide-viewport endpoint: Display role's documented sub-700px clamp, see DESIGN.md Typography Hierarchy"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000000",
+        "createdAt": "2026-08-19T08:19:21.797Z",
+        "reason": "user explicitly requested pure white/black (not the near-black --ink token) for the dark-mode project-link-primary button; deliberate one-off, see styles.css comment above the rule"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.4rem",
+        "createdAt": "2026-08-19T08:31:59.281Z",
+        "reason": "user asked to replicate aditya04tripathi's blog post-title treatment (mono/uppercase/chevron) verbatim on the blog empty-state heading; intentionally off the existing Title (h3) step, which is a different visual language"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.2rem",
+        "createdAt": "2026-08-19T09:27:18.750Z",
+        "reason": "Existing hero role size is outside this task; the user explicitly asked to preserve the hero."
+      }
+    ]
+  }
+}

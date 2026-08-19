@@ -1,0 +1,6 @@
+output
+.playwright-cli
+node_modules
+dist
+.svelte-kit
+build
