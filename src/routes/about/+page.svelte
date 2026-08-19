@@ -23,7 +23,7 @@
 
   <div>
     <p>
-      I’m a computer science student at Monash University, majoring in mathematics, and a developer drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
+      I’m a computer science student at Monash University and a developer drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
     </p>
     <br>
     <p>
