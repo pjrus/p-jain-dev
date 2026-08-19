@@ -7,6 +7,12 @@
   import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { experience, projects, stack } from '$lib/data/content.js';
 
+  const initiallyVisibleProjects = 3;
+  let showAllProjects = $state(false);
+  let visibleProjects = $derived(
+    showAllProjects ? projects : projects.slice(0, initiallyVisibleProjects),
+  );
+
   /**
    * Opens the visitor's email client with their message ready to send.
    * This keeps the static portfolio useful without pretending to submit to a backend.
@@ -62,13 +68,27 @@
       title="Projects"
     />
 
-    <div class="project-grid">
-      {#each projects as project}
+    <div class="project-grid" id="project-grid">
+      {#each visibleProjects as project}
         <ProjectCard {project} />
       {/each}
     </div>
 
-    <a class="text-link section-link" href="https://github.com/pjrus" target="_blank" rel="noreferrer">Browse more on GitHub <ArrowIcon /></a>
+    <div class="project-actions">
+      {#if projects.length > initiallyVisibleProjects}
+        <button
+          class="project-toggle"
+          type="button"
+          aria-controls="project-grid"
+          aria-expanded={showAllProjects}
+          onclick={() => (showAllProjects = !showAllProjects)}
+        >
+          {showAllProjects ? 'Show fewer projects' : 'Show more projects'}
+          <ArrowIcon direction="down" />
+        </button>
+      {/if}
+      <a class="text-link section-link" href="https://github.com/pjrus" target="_blank" rel="noreferrer">Browse more on GitHub <ArrowIcon /></a>
+    </div>
   </div>
 </section>
 
