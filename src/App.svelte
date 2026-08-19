@@ -1,13 +1,35 @@
 <script>
   import ArrowIcon from './components/ArrowIcon.svelte';
   import BlogPage from './components/BlogPage.svelte';
+  import IconGithub from './components/IconGithub.svelte';
+  import IconLinkedin from './components/IconLinkedin.svelte';
   import ProjectCard from './components/ProjectCard.svelte';
   import SectionHeading from './components/SectionHeading.svelte';
   import SiteHeader from './components/SiteHeader.svelte';
   import { experience, projects, stack } from './data/content.js';
-  import { route, navigateTo } from './router.svelte.js';
+  import { route } from './router.svelte.js';
 
   const year = new Date().getFullYear();
+
+  /**
+   * Opens the visitor's email client with their message ready to send.
+   * This keeps the static portfolio useful without pretending to submit to a backend.
+   * @param {SubmitEvent} event
+   */
+  function sendContactMessage(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const formData = new FormData(form);
+    const name = String(formData.get('name') ?? '').trim();
+    const email = String(formData.get('email') ?? '').trim();
+    const message = String(formData.get('message') ?? '').trim();
+    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`);
+
+    window.location.href = `mailto:paarangatj@gmail.com?subject=${subject}&body=${body}`;
+  }
 </script>
 
 <svelte:head>
@@ -113,16 +135,65 @@
     </div>
   </section>
 
+  <section class="contact section" id="contact" aria-labelledby="contact-title">
+    <div class="contact-inner">
+      <header class="contact-intro">
+        <p class="contact-eyebrow">Get in touch</p>
+        <h2 id="contact-title">Let’s make something useful.</h2>
+        <p>
+          I’m always open to thoughtful opportunities, collaborations and projects — or a good conversation about accessible technology.
+        </p>
+      </header>
+
+      <form class="contact-form" onsubmit={sendContactMessage}>
+        <div class="form-field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="4" placeholder="What would you like to talk about?" required></textarea>
+        </div>
+
+        <button class="contact-submit" type="submit">
+          Send message
+          <ArrowIcon />
+        </button>
+        <p class="contact-form-note">Opens your email app with the details filled in.</p>
+      </form>
+
+      <nav class="contact-links" aria-label="Other ways to connect">
+        <a href="mailto:paarangatj@gmail.com">
+          <span class="contact-link-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+              <path d="M3 6.5h18v11H3zM3.5 7l8.5 7 8.5-7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+          </span>
+          Email
+        </a>
+        <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer">
+          <span class="contact-link-icon" aria-hidden="true"><IconLinkedin size={15} /></span>
+          LinkedIn
+        </a>
+        <a href="https://github.com/pjrus" target="_blank" rel="noreferrer">
+          <span class="contact-link-icon" aria-hidden="true"><IconGithub size={16} /></span>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </section>
+
   {/if}
 </main>
 
 <footer class="site-footer">
   <div class="shell footer-inner">
     <p>© {year} Paarangat Jain</p>
-    <div>
-      <a href="https://github.com/pjrus" target="_blank" rel="noreferrer">GitHub</a>
-      <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer">LinkedIn</a>
-      <a href="/#top" onclick={(event) => navigateTo('/#top', event)}>Back to top ↑</a>
-    </div>
   </div>
 </footer>
