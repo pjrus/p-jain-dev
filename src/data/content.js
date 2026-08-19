@@ -93,19 +93,11 @@ export const stack = [
 export const experience = [
   {
     period: 'Jun 2026 — present',
-    role: 'Associate full-stack engineer',
-    organisation: 'PlasmIT Vector',
-    location: 'Docklands, Victoria, Australia',
-    summary:
-      'Managing configuration across the SaaS platform and building frontend, full-stack and mobile features for clinician-centred healthcare workflows. I take mobile work from requirements and user flows through implementation, testing and production-ready delivery.',
-  },
-  {
-    period: 'Mar 2026 — Jun 2026',
     role: 'Full-stack engineering intern',
     organisation: 'PlasmIT Vector',
-    location: 'Docklands, Victoria, Australia',
+    location: 'Docklands, Victoria, Australia · Remote',
     summary:
-      'Supported full-stack development for healthcare technology initiatives, contributing to web experiences and product-facing platforms centred around connected digital care.',
+      'Assisting with the design and development of full-stack applications across frontend, backend and database components. I collaborate on implementation, testing and documentation while gaining hands-on experience across the software development lifecycle.',
   },
   {
     period: 'Mar 2026 — present',
