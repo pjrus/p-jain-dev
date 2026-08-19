@@ -308,10 +308,10 @@ em {
 
 .header-inner {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   min-height: 3.5rem;
-  gap: 2rem;
+  gap: 1rem;
   padding-inline: var(--control-pad-x);
   border: 1px solid var(--line);
   background: var(--header-surface);
@@ -323,6 +323,7 @@ em {
 }
 
 .brand {
+  grid-column: 1;
   justify-self: start;
   font-family: var(--font-display);
   font-size: 1.35rem;
@@ -336,54 +337,67 @@ em {
   color: var(--accent-strong);
 }
 
-.site-header nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.15rem, 1vw, 0.5rem);
-}
-
-.site-header nav a,
-.header-social,
-.theme-toggle,
-.header-contact {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.site-header nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--control-h-sm);
-  padding: 0 0.65rem;
-  color: var(--muted);
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.site-header nav a:hover {
-  background: var(--tint);
-  color: var(--ink);
-}
-
-.site-header nav a[aria-current='page'] {
-  color: var(--ink);
-}
-
-.header-actions {
+.primary-nav {
+  grid-column: 2;
+  justify-self: center;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .header-social,
-.theme-toggle,
-.header-contact {
+.theme-toggle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Outlined boxes carrying an icon and a mono label, sharing the icon controls'
+   footprint so the whole right-hand cluster reads as one row of equal boxes. */
+.primary-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: var(--control-h-sm);
+  padding: 0 0.7rem;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* The boxes are already at full border strength at rest, so hover fills
+   rather than darkening the edge. */
+.primary-nav a:hover {
+  background: var(--tint);
+}
+
+.primary-nav a[aria-current='page'] {
+  background: var(--ink);
+  color: var(--background);
+}
+
+.header-actions {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.5rem;
+}
+
+.header-social,
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: var(--control-h-sm);
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--ink);
   padding: 0 0.75rem;
   background: transparent;
   color: var(--ink);
@@ -396,20 +410,12 @@ em {
 .theme-toggle {
   width: var(--control-h-sm);
   padding: 0;
-  color: var(--muted);
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .header-social:hover,
 .theme-toggle:hover {
-  border-color: var(--ink);
-  color: var(--ink);
-}
-
-.header-contact {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--background);
+  background: var(--tint);
 }
 
 /* Hidden on desktop; becomes the sole way into nav once it collapses. */
@@ -473,6 +479,9 @@ em {
   background: color-mix(in srgb, var(--ink) 45%, transparent);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  /* .site-header disables pointer-events at the wrapper level; both
+     overlay layers sit outside .header-inner, so each re-enables it. */
+  pointer-events: auto;
 }
 
 .mobile-menu {
@@ -489,6 +498,7 @@ em {
   padding: 1.75rem;
   border: 1px solid var(--line);
   background: var(--surface);
+  pointer-events: auto;
   box-shadow: var(--shadow);
 }
 
@@ -498,6 +508,9 @@ em {
 }
 
 .mobile-menu-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding-block: 0.9rem;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
@@ -655,6 +668,13 @@ em {
   box-shadow: var(--shadow);
 }
 
+/* Dark mode swaps the primary blue for a near-white fill so the CTA reads
+   as the brightest element on the page instead of blending with links. */
+:root[data-theme='dark'] .button-primary {
+  background: var(--ink);
+  color: var(--primary-ink);
+}
+
 /* Sits on the contact panel, so it inverts against that surface. */
 .button-light {
   border-color: var(--panel-ink);
@@ -723,8 +743,26 @@ em {
   box-shadow: var(--shadow);
 }
 
-.blog-empty p:not(.eyebrow) {
+.blog-empty p:not(.blog-title) {
   color: var(--muted);
+}
+
+/* Mirrors a post-title treatment: mono, uppercase, with a marker standing
+   in for the link chevron a real post entry would carry. */
+.blog-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.blog-title-marker {
+  color: var(--primary);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -743,8 +781,15 @@ em {
 
 .project-card {
   min-width: 0;
+  border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
+  transition: border-color 0.15s ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  border-color: var(--ink);
 }
 
 /* Inset shadow instead of a border so the accent never shifts card content. */
@@ -810,6 +855,12 @@ em {
   font-family: var(--font-mono);
   font-size: 0.67rem;
   font-weight: 500;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.tag-list li:hover {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 .project-links {
@@ -927,8 +978,14 @@ em {
 
 .stack-card {
   padding: var(--card-pad);
+  border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
+  transition: border-color 0.15s ease;
+}
+
+.stack-card:hover {
+  border-color: var(--ink);
 }
 
 .stack-card-title {
@@ -1118,17 +1175,16 @@ em {
 
 @media (max-width: 900px) {
   .header-inner {
-    gap: 1.25rem;
-  }
-
-  .header-inner {
     grid-template-columns: 1fr auto;
   }
 
-  .site-header nav,
+  .header-actions {
+    grid-column: 2;
+  }
+
+  .primary-nav,
   .header-actions .header-social,
-  .header-actions .theme-toggle,
-  .header-contact {
+  .header-actions .theme-toggle {
     display: none;
   }
 

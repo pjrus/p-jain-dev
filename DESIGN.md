@@ -154,7 +154,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 - **Background** (`#f6f8fc`): the page canvas, a cool near-white rather than pure white.
 - **Surface** (`#ffffff`): cards and raised panels, distinguished from the canvas by being genuinely whiter.
 - **Tint** (`#e5edfb`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
-- **Line** (`#d9e0ea`): hairline dividers and card borders — the system's only border colour at rest.
+- **Line** (`#d9e0ea`): hairline dividers and card borders — the resting border colour everywhere except the header cluster, whose boxes sit at full `--ink`.
 
 ### Named Rules
 **The One-Shadow Rule.** There is exactly one shadow token (`--shadow`), reused verbatim on the header, cards, buttons, the portrait frame and the contact panel. It is never varied in blur or spread to imply multiple elevation levels — depth is binary (flat vs. this one lift), not graduated.
@@ -228,10 +228,13 @@ Every control is a precise, static object: sharp corners, a defined edge, and st
 - **Internal padding:** `--card-pad` (clamp 1.5–2.25rem), or `--card-pad-lg` (clamp 2.5–5rem) for the contact panel specifically.
 
 ### Navigation
-- **Style:** a floating pill header (border + blurred `--header-surface` background at 85% opacity, `backdrop-filter: blur(14px)`) fixed to the viewport top, dropping to a static full-bleed bar under 700px.
-- **Link states:** `--muted` at rest, `--tint` background + `--ink` text on hover — a filled hover rather than an underline, distinct from the text-link underline treatment used in body content.
-- **Icon controls** (GitHub, LinkedIn, theme toggle): identical square footprint (`--control-h-sm`, 2.25rem) so the icon row reads as one unified control cluster; hover darkens the border and icon to `--ink` rather than filling the background.
-- **Mobile:** nav wraps to its own row under the brand/actions row, horizontally scrollable with hidden scrollbars rather than wrapping to multiple lines.
+- **Style:** a floating pill header (border + blurred `--header-surface` background at 85% opacity, `backdrop-filter: blur(14px)`) fixed to the viewport top.
+- **Layout:** brand hard left, everything else in a single right-aligned cluster — nav boxes, then the icon squares, then the contact box. One flex row; the brand takes `margin-right: auto`.
+- **Link boxes:** every nav item is an outlined box at `--control-h-sm` (2.25rem) carrying a leading 14px lucide icon and a mono uppercase label (0.7rem, `0.07em` tracking). Borders sit at full `--ink` strength at rest — the header is the one place the system uses a hard edge rather than `--line-strong`, so the cluster reads as a row of equal, deliberate objects.
+- **Link states:** because the edge is already at full strength, hover fills with `--tint` instead of darkening the border. The current page inverts (`--ink` fill, `--background` text) rather than shifting colour, so "you are here" survives at a glance.
+- **Icon controls** (GitHub, LinkedIn, theme toggle): identical square footprint (`--control-h-sm`) and the same `--ink` border, so icon-only and labelled boxes sit in one unbroken row; hover fills with `--tint` to match the nav boxes.
+- **Contact:** outlined like the nav boxes rather than filled — the header carries no filled CTA, since the contact panel at the foot of the page is where that emphasis lives.
+- **Mobile (≤900px):** the whole cluster collapses to a single hamburger square; nav moves into a dismissible overlay panel (scrim + focus trap + Escape) whose links keep the same icons at 18px, set in the display face at 1.35rem.
 
 ### Experience Timeline (signature component)
 A vertical rail (`border-left`) running from a heading icon down through each entry, with a small filled square marker (`--exp-marker`, not a circle — consistent with the no-radius rule) positioned on the rail at each item's title baseline. Role titles are set in monospace/uppercase rather than the display font, which is the one place the system deliberately breaks its own "mono is metadata only" rule — the intent is for the timeline to read like a log rather than a résumé list.

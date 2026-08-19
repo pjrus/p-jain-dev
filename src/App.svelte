@@ -52,7 +52,6 @@
       <SectionHeading
         label="Selected work"
         title="Projects made to be used."
-        summary="A mix of independent builds, team projects and experiments across accessibility, education and productivity."
       />
 
       <div class="project-grid">

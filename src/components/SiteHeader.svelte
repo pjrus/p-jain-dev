@@ -1,7 +1,10 @@
 <script>
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
+  import IconBriefcase from './IconBriefcase.svelte';
+  import IconDocument from './IconDocument.svelte';
   import IconGithub from './IconGithub.svelte';
+  import IconLayers from './IconLayers.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
   import { route, navigateTo } from '../router.svelte.js';
@@ -92,10 +95,10 @@
   <div class="shell header-inner">
     <a class="brand" href="/#top" onclick={(event) => go('/#top', event)} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
-    <nav aria-label="Main navigation">
-      <a href="/#projects" onclick={(event) => navigateTo('/#projects', event)}>Projects</a>
-      <a href="/#experience" onclick={(event) => navigateTo('/#experience', event)}>Experience</a>
-      <a href="/blog" onclick={(event) => navigateTo('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}>Blog</a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <a href="/#projects" onclick={(event) => navigateTo('/#projects', event)}><IconLayers /> Projects</a>
+      <a href="/#experience" onclick={(event) => navigateTo('/#experience', event)}><IconBriefcase /> Experience</a>
+      <a href="/blog" onclick={(event) => navigateTo('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}><IconDocument /> Blog</a>
     </nav>
 
     <div class="header-actions">
@@ -126,8 +129,6 @@
       >
         <ThemeIcon dark={isDark} />
       </button>
-      <a class="header-contact" href="mailto:paarangatj@gmail.com">Let’s talk</a>
-
       <button
         id="menu-toggle"
         class="menu-toggle"
@@ -161,9 +162,9 @@
       transition:fly={overlayFly}
     >
       <nav class="mobile-menu-nav" aria-label="Mobile">
-        <a href="/#projects" onclick={(event) => go('/#projects', event)}>Projects</a>
-        <a href="/#experience" onclick={(event) => go('/#experience', event)}>Experience</a>
-        <a href="/blog" onclick={(event) => go('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}>Blog</a>
+        <a href="/#projects" onclick={(event) => go('/#projects', event)}><IconLayers size={18} /> Projects</a>
+        <a href="/#experience" onclick={(event) => go('/#experience', event)}><IconBriefcase size={18} /> Experience</a>
+        <a href="/blog" onclick={(event) => go('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
       </nav>
 
       <div class="mobile-menu-foot">

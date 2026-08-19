@@ -12,7 +12,7 @@
   />
 
   <div class="blog-empty">
-    <p class="eyebrow">Coming soon</p>
+    <p class="blog-title"><span class="blog-title-marker">&gt;</span> Coming soon</p>
     <p>I’m drafting my first posts. In the meantime, take a look at what I’ve shipped.</p>
     <a class="text-link" href="/#projects" onclick={(event) => navigateTo('/#projects', event)}>
       See my work <ArrowIcon />

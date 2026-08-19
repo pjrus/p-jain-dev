@@ -68,6 +68,12 @@
         "value": "#000000",
         "createdAt": "2026-08-19T08:19:21.797Z",
         "reason": "user explicitly requested pure white/black (not the near-black --ink token) for the dark-mode project-link-primary button; deliberate one-off, see styles.css comment above the rule"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.4rem",
+        "createdAt": "2026-08-19T08:31:59.281Z",
+        "reason": "user asked to replicate aditya04tripathi's blog post-title treatment (mono/uppercase/chevron) verbatim on the blog empty-state heading; intentionally off the existing Title (h3) step, which is a different visual language"
       }
     ]
   }
