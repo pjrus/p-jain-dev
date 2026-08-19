@@ -4,11 +4,10 @@
   import { afterNavigate } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/state';
-  import IconBriefcase from './IconBriefcase.svelte';
   import IconDocument from './IconDocument.svelte';
   import IconGithub from './IconGithub.svelte';
-  import IconLayers from './IconLayers.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
+  import IconUser from './IconUser.svelte';
 
   let isDark = $state(false);
   let isMenuOpen = $state(false);
@@ -49,7 +48,8 @@
     isMenuOpen = false;
   }
 
-  const isBlog = $derived(page.url.pathname.startsWith(`${base}/blog`));
+  const isBlog = $derived(page.url.pathname.includes('/blog'));
+  const isAbout = $derived(page.url.pathname.endsWith('/about'));
 
   // Locks background scroll while the full-screen menu is open.
   $effect(() => {
@@ -102,8 +102,7 @@
     <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href={`${base}/#projects`}><IconLayers /> Projects</a>
-      <a href={`${base}/#experience`}><IconBriefcase /> Experience</a>
+      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser /> About</a>
       <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument /> Blog</a>
     </nav>
 
@@ -159,8 +158,7 @@
       transition:fly={overlayFly}
     >
       <nav class="mobile-menu-nav" aria-label="Mobile">
-        <a href={`${base}/#projects`}><IconLayers size={18} /> Projects</a>
-        <a href={`${base}/#experience`}><IconBriefcase size={18} /> Experience</a>
+        <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser size={18} /> About</a>
         <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
       </nav>
 

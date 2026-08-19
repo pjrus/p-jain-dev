@@ -2,22 +2,6 @@ import { base } from '$app/paths';
 
 export const projects = [
   {
-    title: 'Ressie',
-    description:
-      'A local-first resume builder that turns structured form data into polished LaTeX, with live PDF preview and multiple templates.',
-    problem:
-      'LaTeX produces excellent resumes, but its syntax and compilation workflow make it difficult for many people to use confidently.',
-    architecture:
-      'A React and Vite interface stores structured resume data locally, while a Node.js and Express service uses Tectonic to compile selected LaTeX templates into a live PDF preview.',
-    outcome:
-      'Private, local-first editing with automatic PDF previews, reusable templates and a dashboard for organising multiple resumes.',
-    image: `${base}/images/ressie.png`,
-    alt: 'Ressie resume builder dashboard',
-    tags: ['React', 'Vite', 'Node.js', 'Express', 'Tectonic'],
-    github: 'https://github.com/pjrus/ressie',
-    visit: 'https://ressie.onrender.com/',
-  },
-  {
     title: 'Skilliton',
     description:
       'An AI-assisted peer skill exchange built at UniHack 2026, matching students and helping them organise sessions.',
@@ -47,6 +31,22 @@ export const projects = [
     alt: 'Placeholder illustration of the Trackie job application workspace',
     tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
     github: 'https://github.com/pjrus/trackie',
+  },
+  {
+    title: 'Ressie',
+    description:
+      'A local-first resume builder that turns structured form data into polished LaTeX, with live PDF preview and multiple templates.',
+    problem:
+      'LaTeX produces excellent resumes, but its syntax and compilation workflow make it difficult for many people to use confidently.',
+    architecture:
+      'A React and Vite interface stores structured resume data locally, while a Node.js and Express service uses Tectonic to compile selected LaTeX templates into a live PDF preview.',
+    outcome:
+      'Private, local-first editing with automatic PDF previews, reusable templates and a dashboard for organising multiple resumes.',
+    image: `${base}/images/ressie.png`,
+    alt: 'Ressie resume builder dashboard',
+    tags: ['React', 'Vite', 'Node.js', 'Express', 'Tectonic'],
+    github: 'https://github.com/pjrus/ressie',
+    visit: 'https://ressie.onrender.com/',
   },
   {
     title: 'Tactile display',
