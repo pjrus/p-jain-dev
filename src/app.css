@@ -47,12 +47,7 @@
      half-interval when tuning. */
   --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
   --heading-space: clamp(2.25rem, 4vw, 3.75rem);
-  --eyebrow-space: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
-
-  /* Hero two-column split ------------------------------------------------ */
-  --split-cols: minmax(0, 1.1fr) minmax(20rem, 0.8fr);
-  --split-gap: clamp(3rem, 7vw, 7rem);
 
   /* Surfaces ------------------------------------------------------------- */
   --card-pad: clamp(1.5rem, 3vw, 2.25rem);
@@ -248,7 +243,6 @@ em {
 /* Shared type utilities                                                   */
 /* ---------------------------------------------------------------------- */
 
-.eyebrow,
 .experience-period {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -256,11 +250,6 @@ em {
   letter-spacing: 0.09em;
   line-height: 1.4;
   text-transform: uppercase;
-}
-
-.eyebrow {
-  margin-bottom: var(--eyebrow-space);
-  color: var(--primary);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -316,8 +305,7 @@ em {
   gap: 0.5rem;
 }
 
-.header-social,
-.theme-toggle {
+.header-social {
   font-size: 0.8rem;
   font-weight: 600;
   text-decoration: none;
@@ -362,8 +350,7 @@ em {
   gap: 0.5rem;
 }
 
-.header-social,
-.theme-toggle {
+.header-social {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -377,15 +364,13 @@ em {
 
 /* Icon-only controls: square rather than glyph-width, and identical to each
    other so the header reads as one set. Each carries its name on aria-label. */
-.header-social,
-.theme-toggle {
+.header-social {
   width: var(--control-h-sm);
   padding: 0;
   transition: background-color 0.15s ease;
 }
 
-.header-social:hover,
-.theme-toggle:hover {
+.header-social:hover {
   background: var(--tint);
 }
 
@@ -623,26 +608,6 @@ em {
   margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
 }
 
-.about-prose {
-  color: var(--muted);
-  font-size: 1.05rem;
-  line-height: 1.75;
-}
-
-.about-prose p + p {
-  margin-top: 1.35rem;
-}
-
-.about-prose p:first-child {
-  color: var(--ink);
-  font-size: 1.12rem;
-}
-
-.about-prose p:last-child {
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--line);
-}
-
 .about-figure {
   float: right;
   width: min(43%, 27rem);
@@ -667,58 +632,6 @@ em {
   letter-spacing: 0.08em;
   line-height: 1.4;
   text-transform: uppercase;
-}
-
-/* ---------------------------------------------------------------------- */
-/* Skills and experience marquee                                          */
-/* ---------------------------------------------------------------------- */
-
-.credential-marquee {
-  border-block: 1px solid var(--line);
-  background: var(--background);
-}
-
-.marquee-window {
-  display: flex;
-  min-width: 0;
-  min-height: 3.75rem;
-  overflow: hidden;
-  align-items: center;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 38s linear infinite;
-  will-change: transform;
-}
-
-.marquee-list {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: clamp(1.25rem, 2.5vw, 2.5rem);
-  padding-right: clamp(1.25rem, 2.5vw, 2.5rem);
-}
-
-.marquee-list li {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.marquee-label {
-  color: var(--primary);
-  font-family: var(--font-display);
-  font-size: clamp(0.88rem, 1.1vw, 1rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-@keyframes marquee-scroll {
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 /* ---------------------------------------------------------------------- */
@@ -797,6 +710,11 @@ em {
   max-width: var(--measure);
   color: var(--muted);
   font-size: 1.1rem;
+}
+
+/* Let the stack summary use the full section measure. */
+.stack .section-heading-grid > p {
+  max-width: none;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -1270,7 +1188,12 @@ em {
 /* ---------------------------------------------------------------------- */
 
 .stack {
+  padding-block: clamp(3rem, 4vw, 4rem);
   border-top: 1px solid var(--line);
+}
+
+.stack .section-heading {
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
 }
 
 .stack-grid {
@@ -1280,7 +1203,7 @@ em {
 }
 
 .stack-card {
-  padding: var(--card-pad);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
   border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -1621,8 +1544,7 @@ em {
   }
 
   .primary-nav,
-  .header-actions .header-social,
-  .header-actions .theme-toggle {
+  .header-actions .header-social {
     display: none;
   }
 
@@ -1753,10 +1675,6 @@ em {
     width: min(82vw, 22rem);
   }
 
-  .marquee-window {
-    min-height: 3.5rem;
-  }
-
   .experience-item-heading {
     flex-direction: column;
     gap: 0.75rem;
@@ -1801,19 +1719,6 @@ em {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-  }
-
-  .marquee-window {
-    overflow-x: auto;
-  }
-
-  .marquee-track {
-    animation: none;
-    will-change: auto;
-  }
-
-  .marquee-track .marquee-list[aria-hidden='true'] {
-    display: none;
   }
 
 }
