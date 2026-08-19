@@ -56,6 +56,55 @@
   </div>
 </section>
 
+<section class="about shell section" id="about" aria-labelledby="about-title" hidden>
+  <h2 id="about-title" class="about-title">Code, people and useful problems.</h2>
+
+  <figure class="about-figure">
+    <img
+      src="/images/dharamshala.jpg"
+      alt="Dharamshala beneath the Dhauladhar mountain range in India"
+    />
+    <figcaption>Dharamshala, India · a favourite place</figcaption>
+  </figure>
+
+  <div class="about-prose">
+    <p>
+      I’m a computer science student at Monash University, majoring in mathematics, and a developer drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
+    </p>
+    <p>
+      As project coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process.
+    </p>
+    <p>
+      Away from the keyboard, I’m usually looking for somewhere new to eat, keeping up with K-dramas and films, or planning another trip.
+    </p>
+  </div>
+
+  <aside class="about-details" aria-label="Education and technical details">
+    <dl>
+      <div>
+        <dt>Location</dt>
+        <dd>Melbourne, VIC, Australia</dd>
+      </div>
+      <div>
+        <dt>Education</dt>
+        <dd>Monash University</dd>
+        <dd class="about-detail-note">Bachelor of Computer Science · Mathematics major</dd>
+      </div>
+      <div>
+        <dt>Core stack</dt>
+        <dd>
+          <ul class="about-stack" aria-label="Core technologies">
+            <li>TypeScript</li>
+            <li>React</li>
+            <li>React Native</li>
+            <li>Python</li>
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </aside>
+</section>
+
 <section class="projects section" id="projects">
   <div class="shell">
     <SectionHeading

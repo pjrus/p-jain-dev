@@ -5,7 +5,7 @@ colors:
   background: "#fafbfe"
   surface: "#ffffff"
   ink: "#182238"
-  muted: "#5e6573"
+  muted: "#182238"
   signal-blue: "#315ed6"
   primary-ink: "#ffffff"
   flare-coral: "#ed6a4b"
@@ -150,7 +150,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 
 ### Neutral
 - **Ink** (`#182238`): primary text and the portrait plinth (`--frame`).
-- **Muted** (`#5e6573`): secondary text — descriptions, summaries, metadata.
+- **Muted** (`#182238` in light mode): secondary text uses the same ink colour as primary copy, with hierarchy carried by size, weight and spacing rather than grey. Dark mode retains a softer secondary value for legibility against the near-black canvas.
 - **Background** (`#fafbfe`): the page canvas, a soft near-white rather than pure white.
 - **Surface** (`#ffffff`): cards and raised panels, distinguished from the canvas by being genuinely whiter.
 - **Tint** (`#e5edfb`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
