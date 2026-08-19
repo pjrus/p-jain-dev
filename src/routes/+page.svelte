@@ -83,7 +83,7 @@
           aria-expanded={showAllProjects}
           onclick={() => (showAllProjects = !showAllProjects)}
         >
-          {showAllProjects ? 'Show fewer projects' : 'Show more projects'}
+          {showAllProjects ? 'Show less' : 'Show more'}
           <ArrowIcon direction="down" />
         </button>
       {/if}

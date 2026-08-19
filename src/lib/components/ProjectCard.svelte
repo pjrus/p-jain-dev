@@ -17,7 +17,7 @@
     </div>
     <div class="project-body">
       <div>
-        <h3><span aria-hidden="true">&gt;</span> {project.title}</h3>
+        <h3>{project.title}</h3>
         <p class="project-description">{project.description}</p>
       </div>
     </div>
