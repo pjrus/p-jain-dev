@@ -17,7 +17,6 @@
     </div>
     <div class="project-body">
       <div>
-        <p class="project-kicker">Selected project</p>
         <h3><span aria-hidden="true">&gt;</span> {project.title}</h3>
         <p class="project-description">{project.description}</p>
       </div>

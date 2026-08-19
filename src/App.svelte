@@ -47,9 +47,10 @@
   <section class="hero shell" id="top">
     <div class="hero-copy">
       <p class="eyebrow"><span class="status-dot"></span> Melbourne · Open to opportunities</p>
-      <h1>I build useful software for <em>real people.</em></h1>
+      <h1>Hi, I’m <em>Paarangat Jain.</em></h1>
+      <p class="hero-role">Developer &amp; computer science student</p>
       <p class="hero-intro">
-        I’m Paarangat Jain — a developer, computer science student and accessibility advocate who enjoys turning difficult problems into clear, practical products.
+        I build practical software across full-stack web, mobile and assistive technology — from production healthcare tools to low-cost tactile displays designed with blind and low-vision users.
       </p>
       <div class="hero-actions">
         <a class="button button-primary" href="#projects">See my work <ArrowIcon direction="down" /></a>
@@ -86,7 +87,6 @@
 
   <section class="stack shell section" id="stack">
     <SectionHeading
-      label="Tech stack"
       title="What I build with."
       summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
     />
@@ -112,7 +112,6 @@
         </svg>
       </span>
       <div>
-        <p class="eyebrow">Work history</p>
         <h2>Experience log</h2>
       </div>
     </div>
@@ -138,7 +137,6 @@
   <section class="contact section" id="contact" aria-labelledby="contact-title">
     <div class="contact-inner">
       <header class="contact-intro">
-        <p class="contact-eyebrow">Get in touch</p>
         <h2 id="contact-title">Let’s make something useful.</h2>
         <p>
           I’m always open to thoughtful opportunities, collaborations and projects — or a good conversation about accessible technology.

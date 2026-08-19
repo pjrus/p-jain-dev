@@ -2,7 +2,7 @@
 name: Paarangat Jain — Portfolio
 description: A technical dossier for a developer and accessibility advocate — evidence-first, sharp-edged, and quietly confident.
 colors:
-  background: "#f6f8fc"
+  background: "#fafbfe"
   surface: "#ffffff"
   ink: "#182238"
   muted: "#5e6573"
@@ -151,7 +151,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 ### Neutral
 - **Ink** (`#182238`): primary text and the portrait plinth (`--frame`).
 - **Muted** (`#5e6573`): secondary text — descriptions, summaries, metadata.
-- **Background** (`#f6f8fc`): the page canvas, a cool near-white rather than pure white.
+- **Background** (`#fafbfe`): the page canvas, a soft near-white rather than pure white.
 - **Surface** (`#ffffff`): cards and raised panels, distinguished from the canvas by being genuinely whiter.
 - **Tint** (`#e5edfb`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
 - **Line** (`#d9e0ea`): hairline dividers and card borders — the resting border colour everywhere except the header cluster, whose boxes sit at full `--ink`.

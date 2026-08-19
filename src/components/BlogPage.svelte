@@ -6,7 +6,6 @@
 
 <section class="blog shell section" id="blog">
   <SectionHeading
-    label="Blog"
     title="Writing, when there's something worth saying."
     summary="Notes on the products I'm building and the problems behind them. Nothing published yet — check back soon."
   />
