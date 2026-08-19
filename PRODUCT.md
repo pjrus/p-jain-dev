@@ -41,7 +41,7 @@ The combination — hardware-adjacent assistive technology, real production empl
 
 ## Capabilities and Constraints
 
-**Current implementation:** a Svelte 5 + Vite single-page site. `src/App.svelte` composes hero, about, selected work, experience log, and contact; `src/data/content.js` is the single source of truth for the `projects` and `experience` arrays; `src/styles.css` holds the full token layer and all styling. Components live in `src/components/` (`SiteHeader`, `SectionHeading`, `ProjectCard`, `ArrowIcon`).
+**Current implementation:** a prerendered SvelteKit site with dedicated home, About and blog routes. The homepage composes the hero, selected work, experience log and contact sections; `src/lib/data/content.js` is the single source of truth for project and experience data; `src/app.css` holds the token layer and shared styling. Reusable components live in `src/lib/components/`.
 
 **Content model:** each project carries `title`, `description`, `problem`, `architecture`, `outcome`, `image`, `alt`, `tags`, and optional `github` / `visit` links. The problem/architecture/outcome triad is deliberate depth — future surfaces should use it rather than reduce projects to blurbs. Each experience entry carries `period`, `role`, `organisation`, `location`, and `summary`.
 

@@ -1,0 +1,33 @@
+<script>
+  import { base } from '$app/paths';
+</script>
+
+<svelte:head>
+  <title>About — Paarangat Jain</title>
+  <meta
+    name="description"
+    content="Learn more about Paarangat Jain, a Melbourne-based developer working across web, mobile and assistive technology."
+  />
+</svelte:head>
+
+<section class="about about-page shell section" aria-labelledby="about-title">
+  <h1 id="about-title" class="about-title">Code, people and useful problems.</h1>
+
+  <figure class="about-figure">
+    <img
+      src={`${base}/images/dharamshala.jpg`}
+      alt="Dharamshala beneath the Dhauladhar mountain range in India"
+    />
+    <figcaption>Dharamshala, India · a favourite place</figcaption>
+  </figure>
+
+  <div>
+    <p>
+      I’m a computer science student at Monash University, majoring in mathematics, and a developer drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
+    </p>
+    <br>
+    <p>
+      As project coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat, keeping up with K-dramas and films, or planning another trip.
+    </p>
+  </div>
+</section>

@@ -80,6 +80,12 @@
         "value": "1.2rem",
         "createdAt": "2026-08-19T09:27:18.750Z",
         "reason": "Existing hero role size is outside this task; the user explicitly asked to preserve the hero."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#3b83f6",
+        "createdAt": "2026-08-19T11:41:19.113Z",
+        "reason": "Pre-existing intentional dark-mode primary-button override documented by the adjacent source comment; unrelated to the About page change."
       }
     ]
   }
