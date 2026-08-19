@@ -6,6 +6,8 @@ A responsive personal portfolio showcasing my work across full-stack web, mobile
 
 The site presents selected projects, technical skills, professional experience, blog posts and contact details. It is built with SvelteKit and fully prerendered as a static site, with no server runtime or analytics.
 
+The [Aditya Tripathi portfolio repository](https://github.com/aditya04tripathi/aditya04tripathi) was used as inspiration for this portfolio's structure and presentation.
+
 ## Technology
 
 - Svelte 5 and SvelteKit

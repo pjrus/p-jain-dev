@@ -27,8 +27,8 @@ export const projects = [
       'A Next.js and TypeScript application stores data in the browser, with React Hook Form and Zod for validated workflows and dnd-kit powering an accessible Kanban board.',
     outcome:
       'A focused application pipeline with table and board views, import and export tools, and no account, API or database required.',
-    image: `${base}/images/trackie-placeholder.svg`,
-    alt: 'Placeholder illustration of the Trackie job application workspace',
+    image: `${base}/images/trackie.png`,
+    alt: 'Trackie job application Kanban board',
     tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
     github: 'https://github.com/pjrus/trackie',
   },

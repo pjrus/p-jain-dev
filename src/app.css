@@ -628,10 +628,6 @@ em {
   content: '';
 }
 
-.about-page {
-  min-height: calc(100vh - var(--header-h));
-}
-
 .about-title {
   max-width: none;
   margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
@@ -1611,7 +1607,6 @@ em {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 7rem;
   padding-block: 1.5rem;
   color: var(--muted);
   font-size: 0.85rem;

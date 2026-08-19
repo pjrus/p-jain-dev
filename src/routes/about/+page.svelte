@@ -27,7 +27,7 @@
     </p>
     <br>
     <p>
-      As project coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat, keeping up with K-dramas and films, or planning another trip.
+      As project coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat, keeping up with films, or planning another trip.
     </p>
   </div>
 </section>
