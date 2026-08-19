@@ -31,6 +31,7 @@ export const projects = [
     alt: 'Trackie job application Kanban board',
     tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
     github: 'https://github.com/pjrus/trackie',
+    visit: 'https://pjrus.github.io/trackie/kanban/',
   },
   {
     title: 'Ressie',
