@@ -5,10 +5,7 @@
 </script>
 
 <section class="blog shell section" id="blog">
-  <SectionHeading
-    title="Writing, when there's something worth saying."
-    summary="Notes on the products I'm building and the problems behind them. Nothing published yet — check back soon."
-  />
+  <SectionHeading title="Blog" />
 
   <div class="blog-empty">
     <p class="blog-title"><span class="blog-title-marker">&gt;</span> Coming soon</p>

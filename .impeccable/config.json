@@ -74,6 +74,12 @@
         "value": "1.4rem",
         "createdAt": "2026-08-19T08:31:59.281Z",
         "reason": "user asked to replicate aditya04tripathi's blog post-title treatment (mono/uppercase/chevron) verbatim on the blog empty-state heading; intentionally off the existing Title (h3) step, which is a different visual language"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.2rem",
+        "createdAt": "2026-08-19T09:27:18.750Z",
+        "reason": "Existing hero role size is outside this task; the user explicitly asked to preserve the hero."
       }
     ]
   }
