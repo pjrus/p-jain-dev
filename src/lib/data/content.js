@@ -34,20 +34,19 @@ export const projects = [
     visit: 'https://studio--studio-818276670-ce8c7.us-central1.hosted.app',
   },
   {
-    title: 'Braille quiz game',
+    title: 'Trackie',
     description:
-      'A reactive learning experience for practising Braille characters, designed with accessible interaction at its core.',
+      'A private, local-first workspace for tracking job applications from first save through to offer.',
     problem:
-      'Learning Braille requires frequent practice and immediate feedback, but many digital exercises provide little sense of progress.',
+      'Job searches scatter application details, deadlines and follow-ups across spreadsheets, calendars and browser tabs.',
     architecture:
-      'A React and TypeScript client models quiz state as RxJS streams, keeping the timer, score, streak and answer feedback synchronised throughout each session.',
+      'A Next.js and TypeScript application stores data in the browser, with React Hook Form and Zod for validated workflows and dnd-kit powering an accessible Kanban board.',
     outcome:
-      'Responsive, zero-install practice with timed challenges, live scoring, streak tracking and immediate answer feedback.',
-    image: `${base}/images/braille-quiz-app.png`,
-    alt: 'Braille character quiz game interface',
-    tags: ['React', 'TypeScript', 'RxJS', 'Accessibility'],
-    github: 'https://github.com/pjrus/braille-quiz-game',
-    visit: 'https://pjrus.github.io/braille-quiz-game',
+      'A focused application pipeline with table and board views, import and export tools, and no account, API or database required.',
+    image: `${base}/images/trackie-placeholder.svg`,
+    alt: 'Placeholder illustration of the Trackie job application workspace',
+    tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
+    github: 'https://github.com/pjrus/trackie',
   },
   {
     title: 'Tactile display',

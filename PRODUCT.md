@@ -26,7 +26,7 @@ Accessibility is not a stated value on this site — it is the substance of the 
 
 - Project coordinator on the Monash Assistive Technology Team, leading development of **affordable tactile displays** for blind and low-vision users, plus the React Native software that drives them — grounded in user interviews and user-centred design.
 - Outreach and operations officer for the same team, building partnerships with schools.
-- Shipped, linkable products, not coursework: Ressie (local-first LaTeX resume builder), Skilliton (UniHack 2026), a Braille quiz game built with RxJS streams, a Pomodoro timer.
+- Shipped, linkable products, not coursework: Ressie (local-first LaTeX resume builder), Skilliton (UniHack 2026), Trackie (local-first job application workspace), and a Pomodoro timer.
 - Paid industry experience in healthcare software (PlasmIT Vector), taking mobile work from requirements through to production delivery.
 
 The combination — hardware-adjacent assistive technology, real production employment, and independently shipped products — is the position. The work spans software and physical hardware, which most portfolios in this category cannot show.
@@ -65,10 +65,10 @@ The combination — hardware-adjacent assistive technology, real production empl
 
 **Real and usable:**
 - Portrait: `public/images/paarangat-jain.webp`
-- Project screenshots: `public/images/` — `ressie.png`, `skill-issue.png`, `braille-quiz-app.png`, `tactile-display-project.png`, `pomo-app.jpeg`
+- Project screenshots: `public/images/` — `ressie.png`, `skill-issue.png`, `trackie-placeholder.svg`, `braille-quiz-app.png`, `tactile-display-project.png`, `pomo-app.jpeg`
 - Résumé PDF: `public/Paarangat-Jain-Resume.pdf`
-- Live deployments: Ressie (ressie.onrender.com), Skilliton (Firebase-hosted), Braille quiz game (pjrus.github.io)
-- Public source on GitHub for Ressie, Skilliton, the Braille quiz game, and the Pomodoro timer
+- Live deployments: Ressie (ressie.onrender.com) and Skilliton (Firebase-hosted)
+- Public source on GitHub for Ressie, Skilliton, Trackie, and the Pomodoro timer
 - Verifiable affiliations: PlasmIT Vector, Ocean Connect, Monash Assistive Technology Team; UniHack 2026 participation
 
 **Absent — must never be fabricated:** testimonials, references, quotes from colleagues or supervisors, client logos, press coverage, awards, user counts, download numbers, performance benchmarks, GitHub stars, or any metric of project usage. The tactile display project has no live link and no public repository — it must not be given one.
