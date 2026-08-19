@@ -50,18 +50,19 @@ export const projects = [
     visit: 'https://ressie.onrender.com/',
   },
   {
-    title: 'Tactile display',
+    title: 'Portfolio website',
     description:
-      'A low-cost assistive technology project bridging mobile software and hardware for blind and low-vision users.',
+      'A responsive personal portfolio showcasing shipped software, accessibility work and experience across web, mobile and hardware.',
     problem:
-      'Refreshable Braille hardware remains expensive, limiting access to tactile digital content for blind and low-vision users.',
+      'A portfolio needs to make real projects, technical range and accessibility experience easy to assess at a glance.',
     architecture:
-      'The project combines low-cost MagnePins tactile hardware with a React Native companion application, supported by Figma prototypes and an accessible project website.',
+      'A prerendered SvelteKit site uses JavaScript, modern CSS and mdsvex for structured project, experience and blog content.',
     outcome:
-      'An open, lower-cost path for controlling tactile display hardware from a familiar mobile interface.',
-    image: `${base}/images/tactile-display-project.png`,
-    alt: 'Prototype tactile display project',
-    tags: ['React Native', 'Hardware', 'Figma', 'Assistive tech'],
+      'A fast, accessible home for project evidence, technical skills, experience, writing and contact details.',
+    image: `${base}/images/portfolio.png`,
+    alt: 'Personal portfolio website homepage',
+    tags: ['SvelteKit', 'JavaScript', 'CSS', 'Accessibility'],
+    github: 'https://github.com/pjrus/p-jain-dev',
   },
   {
     title: 'Pomodoro timer',
