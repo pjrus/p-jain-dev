@@ -3,10 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Paarangat Jain is a Melbourne-based developer building accessible, useful software across web, mobile and assistive technology."
-    />
     <meta name="theme-color" content="#fafbfe" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,10 +11,20 @@
       rel="stylesheet"
     />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233162db%22/><text y=%22.74em%22 x=%22.16em%22 font-size=%2268%22 font-family=%22Arial%22 font-weight=%22700%22 fill=%22white%22>P</text></svg>" />
-    <title>Paarangat Jain — Developer &amp; accessibility advocate</title>
+    <script>
+      // Pages are prerendered, so the saved theme has to be applied before the
+      // first paint — otherwise a dark-mode visitor sees a flash of the light
+      // canvas on every navigation that hits the network.
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light';
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    </script>
+    %sveltekit.head%
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

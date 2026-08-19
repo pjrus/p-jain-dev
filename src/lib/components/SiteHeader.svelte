@@ -1,13 +1,14 @@
 <script>
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
+  import { afterNavigate } from '$app/navigation';
+  import { page } from '$app/state';
   import IconBriefcase from './IconBriefcase.svelte';
   import IconDocument from './IconDocument.svelte';
   import IconGithub from './IconGithub.svelte';
   import IconLayers from './IconLayers.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
-  import { route, navigateTo } from '../router.svelte.js';
 
   let isDark = $state(false);
   let isMenuOpen = $state(false);
@@ -15,11 +16,14 @@
   let reduceMotion = $state(false);
 
   onMount(() => {
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    isDark = savedTheme === 'dark';
-    applyTheme();
+    // The inline script in app.html has already applied the saved theme before
+    // first paint; this only syncs the toggle's state with what is on screen.
+    isDark = document.documentElement.dataset.theme === 'dark';
     reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
+
+  // A tap on a menu link shouldn't leave the full-screen menu open behind the new view.
+  afterNavigate(closeMenu);
 
   function applyTheme() {
     document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
@@ -35,15 +39,7 @@
     isMenuOpen = false;
   }
 
-  /**
-   * Navigates and dismisses the mobile menu, so a tap doesn't leave it open behind the new view.
-   * @param {string} href
-   * @param {MouseEvent} [event]
-   */
-  function go(href, event) {
-    closeMenu();
-    navigateTo(href, event);
-  }
+  const isBlog = $derived(page.url.pathname.startsWith('/blog'));
 
   // Locks background scroll while the full-screen menu is open.
   $effect(() => {
@@ -93,12 +89,12 @@
 
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="/#top" onclick={(event) => go('/#top', event)} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
+    <a class="brand" href="/#top" aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href="/#projects" onclick={(event) => navigateTo('/#projects', event)}><IconLayers /> Projects</a>
-      <a href="/#experience" onclick={(event) => navigateTo('/#experience', event)}><IconBriefcase /> Experience</a>
-      <a href="/blog" onclick={(event) => navigateTo('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}><IconDocument /> Blog</a>
+      <a href="/#projects"><IconLayers /> Projects</a>
+      <a href="/#experience"><IconBriefcase /> Experience</a>
+      <a href="/blog" aria-current={isBlog ? 'page' : undefined}><IconDocument /> Blog</a>
     </nav>
 
     <div class="header-actions">
@@ -162,9 +158,9 @@
       transition:fly={overlayFly}
     >
       <nav class="mobile-menu-nav" aria-label="Mobile">
-        <a href="/#projects" onclick={(event) => go('/#projects', event)}><IconLayers size={18} /> Projects</a>
-        <a href="/#experience" onclick={(event) => go('/#experience', event)}><IconBriefcase size={18} /> Experience</a>
-        <a href="/blog" onclick={(event) => go('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
+        <a href="/#projects"><IconLayers size={18} /> Projects</a>
+        <a href="/#experience"><IconBriefcase size={18} /> Experience</a>
+        <a href="/blog" aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
       </nav>
 
       <div class="mobile-menu-foot">
