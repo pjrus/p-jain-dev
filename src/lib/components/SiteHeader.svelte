@@ -9,7 +9,6 @@
   import IconGithub from './IconGithub.svelte';
   import IconLayers from './IconLayers.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
-  import ThemeIcon from './ThemeIcon.svelte';
 
   let isDark = $state(false);
   let isMenuOpen = $state(false);
@@ -21,6 +20,16 @@
     // first paint; this only syncs the toggle's state with what is on screen.
     isDark = document.documentElement.dataset.theme === 'dark';
     reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /** @param {KeyboardEvent} event */
+    function handleThemeShortcut(event) {
+      if (!event.ctrlKey || event.key.toLowerCase() !== 'd' || event.repeat) return;
+      event.preventDefault();
+      toggleTheme();
+    }
+
+    document.addEventListener('keydown', handleThemeShortcut);
+    return () => document.removeEventListener('keydown', handleThemeShortcut);
   });
 
   // A tap on a menu link shouldn't leave the full-screen menu open behind the new view.
@@ -118,15 +127,6 @@
         <IconLinkedin />
       </a>
       <button
-        class="theme-toggle"
-        type="button"
-        onclick={toggleTheme}
-        aria-label={`Use ${isDark ? 'light' : 'dark'} theme`}
-        aria-pressed={isDark}
-      >
-        <ThemeIcon dark={isDark} />
-      </button>
-      <button
         id="menu-toggle"
         class="menu-toggle"
         type="button"
@@ -184,15 +184,6 @@
           >
             <IconLinkedin size={20} />
           </a>
-          <button
-            class="theme-toggle"
-            type="button"
-            onclick={toggleTheme}
-            aria-label={`Use ${isDark ? 'light' : 'dark'} theme`}
-            aria-pressed={isDark}
-          >
-            <ThemeIcon dark={isDark} />
-          </button>
         </div>
 
         <a class="button button-primary mobile-menu-contact" href="mailto:paarangatj@gmail.com" onclick={closeMenu}>

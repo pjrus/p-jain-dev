@@ -1,12 +1,11 @@
 <script>
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
-  import CredentialMarquee from '$lib/components/CredentialMarquee.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
-  import { experience, highlights, projects, stack } from '$lib/data/content.js';
+  import { experience, projects, stack } from '$lib/data/content.js';
 
   /**
    * Opens the visitor's email client with their message ready to send.
@@ -56,8 +55,6 @@
     </figure>
   </div>
 </section>
-
-<CredentialMarquee items={highlights} />
 
 <section class="projects section" id="projects">
   <div class="shell">
