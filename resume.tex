@@ -1,0 +1,140 @@
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\definecolor{ink}{HTML}{202124}
+\definecolor{muted}{HTML}{5F6368}
+
+\pagestyle{empty}
+\color{ink}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=1pt,topsep=2pt,parsep=0pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+
+\newcommand{\resumeEntry}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textit{#2} \\
+    {\color{muted}#3} & {\color{muted}\textit{#4}}
+  \end{tabularx}
+  \vspace{1pt}
+}
+
+\newcommand{\resumeProject}[3]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textit{#2}
+  \end{tabularx}
+  \textit{\color{muted}#3}
+  \vspace{1pt}
+}
+
+\begin{document}
+
+{\centering
+  {\LARGE\bfseries Paarangat Jain}\par
+  \vspace{3pt}
+  0410 215 889 \textbar{} \href{mailto:paarangat@gmail.com}{paarangat@gmail.com} \textbar{}
+  \href{https://linkedin.com/in/paarangat-jain}{linkedin.com/in/paarangat-jain} \textbar{}
+  \href{https://p-jain.dev}{p-jain.dev}\par
+}
+
+\section{Education}
+\resumeEntry{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science (Mathematics Minor), WAM: 73.84, GPA: 3.063}{Clayton, VIC}
+\resumeEntry{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
+
+\section{Experience}
+
+\resumeEntry{Volunteer -- Website Support \& Management}{Mar. 2026 -- Present}{Ocean Connect}{Remote}
+\begin{itemize}
+  \item Support management and maintenance of Ocean Connect's website to ensure programme, event and initiative information remains accurate and accessible.
+  \item Update and organise website content to improve navigation, clarity and usability for volunteers and community members.
+  \item Assist in strengthening the organisation's digital presence to better communicate marine conservation initiatives and community programmes.
+\end{itemize}
+
+\resumeEntry{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
+  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
+  \item Contribute to the organisation's coordination, communication and operational workflows.
+\end{itemize}
+
+\resumeEntry{Project Coordinator}{Aug. 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Lead collaboration with the academic supervisor to define project goals and strategies for developing low-cost tactile and refreshable Braille displays.
+  \item Guide and coordinate project officers in brainstorming and developing accessibility technology.
+  \item Conduct user interviews and design surveys to gather insights for user-centred development.
+  \item Lead development of the React Native mobile application supporting the tactile display project.
+  \item Received more than 90\% positive feedback from team members for effective leadership and communication.
+\end{itemize}
+
+\resumeEntry{Projects Officer}{Mar. 2025 -- Aug. 2025}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Collaborated with the academic supervisor and fellow officers to brainstorm accessibility solutions.
+  \item Assisted in the design, development and testing of tactile display components for blind and low-vision users.
+\end{itemize}
+
+\section{Projects}
+\resumeProject{Skill-Issue (Skilliton)}{Feb. 2026}{Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS \textbar{} GitHub}
+\begin{itemize}
+  \item Built an AI-powered peer-to-peer skill exchange platform at UniHack 2026, enabling university students to find partners for skill swaps.
+  \item Developed the full-stack application with Next.js, TypeScript and Firebase Authentication with Google OAuth support.
+  \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
+  \item Implemented booking with Google Meet links and downloadable calendar events.
+\end{itemize}
+
+\resumeProject{Personal Portfolio Website}{Jan. 2025 -- Present}{Web development, VPS \textbar{} p-jain.dev \textbar{} GitHub}
+\begin{itemize}
+  \item Developed and maintain a portfolio website showcasing projects and technical skills.
+  \item Deployed the site on a virtual private server with custom domain configuration.
+\end{itemize}
+
+\resumeProject{Tactile Display Project}{Mar. 2025 -- Present}{React Native, hardware}
+\begin{itemize}
+  \item Contributed to an open-source project developing low-cost refreshable Braille displays for blind and low-vision users.
+  \item Developed a React Native mobile application to interact with the tactile display hardware.
+  \item Used Figma to develop mock prototypes and create an accessible companion website.
+\end{itemize}
+
+\resumeProject{Braille Character Quiz Game}{May 2025 -- Present}{React, TypeScript, RxJS \textbar{} GitHub Pages}
+\begin{itemize}
+  \item Developed an interactive web-based game for learning and practising Braille characters.
+  \item Implemented real-time feedback, scoring and streak tracking using RxJS for reactive state management.
+  \item Designed a modern, responsive and accessible interface with timed challenges and custom animations.
+\end{itemize}
+
+\resumeProject{Pomodoro Timer App}{Dec. 2025 -- Present}{React Native, Expo, TypeScript \textbar{} GitHub}
+\begin{itemize}
+  \item Developed a full-featured iOS productivity application using React Native and Expo.
+  \item Integrated ambient sound playback, haptic feedback and multi-theme support.
+  \item Designed modular components with file-based routing and persistent local storage.
+\end{itemize}
+
+\resumeProject{Appointment Booking System}{2023 -- 2026}{Next.js, React, TypeScript, MongoDB, Tailwind CSS \textbar{} GitHub}
+\begin{itemize}
+  \item Rewrote a VCE Software Development Project from PHP/MySQL to Next.js and MongoDB.
+  \item Implemented full CRUD operations with server-side validation and double-booking conflict prevention.
+  \item Built an admin dashboard for appointments, doctor profiles and clinic settings, including automated calendar files.
+\end{itemize}
+
+\section{Technical Skills}
+\textbf{Languages:} Haskell, Python, JavaScript, PHP, MySQL, R, TypeScript, HTML/CSS\\
+\textbf{Operating systems:} Linux (Manjaro), macOS, Windows\\
+\textbf{Technologies:} React Native, React, Next.js, Expo, Docker, Git, Arduino, MongoDB, Figma, VPS deployment, functional programming, statistical analysis
+
+\section{Certifications}
+Deloitte Australia Technology Job Simulation (2025)\\
+Google Technical Support Fundamentals Certificate (Grade: 98.35\%)\\
+FreeCodeCamp Responsive Web Design Certification
+
+\end{document}

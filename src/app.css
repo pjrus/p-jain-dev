@@ -1073,11 +1073,12 @@ em {
 
 .projects {
   --h2-measure: none;
+  padding-top: clamp(2rem, 3.5vw, 3rem);
   border-top: 1px solid var(--line);
 }
 
 .projects .section-heading {
-  margin-bottom: clamp(1.75rem, 3vw, 3rem);
+  margin-bottom: clamp(1.25rem, 2vw, 2rem);
 }
 
 .project-grid {
@@ -1229,10 +1230,6 @@ em {
   text-transform: uppercase;
 }
 
-.section-link {
-  margin-top: 0;
-}
-
 .project-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1247,24 +1244,25 @@ em {
   align-items: center;
   justify-content: center;
   gap: var(--control-gap);
+  min-width: 12rem;
   min-height: var(--control-h);
   padding: 0.8rem var(--control-pad-x);
   border: 1px solid var(--ink);
-  background: transparent;
+  background: var(--surface);
   color: var(--ink);
   cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
   text-decoration: none;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .project-toggle:hover {
+  border-color: var(--ink);
   background: var(--ink);
   color: var(--background);
-}
-
-.project-toggle[aria-expanded='true'] svg {
-  transform: rotate(-90deg);
 }
 
 /* ---------------------------------------------------------------------- */
