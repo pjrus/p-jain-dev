@@ -16,7 +16,7 @@
 
   onMount(() => {
     const savedTheme = localStorage.getItem('portfolio-theme');
-    isDark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    isDark = savedTheme === 'dark';
     applyTheme();
     reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   });

@@ -94,7 +94,7 @@
   color-scheme: dark;
 
   /* Elevation ladder: canvas -> card -> chip, each step readable on the last. */
-  --background: #0a0a0a;
+  --background: #161616;
   --surface: #151517;
   --tint: #202024;
 
@@ -223,7 +223,7 @@ em {
   padding-block: var(--section-space);
 }
 
-/* Keep the hero at full emphasis while compacting all subsequent content. */
+/* Compact all page content beneath the full-scale site header. */
 .content-scale {
   zoom: 0.95;
 }
@@ -533,17 +533,11 @@ em {
   gap: clamp(2.5rem, 5vw, 4.5rem);
 }
 
-.hero-copy .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.status-dot {
-  width: 0.62rem;
-  height: 0.62rem;
-  flex: 0 0 auto;
-  background: var(--accent);
+/* Keep dark-mode hero actions monochrome while using coral for evidence rails. */
+:root[data-theme='dark'] .hero {
+  --primary: #ffffff;
+  --accent: #ff8a6c;
+  --accent-strong: #ffffff;
 }
 
 .hero-role {
@@ -559,7 +553,7 @@ em {
 .hero-intro {
   max-width: var(--measure);
   margin-top: 1.5rem;
-  color: var(--muted);
+  color: var(--ink);
   font-size: clamp(1.02rem, 1.3vw, 1.15rem);
   line-height: 1.55;
 }
@@ -647,11 +641,11 @@ em {
   box-shadow: var(--shadow);
 }
 
-/* Dark mode swaps the primary blue for a near-white fill so the CTA reads
-   as the brightest element on the page instead of blending with links. */
+/* Dark mode gives the primary hero action a stronger blue treatment. */
 :root[data-theme='dark'] .button-primary {
-  background: var(--ink);
-  color: var(--primary-ink);
+  border-color: #3b83f6;
+  background: #3b83f6;
+  color: #ffffff;
 }
 
 /* Matches button height so both align in a row, while the rule stays
