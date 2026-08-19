@@ -69,7 +69,7 @@
     </div>
   </section>
 
-  <section class="projects section" id="projects">
+  <section class="projects section content-scale" id="projects">
     <div class="shell">
       <SectionHeading
         title="Projects"
@@ -85,7 +85,7 @@
     </div>
   </section>
 
-  <section class="stack shell section" id="stack">
+  <section class="stack shell section content-scale" id="stack">
     <SectionHeading
       title="What I build with."
       summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
@@ -103,7 +103,7 @@
     </div>
   </section>
 
-  <section class="experience shell section" id="experience">
+  <section class="experience shell section content-scale" id="experience">
     <div class="experience-heading">
       <span class="experience-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
@@ -134,7 +134,7 @@
     </div>
   </section>
 
-  <section class="contact section" id="contact" aria-labelledby="contact-title">
+  <section class="contact section content-scale" id="contact" aria-labelledby="contact-title">
     <div class="contact-inner">
       <header class="contact-intro">
         <h2 id="contact-title">Let’s make something useful.</h2>
@@ -190,7 +190,7 @@
   {/if}
 </main>
 
-<footer class="site-footer">
+<footer class="site-footer content-scale">
   <div class="shell footer-inner">
     <p>© {year} Paarangat Jain</p>
   </div>

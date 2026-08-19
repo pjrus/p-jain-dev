@@ -1,9 +1,0 @@
-/* Main Stylesheet - Modular Architecture
-   All styleguide logic is split into focused CSS partials imported in cascade order.
-   This ensures consistent theming, layout, and responsive behavior.
-*/
-
-@import url("styles/theme.css");
-@import url("styles/core.css");
-@import url("styles/pages.css");
-@import url("styles/core/responsive.css");

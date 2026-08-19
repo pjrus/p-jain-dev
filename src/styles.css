@@ -223,6 +223,11 @@ em {
   padding-block: var(--section-space);
 }
 
+/* Keep the hero at full emphasis while compacting all subsequent content. */
+.content-scale {
+  zoom: 0.95;
+}
+
 #main-content {
   padding-top: var(--header-h);
 }
