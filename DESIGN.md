@@ -43,6 +43,44 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
     letterSpacing: "0.09em"
+  brand:
+    fontFamily: "'Bricolage Grotesque', sans-serif"
+    fontSize: "1.35rem"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.05em"
+  control:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: "0.8rem"
+    fontWeight: 600
+  body-lg:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: "1.1rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  label-xs:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.7rem"
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: "0.08em"
+  label-sm:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.78rem"
+    fontWeight: 500
+  label-md:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.85rem"
+    fontWeight: 600
+    letterSpacing: "0.06em"
+  label-detail:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.82rem"
+    lineHeight: 1.65
+  label-lg:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.88rem"
+    fontWeight: 600
 rounded:
   base: "0px"
 spacing:
@@ -67,7 +105,7 @@ components:
     backgroundColor: "{colors.signal-blue}"
     textColor: "{colors.primary-ink}"
     rounded: "{rounded.base}"
-    typography: "{typography.label}"
+    typography: "{typography.label-lg}"
     padding: "0 0.9rem"
     height: "2.9rem"
   project-link-primary-hover:
@@ -76,7 +114,7 @@ components:
   tag:
     backgroundColor: "transparent"
     textColor: "{colors.muted}"
-    typography: "{typography.label}"
+    typography: "{typography.label-xs}"
     rounded: "{rounded.base}"
     padding: "0.32rem 0.55rem"
 ---
@@ -130,14 +168,19 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 **Character:** A confident, slightly condensed grotesque for anything that needs to announce itself (headings), paired with a plain, highly legible humanist sans for reading (body copy), and a monospace held in reserve exclusively for metadata — the pairing reads as "headline / prose / data" rather than a two-font system.
 
 ### Hierarchy
-- **Display** (700, `clamp(2.6rem, 4.3vw, 4.4rem)`, line-height 1.06): the `h1` only — one per page, capped at a 14-character measure so it wraps deliberately rather than by accident.
+- **Display** (700, `clamp(2.6rem, 4.3vw, 4.4rem)`, line-height 1.06): the `h1` only — one per page, capped at a 14-character measure so it wraps deliberately rather than by accident. Under 700px it steps down to its own mobile clamp (`clamp(2.4rem, 11vw, 3.2rem)`) rather than continuing the desktop curve, so it never collapses below a readable size on narrow viewports.
 - **Headline** (600, `clamp(2.6rem, 5vw, 5rem)`, line-height 1.06): section titles (`h2`) — "Experience log", "Have a useful problem to solve?"
 - **Title** (600, `clamp(1.45rem, 2.2vw, 2rem)`, line-height 1.06): card and item titles (`h3`) — project names, experience roles.
+- **Brand** (700, 1.35rem, letter-spacing -0.05em): the header wordmark only ("PJ.") — display-family but its own fixed size, never reused elsewhere.
 - **Body** (400, 1rem, line-height 1.65): running copy, capped at a 38rem (`--measure`) or 62rem (`--measure-lg`) measure depending on context.
-- **Label** (600, 0.75rem–0.85rem, letter-spacing 0.06–0.09em, uppercase): eyebrows, project kickers, experience periods, tag chips, detail-block headings — always monospace, always tracked, never used for anything a visitor is meant to read at length.
+- **Body Large** (400, 1.1rem, line-height 1.55): intro and summary copy that needs more presence than running body text — the hero intro and section-heading summaries scale within a rem of this step (hero intro clamps up to 1.15rem at wide viewports, the experience-summary sits a touch under at 1.05rem); no two contexts share a single fixed value, each is tuned to its column width around this canonical size.
+- **Control** (600, 0.8rem): UI microcopy that isn't a metadata label — icon-button accessible text, the header "Let's talk" CTA.
+- **Label** (600, 0.75rem, letter-spacing 0.09em, uppercase): the base metadata size — eyebrows, project kickers, experience periods.
+- **Label scale** (mono, always tracked, never used for anything a visitor reads at length): the label role isn't one fixed size but a tight scale for different metadata weights, from the smallest supporting marks up to CTA text: **XS** 0.7rem (hero facts, with the portrait caption and tag chips sitting a hair under at 0.68rem and 0.67rem respectively — hand-tuned to their tighter containers rather than snapped to the step), **SM** 0.78rem (experience location), **base** 0.75rem (see Label, above), **Detail** 0.82rem (project outcome callouts), **MD** 0.85rem (project detail-block headings), **LG** 0.88rem (project-link CTA text — Source / View project).
 
 ### Named Rules
 **The Mono-Is-Metadata Rule.** IBM Plex Mono never appears in a sentence a visitor reads start to finish. It marks status, category, or position — eyebrows, kickers, periods, tags — and nowhere else.
+**The Tuned-Step Rule.** A handful of mono and body sizes sit within ±0.03rem of a documented step rather than snapping to it exactly (tag chips, the portrait caption, the experience summary, the footer note). That's deliberate per-component tuning against a specific container, not drift — don't "fix" them to the exact step, and don't add a new token for every one-off delta either.
 
 ## Layout
 

@@ -4,7 +4,7 @@
   import ProjectCard from './components/ProjectCard.svelte';
   import SectionHeading from './components/SectionHeading.svelte';
   import SiteHeader from './components/SiteHeader.svelte';
-  import { experience, projects } from './data/content.js';
+  import { experience, projects, stack } from './data/content.js';
   import { route, navigateTo } from './router.svelte.js';
 
   const year = new Date().getFullYear();
@@ -62,6 +62,25 @@
       </div>
 
       <a class="text-link section-link" href="https://github.com/pjrus" target="_blank" rel="noreferrer">Browse more on GitHub <ArrowIcon /></a>
+    </div>
+  </section>
+
+  <section class="stack shell section" id="stack">
+    <SectionHeading
+      label="Tech stack"
+      title="What I build with."
+      summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
+    />
+
+    <div class="stack-grid">
+      {#each stack as group}
+        <div class="stack-card">
+          <h3 class="stack-card-title">// {group.label}</h3>
+          <ul class="tag-list" aria-label={group.label}>
+            {#each group.items as item}<li>{item}</li>{/each}
+          </ul>
+        </div>
+      {/each}
     </div>
   </section>
 

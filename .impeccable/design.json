@@ -19,7 +19,15 @@
       "headline": { "displayName": "Headline", "purpose": "Section titles (h2)." },
       "title": { "displayName": "Title", "purpose": "Card and item titles (h3) — project names, experience roles." },
       "body": { "displayName": "Body", "purpose": "Running copy, capped at a 38rem or 62rem measure." },
-      "label": { "displayName": "Label", "purpose": "Metadata only: eyebrows, kickers, periods, tags, detail-block headings — mono, uppercase, tracked." }
+      "body-lg": { "displayName": "Body Large", "purpose": "Intro and summary copy needing more presence than running body text — hero intro, section-heading summaries, experience summary." },
+      "brand": { "displayName": "Brand", "purpose": "The header wordmark only (\"PJ.\") — display-family, its own fixed size." },
+      "control": { "displayName": "Control", "purpose": "UI microcopy that isn't a metadata label — icon-button accessible text, the header CTA." },
+      "label": { "displayName": "Label", "purpose": "Base metadata size: eyebrows, project kickers, experience periods — mono, uppercase, tracked." },
+      "label-xs": { "displayName": "Label XS", "purpose": "Smallest metadata band — hero facts; tag chips and the portrait caption sit a hair under, tuned to their own tighter containers." },
+      "label-sm": { "displayName": "Label SM", "purpose": "Experience location metadata." },
+      "label-detail": { "displayName": "Label Detail", "purpose": "Project outcome callout text." },
+      "label-md": { "displayName": "Label MD", "purpose": "Project detail-block headings (Problem statement, Architecture, Key outcome)." },
+      "label-lg": { "displayName": "Label LG", "purpose": "Project-link CTA text — Source / View project." }
     },
     "shadows": [
       { "name": "ambient-light", "value": "0 14px 30px rgba(24, 34, 56, 0.09)", "purpose": "The system's one shadow, light theme — header, cards, buttons, portrait frame, contact panel." },
@@ -99,6 +107,7 @@
       { "name": "The Two-Coral Rule", "body": "Never use plain --accent for text or a focus ring — use --accent-strong there; plain --accent is reserved for shapes large enough to not need the extra contrast margin.", "section": "colors" },
       { "name": "The One-Shadow Rule", "body": "There is exactly one shadow token (--shadow), reused verbatim on the header, cards, buttons, the portrait frame and the contact panel. It is never varied in blur or spread to imply multiple elevation levels — depth is binary (flat vs. this one lift), not graduated.", "section": "colors" },
       { "name": "The Mono-Is-Metadata Rule", "body": "IBM Plex Mono never appears in a sentence a visitor reads start to finish. It marks status, category, or position — eyebrows, kickers, periods, tags — and nowhere else.", "section": "typography" },
+      { "name": "The Tuned-Step Rule", "body": "A handful of mono and body sizes sit within ±0.03rem of a documented step rather than snapping to it exactly (tag chips, the portrait caption, the experience summary, the footer note). That's deliberate per-component tuning against a specific container, not drift — don't \"fix\" them to the exact step, and don't add a new token for every one-off delta either.", "section": "typography" },
       { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. The one shadow token marks \"this is a raised object\" — a card, a button, a panel — and never varies to suggest degrees of raised-ness.", "section": "elevation" },
       { "name": "The No-Radius Rule", "body": "Nothing in this system gets a rounded corner, ever — not a button, not a chip, not an image frame. Squareness is load-bearing for the \"field report / dossier\" read; a single rounded element would break the world.", "section": "elevation" }
     ],
