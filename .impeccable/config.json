@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "0.95rem",
+        "createdAt": "2026-08-19T08:02:06.495Z",
+        "reason": "user asked to make the header nav menu buttons (About/Projects/Experience) larger; 0.95rem is the intentional new size for .site-header nav a"
+      }
+    ]
+  }
+}

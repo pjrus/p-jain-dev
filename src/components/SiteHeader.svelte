@@ -3,6 +3,7 @@
   import IconGithub from './IconGithub.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
+  import { route, navigateTo } from '../router.svelte.js';
 
   let isDark = false;
 
@@ -25,12 +26,12 @@
 
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="#top" aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
+    <a class="brand" href="/#top" onclick={(event) => navigateTo('/#top', event)} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
     <nav aria-label="Main navigation">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
+      <a href="/#projects" onclick={(event) => navigateTo('/#projects', event)}>Projects</a>
+      <a href="/#experience" onclick={(event) => navigateTo('/#experience', event)}>Experience</a>
+      <a href="/blog" onclick={(event) => navigateTo('/blog', event)} aria-current={route.path === '/blog' ? 'page' : undefined}>Blog</a>
     </nav>
 
     <div class="header-actions">

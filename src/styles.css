@@ -66,7 +66,7 @@
   --eyebrow-space: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
 
-  /* Two-column split shared by hero, about and contact -------------------- */
+  /* Two-column split shared by hero and contact --------------------------- */
   --split-cols: minmax(0, 1.1fr) minmax(20rem, 0.8fr);
   --split-gap: clamp(3rem, 7vw, 7rem);
 
@@ -366,6 +366,10 @@ em {
   color: var(--ink);
 }
 
+.site-header nav a[aria-current='page'] {
+  color: var(--ink);
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -582,52 +586,33 @@ em {
 }
 
 /* ---------------------------------------------------------------------- */
-/* About                                                                   */
+/* Blog                                                                    */
 /* ---------------------------------------------------------------------- */
 
-.about {
+.blog {
   border-top: 1px solid var(--line);
 }
 
-.about-grid {
+.blog-empty {
   display: grid;
-  grid-template-columns: var(--split-cols);
-  gap: var(--split-gap);
-}
-
-.about-copy {
-  display: grid;
+  gap: 0.75rem;
   max-width: var(--measure);
-  gap: 1.5rem;
-  color: var(--muted);
-  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
-}
-
-.capabilities {
-  align-self: start;
   padding: var(--card-pad);
   background: var(--surface);
   box-shadow: var(--shadow);
 }
 
-.capabilities li {
-  display: flex;
-  align-items: center;
-  padding-block: 1rem;
-  border-top: 1px solid var(--line);
-  gap: 1rem;
-  font-weight: 600;
-}
-
-.capabilities li span {
-  color: var(--accent-strong);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+.blog-empty p:not(.eyebrow) {
+  color: var(--muted);
 }
 
 /* ---------------------------------------------------------------------- */
 /* Projects                                                                */
 /* ---------------------------------------------------------------------- */
+
+.projects {
+  border-top: 1px solid var(--line);
+}
 
 .project-grid {
   display: grid;
@@ -731,6 +716,21 @@ em {
   border-color: var(--ink);
   background: var(--ink);
   color: var(--background);
+}
+
+/* Dark theme: the primary project link inverts to white-on-black instead of
+   the signal blue, which was low-contrast against the black canvas' hover
+   state. Hover reveals the blue instead, so the swap still reads as feedback. */
+:root[data-theme='dark'] .project-links .project-link-primary {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #000000;
+}
+
+:root[data-theme='dark'] .project-links .project-link-primary:hover {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
 }
 
 /* Same horizontal padding as .project-summary so both halves of the card
@@ -979,7 +979,6 @@ em {
 
   /* Every two-column split collapses at the same width. */
   .hero,
-  .about-grid,
   .contact,
   .project-details,
   .project-body {
@@ -998,7 +997,6 @@ em {
     width: min(100%, 22rem);
   }
 
-  .about-copy,
   .hero-intro,
   .project-description {
     max-width: var(--measure);

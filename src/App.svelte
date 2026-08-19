@@ -1,9 +1,11 @@
 <script>
   import ArrowIcon from './components/ArrowIcon.svelte';
+  import BlogPage from './components/BlogPage.svelte';
   import ProjectCard from './components/ProjectCard.svelte';
   import SectionHeading from './components/SectionHeading.svelte';
   import SiteHeader from './components/SiteHeader.svelte';
   import { experience, projects } from './data/content.js';
+  import { route, navigateTo } from './router.svelte.js';
 
   const year = new Date().getFullYear();
 </script>
@@ -17,6 +19,9 @@
 <SiteHeader />
 
 <main id="main-content">
+  {#if route.path === '/blog'}
+    <BlogPage />
+  {:else}
   <section class="hero shell" id="top">
     <div class="hero-copy">
       <p class="eyebrow"><span class="status-dot"></span> Melbourne · Open to opportunities</p>
@@ -39,37 +44,6 @@
         <img src="/images/paarangat-jain.webp" alt="Paarangat Jain smiling in formal attire" />
         <figcaption>Paarangat Jain / Developer</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <section class="about section" id="about">
-    <div class="shell">
-      <SectionHeading
-        label="About"
-        title="Technology should make everyday life easier."
-        summary="That belief shapes the products I choose, the details I notice and the way I work with people."
-      />
-
-      <div class="about-grid">
-        <div class="about-copy">
-          <p>
-            My work moves between full-stack development, mobile apps, data and hardware. The common thread is practical problem-solving: understanding the person behind the problem, then making the solution clear and dependable.
-          </p>
-          <p>
-            At the Monash Assistive Technology Team, I coordinate work on affordable tactile displays for blind and low-vision users. It’s the kind of challenge I enjoy most — technical, collaborative and grounded in real impact.
-          </p>
-        </div>
-
-        <div class="capabilities">
-          <p class="eyebrow">I work across</p>
-          <ul>
-            <li><span>01</span> Full-stack web</li>
-            <li><span>02</span> Mobile applications</li>
-            <li><span>03</span> Assistive technology</li>
-            <li><span>04</span> Data & AI applications</li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -133,6 +107,7 @@
       <a class="button button-light" href="mailto:paarangatj@gmail.com">Send me an email <ArrowIcon /></a>
     </div>
   </section>
+  {/if}
 </main>
 
 <footer class="site-footer">
@@ -141,7 +116,7 @@
     <div>
       <a href="https://github.com/pjrus" target="_blank" rel="noreferrer">GitHub</a>
       <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer">LinkedIn</a>
-      <a href="#top">Back to top ↑</a>
+      <a href="/#top" onclick={(event) => navigateTo('/#top', event)}>Back to top ↑</a>
     </div>
   </div>
 </footer>

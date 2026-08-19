@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-19T08:00:12Z",
+  "title": "Design System: Paarangat Jain — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "background": { "role": "neutral", "displayName": "Background", "canonical": "#f6f8fc", "tonalRamp": ["#132039", "#223967", "#325395", "#446dc1", "#7191d0", "#9fb5df", "#cdd8ee", "#ecf0f9"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#ffffff", "tonalRamp": ["#262626", "#454545", "#636363", "#828282", "#a1a1a1", "#bfbfbf", "#dedede", "#f2f2f2"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#182238", "tonalRamp": ["#172136", "#293b60", "#3c558b", "#506fb4", "#7b92c6", "#a6b6d9", "#d1d9eb", "#edf0f7"] },
+      "muted": { "role": "neutral", "displayName": "Muted", "canonical": "#5e6573", "tonalRamp": ["#22252a", "#3e434c", "#59606d", "#757e8f", "#979daa", "#b9bdc6", "#dbdde1", "#f1f2f4"] },
+      "signal-blue": { "role": "primary", "displayName": "Signal Blue", "canonical": "#315ed6", "tonalRamp": ["#0d1b40", "#173073", "#2145a6", "#2f5cd6", "#6284e0", "#95acea", "#c8d4f4", "#eaeefb"] },
+      "flare-coral": { "role": "secondary", "displayName": "Flare Coral", "canonical": "#ed6a4b", "tonalRamp": ["#461307", "#7d220d", "#b53112", "#e8431c", "#ee7153", "#f39f8b", "#f9cdc3", "#fdece8"] },
+      "flare-coral-strong": { "role": "secondary", "displayName": "Flare Coral Strong", "canonical": "#d13813", "tonalRamp": ["#461306", "#7e220b", "#b63111", "#ea421a", "#ef7152", "#f49f8a", "#f9cdc2", "#fdece8"] },
+      "tint": { "role": "neutral", "displayName": "Tint", "canonical": "#e5edfb", "tonalRamp": ["#0a1f42", "#123777", "#1b50ac", "#2669de", "#5b8ee6", "#91b3ee", "#c6d7f6", "#e9f0fc"] },
+      "line": { "role": "neutral", "displayName": "Line", "canonical": "#d9e0ea", "tonalRamp": ["#1b2431", "#314159", "#475e80", "#5e7ca6", "#859cbc", "#adbcd2", "#d4dce7", "#eff2f6"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The h1 only — one per page, capped at a 14-character measure." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (h2)." },
+      "title": { "displayName": "Title", "purpose": "Card and item titles (h3) — project names, experience roles." },
+      "body": { "displayName": "Body", "purpose": "Running copy, capped at a 38rem or 62rem measure." },
+      "label": { "displayName": "Label", "purpose": "Metadata only: eyebrows, kickers, periods, tags, detail-block headings — mono, uppercase, tracked." }
+    },
+    "shadows": [
+      { "name": "ambient-light", "value": "0 14px 30px rgba(24, 34, 56, 0.09)", "purpose": "The system's one shadow, light theme — header, cards, buttons, portrait frame, contact panel." },
+      { "name": "ambient-dark", "value": "0 20px 45px rgba(0, 0, 0, 0.65)", "purpose": "The system's one shadow, dark theme — deeper to register against a near-black canvas." }
+    ],
+    "motion": [
+      { "name": "control-transition", "value": "background-color 0.15s ease, color 0.15s ease", "purpose": "Nav links and icon controls: hover state changes by colour only." },
+      { "name": "theme-icon-swap", "value": "transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease", "purpose": "Sun/moon crossfade-and-rotate on the theme toggle — the system's one deliberate decorative motion." },
+      { "name": "reduced-motion", "value": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important", "purpose": "prefers-reduced-motion: reduce collapses all transitions and animations." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "900px" },
+      { "name": "sm", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The system's default call-to-action — filled signal blue, square corners, ambient shadow.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">See my work<svg viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; min-height: 3.25rem; padding: 0.8rem 1.25rem; border: 1px solid transparent; border-radius: 0; background: #315ed6; color: #ffffff; font-weight: 600; text-decoration: none; box-shadow: 0 14px 30px rgba(24, 34, 56, 0.09); }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "Unfilled action link with an underline rule offset from the baseline; used alongside the primary button and for 'browse more' style links.",
+      "html": "<a class=\"ds-text-link\" href=\"#\">Read my résumé<svg viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ".ds-text-link { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; min-height: 3.25rem; padding-block: 0.8rem; border: 1px solid transparent; color: #182238; font-weight: 600; text-decoration: none; transition: color 0.15s ease; } .ds-text-link::after { content: ''; position: absolute; right: 0; bottom: 0.55rem; left: 0; height: 1px; background: currentColor; } .ds-text-link:hover { color: #315ed6; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "The system's signature content object — media + body summary row, ambient shadow, evidence rail on alternating cards.",
+      "html": "<article class=\"ds-project-card\"><div class=\"ds-project-summary\"><div class=\"ds-project-kicker\">Selected project</div><h3 class=\"ds-project-title\"><span aria-hidden=\"true\">&gt;</span> Ressie</h3><p class=\"ds-project-desc\">A local-first LaTeX résumé builder.</p><ul class=\"ds-tag-list\"><li>Svelte</li><li>LaTeX</li><li>IndexedDB</li></ul></div></article>",
+      "css": ".ds-project-card { min-width: 0; background: #ffffff; border-radius: 0; box-shadow: inset 0.35rem 0 0 #315ed6, 0 14px 30px rgba(24, 34, 56, 0.09); padding: clamp(1.5rem, 3vw, 2.25rem); } .ds-project-kicker { margin-bottom: 1rem; color: #d13813; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; } .ds-project-title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(1.45rem, 2.2vw, 2rem); font-weight: 600; letter-spacing: -0.04em; } .ds-project-title span { color: #315ed6; } .ds-project-desc { margin-top: 1rem; max-width: 38rem; color: #5e6573; } .ds-tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; padding: 0; list-style: none; } .ds-tag-list li { padding: 0.32rem 0.55rem; border: 1px solid #d9e0ea; color: #5e6573; font-family: 'IBM Plex Mono', monospace; font-size: 0.67rem; font-weight: 500; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Informational tech-stack tag — outlined, monospace, no interactive state.",
+      "html": "<li class=\"ds-tag\">TypeScript</li>",
+      "css": ".ds-tag { display: inline-block; padding: 0.32rem 0.55rem; border: 1px solid #d9e0ea; border-radius: 0; color: #5e6573; font-family: 'IBM Plex Mono', monospace; font-size: 0.67rem; font-weight: 500; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "refersTo": "site-header",
+      "description": "Floating pill header with blurred background, icon-control cluster, and a filled-hover nav treatment distinct from the underline text-link.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-brand\" href=\"#\">PJ<span>.</span></a><nav class=\"ds-nav\"><a href=\"#\">About</a><a href=\"#\" class=\"is-hover\">Projects</a><a href=\"#\">Experience</a></nav><a class=\"ds-header-contact\" href=\"#\">Let's talk</a></header>",
+      "css": ".ds-header { display: flex; align-items: center; gap: 2rem; min-height: 3.5rem; padding-inline: 1.25rem; border: 1px solid #d9e0ea; border-radius: 0; background: rgba(246, 248, 252, 0.85); backdrop-filter: blur(14px); box-shadow: 0 14px 30px rgba(24, 34, 56, 0.09); } .ds-brand { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.05em; text-decoration: none; color: #182238; } .ds-brand span { color: #d13813; } .ds-nav { display: flex; gap: 0.5rem; } .ds-nav a { display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 0.65rem; color: #5e6573; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: background-color 0.15s ease, color 0.15s ease; } .ds-nav a:hover, .ds-nav a.is-hover { background: #e5edfb; color: #182238; } .ds-header-contact { display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0 0.75rem; border: 1px solid #182238; background: #182238; color: #f6f8fc; text-decoration: none; font-size: 0.8rem; font-weight: 600; }"
+    },
+    {
+      "name": "Experience Timeline Item",
+      "kind": "custom",
+      "refersTo": "experience-item",
+      "description": "The signature component: a square marker on a vertical rail, monospace uppercase role title — the one place the system breaks its own mono-is-metadata-only rule.",
+      "html": "<div class=\"ds-exp-item\"><span class=\"ds-exp-marker\" aria-hidden=\"true\"></span><div class=\"ds-exp-heading\"><h3>Software Engineer Intern</h3><p class=\"ds-exp-period\">Jan 2026 — Feb 2026</p></div><p class=\"ds-exp-org\">@ PlasmIT Vector</p></div>",
+      "css": ".ds-exp-item { position: relative; padding-left: 3.35rem; border-left: 1px solid #d9e0ea; } .ds-exp-marker { position: absolute; top: 0.3rem; left: -0.425rem; width: 0.85rem; height: 0.85rem; border: 0.2rem solid #f6f8fc; background: #315ed6; border-radius: 0; } .ds-exp-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; } .ds-exp-heading h3 { margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: clamp(1.2rem, 2.2vw, 1.65rem); font-weight: 600; letter-spacing: 0.01em; text-transform: uppercase; color: #182238; } .ds-exp-period { display: inline-flex; align-items: center; padding: 0.35rem 0.8rem; background: #e5edfb; color: #182238; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; white-space: nowrap; } .ds-exp-org { margin-top: 1rem; color: #315ed6; font-family: 'IBM Plex Mono', monospace; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Field Report",
+    "overview": "The site reads as a technical dossier rather than a marketing page: numbered capability lists, monospace status labels in caps, terminal-style section markers (`>`, `□`, `◇`), and a rail of evidence — problem, architecture, outcome — behind every project. Nothing here is decorative for its own sake; every mark either orients the reader (an eyebrow, a kicker, a timestamp) or points at proof (a source link, a live link, a résumé).\n\nThe aesthetic is technical and restrained: precise, evidence-led, quietly confident. It is deliberately not a soft rounded-corner SaaS template, not a glossy gradient landing page, and not an illustration-heavy personal-brand site. Corners never soften, shadows never stack into decorative depth, and colour is spent sparingly — signal blue carries interaction, coral carries alert-grade emphasis, and everything else stays ink-on-paper.\n\nThe system is built once in light and dark, sharing every structural token (spacing, type scale, radius, layout) and diverging only in the colour role assignments needed to keep contrast and hierarchy intact on each canvas.",
+    "keyCharacteristics": [
+      "Zero border-radius anywhere in the system — every corner is square, without exception.",
+      "Monospace (IBM Plex Mono) reserved for metadata: eyebrows, kickers, tags, timestamps, periods — always uppercase, always tracked wide.",
+      "One ambient shadow token does all elevation work; there is no multi-level shadow scale.",
+      "Two accent colours with distinct jobs: signal blue for interaction and structure, flare coral for alert-grade emphasis and status.",
+      "A visible accent rail (2px border) marks \"this is evidence\" — hero facts, project detail blocks, alternating project cards."
+    ],
+    "rules": [
+      { "name": "The Two-Coral Rule", "body": "Never use plain --accent for text or a focus ring — use --accent-strong there; plain --accent is reserved for shapes large enough to not need the extra contrast margin.", "section": "colors" },
+      { "name": "The One-Shadow Rule", "body": "There is exactly one shadow token (--shadow), reused verbatim on the header, cards, buttons, the portrait frame and the contact panel. It is never varied in blur or spread to imply multiple elevation levels — depth is binary (flat vs. this one lift), not graduated.", "section": "colors" },
+      { "name": "The Mono-Is-Metadata Rule", "body": "IBM Plex Mono never appears in a sentence a visitor reads start to finish. It marks status, category, or position — eyebrows, kickers, periods, tags — and nowhere else.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. The one shadow token marks \"this is a raised object\" — a card, a button, a panel — and never varies to suggest degrees of raised-ness.", "section": "elevation" },
+      { "name": "The No-Radius Rule", "body": "Nothing in this system gets a rounded corner, ever — not a button, not a chip, not an image frame. Squareness is load-bearing for the \"field report / dossier\" read; a single rounded element would break the world.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every corner square (border-radius: 0) on any new component — this is the system's most load-bearing rule.",
+      "Do reuse the single --shadow token verbatim rather than authoring a new blur/spread value for a \"more important\" surface.",
+      "Do reserve --font-mono for metadata (labels, timestamps, tags, kickers) and keep it uppercase and letter-spaced when it is.",
+      "Do use --accent-strong rather than --accent for any text or focus-ring use of coral; reserve plain --accent for graphics-scale marks like the status dot.",
+      "Do keep hover/focus states to colour and border changes only — no scale, translate, or added shadow on interactive elements (the theme-toggle icon's rotate/scale transition is the one deliberate exception, reserved for that single control)."
+    ],
+    "donts": [
+      "Don't introduce a second shadow value or a multi-level elevation scale — depth in this system is binary, not graduated.",
+      "Don't round any corner, on any component, for any reason — a single rounded element breaks the dossier/field-report read that the rest of the system is built on.",
+      "Don't set body copy or multi-sentence content in the monospace font — it is reserved for short, tracked, uppercase metadata only.",
+      "Don't add decorative motion (bounce, float, parallax, gradient shimmer) — the system's only motion budget is functional: colour/border transitions on hover, and the theme-toggle's icon swap."
+    ]
+  }
+}

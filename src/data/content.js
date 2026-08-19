@@ -102,15 +102,23 @@ export const experience = [
     organisation: 'Ocean Connect',
     location: 'Remote',
     summary:
-      'Maintaining an accessible digital presence for marine conservation programs, events and community initiatives.',
+      'Maintaining the Ocean Connect website so program, event and initiative information stays accurate and reachable. I reorganise content for clearer navigation and usability for volunteers and community members, and help strengthen how the organisation communicates its marine conservation work.',
   },
   {
-    period: 'Feb 2026 — present',
-    role: 'Outreach & operations officer',
+    period: 'Mar 2026 — present',
+    role: 'Outreach officer',
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Supporting technical operations and building partnerships with schools to expand the reach of accessibility-focused programs and workshops.',
+      'Engaging with schools that support students with disabilities to build partnerships for technology-driven empowerment. I communicate the team’s mission to stakeholders, coordinate collaborative workshops and programs, and maintain those relationships between initiatives.',
+  },
+  {
+    period: 'Feb 2026 — present',
+    role: 'Operations officer',
+    organisation: 'Monash Assistive Technology Team',
+    location: 'Clayton, Victoria, Australia',
+    summary:
+      'Supporting the technical operations behind the team’s accessibility-focused projects. I work with fellow officers to keep technical initiatives running smoothly and contribute to the coordination, communication and internal workflows the organisation depends on.',
   },
   {
     period: 'Aug 2025 — present',
@@ -118,6 +126,14 @@ export const experience = [
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Leading collaborative development of affordable tactile displays and the React Native software that supports them, grounded in user interviews and user-centred design.',
+      'Working with our academic supervisor to define the goals and strategy for developing low-cost tactile and refreshable Braille displays, and coordinating the project officers building them. I run user interviews and design surveys to keep the work user-centred, and lead development of the React Native application that supports the display.',
+  },
+  {
+    period: 'Mar 2025 — Aug 2025',
+    role: 'Projects officer',
+    organisation: 'Monash Assistive Technology Team',
+    location: 'Clayton, Victoria, Australia',
+    summary:
+      'Collaborated with our academic supervisor and fellow officers to brainstorm accessibility solutions, and assisted in the design, development and testing of tactile display components for blind and low-vision users.',
   },
 ];
