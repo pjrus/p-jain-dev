@@ -69,14 +69,21 @@
   }
 
   .content-card {
-    --card-padding: var(--spacing-sm);
+    --card-padding: 0.95rem;
     padding: var(--card-padding);
+    font-size: 0.95rem;
+  }
+
+  .content-card p,
+  .content-card li {
+    font-size: 0.95rem;
   }
 
   .project-card p {
     font-size: 0.85rem;
   }
 
+  .content-card .project-card-point,
   .project-card-point {
     font-size: 0.85rem;
   }
