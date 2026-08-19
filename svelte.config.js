@@ -9,6 +9,10 @@ export default {
   preprocess: [vitePreprocess(), mdsvex({ extensions: ['.md'] })],
 
   kit: {
+    paths: {
+      // GitHub Pages serves project sites from the repository name.
+      base: process.env.BASE_PATH ?? '',
+    },
     // Every route is prerendered, so the build is a folder of static files that
     // any host can serve — no Node runtime required.
     adapter: adapter({
