@@ -37,7 +37,7 @@
   --font-mono: 'IBM Plex Mono', monospace;
 
   /* Layout grid ---------------------------------------------------------- */
-  --shell-max: 64rem;
+  --shell-max: 68rem;
   --gutter: 1.5rem;
   --header-h: 4.5rem;
 
@@ -75,10 +75,6 @@
   /* Accent rule used by hero facts and project detail blocks -------------- */
   --accent-bar: 2px;
   --accent-bar-gap: 1rem;
-
-  /* Project card media --------------------------------------------------- */
-  --project-media-w: 15rem;
-  --project-media-h: 9.5rem;
 
   /* Experience timeline: rail sits on the icon's centre line -------------- */
   --exp-icon: 4.25rem;
@@ -1082,11 +1078,13 @@ em {
 
 .project-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--card-gap);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .project-card {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   border: 1px solid transparent;
   background: var(--surface);
@@ -1099,22 +1097,18 @@ em {
   border-color: var(--ink);
 }
 
-/* Inset shadow instead of a border so the accent never shifts card content. */
-.project-card:nth-child(even) {
-  box-shadow: inset 0.35rem 0 0 var(--primary), var(--shadow);
-}
-
 .project-summary {
   display: grid;
-  grid-template-columns: var(--project-media-w) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   align-items: start;
-  padding: var(--card-pad);
-  gap: var(--card-gap);
+  padding: 1.25rem;
+  gap: 1.5rem;
 }
 
 .project-image-wrap {
-  width: var(--project-media-w);
-  height: var(--project-media-h);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--background);
@@ -1128,10 +1122,10 @@ em {
 
 .project-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 1fr;
   align-items: start;
-  min-height: var(--project-media-h);
-  gap: var(--card-gap);
+  min-height: 0;
+  gap: 1.5rem;
 }
 
 .project-body h3 span {
@@ -1168,7 +1162,7 @@ em {
 .project-links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -1207,25 +1201,16 @@ em {
   color: var(--primary-ink);
 }
 
-/* Same horizontal padding as .project-summary so both halves of the card
-   share one internal grid. */
+/* Keep the detail panel aligned with the summary's internal padding. */
 .project-details {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  padding: var(--card-pad);
-  border-top: 1px solid var(--line);
-  gap: var(--split-gap);
-}
-
-.project-notes,
-.project-results {
-  display: grid;
-  align-content: start;
+  grid-template-columns: 1fr;
+  flex: 1;
+  padding: 0 1.25rem 1.25rem;
   gap: 2rem;
 }
 
-.project-detail-block h4,
-.project-results h4 {
+.project-stack h4 {
   margin: 0 0 0.85rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -1235,33 +1220,42 @@ em {
   text-transform: uppercase;
 }
 
-.project-detail-block h4 span {
-  margin-right: 0.45rem;
-  color: var(--primary);
-}
-
-.project-detail-block > p {
-  padding-left: var(--accent-bar-gap);
-  border-left: var(--accent-bar) solid var(--primary);
-  color: var(--muted);
-}
-
-.outcome-card {
-  padding: var(--card-pad-sm);
-  border: 1px solid var(--line);
-  background: var(--background);
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.65;
-}
-
-.outcome-card span {
-  margin-right: 0.35rem;
-}
-
 .section-link {
+  margin-top: 0;
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.5rem;
   margin-top: var(--stack-space);
+}
+
+.project-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--control-gap);
+  min-height: var(--control-h);
+  padding: 0.8rem var(--control-pad-x);
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-toggle:hover {
+  background: var(--ink);
+  color: var(--background);
+}
+
+.project-toggle[aria-expanded='true'] svg {
+  transform: rotate(-90deg);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -1633,9 +1627,12 @@ em {
 
   /* Every two-column split collapses at the same width. */
   .hero,
-  .project-details,
-  .project-body {
+  .project-details {
     grid-template-columns: 1fr;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero {
@@ -1691,10 +1688,6 @@ em {
     max-width: var(--measure);
   }
 
-  .project-links {
-    justify-content: flex-start;
-  }
-
 }
 
 @media (max-width: 700px) {
@@ -1703,8 +1696,6 @@ em {
     --heading-space: clamp(1.75rem, 7vw, 2.75rem);
     --exp-icon: 2.5rem;
     --exp-gap: 0.75rem;
-    --project-media-w: 100%;
-    --project-media-h: 13rem;
   }
 
   .header-inner {
@@ -1759,14 +1750,6 @@ em {
     min-height: 3.5rem;
   }
 
-  .project-summary {
-    grid-template-columns: 1fr;
-  }
-
-  .project-body {
-    min-height: 0;
-  }
-
   .experience-item-heading {
     flex-direction: column;
     gap: 0.75rem;
@@ -1792,6 +1775,12 @@ em {
     justify-content: center;
     min-height: 0;
     padding-block: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 }
 
