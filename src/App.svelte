@@ -42,7 +42,6 @@
     <div class="hero-visual" aria-label="Portrait and current work">
       <figure class="portrait-card">
         <img src="/images/paarangat-jain.webp" alt="Paarangat Jain smiling in formal attire" />
-        <figcaption>Paarangat Jain / Developer</figcaption>
       </figure>
     </div>
   </section>
@@ -50,8 +49,7 @@
   <section class="projects section" id="projects">
     <div class="shell">
       <SectionHeading
-        label="Selected work"
-        title="Projects made to be used."
+        title="Projects"
       />
 
       <div class="project-grid">
@@ -115,16 +113,6 @@
     </div>
   </section>
 
-  <section class="contact shell" id="contact">
-    <div>
-      <p class="eyebrow">Get in touch</p>
-      <h2>Have a useful problem to solve?</h2>
-    </div>
-    <div class="contact-action">
-      <p>I’m always happy to talk about internships, collaborative projects or interesting technical problems.</p>
-      <a class="button button-light" href="mailto:paarangatj@gmail.com">Send me an email <ArrowIcon /></a>
-    </div>
-  </section>
   {/if}
 </main>
 

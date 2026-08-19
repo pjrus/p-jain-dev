@@ -129,7 +129,7 @@ The site reads as a technical dossier rather than a marketing page: numbered cap
 
 The aesthetic is technical and restrained: precise, evidence-led, quietly confident. It is deliberately not a soft rounded-corner SaaS template, not a glossy gradient landing page, and not an illustration-heavy personal-brand site. Corners never soften, shadows never stack into decorative depth, and colour is spent sparingly — signal blue carries interaction, coral carries alert-grade emphasis, and everything else stays ink-on-paper.
 
-The system is built once in light and dark, sharing every structural token (spacing, type scale, radius, layout) and diverging only in the colour role assignments needed to keep contrast and hierarchy intact on each canvas.
+The system is built once in light and dark, sharing every structural token (spacing, type scale, radius, layout) and diverging only in the colour role assignments needed to keep contrast and hierarchy intact on each canvas. Dark-mode primary text is pure white (`#ffffff`); secondary text remains muted so the hierarchy stays legible without dulling headings or body copy.
 
 **Key Characteristics:**
 - Zero border-radius anywhere in the system — every corner is square, without exception.

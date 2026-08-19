@@ -28,24 +28,8 @@
      colour; dark mode lifts the header off it. */
   --header-surface: #f6f8fc;
 
-  /* Contact call to action, addressed as a role rather than as "the primary
-     colour" so each theme can compose the panel independently. */
-  --panel: #315ed6;
-  --panel-ink: #ffffff;
-  --panel-edge: transparent;
-
-  /* Secondary text on the panel, tinted from the panel's own hue. An explicit
-     value rather than an alpha, so its contrast does not depend on whatever
-     happens to sit behind the panel. */
-  --panel-muted: #e5edfb;
-
-  /* The accent cannot reach 3:1 on the blue panel, so the ring inverts here.
-     Dark mode keeps the coral, where it has contrast to spare. */
-  --panel-focus: #ffffff;
-
   /* Plinth behind the portrait. */
   --frame: #182238;
-  --frame-ink: #ffffff;
 
   --shadow: 0 14px 30px rgba(24, 34, 56, 0.09);
   --font-display: 'Bricolage Grotesque', sans-serif;
@@ -66,14 +50,13 @@
   --eyebrow-space: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
 
-  /* Two-column split shared by hero and contact --------------------------- */
+  /* Hero two-column split ------------------------------------------------ */
   --split-cols: minmax(0, 1.1fr) minmax(20rem, 0.8fr);
   --split-gap: clamp(3rem, 7vw, 7rem);
 
   /* Surfaces ------------------------------------------------------------- */
   --card-pad: clamp(1.5rem, 3vw, 2.25rem);
   --card-pad-sm: 1.15rem;
-  --card-pad-lg: clamp(2.5rem, 5vw, 5rem);
   --card-gap: clamp(1.5rem, 3vw, 2.5rem);
 
   /* Controls ------------------------------------------------------------- */
@@ -115,7 +98,7 @@
   --surface: #151517;
   --tint: #202024;
 
-  --ink: #f3f3f3;
+  --ink: #ffffff;
   --muted: #a5a5a7;
   --primary: #7ba2ff;
   --primary-ink: #0a0a0a;
@@ -126,14 +109,6 @@
   --line: #34343a;
   --line-strong: #6a6a6d;
   --header-surface: #151517;
-
-  /* The panel stays black and lets its near-white button carry the emphasis;
-     a light slab this large would glare on a dark page. */
-  --panel: #1a1a1d;
-  --panel-ink: #f3f3f3;
-  --panel-muted: #a5a5a7;
-  --panel-focus: #ff8a6c;
-  --panel-edge: #35353b;
 
   --frame: #000000;
 
@@ -233,10 +208,6 @@ em {
 :focus-visible {
   outline: 3px solid var(--accent-strong);
   outline-offset: 4px;
-}
-
-.contact :focus-visible {
-  outline-color: var(--panel-focus);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -611,7 +582,7 @@ em {
   font-weight: 600;
 }
 
-/* Portrait sits in normal flow so its edges land on the container grid. */
+/* Portrait sits in normal flow and uses the primary colour as a crisp ring. */
 .hero-visual {
   display: flex;
   min-width: 0;
@@ -621,24 +592,18 @@ em {
 
 .portrait-card {
   width: min(100%, 21.5rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--primary);
+  border-radius: 50%;
   background: var(--frame);
-  box-shadow: var(--shadow);
 }
 
 .portrait-card img {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
   object-position: center 38%;
-}
-
-.portrait-card figcaption {
-  padding: 0.9rem 1rem;
-  color: var(--frame-ink);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -673,13 +638,6 @@ em {
 :root[data-theme='dark'] .button-primary {
   background: var(--ink);
   color: var(--primary-ink);
-}
-
-/* Sits on the contact panel, so it inverts against that surface. */
-.button-light {
-  border-color: var(--panel-ink);
-  background: var(--panel-ink);
-  color: var(--panel);
 }
 
 /* Matches button height so both align in a row, while the rule stays
@@ -770,6 +728,7 @@ em {
 /* ---------------------------------------------------------------------- */
 
 .projects {
+  --h2-measure: none;
   border-top: 1px solid var(--line);
 }
 
@@ -1110,33 +1069,6 @@ em {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Contact                                                                 */
-/* ---------------------------------------------------------------------- */
-
-.contact {
-  display: grid;
-  grid-template-columns: var(--split-cols);
-  margin-bottom: var(--section-space);
-  padding: var(--card-pad-lg);
-  background: var(--panel);
-  color: var(--panel-ink);
-  box-shadow: inset 0 0 0 1px var(--panel-edge), var(--shadow);
-  gap: var(--split-gap);
-  scroll-margin-top: calc(var(--header-h) + 1rem);
-}
-
-.contact .eyebrow {
-  color: var(--panel-muted);
-}
-
-.contact-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2rem;
-}
-
-/* ---------------------------------------------------------------------- */
 /* Footer                                                                  */
 /* ---------------------------------------------------------------------- */
 
@@ -1196,7 +1128,6 @@ em {
 
   /* Every two-column split collapses at the same width. */
   .hero,
-  .contact,
   .project-details,
   .project-body {
     grid-template-columns: 1fr;
@@ -1223,9 +1154,6 @@ em {
     justify-content: flex-start;
   }
 
-  .contact {
-    gap: 2.5rem;
-  }
 }
 
 @media (max-width: 700px) {
@@ -1234,7 +1162,6 @@ em {
     --heading-space: clamp(1.75rem, 7vw, 2.75rem);
     --exp-icon: 2.5rem;
     --exp-gap: 0.75rem;
-    --card-pad-lg: clamp(1.75rem, 7vw, 2.5rem);
     --project-media-w: 100%;
     --project-media-h: 13rem;
   }
@@ -1277,7 +1204,7 @@ em {
   }
 
   .portrait-card {
-    width: 100%;
+    width: min(82vw, 22rem);
   }
 
   .project-summary {
