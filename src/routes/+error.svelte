@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import { page } from '$app/state';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
 </script>
@@ -11,6 +12,6 @@
   <div class="blog-empty">
     <p class="blog-title"><span class="blog-title-marker">&gt;</span> {page.status}</p>
     <p>{page.error?.message ?? 'That page could not be found.'}</p>
-    <a class="text-link" href="/">Back to the home page <ArrowIcon /></a>
+    <a class="text-link" href={`${base}/`}>Back to the home page <ArrowIcon /></a>
   </div>
 </section>

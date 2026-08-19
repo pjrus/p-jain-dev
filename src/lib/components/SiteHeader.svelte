@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { afterNavigate } from '$app/navigation';
+  import { base } from '$app/paths';
   import { page } from '$app/state';
   import IconBriefcase from './IconBriefcase.svelte';
   import IconDocument from './IconDocument.svelte';
@@ -39,7 +40,7 @@
     isMenuOpen = false;
   }
 
-  const isBlog = $derived(page.url.pathname.startsWith('/blog'));
+  const isBlog = $derived(page.url.pathname.startsWith(`${base}/blog`));
 
   // Locks background scroll while the full-screen menu is open.
   $effect(() => {
@@ -89,12 +90,12 @@
 
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="/#top" aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
+    <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href="/#projects"><IconLayers /> Projects</a>
-      <a href="/#experience"><IconBriefcase /> Experience</a>
-      <a href="/blog" aria-current={isBlog ? 'page' : undefined}><IconDocument /> Blog</a>
+      <a href={`${base}/#projects`}><IconLayers /> Projects</a>
+      <a href={`${base}/#experience`}><IconBriefcase /> Experience</a>
+      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument /> Blog</a>
     </nav>
 
     <div class="header-actions">
@@ -158,9 +159,9 @@
       transition:fly={overlayFly}
     >
       <nav class="mobile-menu-nav" aria-label="Mobile">
-        <a href="/#projects"><IconLayers size={18} /> Projects</a>
-        <a href="/#experience"><IconBriefcase size={18} /> Experience</a>
-        <a href="/blog" aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
+        <a href={`${base}/#projects`}><IconLayers size={18} /> Projects</a>
+        <a href={`${base}/#experience`}><IconBriefcase size={18} /> Experience</a>
+        <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
       </nav>
 
       <div class="mobile-menu-foot">

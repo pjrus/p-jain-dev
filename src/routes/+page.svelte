@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
@@ -40,7 +41,7 @@
     </p>
     <div class="hero-actions">
       <a class="button button-primary" href="#projects">See my work <ArrowIcon direction="down" /></a>
-      <a class="text-link" href="/Paarangat-Jain-Resume.pdf" target="_blank">Read my résumé <ArrowIcon /></a>
+      <a class="text-link" href={`${base}/Paarangat-Jain-Resume.pdf`} target="_blank">Read my résumé <ArrowIcon /></a>
     </div>
     <dl class="hero-facts">
       <div><dt>Focus</dt><dd>Accessible products</dd></div>
@@ -50,7 +51,7 @@
 
   <div class="hero-visual" aria-label="Portrait and current work">
     <figure class="portrait-card">
-      <img src="/images/paarangat-jain.webp" alt="Paarangat Jain smiling in formal attire" />
+      <img src={`${base}/images/paarangat-jain.webp`} alt="Paarangat Jain smiling in formal attire" />
     </figure>
   </div>
 </section>

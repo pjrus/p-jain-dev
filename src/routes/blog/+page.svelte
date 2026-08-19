@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { formatDate, posts } from '$lib/posts.js';
@@ -25,7 +26,7 @@
               {#if post.draft}<span class="post-draft">Draft</span>{/if}
             </p>
             <h3 class="post-item-title">
-              <a href="/blog/{post.slug}"><span class="post-marker" aria-hidden="true">&gt;</span> {post.title}</a>
+              <a href={`${base}/blog/${post.slug}`}><span class="post-marker" aria-hidden="true">&gt;</span> {post.title}</a>
             </h3>
             <p class="post-summary">{post.summary}</p>
             {#if post.tags.length > 0}
@@ -41,7 +42,7 @@
     <div class="blog-empty">
       <p class="blog-title"><span class="blog-title-marker">&gt;</span> Coming soon</p>
       <p>I’m drafting my first posts. In the meantime, take a look at what I’ve shipped.</p>
-      <a class="text-link" href="/#projects">See my work <ArrowIcon /></a>
+      <a class="text-link" href={`${base}/#projects`}>See my work <ArrowIcon /></a>
     </div>
   {/if}
 </section>

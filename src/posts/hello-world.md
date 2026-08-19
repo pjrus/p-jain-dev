@@ -31,7 +31,7 @@ of the production build entirely.
 
 ## What Markdown gives you
 
-Ordinary Markdown works as expected: **bold**, _italics_, [links](/#projects),
+Ordinary Markdown works as expected: **bold**, _italics_, [links](../#projects),
 lists, quotes and fenced code blocks with syntax highlighting.
 
 > Because mdsvex compiles each post into a Svelte component, a post can also

@@ -1,3 +1,5 @@
+import { base } from '$app/paths';
+
 export const projects = [
   {
     title: 'Ressie',
@@ -9,7 +11,7 @@ export const projects = [
       'A React and Vite interface stores structured resume data locally, while a Node.js and Express service uses Tectonic to compile selected LaTeX templates into a live PDF preview.',
     outcome:
       'Private, local-first editing with automatic PDF previews, reusable templates and a dashboard for organising multiple resumes.',
-    image: '/images/ressie.png',
+    image: `${base}/images/ressie.png`,
     alt: 'Ressie resume builder dashboard',
     tags: ['React', 'Vite', 'Node.js', 'Express', 'Tectonic'],
     github: 'https://github.com/pjrus/ressie',
@@ -25,7 +27,7 @@ export const projects = [
       'A Next.js and TypeScript application uses Firebase for authentication and data, with Genkit and Gemini powering personalised matching and conversational recommendations.',
     outcome:
       'Combined skill discovery, AI guidance, real-time chat, Google Meet booking and downloadable calendar events in one workflow.',
-    image: '/images/skill-issue.png',
+    image: `${base}/images/skill-issue.png`,
     alt: 'Skilliton peer skill exchange platform',
     tags: ['Next.js', 'Firebase', 'TypeScript', 'Genkit', 'Gemini'],
     github: 'https://github.com/pjrus/unihack-2026-final',
@@ -41,7 +43,7 @@ export const projects = [
       'A React and TypeScript client models quiz state as RxJS streams, keeping the timer, score, streak and answer feedback synchronised throughout each session.',
     outcome:
       'Responsive, zero-install practice with timed challenges, live scoring, streak tracking and immediate answer feedback.',
-    image: '/images/braille-quiz-app.png',
+    image: `${base}/images/braille-quiz-app.png`,
     alt: 'Braille character quiz game interface',
     tags: ['React', 'TypeScript', 'RxJS', 'Accessibility'],
     github: 'https://github.com/pjrus/braille-quiz-game',
@@ -57,7 +59,7 @@ export const projects = [
       'The project combines low-cost MagnePins tactile hardware with a React Native companion application, supported by Figma prototypes and an accessible project website.',
     outcome:
       'An open, lower-cost path for controlling tactile display hardware from a familiar mobile interface.',
-    image: '/images/tactile-display-project.png',
+    image: `${base}/images/tactile-display-project.png`,
     alt: 'Prototype tactile display project',
     tags: ['React Native', 'Hardware', 'Figma', 'Assistive tech'],
   },
@@ -71,7 +73,7 @@ export const projects = [
       'A modular React Native application uses Expo Router for file-based navigation, persistent local storage for preferences, and native audio and haptic feedback.',
     outcome:
       'A customisable focus routine with ambient sound, haptic cues, persistent settings and a clear mobile-first timer.',
-    image: '/images/pomo-app.jpeg',
+    image: `${base}/images/pomo-app.jpeg`,
     imagePosition: 'center 20%',
     alt: 'Pomodoro timer mobile app',
     tags: ['React Native', 'Expo', 'TypeScript', 'Local storage'],
