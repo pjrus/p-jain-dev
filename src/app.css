@@ -37,7 +37,7 @@
   --font-mono: 'IBM Plex Mono', monospace;
 
   /* Layout grid ---------------------------------------------------------- */
-  --shell-max: 68rem;
+  --shell-max: 69rem;
   --gutter: 1.5rem;
   --header-h: 4.5rem;
 
@@ -1110,6 +1110,7 @@ em {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
+  align-content: start;
   padding: 1.25rem;
   gap: 1.5rem;
 }
@@ -1135,10 +1136,6 @@ em {
   align-items: start;
   min-height: 0;
   gap: 1.5rem;
-}
-
-.project-body h3 span {
-  color: var(--primary);
 }
 
 .project-description {
@@ -1169,10 +1166,13 @@ em {
 }
 
 .project-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.project-links > :only-child {
+  grid-column: 1 / -1;
 }
 
 .project-links a {
@@ -1419,7 +1419,7 @@ em {
 /* ---------------------------------------------------------------------- */
 
 .contact {
-  margin-top: var(--section-space);
+  margin-top: 0;
   border-top: 1px solid var(--line);
   background: var(--background);
 }
