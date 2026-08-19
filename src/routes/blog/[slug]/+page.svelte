@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import { formatDate } from '$lib/posts.js';
 
@@ -18,7 +19,7 @@
 
 <article class="post shell section">
   <header class="post-header">
-    <a class="text-link post-back" href="/blog"><ArrowIcon direction="left" /> All posts</a>
+    <a class="text-link post-back" href={`${base}/blog`}><ArrowIcon direction="left" /> All posts</a>
     <p class="post-meta">
       <time datetime={data.post.date}>{formatDate(data.post.date)}</time>
       {#if data.post.draft}<span class="post-draft">Draft</span>{/if}
