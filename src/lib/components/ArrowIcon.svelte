@@ -1,9 +1,11 @@
 <script>
+  /** @type {{ direction?: 'right' | 'down' | 'left' }} */
   let { direction = 'right' } = $props();
 </script>
 
 <svg
   class:arrow-down={direction === 'down'}
+  class:arrow-left={direction === 'left'}
   viewBox="0 0 20 20"
   width="20"
   height="20"
@@ -16,5 +18,9 @@
 <style>
   .arrow-down {
     transform: rotate(90deg);
+  }
+
+  .arrow-left {
+    transform: rotate(180deg);
   }
 </style>

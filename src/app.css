@@ -731,6 +731,231 @@ em {
   color: var(--primary);
 }
 
+/* Post index -------------------------------------------------------------
+   Hairline-separated rows rather than cards: the writing is the subject, so
+   the list stays quieter than the project grid it sits beside. */
+
+.post-list {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.post-item {
+  padding-block: var(--stack-space);
+  border-bottom: 1px solid var(--line);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-draft {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--accent-strong);
+  color: var(--accent-strong);
+}
+
+/* Mono, uppercase and marker-led, matching the .blog-title treatment. */
+.post-item-title {
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.post-item-title a {
+  color: var(--ink);
+}
+
+.post-item-title a:hover {
+  color: var(--primary);
+}
+
+.post-marker {
+  color: var(--primary);
+}
+
+.post-summary {
+  margin-top: 0.75rem;
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.post-summary + .tag-list {
+  margin-top: 1.15rem;
+}
+
+/* Single post ----------------------------------------------------------- */
+
+.post-header {
+  padding-bottom: var(--stack-space);
+  border-bottom: 1px solid var(--line);
+}
+
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--control-gap);
+  margin-bottom: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* Size, family and measure come from the global h1 rule. */
+.post-title {
+  margin-top: 0.9rem;
+}
+
+.post-lede {
+  margin-top: 1.1rem;
+  max-width: var(--measure);
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.post-lede + .tag-list {
+  margin-top: 1.35rem;
+}
+
+/* Post body -------------------------------------------------------------
+   Markdown output has no classes of its own, so the element selectors here
+   are scoped to .prose and are the only place raw tags are styled. */
+
+.prose {
+  max-width: var(--measure);
+  margin-top: var(--stack-space);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.prose > * + * {
+  margin-top: 1.15rem;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 2.75rem;
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+/* Section headings on the page are set at display scale; inside an article
+   they step down to the title and body-lg sizes so they read as subheadings
+   rather than as new sections of the site. */
+.prose h2 {
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.prose h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.35rem;
+  list-style: revert;
+}
+
+.prose li + li {
+  margin-top: 0.4rem;
+}
+
+.prose blockquote {
+  padding-left: var(--accent-bar-gap);
+  border-left: var(--accent-bar) solid var(--primary);
+  color: var(--muted);
+}
+
+.prose img {
+  width: 100%;
+  height: auto;
+  box-shadow: var(--shadow);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.prose code {
+  padding: 0.15em 0.35em;
+  background: var(--tint);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: var(--card-pad-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: 1em;
+}
+
+/* Prism token colours for the highlighting mdsvex applies to fenced code.
+   Kept to the palette so code reads the same as the rest of the page in both
+   themes, with only three roles: dimmed, signal, and value. */
+.prose .token.comment,
+.prose .token.punctuation,
+.prose .token.operator,
+.prose .token.prolog,
+.prose .token.doctype {
+  color: var(--muted);
+}
+
+.prose .token.keyword,
+.prose .token.tag,
+.prose .token.selector,
+.prose .token.atrule,
+.prose .token.key,
+.prose .token.property,
+.prose .token.attr-name,
+.prose .token.important {
+  color: var(--primary);
+}
+
+.prose .token.string,
+.prose .token.attr-value,
+.prose .token.number,
+.prose .token.datetime,
+.prose .token.boolean,
+.prose .token.regex {
+  color: var(--accent-strong);
+}
+
+.prose .token.function,
+.prose .token.class-name {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------------------- */
 /* Projects                                                                */
 /* ---------------------------------------------------------------------- */
