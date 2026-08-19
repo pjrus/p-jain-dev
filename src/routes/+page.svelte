@@ -87,7 +87,6 @@
           <ArrowIcon direction="down" />
         </button>
       {/if}
-      <a class="text-link section-link" href="https://github.com/pjrus" target="_blank" rel="noreferrer">Browse more on GitHub <ArrowIcon /></a>
     </div>
   </div>
 </section>
