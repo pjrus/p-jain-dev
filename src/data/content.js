@@ -72,6 +72,7 @@ export const projects = [
     outcome:
       'A customisable focus routine with ambient sound, haptic cues, persistent settings and a clear mobile-first timer.',
     image: '/images/pomo-app.jpeg',
+    imagePosition: 'center 20%',
     alt: 'Pomodoro timer mobile app',
     tags: ['React Native', 'Expo', 'TypeScript', 'Local storage'],
     github: 'https://github.com/pjrus/pomo-app',

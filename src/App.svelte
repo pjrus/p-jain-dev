@@ -42,31 +42,33 @@
     </div>
   </section>
 
-  <section class="about shell section" id="about">
-    <SectionHeading
-      label="About"
-      title="Technology should make everyday life easier."
-      summary="That belief shapes the products I choose, the details I notice and the way I work with people."
-    />
+  <section class="about section" id="about">
+    <div class="shell">
+      <SectionHeading
+        label="About"
+        title="Technology should make everyday life easier."
+        summary="That belief shapes the products I choose, the details I notice and the way I work with people."
+      />
 
-    <div class="about-grid">
-      <div class="about-copy">
-        <p>
-          My work moves between full-stack development, mobile apps, data and hardware. The common thread is practical problem-solving: understanding the person behind the problem, then making the solution clear and dependable.
-        </p>
-        <p>
-          At the Monash Assistive Technology Team, I coordinate work on affordable tactile displays for blind and low-vision users. It’s the kind of challenge I enjoy most — technical, collaborative and grounded in real impact.
-        </p>
-      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>
+            My work moves between full-stack development, mobile apps, data and hardware. The common thread is practical problem-solving: understanding the person behind the problem, then making the solution clear and dependable.
+          </p>
+          <p>
+            At the Monash Assistive Technology Team, I coordinate work on affordable tactile displays for blind and low-vision users. It’s the kind of challenge I enjoy most — technical, collaborative and grounded in real impact.
+          </p>
+        </div>
 
-      <div class="capabilities">
-        <p class="eyebrow">I work across</p>
-        <ul>
-          <li><span>01</span> Full-stack web</li>
-          <li><span>02</span> Mobile applications</li>
-          <li><span>03</span> Assistive technology</li>
-          <li><span>04</span> Data & AI applications</li>
-        </ul>
+        <div class="capabilities">
+          <p class="eyebrow">I work across</p>
+          <ul>
+            <li><span>01</span> Full-stack web</li>
+            <li><span>02</span> Mobile applications</li>
+            <li><span>03</span> Assistive technology</li>
+            <li><span>04</span> Data & AI applications</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -121,7 +123,7 @@
     </div>
   </section>
 
-  <section class="contact shell section" id="contact">
+  <section class="contact shell" id="contact">
     <div>
       <p class="eyebrow">Get in touch</p>
       <h2>Have a useful problem to solve?</h2>

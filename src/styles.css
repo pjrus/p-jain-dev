@@ -14,6 +14,54 @@
   --font-display: 'Bricolage Grotesque', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Layout grid ---------------------------------------------------------- */
+  --shell-max: 1180px;
+  --gutter: 1.5rem;
+  --header-h: 4.5rem;
+
+  /* Vertical rhythm ------------------------------------------------------ */
+  --section-space: clamp(6rem, 11vw, 10rem);
+  --heading-space: clamp(3.5rem, 7vw, 6rem);
+  --eyebrow-space: 1.25rem;
+  --stack-space: clamp(2.5rem, 4vw, 3rem);
+
+  /* Two-column split shared by hero, about and contact -------------------- */
+  --split-cols: minmax(0, 1.1fr) minmax(20rem, 0.8fr);
+  --split-gap: clamp(3rem, 7vw, 7rem);
+
+  /* Surfaces ------------------------------------------------------------- */
+  --card-pad: clamp(1.5rem, 3vw, 2.25rem);
+  --card-pad-sm: 1.15rem;
+  --card-pad-lg: clamp(2.5rem, 5vw, 5rem);
+  --card-gap: clamp(1.5rem, 3vw, 2.5rem);
+
+  /* Controls ------------------------------------------------------------- */
+  --control-h: 3.25rem;
+  --control-h-md: 2.9rem;
+  --control-h-sm: 2.25rem;
+  --control-pad-x: 1.25rem;
+  --control-gap: 0.65rem;
+
+  /* Typography measures -------------------------------------------------- */
+  --measure: 38rem;
+  --measure-lg: 62rem;
+  --h1-measure: 14ch;
+  --h2-measure: 13ch;
+
+  /* Accent rule used by hero facts and project detail blocks -------------- */
+  --accent-bar: 2px;
+  --accent-bar-gap: 1rem;
+
+  /* Project card media --------------------------------------------------- */
+  --project-media-w: 15rem;
+  --project-media-h: 9.5rem;
+
+  /* Experience timeline: rail sits on the icon's centre line -------------- */
+  --exp-icon: 4.25rem;
+  --exp-gap: 1.25rem;
+  --exp-role: clamp(1.2rem, 2.2vw, 1.65rem);
+  --exp-marker: 0.85rem;
 }
 
 :root[data-theme='dark'] {
@@ -37,7 +85,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
 body {
@@ -53,6 +101,7 @@ body {
 button,
 a {
   font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -62,6 +111,10 @@ a {
 img {
   display: block;
   max-width: 100%;
+}
+
+svg {
+  flex: 0 0 auto;
 }
 
 h1,
@@ -89,13 +142,13 @@ h3 {
 }
 
 h1 {
-  max-width: 14ch;
+  max-width: var(--h1-measure);
   font-size: clamp(2.6rem, 4.3vw, 4.4rem);
   font-weight: 700;
 }
 
 h2 {
-  max-width: 13ch;
+  max-width: var(--h2-measure);
   font-size: clamp(2.6rem, 5vw, 5rem);
   font-weight: 600;
 }
@@ -110,28 +163,26 @@ em {
   font-style: normal;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Container system                                                        */
+/* ---------------------------------------------------------------------- */
+
 .shell {
-  width: min(1180px, calc(100% - 3rem));
+  width: min(var(--shell-max), 100% - var(--gutter) * 2);
   margin-inline: auto;
 }
 
 .section {
-  padding-block: clamp(6rem, 11vw, 10rem);
-  scroll-margin-top: 6rem;
+  padding-block: var(--section-space);
 }
 
 #main-content {
-  padding-top: 5rem;
+  padding-top: var(--header-h);
 }
 
 .skip-link {
@@ -150,6 +201,10 @@ a {
   transform: translateY(0);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Shared type utilities                                                   */
+/* ---------------------------------------------------------------------- */
+
 .eyebrow,
 .project-kicker,
 .experience-period {
@@ -162,8 +217,13 @@ a {
 }
 
 .eyebrow {
+  margin-bottom: var(--eyebrow-space);
   color: var(--primary);
 }
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                  */
+/* ---------------------------------------------------------------------- */
 
 .site-header {
   position: fixed;
@@ -171,9 +231,7 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: center;
-  padding: 1rem 1.5rem 0;
+  padding-top: 1rem;
   pointer-events: none;
 }
 
@@ -183,7 +241,7 @@ a {
   align-items: center;
   min-height: 3.5rem;
   gap: 2rem;
-  padding-inline: 1.25rem;
+  padding-inline: var(--control-pad-x);
   border: 1px solid var(--line);
   background: var(--background);
   background: color-mix(in srgb, var(--background) 85%, transparent);
@@ -194,6 +252,7 @@ a {
 }
 
 .brand {
+  justify-self: start;
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 700;
@@ -208,6 +267,7 @@ a {
 
 .site-header nav {
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: clamp(0.15rem, 1vw, 0.5rem);
 }
@@ -221,7 +281,10 @@ a {
 }
 
 .site-header nav a {
-  padding: 0.4rem 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h-sm);
+  padding: 0 0.65rem;
   color: var(--muted);
   transition: background-color 0.15s ease, color 0.15s ease;
 }
@@ -239,9 +302,12 @@ a {
 
 .theme-toggle,
 .header-contact {
-  min-height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-h-sm);
   border: 1px solid var(--line);
-  padding: 0.45rem 0.75rem;
+  padding: 0 0.75rem;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -253,30 +319,33 @@ a {
   color: var(--background);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                    */
+/* ---------------------------------------------------------------------- */
+
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.75fr);
+  grid-template-columns: var(--split-cols);
   align-items: center;
-  min-height: auto;
   padding-block: clamp(3.5rem, 6vw, 5.5rem);
-  gap: clamp(3rem, 6vw, 6rem);
+  gap: var(--split-gap);
 }
 
 .hero-copy .eyebrow {
   display: flex;
   align-items: center;
-  margin-bottom: 1.25rem;
   gap: 0.65rem;
 }
 
 .status-dot {
   width: 0.62rem;
   height: 0.62rem;
+  flex: 0 0 auto;
   background: var(--accent);
 }
 
 .hero-intro {
-  max-width: 34rem;
+  max-width: var(--measure);
   margin-top: 1.5rem;
   color: var(--muted);
   font-size: clamp(1.02rem, 1.3vw, 1.15rem);
@@ -291,40 +360,6 @@ a {
   gap: 1.25rem;
 }
 
-.button,
-.text-link,
-.project-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.button {
-  min-height: 3.25rem;
-  padding: 0.8rem 1.25rem;
-  border: 1px solid transparent;
-}
-
-.button-primary {
-  background: var(--primary);
-  color: var(--primary-ink);
-  box-shadow: var(--shadow);
-}
-
-.text-link {
-  min-height: 2.75rem;
-  border-bottom: 1px solid var(--ink);
-}
-
-.text-link:hover,
-.project-links a:hover {
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
 .hero-facts {
   display: flex;
   margin-top: clamp(2rem, 4.5vw, 3.5rem);
@@ -332,8 +367,8 @@ a {
 }
 
 .hero-facts div {
-  padding-left: 1rem;
-  border-left: 2px solid var(--accent);
+  padding-left: var(--accent-bar-gap);
+  border-left: var(--accent-bar) solid var(--accent);
 }
 
 .hero-facts dt {
@@ -349,17 +384,16 @@ a {
   font-weight: 600;
 }
 
+/* Portrait sits in normal flow so its edges land on the container grid. */
 .hero-visual {
-  position: relative;
-  min-height: 27rem;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .portrait-card {
-  position: absolute;
-  z-index: 1;
-  top: 1rem;
-  right: 1.5rem;
-  width: min(84%, 21.5rem);
+  width: min(100%, 21.5rem);
   background: var(--navy);
   box-shadow: var(--shadow);
 }
@@ -380,12 +414,69 @@ a {
   text-transform: uppercase;
 }
 
-.section-heading {
-  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+/* ---------------------------------------------------------------------- */
+/* Controls                                                                */
+/* ---------------------------------------------------------------------- */
+
+.button,
+.text-link,
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--control-gap);
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.section-heading > .eyebrow {
-  margin-bottom: 1.25rem;
+.button {
+  min-height: var(--control-h);
+  padding: 0.8rem var(--control-pad-x);
+  border: 1px solid transparent;
+}
+
+.button-primary {
+  background: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: var(--shadow);
+}
+
+.button-light {
+  border-color: var(--primary-ink);
+  background: var(--primary-ink);
+  color: var(--primary);
+}
+
+/* Matches button height so both align in a row, while the rule stays
+   tucked under the label instead of at the bottom of the hit area. */
+.text-link {
+  position: relative;
+  min-height: var(--control-h);
+  padding-block: 0.8rem;
+  border: 1px solid transparent;
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0.55rem;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+}
+
+.text-link:hover,
+.project-links a:hover {
+  color: var(--primary);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Section headings                                                        */
+/* ---------------------------------------------------------------------- */
+
+.section-heading {
+  margin-bottom: var(--heading-space);
 }
 
 .section-heading-grid {
@@ -395,10 +486,14 @@ a {
 }
 
 .section-heading-grid > p {
-  max-width: 38rem;
+  max-width: var(--measure);
   color: var(--muted);
   font-size: 1.1rem;
 }
+
+/* ---------------------------------------------------------------------- */
+/* About                                                                   */
+/* ---------------------------------------------------------------------- */
 
 .about {
   border-top: 1px solid var(--line);
@@ -406,25 +501,23 @@ a {
 
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
-  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: var(--split-cols);
+  gap: var(--split-gap);
 }
 
 .about-copy {
   display: grid;
+  max-width: var(--measure);
   gap: 1.5rem;
   color: var(--muted);
   font-size: clamp(1.15rem, 1.7vw, 1.35rem);
 }
 
 .capabilities {
-  padding: 1.75rem;
+  align-self: start;
+  padding: var(--card-pad);
   background: var(--surface);
   box-shadow: var(--shadow);
-}
-
-.capabilities .eyebrow {
-  margin-bottom: 1.15rem;
 }
 
 .capabilities li {
@@ -442,14 +535,14 @@ a {
   font-size: 0.7rem;
 }
 
-.projects {
-  background: var(--background);
-}
+/* ---------------------------------------------------------------------- */
+/* Projects                                                                */
+/* ---------------------------------------------------------------------- */
 
 .project-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: var(--card-gap);
 }
 
 .project-card {
@@ -458,21 +551,22 @@ a {
   box-shadow: var(--shadow);
 }
 
+/* Inset shadow instead of a border so the accent never shifts card content. */
 .project-card:nth-child(even) {
-  border-left: 0.35rem solid var(--primary);
+  box-shadow: inset 0.35rem 0 0 var(--primary), var(--shadow);
 }
 
 .project-summary {
   display: grid;
-  grid-template-columns: 15rem minmax(0, 1fr);
+  grid-template-columns: var(--project-media-w) minmax(0, 1fr);
   align-items: start;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: var(--card-pad);
+  gap: var(--card-gap);
 }
 
 .project-image-wrap {
-  width: 15rem;
-  height: 9.5rem;
+  width: var(--project-media-w);
+  height: var(--project-media-h);
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--background);
@@ -484,17 +578,12 @@ a {
   object-fit: cover;
 }
 
-.project-card:last-child .project-image-wrap img {
-  object-position: center 20%;
-}
-
 .project-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  min-height: 9.5rem;
-  padding: 0;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  min-height: var(--project-media-h);
+  gap: var(--card-gap);
 }
 
 .project-kicker {
@@ -508,6 +597,7 @@ a {
 
 .project-description {
   margin-top: 1rem;
+  max-width: var(--measure);
   color: var(--muted);
 }
 
@@ -530,12 +620,12 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .project-links a {
-  min-height: 2.9rem;
-  padding: 0.7rem 0.9rem;
+  min-height: var(--control-h-md);
+  padding: 0 0.9rem;
   border: 1px solid var(--line);
   font-family: var(--font-mono);
   font-size: 0.88rem;
@@ -553,12 +643,14 @@ a {
   color: var(--background);
 }
 
+/* Same horizontal padding as .project-summary so both halves of the card
+   share one internal grid. */
 .project-details {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  padding: clamp(1.75rem, 4vw, 3rem);
+  padding: var(--card-pad);
   border-top: 1px solid var(--line);
-  gap: clamp(2.5rem, 6vw, 6rem);
+  gap: var(--split-gap);
 }
 
 .project-notes,
@@ -585,13 +677,13 @@ a {
 }
 
 .project-detail-block > p {
-  padding-left: 1rem;
-  border-left: 2px solid var(--primary);
+  padding-left: var(--accent-bar-gap);
+  border-left: var(--accent-bar) solid var(--primary);
   color: var(--muted);
 }
 
 .outcome-card {
-  padding: 1.15rem;
+  padding: var(--card-pad-sm);
   border: 1px solid var(--line);
   background: var(--background);
   color: var(--primary);
@@ -605,51 +697,58 @@ a {
 }
 
 .section-link {
-  margin-top: 3rem;
+  margin-top: var(--stack-space);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Experience timeline                                                     */
+/* ---------------------------------------------------------------------- */
+
+.experience {
+  --h2-measure: none;
 }
 
 .experience-heading {
   display: flex;
   align-items: center;
-  margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
-  gap: 1.25rem;
-}
-
-.experience-heading h2 {
-  max-width: none;
+  margin-bottom: var(--heading-space);
+  gap: var(--exp-gap);
 }
 
 .experience-icon {
   display: grid;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: var(--exp-icon);
+  height: var(--exp-icon);
   flex: 0 0 auto;
   place-items: center;
   background: var(--tint);
   color: var(--primary);
 }
 
+/* Rail runs down the centre line of the heading icon. */
 .experience-list {
   position: relative;
-  margin-left: 0.75rem;
+  margin-left: calc(var(--exp-icon) / 2 - 0.5px);
   border-left: 1px solid var(--line);
 }
 
+/* Item text lands on the same x as the heading text (icon + gap). */
 .experience-item {
   position: relative;
-  padding: 0 0 clamp(4rem, 7vw, 6rem) clamp(2rem, 5vw, 4rem);
+  padding: 0 0 clamp(4rem, 7vw, 6rem) calc(var(--exp-icon) / 2 + var(--exp-gap) - 0.5px);
 }
 
 .experience-item:last-child {
   padding-bottom: 0;
 }
 
+/* Centred on the rail, and on the first line of the role title. */
 .experience-marker {
   position: absolute;
-  top: 0.55rem;
-  left: -0.45rem;
-  width: 0.85rem;
-  height: 0.85rem;
+  top: calc(var(--exp-role) * 0.65 - var(--exp-marker) / 2);
+  left: calc(var(--exp-marker) / -2 - 0.5px);
+  width: var(--exp-marker);
+  height: var(--exp-marker);
   border: 0.2rem solid var(--background);
   background: var(--primary);
 }
@@ -663,7 +762,7 @@ a {
 
 .experience-item h3 {
   font-family: var(--font-mono);
-  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-size: var(--exp-role);
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.3;
@@ -671,8 +770,11 @@ a {
 }
 
 .experience-period {
+  display: inline-flex;
+  align-items: center;
   flex: 0 0 auto;
-  padding: 0.55rem 0.8rem;
+  min-height: calc(var(--exp-role) * 1.3);
+  padding: 0.35rem 0.8rem;
   background: var(--tint);
   color: var(--ink);
   white-space: nowrap;
@@ -699,27 +801,30 @@ a {
 }
 
 .experience-summary {
-  max-width: 62rem;
+  max-width: var(--measure-lg);
   margin-top: 1.5rem;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.75;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Contact                                                                 */
+/* ---------------------------------------------------------------------- */
+
 .contact {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
-  margin-top: clamp(4rem, 8vw, 8rem);
-  margin-bottom: clamp(4rem, 8vw, 8rem);
-  padding: clamp(2.5rem, 6vw, 5rem);
+  grid-template-columns: var(--split-cols);
+  margin-bottom: var(--section-space);
+  padding: var(--card-pad-lg);
   background: var(--primary);
   color: var(--primary-ink);
   box-shadow: var(--shadow);
-  gap: clamp(3rem, 8vw, 8rem);
+  gap: var(--split-gap);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .contact .eyebrow {
-  margin-bottom: 1rem;
   color: var(--primary-ink);
   opacity: 0.75;
 }
@@ -728,15 +833,12 @@ a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 2rem;
 }
 
-.button-light {
-  border-color: var(--primary-ink);
-  background: var(--primary-ink);
-  color: var(--primary);
-}
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                  */
+/* ---------------------------------------------------------------------- */
 
 .site-footer {
   border-top: 1px solid var(--line);
@@ -747,6 +849,7 @@ a {
   align-items: center;
   justify-content: space-between;
   min-height: 7rem;
+  padding-block: 1.5rem;
   color: var(--muted);
   font-size: 0.85rem;
   gap: 2rem;
@@ -766,66 +869,75 @@ a {
   color: var(--ink);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Breakpoints                                                             */
+/* ---------------------------------------------------------------------- */
+
 @media (max-width: 900px) {
   .header-inner {
-    grid-template-columns: auto 1fr auto;
     gap: 1.25rem;
   }
 
   .site-header nav {
     justify-content: flex-start;
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Every two-column split collapses at the same width. */
+  .hero,
+  .about-grid,
+  .contact,
+  .project-details,
+  .project-body {
+    grid-template-columns: 1fr;
   }
 
   .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .hero-copy {
-    padding-top: 1rem;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
   }
 
   .hero-visual {
-    width: min(100%, 30rem);
-    min-height: 26rem;
-    margin-inline: auto;
+    justify-content: flex-start;
   }
 
-  .about-grid {
-    grid-template-columns: 1fr;
+  .portrait-card {
+    width: min(100%, 22rem);
   }
 
-  .project-details {
-    grid-template-columns: 1fr;
-  }
-
-  .project-body {
-    grid-template-columns: 1fr;
+  .about-copy,
+  .hero-intro,
+  .project-description {
+    max-width: var(--measure);
   }
 
   .project-links {
     justify-content: flex-start;
   }
 
+  .contact {
+    gap: 2.5rem;
+  }
 }
 
 @media (max-width: 700px) {
-  .shell {
-    width: min(100% - 2rem, 38rem);
-  }
-
-  .section {
-    padding-block: 5rem;
-    scroll-margin-top: 1rem;
+  :root {
+    --header-h: 0rem;
+    --section-space: 5rem;
+    --heading-space: clamp(2.5rem, 9vw, 3.5rem);
+    --exp-icon: 2.5rem;
+    --exp-gap: 0.75rem;
+    --card-pad-lg: clamp(1.75rem, 7vw, 2.5rem);
+    --project-media-w: 100%;
+    --project-media-h: 13rem;
   }
 
   .site-header {
     position: static;
-    padding: 0;
-  }
-
-  #main-content {
     padding-top: 0;
   }
 
@@ -840,10 +952,11 @@ a {
     justify-content: space-between;
     padding-top: 0.4rem;
     border-top: 1px solid var(--line);
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .site-header nav a {
+    padding-inline: 0.4rem;
     font-size: 0.75rem;
   }
 
@@ -852,12 +965,16 @@ a {
   }
 
   h1 {
+    max-width: none;
     font-size: clamp(2.4rem, 11vw, 3.2rem);
   }
 
+  h2 {
+    max-width: none;
+  }
+
   .hero {
-    padding-block: 3rem 3.5rem;
-    gap: 2.5rem;
+    padding-block: 2.5rem 3.5rem;
   }
 
   .hero-facts {
@@ -865,79 +982,45 @@ a {
     gap: 1.25rem;
   }
 
-  .hero-visual {
-    min-height: 22rem;
-  }
-
   .portrait-card {
-    right: 0;
-    width: 82%;
-  }
-
-  .project-summary,
-  .project-grid,
-  .contact {
-    grid-template-columns: 1fr;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .project-image-wrap {
     width: 100%;
-    height: 13rem;
-    border: 1px solid var(--line);
   }
 
-  .project-image-wrap {
-    min-height: 13rem;
+  .project-summary {
+    grid-template-columns: 1fr;
   }
 
   .project-body {
     min-height: 0;
   }
 
-  .experience-heading {
-    align-items: flex-start;
-  }
-
-  .experience-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-
-  .experience-list {
-    margin-left: 0.4rem;
-  }
-
-  .experience-item {
-    padding-left: 1.75rem;
-  }
-
   .experience-item-heading {
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .experience-period {
     white-space: normal;
   }
 
-  .contact {
-    width: calc(100% - 2rem);
-  }
-
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding-block: 2rem;
+    min-height: 0;
+    padding-block: 2.5rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

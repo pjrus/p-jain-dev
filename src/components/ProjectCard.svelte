@@ -7,7 +7,13 @@
 <article class="project-card">
   <div class="project-summary">
     <div class="project-image-wrap">
-      <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
+      <img
+        src={project.image}
+        alt={project.alt}
+        style:object-position={project.imagePosition ?? null}
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     <div class="project-body">
       <div>
