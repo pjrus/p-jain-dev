@@ -39,7 +39,7 @@
   /* Layout grid ---------------------------------------------------------- */
   --shell-max: 69rem;
   --gutter: 1.5rem;
-  --header-h: 6rem;
+  --header-h: 5.5rem;
 
   /* Vertical rhythm ------------------------------------------------------ */
   /* Sections carry this as symmetric padding-block, so the interval a visitor
@@ -57,7 +57,7 @@
   /* Controls ------------------------------------------------------------- */
   --control-h: 3.25rem;
   --control-h-md: 2.9rem;
-  --control-h-sm: 2.95rem;
+  --control-h-sm: 2.65rem;
   --control-pad-x: 1.25rem;
   --control-gap: 0.65rem;
 

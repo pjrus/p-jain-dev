@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  min-height: 4.5rem;
+  min-height: 4rem;
   gap: 1.5rem;
   padding-inline: 1.7rem;
   border: 1px solid var(--line);
