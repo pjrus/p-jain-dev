@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
@@ -12,6 +13,47 @@
   let visibleProjects = $derived(
     showAllProjects ? projects : projects.slice(0, initiallyVisibleProjects),
   );
+
+  onMount(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const revealTargets = [...document.querySelectorAll('[data-reveal]')];
+    if (revealTargets.length === 0) return;
+
+    document.documentElement.classList.add('motion-reveals-ready');
+
+    const pendingTargets = new Set(revealTargets);
+
+    function revealVisibleTargets() {
+      const triggerLine = window.innerHeight * 0.88;
+
+      for (const target of pendingTargets) {
+        const bounds = target.getBoundingClientRect();
+        if (bounds.top > triggerLine || bounds.bottom < 0) continue;
+        target.classList.add('is-visible');
+        pendingTargets.delete(target);
+      }
+
+      if (pendingTargets.size === 0) {
+        window.removeEventListener('scroll', revealVisibleTargets);
+        window.removeEventListener('resize', revealVisibleTargets);
+      }
+    }
+
+    const revealFrame = requestAnimationFrame(() => {
+      revealVisibleTargets();
+      window.addEventListener('scroll', revealVisibleTargets, { passive: true });
+      window.addEventListener('resize', revealVisibleTargets);
+    });
+
+    return () => {
+      cancelAnimationFrame(revealFrame);
+      window.removeEventListener('scroll', revealVisibleTargets);
+      window.removeEventListener('resize', revealVisibleTargets);
+      document.documentElement.classList.remove('motion-reveals-ready');
+    };
+  });
 
   /**
    * Opens the visitor's email client with their message ready to send.
@@ -66,11 +108,19 @@
   <div class="shell">
     <SectionHeading
       title="Projects"
+      reveal
     />
 
     <div class="project-grid" id="project-grid">
-      {#each visibleProjects as project}
-        <ProjectCard {project} />
+      {#each visibleProjects as project, index}
+        <ProjectCard
+          {project}
+          reveal={showAllProjects && index >= initiallyVisibleProjects}
+          revealDelay={showAllProjects && index >= initiallyVisibleProjects
+            ? Math.min(index - initiallyVisibleProjects, 2) * 65
+            : Math.min(index, 2) * 65}
+          revealOnScroll={index < initiallyVisibleProjects}
+        />
       {/each}
     </div>
 
@@ -95,11 +145,12 @@
   <SectionHeading
     title="What I build with."
     summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
+    reveal
   />
 
   <div class="stack-grid">
-    {#each stack as group}
-      <div class="stack-card">
+    {#each stack as group, index}
+      <div class="stack-card" data-reveal="stack-card" style={`--reveal-delay: ${index * 90}ms`}>
         <h3 class="stack-card-title">// {group.label}</h3>
         <ul class="tag-list" aria-label={group.label}>
           {#each group.items as item}<li>{item}</li>{/each}
@@ -110,7 +161,7 @@
 </section>
 
 <section class="experience shell section" id="experience">
-  <div class="experience-heading">
+  <div class="experience-heading" data-reveal="section-heading">
     <span class="experience-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
         <path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" />
@@ -122,9 +173,13 @@
     </div>
   </div>
 
-  <div class="experience-list">
-    {#each experience as item}
-      <article class="experience-item">
+  <div class="experience-list" data-reveal="experience-rail">
+    {#each experience as item, index}
+      <article
+        class="experience-item"
+        data-reveal="experience-item"
+        style={`--reveal-delay: ${Math.min(index, 4) * 70}ms`}
+      >
         <span class="experience-marker" aria-hidden="true"></span>
         <div class="experience-item-heading">
           <h3>{item.role}</h3>
@@ -142,14 +197,14 @@
 
 <section class="contact section" id="contact" aria-labelledby="contact-title">
   <div class="contact-inner">
-    <header class="contact-intro">
+    <header class="contact-intro" data-reveal="contact-intro">
       <h2 id="contact-title">Let’s make something useful.</h2>
       <p>
         I’m always open to thoughtful opportunities, collaborations and projects — or a good conversation about accessible technology.
       </p>
     </header>
 
-    <form class="contact-form" onsubmit={sendContactMessage}>
+    <form class="contact-form" data-reveal="contact-form" onsubmit={sendContactMessage}>
       <div class="form-field">
         <label for="contact-name">Name</label>
         <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
@@ -172,7 +227,7 @@
       <p class="contact-form-note">Opens your email app with the details filled in.</p>
     </form>
 
-    <nav class="contact-links" aria-label="Other ways to connect">
+    <nav class="contact-links" data-reveal="contact-links" aria-label="Other ways to connect">
       <a href="mailto:paarangatj@gmail.com">
         <span class="contact-link-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="17" height="17" fill="none">

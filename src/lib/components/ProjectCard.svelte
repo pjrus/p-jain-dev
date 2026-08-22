@@ -1,10 +1,15 @@
 <script>
   import ArrowIcon from './ArrowIcon.svelte';
 
-  let { project } = $props();
+  let { project, reveal = false, revealDelay = 0, revealOnScroll = false } = $props();
 </script>
 
-<article class="project-card">
+<article
+  class="project-card"
+  class:project-card--revealed={reveal}
+  data-reveal={revealOnScroll ? 'project-card' : undefined}
+  style={`--reveal-delay: ${revealDelay}ms`}
+>
   <div class="project-summary">
     <div class="project-image-wrap">
       <img

@@ -19,6 +19,17 @@ import { dev } from '$app/environment';
  * @property {boolean} [draft]
  */
 
+/**
+ * Keeps frontmatter dates stable whether the YAML loader returns a string or
+ * a Date object, while preserving the ISO value used by the time element.
+ * @param {string | Date} value
+ */
+function normaliseDate(value) {
+  const parsed = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(parsed.getTime())) return String(value);
+  return parsed.toISOString().slice(0, 10);
+}
+
 // Only the frontmatter is pulled in, so listing posts never bundles their bodies.
 const frontmatter = /** @type {Record<string, Frontmatter>} */ (
   import.meta.glob('/src/posts/*.md', { eager: true, import: 'metadata' })
@@ -33,7 +44,7 @@ export const posts = Object.entries(frontmatter)
   .map(([path, meta]) => ({
     slug: path.split('/').pop()?.replace(/\.md$/, '') ?? '',
     title: meta.title,
-    date: meta.date,
+    date: normaliseDate(meta.date),
     summary: meta.summary,
     tags: meta.tags ?? [],
     draft: meta.draft ?? false,
