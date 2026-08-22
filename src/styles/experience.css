@@ -102,7 +102,7 @@
 
 .experience-summary {
   max-width: var(--measure-lg);
-  margin-top: 1.5rem;
+  margin-top: 0.85rem;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.75;
