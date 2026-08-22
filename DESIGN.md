@@ -45,7 +45,7 @@ typography:
     letterSpacing: "0.09em"
   brand:
     fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "1.35rem"
+    fontSize: "1.8rem"
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "-0.05em"
@@ -171,7 +171,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 - **Display** (700, `clamp(2.6rem, 4.3vw, 4.4rem)`, line-height 1.06): the `h1` only — one per page, capped at a 14-character measure so it wraps deliberately rather than by accident. Under 700px it steps down to its own mobile clamp (`clamp(2.4rem, 11vw, 3.2rem)`) rather than continuing the desktop curve, so it never collapses below a readable size on narrow viewports.
 - **Headline** (600, `clamp(2.6rem, 5vw, 5rem)`, line-height 1.06): section titles (`h2`) — "Experience log", "Have a useful problem to solve?"
 - **Title** (600, `clamp(1.45rem, 2.2vw, 2rem)`, line-height 1.06): card and item titles (`h3`) — project names, experience roles.
-- **Brand** (700, 1.35rem, letter-spacing -0.05em): the header wordmark only ("PJ.") — display-family but its own fixed size, never reused elsewhere.
+- **Brand** (700, 1.8rem, letter-spacing -0.05em): the header wordmark only ("PJ.") — display-family but its own fixed size, never reused elsewhere.
 - **Body** (400, 1rem, line-height 1.65): running copy, capped at a 38rem (`--measure`) or 62rem (`--measure-lg`) measure depending on context.
 - **Body Large** (400, 1.1rem, line-height 1.55): intro and summary copy that needs more presence than running body text — the hero intro and section-heading summaries scale within a rem of this step (hero intro clamps up to 1.15rem at wide viewports, the experience-summary sits a touch under at 1.05rem); no two contexts share a single fixed value, each is tuned to its column width around this canonical size.
 - **Control** (600, 0.8rem): UI microcopy that isn't a metadata label — icon-button accessible text, the header "Let's talk" CTA.
@@ -229,11 +229,10 @@ Every control is a precise, static object: sharp corners, a defined edge, and st
 
 ### Navigation
 - **Style:** a floating pill header (border + blurred `--header-surface` background at 85% opacity, `backdrop-filter: blur(14px)`) fixed to the viewport top.
-- **Layout:** brand hard left, everything else in a single right-aligned cluster — nav boxes, then the icon squares, then the contact box. One flex row; the brand takes `margin-right: auto`.
-- **Link boxes:** every nav item is an outlined box at `--control-h-sm` (2.25rem) carrying a leading 14px lucide icon and a mono uppercase label (0.7rem, `0.07em` tracking). Borders sit at full `--ink` strength at rest — the header is the one place the system uses a hard edge rather than `--line-strong`, so the cluster reads as a row of equal, deliberate objects.
+- **Layout:** a three-column grid — brand hard left, nav boxes centred in the header regardless of how wide the shell gets, icon squares hard right. The desktop header carries no contact CTA of its own — that emphasis lives in the contact panel at the foot of the page and in the mobile overlay's footer.
+- **Link boxes:** every nav item is an outlined box at `--control-h-sm` (2.95rem) carrying a leading 17px lucide icon and a mono uppercase label (0.85rem, `0.08em` tracking — sized up from the base Label step to fill the nav box's larger footprint). Borders sit at full `--ink` strength at rest — the header is the one place the system uses a hard edge rather than `--line-strong`, so the cluster reads as a row of equal, deliberate objects.
 - **Link states:** because the edge is already at full strength, hover fills with `--tint` instead of darkening the border. The current page inverts (`--ink` fill, `--background` text) rather than shifting colour, so "you are here" survives at a glance.
 - **Icon controls** (GitHub, LinkedIn, theme toggle): identical square footprint (`--control-h-sm`) and the same `--ink` border, so icon-only and labelled boxes sit in one unbroken row; hover fills with `--tint` to match the nav boxes.
-- **Contact:** outlined like the nav boxes rather than filled — the header carries no filled CTA, since the contact panel at the foot of the page is where that emphasis lives.
 - **Mobile (≤900px):** the whole cluster collapses to a single hamburger square; nav moves into a dismissible overlay panel (scrim + focus trap + Escape) whose links keep the same icons at 18px, set in the display face at 1.35rem.
 
 ### Experience Timeline (signature component)
