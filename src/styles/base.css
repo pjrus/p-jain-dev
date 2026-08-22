@@ -107,7 +107,7 @@ em {
 
 /* Compact all page content beneath the full-scale site header. */
 .content-scale {
-  zoom: 0.95;
+  zoom: 0.9;
 }
 
 #main-content {
