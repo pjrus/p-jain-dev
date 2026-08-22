@@ -1,9 +1,10 @@
 /* The homepage opens like a field report: the reading column registers first,
-   then the portrait and any newly requested evidence follow its order. */
+   then the portrait and any newly requested evidence follow its order. Both
+   wipe top-to-bottom, as if a shade were lifting to reveal each block. */
 @keyframes hero-copy-register {
   from {
-    clip-path: inset(0 100% 0 0);
-    transform: translateX(-1rem);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-1rem);
   }
 
   62% {
@@ -11,14 +12,14 @@
   }
 
   to {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
 @keyframes hero-visual-register {
   from {
-    clip-path: inset(100% 0 0 0);
-    transform: translateY(1.25rem);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-1.25rem);
   }
 
   to {

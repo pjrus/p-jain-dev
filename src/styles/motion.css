@@ -63,7 +63,7 @@
 
 @keyframes viewport-panel-register {
   from {
-    clip-path: inset(0 0 12% 0);
+    clip-path: inset(0 0 100% 0);
     opacity: 0;
     transform: translateY(0.9rem);
   }
