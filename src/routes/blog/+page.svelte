@@ -17,7 +17,7 @@
   />
 
   {#if posts.length > 0}
-    <ul class="post-list">
+    <ul class="post-list" aria-label="Published notes">
       {#each posts as post (post.slug)}
         <li class="post-item">
           <article>
@@ -30,7 +30,7 @@
             </h3>
             <p class="post-summary">{post.summary}</p>
             {#if post.tags.length > 0}
-              <ul class="tag-list" aria-label={`${post.title} topics`}>
+              <ul class="tag-list post-tags" aria-label={`${post.title} topics`}>
                 {#each post.tags as tag}<li>{tag}</li>{/each}
               </ul>
             {/if}
