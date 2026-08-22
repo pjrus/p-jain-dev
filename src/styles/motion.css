@@ -1,0 +1,155 @@
+/* Generic scroll-reveal engine. Component-specific entrance animations
+   (hero, project cards) live with their components and key off the classes
+   and custom properties defined here. */
+
+@keyframes viewport-heading-register {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+
+  70% {
+    clip-path: inset(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes viewport-card-register {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: translateY(0.9rem);
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes viewport-rail-register {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: translateY(-0.75rem);
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes viewport-item-register {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+    transform: translateX(-0.75rem);
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes viewport-panel-register {
+  from {
+    clip-path: inset(0 0 12% 0);
+    opacity: 0;
+    transform: translateY(0.9rem);
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll reveals are progressive enhancement: the page stays visible until
+   the observer is ready, then each surface registers in its own direction. */
+:root.motion-reveals-ready [data-reveal] {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+:root.motion-reveals-ready [data-reveal='section-heading'] {
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-1rem);
+}
+
+:root.motion-reveals-ready [data-reveal='experience-rail'] {
+  transform: translateY(-0.75rem);
+}
+
+:root.motion-reveals-ready [data-reveal='experience-item'] {
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-0.75rem);
+}
+
+:root.motion-reveals-ready [data-reveal].is-visible {
+  clip-path: none;
+  opacity: 1;
+  transform: none;
+}
+
+:root.motion-reveals-ready [data-reveal='section-heading'].is-visible {
+  animation: viewport-heading-register 520ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+}
+
+:root.motion-reveals-ready [data-reveal='project-card'].is-visible,
+:root.motion-reveals-ready [data-reveal='stack-card'].is-visible {
+  animation: viewport-card-register 460ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+}
+
+:root.motion-reveals-ready [data-reveal='experience-rail'].is-visible {
+  animation: viewport-rail-register 620ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+}
+
+:root.motion-reveals-ready [data-reveal='experience-item'].is-visible {
+  animation: viewport-item-register 440ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+}
+
+:root.motion-reveals-ready [data-reveal='contact-intro'].is-visible,
+:root.motion-reveals-ready [data-reveal='contact-form'].is-visible,
+:root.motion-reveals-ready [data-reveal='contact-links'].is-visible {
+  animation: viewport-panel-register 480ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .hero-copy,
+  .hero-copy > *,
+  .hero-visual,
+  .project-card--revealed {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  :root.motion-reveals-ready [data-reveal] {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+}
