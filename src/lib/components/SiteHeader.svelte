@@ -102,8 +102,8 @@
     <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser /> About</a>
-      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument /> Blog</a>
+      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser size={17} /> About</a>
+      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={17} /> Blog</a>
     </nav>
 
     <div class="header-actions">
@@ -114,7 +114,7 @@
         rel="noreferrer"
         aria-label="GitHub profile"
       >
-        <IconGithub />
+        <IconGithub size={20} />
       </a>
       <a
         class="header-social"
@@ -123,7 +123,7 @@
         rel="noreferrer"
         aria-label="LinkedIn profile"
       >
-        <IconLinkedin />
+        <IconLinkedin size={20} />
       </a>
       <button
         id="menu-toggle"
