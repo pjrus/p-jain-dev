@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  flex: 0 0 auto;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+h1 {
+  max-width: var(--h1-measure);
+  font-size: clamp(2.6rem, 4.3vw, 4.4rem);
+  font-weight: 700;
+}
+
+h2 {
+  max-width: var(--h2-measure);
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  font-weight: 600;
+}
+
+em {
+  color: var(--ink);
+  font-style: normal;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-strong);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Container system                                                        */
+/* ---------------------------------------------------------------------- */
+
+.shell {
+  width: min(var(--shell-max), 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+/* Compact all page content beneath the full-scale site header. */
+.content-scale {
+  zoom: 0.95;
+}
+
+#main-content {
+  padding-top: var(--header-h);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--background);
+  text-decoration: none;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  h1 {
+    max-width: none;
+    font-size: clamp(2.4rem, 11vw, 3.2rem);
+  }
+
+  h2 {
+    max-width: none;
+  }
+}

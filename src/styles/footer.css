@@ -1,0 +1,20 @@
+.site-footer {
+  border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 1.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 700px) {
+  .footer-inner {
+    justify-content: center;
+    min-height: 0;
+    padding-block: 2.5rem;
+  }
+}

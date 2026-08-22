@@ -1,0 +1,224 @@
+/* The homepage opens like a field report: the reading column registers first,
+   then the portrait and any newly requested evidence follow its order. */
+@keyframes hero-copy-register {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-1rem);
+  }
+
+  62% {
+    clip-path: inset(0);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-visual-register {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(1.25rem);
+  }
+
+  to {
+    clip-path: inset(0);
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy {
+    animation: hero-copy-register 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-visual {
+    animation: hero-visual-register 720ms cubic-bezier(0.16, 1, 0.3, 1) 110ms both;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+  align-items: center;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Keep dark-mode hero actions monochrome while using coral for evidence rails. */
+:root[data-theme='dark'] .hero {
+  --primary: #ffffff;
+  --accent: #ff8a6c;
+  --accent-strong: #ffffff;
+}
+
+.hero-role {
+  margin-top: 1.1rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.hero-intro {
+  max-width: var(--measure);
+  margin-top: 1.5rem;
+  color: var(--ink);
+  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1.25rem;
+}
+
+.hero-facts {
+  display: flex;
+  margin-top: clamp(2rem, 4.5vw, 3.5rem);
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.hero-facts div {
+  padding-left: var(--accent-bar-gap);
+  border-left: var(--accent-bar) solid var(--accent);
+}
+
+.hero-facts dt {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-facts dd {
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+/* Portrait sits in normal flow and uses the primary colour as a crisp ring. */
+.hero-visual {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.portrait-card {
+  width: min(100%, 21.5rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--primary);
+  border-radius: 50%;
+  background: var(--frame);
+}
+
+.portrait-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  /* On mobile, lead with the portrait and centre the hero content while
+     keeping the desktop two-column composition unchanged. */
+  .hero-copy {
+    display: contents;
+  }
+
+  .hero-visual {
+    order: 1;
+    justify-content: center;
+  }
+
+  .hero-copy > h1 {
+    order: 2;
+  }
+
+  .hero-role {
+    order: 3;
+    margin-top: 0;
+  }
+
+  .hero-intro {
+    order: 4;
+    margin-inline: auto;
+    margin-top: 0;
+  }
+
+  .hero-actions {
+    order: 5;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .hero-facts {
+    order: 6;
+    justify-content: center;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .portrait-card {
+    width: min(100%, 22rem);
+  }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .hero-copy {
+    animation: none;
+  }
+
+  .hero-copy > * {
+    animation: hero-copy-register 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-copy > .hero-role {
+    animation-delay: 55ms;
+  }
+
+  .hero-copy > .hero-intro {
+    animation-delay: 110ms;
+  }
+
+  .hero-copy > .hero-actions {
+    animation-delay: 165ms;
+  }
+
+  .hero-copy > .hero-facts {
+    animation-delay: 220ms;
+  }
+
+  .hero-visual {
+    animation-delay: 0ms;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-block: 2.5rem 3.5rem;
+  }
+
+  .hero-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .portrait-card {
+    width: min(82vw, 22rem);
+  }
+}

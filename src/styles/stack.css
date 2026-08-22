@@ -1,0 +1,39 @@
+.stack {
+  padding-block: clamp(3rem, 4vw, 4rem);
+  border-top: 1px solid var(--line);
+}
+
+.stack .section-heading {
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--card-gap);
+}
+
+.stack-card {
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border: 1px solid transparent;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s ease;
+}
+
+.stack-card:hover {
+  border-color: var(--ink);
+}
+
+.stack-card-title {
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}

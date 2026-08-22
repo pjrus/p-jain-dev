@@ -1,0 +1,53 @@
+.button,
+.text-link,
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--control-gap);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.button {
+  min-height: var(--control-h);
+  padding: 0.8rem var(--control-pad-x);
+  border: 1px solid transparent;
+}
+
+.button-primary {
+  background: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: var(--shadow);
+}
+
+/* Dark mode gives the primary hero action a stronger blue treatment. */
+:root[data-theme='dark'] .button-primary {
+  border-color: #3b83f6;
+  background: #3b83f6;
+  color: #ffffff;
+}
+
+/* Matches button height so both align in a row, while the rule stays
+   tucked under the label instead of at the bottom of the hit area. */
+.text-link {
+  position: relative;
+  min-height: var(--control-h);
+  padding-block: 0.8rem;
+  border: 1px solid transparent;
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0.55rem;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+}
+
+.text-link:hover,
+.project-links a:hover {
+  color: var(--primary);
+}

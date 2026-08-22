@@ -1,0 +1,156 @@
+.blog {
+  border-top: 1px solid var(--line);
+}
+
+.blog .section-heading {
+  margin-bottom: clamp(2.5rem, 5vw, 4.25rem);
+}
+
+.blog .section-heading-grid {
+  max-width: 58rem;
+}
+
+.blog .section-heading-grid > p {
+  max-width: 47rem;
+}
+
+.blog-empty {
+  display: grid;
+  gap: 0.75rem;
+  max-width: var(--measure);
+  padding: var(--card-pad);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.blog-empty p:not(.blog-title) {
+  color: var(--muted);
+}
+
+/* Mirrors a post-title treatment: mono, uppercase, with a marker standing
+   in for the link chevron a real post entry would carry. */
+.blog-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.blog-title-marker {
+  color: var(--primary);
+}
+
+/* Post index -------------------------------------------------------------
+   Hairline-separated rows rather than cards: the writing is the subject, so
+   the list stays quieter than the project grid it sits beside. */
+
+.post-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.post-item {
+  min-width: 0;
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.post-item article {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  width: 100%;
+  align-items: start;
+}
+
+.post-meta {
+  grid-column: 1;
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-draft {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--accent-strong);
+  color: var(--accent-strong);
+}
+
+/* Mono, uppercase and marker-led, matching the .blog-title treatment. */
+.post-item-title {
+  grid-column: 2;
+  max-width: 32ch;
+  margin-top: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.post-item-title a {
+  color: var(--ink);
+}
+
+.post-item-title a:hover {
+  color: var(--primary);
+}
+
+.post-marker {
+  color: var(--primary);
+}
+
+.post-summary {
+  grid-column: 2;
+  margin-top: 0.75rem;
+  max-width: 50rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.post-tags {
+  grid-column: 2;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .post-list {
+    grid-template-columns: 1fr;
+  }
+
+  .post-item article {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    min-height: 0;
+  }
+
+  .post-meta,
+  .post-item-title,
+  .post-summary,
+  .post-tags {
+    grid-column: 1;
+  }
+
+  .post-item-title {
+    margin-top: 1rem;
+  }
+
+  .post-tags {
+    margin-top: 1.5rem;
+  }
+}

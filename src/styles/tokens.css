@@ -1,0 +1,117 @@
+:root {
+  color-scheme: light;
+
+  /* Core palette --------------------------------------------------------- */
+  --background: #fafbfe;
+  --surface: #ffffff;
+  --ink: #182238;
+  --muted: #182238;
+  --primary: #315ed6;
+  --primary-ink: #ffffff;
+  --accent: #ed6a4b;
+
+  /* The accent at a lightness that clears 4.5:1 on white and on the canvas.
+     Small text and focus rings use this; the plain accent stays reserved for
+     graphics, where its lighter coral carries the brand without a contrast
+     obligation. */
+  --accent-strong: #d13813;
+
+  --tint: #e5edfb;
+  --line: #d9e0ea;
+
+  /* The boundary of an interactive control, kept separate from the
+     decorative hairline so each theme can meet the 3:1 non-text minimum
+     without darkening every divider on the page. */
+  --line-strong: #d9e0ea;
+
+  /* The floating header is its own plane. Light mode shares the canvas
+     colour; dark mode lifts the header off it. */
+  --header-surface: #fafbfe;
+
+  /* Plinth behind the portrait. */
+  --frame: #182238;
+
+  --shadow: 0 14px 30px rgba(24, 34, 56, 0.09);
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Layout grid ---------------------------------------------------------- */
+  --shell-max: 69rem;
+  --gutter: 1.5rem;
+  --header-h: 4.5rem;
+
+  /* Vertical rhythm ------------------------------------------------------ */
+  /* Sections carry this as symmetric padding-block, so the interval a visitor
+     actually sees between two of them is twice this value. Read it as a
+     half-interval when tuning. */
+  --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
+  --heading-space: clamp(2.25rem, 4vw, 3.75rem);
+  --stack-space: clamp(2.5rem, 4vw, 3rem);
+
+  /* Surfaces ------------------------------------------------------------- */
+  --card-pad: clamp(1.5rem, 3vw, 2.25rem);
+  --card-pad-sm: 1.15rem;
+  --card-gap: clamp(1.5rem, 3vw, 2.5rem);
+
+  /* Controls ------------------------------------------------------------- */
+  --control-h: 3.25rem;
+  --control-h-md: 2.9rem;
+  --control-h-sm: 2.25rem;
+  --control-pad-x: 1.25rem;
+  --control-gap: 0.65rem;
+
+  /* Typography measures -------------------------------------------------- */
+  --measure: 38rem;
+  --measure-lg: 62rem;
+  --h1-measure: 14ch;
+  --h2-measure: 13ch;
+
+  /* Accent rule used by hero facts and project detail blocks -------------- */
+  --accent-bar: 2px;
+  --accent-bar-gap: 1rem;
+
+  /* Experience timeline: rail sits on the icon's centre line -------------- */
+  --exp-icon: 4.25rem;
+  --exp-gap: 1.25rem;
+  --exp-role: clamp(1.2rem, 2.2vw, 1.65rem);
+  --exp-marker: 0.85rem;
+}
+
+/* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
+   surface lightness rather than by tinting the greys toward the brand hue,
+   so blue and coral only ever appear as action, state or emphasis. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Elevation ladder: canvas -> card -> chip, each step readable on the last. */
+  --background: #161616;
+  --surface: #151517;
+  --tint: #202024;
+
+  --ink: #ffffff;
+  --muted: #a5a5a7;
+  --primary: #7ba2ff;
+  --primary-ink: #0a0a0a;
+  --accent: #ff8a6c;
+  /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
+  --accent-strong: #ff8a6c;
+
+  --line: #34343a;
+  --line-strong: #6a6a6d;
+  --header-surface: #151517;
+
+  --frame: #000000;
+
+  /* Deep enough to register against a near-black canvas. */
+  --shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --section-space: 3.25rem;
+    --heading-space: clamp(1.75rem, 7vw, 2.75rem);
+    --exp-icon: 2.5rem;
+    --exp-gap: 0.75rem;
+  }
+}

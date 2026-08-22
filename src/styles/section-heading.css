@@ -1,0 +1,20 @@
+.section-heading {
+  margin-bottom: var(--heading-space);
+}
+
+.section-heading-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.section-heading-grid > p {
+  max-width: var(--measure);
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+/* Let the stack summary use the full section measure. */
+.stack .section-heading-grid > p {
+  max-width: none;
+}
