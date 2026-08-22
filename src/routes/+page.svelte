@@ -204,7 +204,12 @@
       </p>
     </header>
 
-    <form class="contact-form" data-reveal="contact-form" onsubmit={sendContactMessage}>
+    <form
+      class="contact-form"
+      data-reveal="contact-form"
+      style="--reveal-delay: 90ms"
+      onsubmit={sendContactMessage}
+    >
       <div class="form-field">
         <label for="contact-name">Name</label>
         <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
@@ -227,7 +232,12 @@
       <p class="contact-form-note">Opens your email app with the details filled in.</p>
     </form>
 
-    <nav class="contact-links" data-reveal="contact-links" aria-label="Other ways to connect">
+    <nav
+      class="contact-links"
+      data-reveal="contact-links"
+      style="--reveal-delay: 180ms"
+      aria-label="Other ways to connect"
+    >
       <a href="mailto:paarangatj@gmail.com">
         <span class="contact-link-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
