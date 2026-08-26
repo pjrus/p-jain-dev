@@ -7,15 +7,6 @@
   const year = new Date().getFullYear();
 </script>
 
-<svelte:head>
-  <meta
-    name="description"
-    content="Paarangat Jain is a Melbourne-based developer building accessible, useful software across web, mobile and assistive technology."
-  />
-  <meta property="og:title" content="Paarangat Jain — Developer & accessibility advocate" />
-  <meta property="og:description" content="Useful, accessible software across web, mobile and assistive technology." />
-</svelte:head>
-
 <a class="skip-link" href="#main-content">Skip to content</a>
 <SiteHeader />
 

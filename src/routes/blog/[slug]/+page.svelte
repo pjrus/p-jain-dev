@@ -1,21 +1,53 @@
 <script>
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
+  import SeoHead from '$lib/components/SeoHead.svelte';
   import { formatDate } from '$lib/posts.js';
+  import { assetUrl, canonicalUrl } from '$lib/seo.js';
 
   /** @type {{ data: import('./$types').PageData }} */
   let { data } = $props();
 
   const Content = $derived(data.content);
+  const postUrl = $derived(canonicalUrl(`/blog/${data.post.slug}`));
+  const postJsonLd = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: data.post.title,
+    description: data.post.summary,
+    datePublished: data.post.date,
+    dateModified: data.post.date,
+    url: postUrl,
+    image: assetUrl('/images/portfolio.png'),
+    author: {
+      '@type': 'Person',
+      name: 'Paarangat Jain',
+      url: canonicalUrl('/'),
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Paarangat Jain',
+      url: canonicalUrl('/'),
+    },
+    keywords: data.post.tags,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+  });
 </script>
 
-<svelte:head>
-  <title>{data.post.title} — Paarangat Jain</title>
-  <meta name="description" content={data.post.summary} />
-  <meta property="og:title" content={data.post.title} />
-  <meta property="og:description" content={data.post.summary} />
-  <meta property="og:type" content="article" />
-</svelte:head>
+<SeoHead
+  title={`${data.post.title} — Paarangat Jain`}
+  description={data.post.summary}
+  path={`/blog/${data.post.slug}`}
+  type="article"
+  publishedTime={data.post.date}
+  modifiedTime={data.post.date}
+  tags={data.post.tags}
+  noindex={data.post.draft}
+  jsonLd={postJsonLd}
+/>
 
 <article class="post shell section">
   <header class="post-header">

@@ -1,19 +1,37 @@
 <script>
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
+  import SeoHead from '$lib/components/SeoHead.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { formatDate, posts } from '$lib/posts.js';
+  import { canonicalUrl } from '$lib/seo.js';
+
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Blog — Paarangat Jain',
+    url: canonicalUrl('/blog'),
+    description: 'Notes on accessible software, assistive hardware and the things I build.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Paarangat Jain',
+      url: canonicalUrl('/'),
+    },
+  };
 </script>
 
-<svelte:head>
-  <title>Blog — Paarangat Jain</title>
-  <meta name="description" content="Notes on accessible software, assistive hardware and the things I build." />
-</svelte:head>
+<SeoHead
+  title="Blog — Paarangat Jain"
+  description="Notes on accessible software, assistive hardware and the things I build."
+  path="/blog"
+  jsonLd={blogJsonLd}
+/>
 
 <section class="blog shell section" id="blog">
   <SectionHeading
     title="Blog"
     summary="Notes on accessible software, assistive hardware and whatever I happen to be building."
+    headingLevel="h1"
   />
 
   {#if posts.length > 0}
