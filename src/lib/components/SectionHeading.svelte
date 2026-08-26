@@ -1,5 +1,5 @@
 <script>
-  let { title, summary = '', reveal = false, revealDelay = 0 } = $props();
+  let { title, summary = '', headingLevel = 'h2', reveal = false, revealDelay = 0 } = $props();
 </script>
 
 <div
@@ -8,7 +8,7 @@
   style={reveal ? `--reveal-delay: ${revealDelay}ms` : undefined}
 >
   <div class="section-heading-grid">
-    <h2>{title}</h2>
+    <svelte:element this={headingLevel}>{title}</svelte:element>
     {#if summary}<p>{summary}</p>{/if}
   </div>
 </div>

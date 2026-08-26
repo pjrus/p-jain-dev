@@ -18,3 +18,8 @@ export async function load({ params }) {
 
   return { post, content };
 }
+
+/** Ensure every published post is emitted by the static adapter. */
+export function entries() {
+  return posts.filter((post) => !post.draft).map((post) => ({ slug: post.slug }));
+}

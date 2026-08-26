@@ -1,14 +1,31 @@
 <script>
   import { base } from '$app/paths';
+  import SeoHead from '$lib/components/SeoHead.svelte';
+  import { assetUrl, canonicalUrl } from '$lib/seo.js';
+
+  const aboutJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Paarangat Jain',
+    url: canonicalUrl('/about'),
+    description:
+      'Learn more about Paarangat Jain, a Melbourne-based developer working across web, mobile and assistive technology.',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Paarangat Jain',
+      url: canonicalUrl('/'),
+      image: assetUrl('/images/paarangat-jain.webp'),
+      jobTitle: 'Developer and accessibility advocate',
+    },
+  };
 </script>
 
-<svelte:head>
-  <title>About — Paarangat Jain</title>
-  <meta
-    name="description"
-    content="Learn more about Paarangat Jain, a Melbourne-based developer working across web, mobile and assistive technology."
-  />
-</svelte:head>
+<SeoHead
+  title="About — Paarangat Jain"
+  description="Learn more about Paarangat Jain, a Melbourne-based developer working across web, mobile and assistive technology."
+  path="/about"
+  jsonLd={aboutJsonLd}
+/>
 
 <section class="about about-page shell section" aria-labelledby="about-title">
   <h1 id="about-title" class="about-title">Code, people and useful problems.</h1>

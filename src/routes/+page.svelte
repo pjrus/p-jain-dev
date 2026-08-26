@@ -5,8 +5,38 @@
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
+  import SeoHead from '$lib/components/SeoHead.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { experience, projects, stack } from '$lib/data/content.js';
+  import { assetUrl, canonicalUrl } from '$lib/seo.js';
+
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Paarangat Jain',
+    url: canonicalUrl('/'),
+    image: assetUrl('/images/paarangat-jain.webp'),
+    jobTitle: 'Developer and accessibility advocate',
+    description:
+      'Melbourne-based developer building accessible, useful software across web, mobile and assistive technology.',
+    email: 'mailto:paarangatj@gmail.com',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Melbourne',
+      addressRegion: 'Victoria',
+      addressCountry: 'AU',
+    },
+    sameAs: [
+      'https://github.com/pjrus',
+      'https://www.linkedin.com/in/paarangat-jain-6aa1321ba/',
+    ],
+    knowsAbout: [
+      'Accessible web development',
+      'Mobile application development',
+      'Assistive technology',
+      'Full-stack software development',
+    ],
+  };
 
   const initiallyVisibleProjects = 3;
   let showAllProjects = $state(false);
@@ -76,9 +106,11 @@
   }
 </script>
 
-<svelte:head>
-  <title>Paarangat Jain — Developer &amp; accessibility advocate</title>
-</svelte:head>
+<SeoHead
+  title="Paarangat Jain — Developer & accessibility advocate"
+  description="Paarangat Jain is a Melbourne-based developer building accessible, useful software across web, mobile and assistive technology."
+  jsonLd={homeJsonLd}
+/>
 
 <section class="hero shell" id="top">
   <div class="hero-copy">

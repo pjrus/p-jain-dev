@@ -2,11 +2,15 @@
   import { base } from '$app/paths';
   import { page } from '$app/state';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
+  import SeoHead from '$lib/components/SeoHead.svelte';
 </script>
 
-<svelte:head>
-  <title>{page.status} — Paarangat Jain</title>
-</svelte:head>
+<SeoHead
+  title={`${page.status} — Paarangat Jain`}
+  description="The requested page could not be found."
+  path={page.url.pathname.startsWith(base) ? page.url.pathname.slice(base.length) || '/' : page.url.pathname}
+  noindex
+/>
 
 <section class="blog shell section">
   <div class="blog-empty">
