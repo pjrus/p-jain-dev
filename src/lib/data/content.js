@@ -80,6 +80,21 @@ export const projects = [
     tags: ['React Native', 'Expo', 'TypeScript', 'Local storage'],
     github: 'https://github.com/pjrus/pomo-app',
   },
+  {
+    title: 'Puzzie',
+    description:
+      'A local-first puzzle platform with daily challenges across word, number, logic and grid-based formats.',
+    problem:
+      'Quick puzzle experiences are often split across separate apps, making it difficult to explore different formats while keeping a single sense of progress.',
+    architecture:
+      'A Next.js and TypeScript application uses a strongly typed puzzle catalogue, reusable generators and renderers, with browser storage preserving scores, streaks and completed challenges.',
+    outcome:
+      'Brought 14 puzzle formats into one responsive experience with daily challenges, difficulty-aware scoring, hints and locally stored statistics.',
+    image: `${base}/images/puzzie.png`,
+    alt: 'Puzzie puzzle platform homepage with a featured daily challenge',
+    tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'Tailwind CSS'],
+    github: 'https://github.com/pjrus/puzzie',
+  },
 ];
 
 export const stack = [
