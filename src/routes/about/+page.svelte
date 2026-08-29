@@ -53,18 +53,3 @@
   </div>
 
 </section>
-
-<section class="about-skills stack shell" aria-label="Skills">
-  <SectionHeading title="Skills" />
-
-  <div class="stack-grid">
-    {#each stack as group}
-      <div class="stack-card">
-        <h3 class="stack-card-title">// {group.label}</h3>
-        <ul class="tag-list" aria-label={group.label}>
-          {#each group.items as item}<li>{item}</li>{/each}
-        </ul>
-      </div>
-    {/each}
-  </div>
-</section>
