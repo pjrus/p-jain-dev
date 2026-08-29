@@ -57,8 +57,21 @@
 
     function revealVisibleTargets() {
       const triggerLine = window.innerHeight * 0.88;
+      const projectsSection = document.getElementById('projects');
+      const projectsBounds = projectsSection?.getBoundingClientRect();
+      const projectsProgress = projectsBounds
+        ? (window.innerHeight - projectsBounds.top) / projectsBounds.height
+        : 0;
+      // Start the card cascade once the section has just entered the viewport.
+      const revealProjectCards = projectsProgress >= 0.12 && (projectsBounds?.bottom ?? -1) >= 0;
 
       for (const target of pendingTargets) {
+        if (target.getAttribute('data-reveal') === 'project-card' && revealProjectCards) {
+          target.classList.add('is-visible');
+          pendingTargets.delete(target);
+          continue;
+        }
+
         const bounds = target.getBoundingClientRect();
         if (bounds.top > triggerLine || bounds.bottom < 0) continue;
         target.classList.add('is-visible');
