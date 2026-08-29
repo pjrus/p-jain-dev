@@ -5,7 +5,7 @@
 }
 
 .projects .section-heading {
-  margin-bottom: clamp(1.25rem, 2vw, 2rem);
+  margin-bottom: var(--page-heading-gap);
 }
 
 @keyframes evidence-card-register {

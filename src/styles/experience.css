@@ -3,7 +3,7 @@
 }
 
 .experience-heading {
-  margin-bottom: var(--heading-space);
+  margin-bottom: var(--page-heading-gap);
 }
 
 /* Keep the rail and role content aligned beneath the heading. */
