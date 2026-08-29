@@ -12,7 +12,7 @@
   noindex
 />
 
-<section class="blog shell section">
+<section class="blog shell section page-section">
   <div class="blog-empty">
     <p class="blog-title"><span class="blog-title-marker">&gt;</span> {page.status}</p>
     <p>{page.error?.message ?? 'That page could not be found.'}</p>

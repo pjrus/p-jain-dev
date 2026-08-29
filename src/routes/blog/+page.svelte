@@ -27,7 +27,7 @@
   jsonLd={blogJsonLd}
 />
 
-<section class="blog shell section" id="blog">
+<section class="blog shell section page-section" id="blog">
   <SectionHeading
     title="Blog"
     summary="Notes on accessible software, assistive hardware and whatever I happen to be building."

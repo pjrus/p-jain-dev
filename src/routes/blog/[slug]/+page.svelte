@@ -49,7 +49,7 @@
   jsonLd={postJsonLd}
 />
 
-<article class="post shell section">
+<article class="post shell section page-section">
   <header class="post-header">
     <a class="text-link post-back" href={`${base}/blog`}><ArrowIcon direction="left" /> All posts</a>
     <p class="post-meta">
