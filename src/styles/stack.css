@@ -3,10 +3,6 @@
   border-top: 1px solid var(--line);
 }
 
-.stack .section-heading {
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
-}
-
 .stack-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));

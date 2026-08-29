@@ -13,7 +13,7 @@
 .contact-intro {
   display: grid;
   justify-items: center;
-  gap: 1.25rem;
+  gap: var(--page-heading-gap);
 }
 
 .contact-intro h2 {
@@ -31,7 +31,7 @@
 
 .contact-form {
   display: grid;
-  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  margin-top: var(--page-heading-gap);
   gap: 1.15rem;
   text-align: left;
 }

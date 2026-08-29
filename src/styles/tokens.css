@@ -48,8 +48,8 @@
   --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
   --page-top-space: clamp(3rem, 4vw, 4rem);
   --heading-space: clamp(2.25rem, 4vw, 3.75rem);
-  /* Page titles lead directly into their content. Hero sections keep their
-     own, more generous rhythm. */
+  /* Page and section titles lead directly into their content. Hero sections
+     keep their own, more generous rhythm. */
   --page-heading-gap: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
 
