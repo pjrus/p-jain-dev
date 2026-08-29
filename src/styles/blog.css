@@ -3,7 +3,7 @@
 }
 
 .blog .section-heading {
-  margin-bottom: clamp(2.5rem, 5vw, 4.25rem);
+  margin-bottom: var(--page-heading-gap);
 }
 
 .blog .section-heading-grid {
