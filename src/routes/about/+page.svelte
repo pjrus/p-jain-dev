@@ -27,7 +27,7 @@
   jsonLd={aboutJsonLd}
 />
 
-<section class="about about-page shell section" aria-labelledby="about-title">
+<section class="about about-page shell section page-section" aria-labelledby="about-title">
   <h1 id="about-title" class="about-title">Code, people and useful problems.</h1>
 
   <figure class="about-figure">
