@@ -3,33 +3,20 @@
 }
 
 .experience-heading {
-  display: flex;
-  align-items: center;
   margin-bottom: var(--heading-space);
-  gap: var(--exp-gap);
 }
 
-.experience-icon {
-  display: grid;
-  width: var(--exp-icon);
-  height: var(--exp-icon);
-  flex: 0 0 auto;
-  place-items: center;
-  background: var(--tint);
-  color: var(--primary);
-}
-
-/* Rail runs down the centre line of the heading icon. */
+/* Keep the rail and role content aligned beneath the heading. */
 .experience-list {
   position: relative;
-  margin-left: calc(var(--exp-icon) / 2 - 0.5px);
+  margin-left: calc(var(--exp-rail-offset) / 2 - 0.5px);
   border-left: 1px solid var(--line);
 }
 
 /* Item text lands on the same x as the heading text (icon + gap). */
 .experience-item {
   position: relative;
-  padding: 0 0 clamp(2rem, 3vw, 3rem) calc(var(--exp-icon) / 2 + var(--exp-gap) - 0.5px);
+  padding: 0 0 clamp(2rem, 3vw, 3rem) calc(var(--exp-rail-offset) / 2 + var(--exp-gap) - 0.5px);
 }
 
 .experience-item:last-child {
