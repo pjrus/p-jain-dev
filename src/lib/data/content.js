@@ -95,6 +95,38 @@ export const projects = [
     tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'Tailwind CSS'],
     github: 'https://github.com/pjrus/puzzie',
   },
+  {
+    title: 'Mazzie',
+    description:
+      'A daily equation puzzle where every guess must be mathematically valid and balance correctly.',
+    problem:
+      'Most Wordle-style puzzle games validate letter patterns, but do not need to enforce that each player attempt is logically or mathematically sound.',
+    architecture:
+      'A SvelteKit and TypeScript application uses a seeded equation generator, parser and validator to create consistent daily challenges, with local storage for progress, streaks and settings.',
+    outcome:
+      'A responsive puzzle experience with daily and practice modes, difficulty variants, shareable results and reliable equation validation.',
+    image: `${base}/images/mazzie.png`,
+    alt: 'Mazzie daily equation puzzle interface',
+    tags: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Vitest', 'Local-first'],
+    github: 'https://github.com/pjrus/mazzie',
+    visit: 'https://pjrus.github.io/mazzie/',
+  },
+  {
+    title: 'Braille Character Quiz Game',
+    description:
+      'An interactive learning game for practising Braille letters, numbers and symbols through timed challenges.',
+    problem:
+      'Braille learning tools need to make repeated practice approachable while supporting different experience levels and accessible ways of interacting.',
+    architecture:
+      'A statically exported Next.js and TypeScript application uses React state and typed local-storage helpers to manage questions, game sessions, preferences and persistent statistics.',
+    outcome:
+      'A responsive, keyboard-accessible quiz with configurable sessions, instant feedback, streak tracking, reference material and deployable static hosting.',
+    image: `${base}/images/braille-quiz-app.png`,
+    alt: 'Braille Character Quiz Game interface',
+    tags: ['Next.js', 'React', 'TypeScript', 'Accessibility', 'Local-first'],
+    github: 'https://github.com/pjrus/braille-quiz-game',
+    visit: 'https://pjrus.github.io/braille-quiz-game/',
+  },
 ];
 
 export const stack = [
