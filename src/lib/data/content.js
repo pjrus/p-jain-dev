@@ -94,6 +94,7 @@ export const projects = [
     alt: 'Puzzie puzzle platform homepage with a featured daily challenge',
     tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'Tailwind CSS'],
     github: 'https://github.com/pjrus/puzzie',
+    visit: 'https://pjrus.github.io/puzzie/',
   },
   {
     title: 'Mazzie',
