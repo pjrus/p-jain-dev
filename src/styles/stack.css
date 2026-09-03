@@ -10,7 +10,7 @@
 }
 
 .stack-card {
-  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  padding: var(--card-pad, clamp(1.4rem, 2.5vw, 1.85rem));
   border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -27,9 +27,9 @@
   border-bottom: 1px solid var(--line);
   color: var(--primary);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.4;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
