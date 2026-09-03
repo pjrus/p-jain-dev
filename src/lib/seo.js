@@ -15,11 +15,3 @@ export function canonicalUrl(path = '/') {
   const normalisedPath = path === '/' ? '' : `/${path.replace(/^\/+|\/+$/g, '')}`;
   return `${siteUrl}${normalisedPath}`;
 }
-
-/**
- * Converts a public asset path into an absolute URL for social previews.
- * @param {string} path
- */
-export function assetUrl(path = defaultImage) {
-  return canonicalUrl(path);
-}

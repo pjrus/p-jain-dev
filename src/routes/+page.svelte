@@ -8,14 +8,14 @@
   import SeoHead from '$lib/components/SeoHead.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { experience, projects, stack } from '$lib/data/content.js';
-  import { assetUrl, canonicalUrl } from '$lib/seo.js';
+  import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Paarangat Jain',
     url: canonicalUrl('/'),
-    image: assetUrl('/images/paarangat-jain.webp'),
+    image: canonicalUrl('/images/paarangat-jain.webp'),
     jobTitle: 'Developer and accessibility advocate',
     description:
       'Melbourne-based developer building accessible, useful software across web, mobile and assistive technology.',
@@ -45,55 +45,29 @@
   );
 
   onMount(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const revealTargets = [...document.querySelectorAll('[data-reveal]')];
-    if (revealTargets.length === 0) return;
+    const targets = document.querySelectorAll('[data-reveal]');
+    if (targets.length === 0) return;
 
     document.documentElement.classList.add('motion-reveals-ready');
 
-    const pendingTargets = new Set(revealTargets);
-
-    function revealVisibleTargets() {
-      const triggerLine = window.innerHeight * 0.88;
-      const projectsSection = document.getElementById('projects');
-      const projectsBounds = projectsSection?.getBoundingClientRect();
-      const projectsProgress = projectsBounds
-        ? (window.innerHeight - projectsBounds.top) / projectsBounds.height
-        : 0;
-      // Start the card cascade once the section has just entered the viewport.
-      const revealProjectCards = projectsProgress >= 0.12 && (projectsBounds?.bottom ?? -1) >= 0;
-
-      for (const target of pendingTargets) {
-        if (target.getAttribute('data-reveal') === 'project-card' && revealProjectCards) {
-          target.classList.add('is-visible');
-          pendingTargets.delete(target);
-          continue;
+    // Each surface registers once, a little before it reaches the bottom edge.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
+      },
+      { rootMargin: '0px 0px -12% 0px' },
+    );
 
-        const bounds = target.getBoundingClientRect();
-        if (bounds.top > triggerLine || bounds.bottom < 0) continue;
-        target.classList.add('is-visible');
-        pendingTargets.delete(target);
-      }
-
-      if (pendingTargets.size === 0) {
-        window.removeEventListener('scroll', revealVisibleTargets);
-        window.removeEventListener('resize', revealVisibleTargets);
-      }
-    }
-
-    const revealFrame = requestAnimationFrame(() => {
-      revealVisibleTargets();
-      window.addEventListener('scroll', revealVisibleTargets, { passive: true });
-      window.addEventListener('resize', revealVisibleTargets);
-    });
+    for (const target of targets) observer.observe(target);
 
     return () => {
-      cancelAnimationFrame(revealFrame);
-      window.removeEventListener('scroll', revealVisibleTargets);
-      window.removeEventListener('resize', revealVisibleTargets);
+      observer.disconnect();
       document.documentElement.classList.remove('motion-reveals-ready');
     };
   });

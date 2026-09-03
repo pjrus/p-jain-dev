@@ -1,9 +1,8 @@
 <script>
   import { base } from '$app/paths';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import SectionHeading from '$lib/components/SectionHeading.svelte';
   import { stack } from '$lib/data/content.js';
-  import { assetUrl, canonicalUrl } from '$lib/seo.js';
+  import { canonicalUrl } from '$lib/seo.js';
 
   const aboutDescription =
     'Meet Paarangat Jain, a Melbourne-based computer science student and accessibility-focused developer building practical web, mobile and assistive technology.';
@@ -18,7 +17,7 @@
       '@type': 'Person',
       name: 'Paarangat Jain',
       url: canonicalUrl('/'),
-      image: assetUrl('/images/paarangat-jain.webp'),
+      image: canonicalUrl('/images/paarangat-jain.webp'),
       jobTitle: 'Developer and accessibility advocate',
     },
   };

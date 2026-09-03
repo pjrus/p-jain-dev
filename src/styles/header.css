@@ -163,34 +163,66 @@
   transform: rotate(-45deg);
 }
 
-.menu-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 25;
-  background: color-mix(in srgb, var(--ink) 45%, transparent);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  /* .site-header disables pointer-events at the wrapper level; both
-     overlay layers sit outside .header-inner, so each re-enables it. */
-  pointer-events: auto;
-}
-
 .mobile-menu {
+  /* <dialog> supplies the focus trap, Escape-to-close and inert background;
+     these rules only undo its default centred box and paint the surface. */
   position: fixed;
-  z-index: 30;
   top: calc(var(--header-h) - 1.5rem);
   left: var(--gutter);
   right: var(--gutter);
+  bottom: auto;
+  width: auto;
+  max-width: none;
   max-height: calc(100vh - var(--header-h) - 1.5rem);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  margin: 0;
   padding: 1.75rem;
   border: 1px solid var(--line);
   background: var(--surface);
-  pointer-events: auto;
+  color: var(--ink);
   box-shadow: var(--shadow);
+  pointer-events: auto;
+}
+
+.mobile-menu[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+:root[data-theme='dark'] .mobile-menu::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* ::backdrop does not inherit page custom properties in every engine, so the
+   scrim carries literal colours. */
+.mobile-menu::backdrop {
+  background: rgba(24, 34, 56, 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu[open] {
+    animation: mobile-menu-open 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-menu[open]::backdrop {
+    animation: mobile-menu-backdrop 180ms ease;
+  }
+}
+
+@keyframes mobile-menu-open {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes mobile-menu-backdrop {
+  from {
+    opacity: 0;
+  }
 }
 
 .mobile-menu-nav {
@@ -233,7 +265,7 @@
 
 @media (max-width: 900px) {
   .primary-nav,
-  .header-actions .header-social {
+  .header-actions .header-social:not(.theme-toggle) {
     display: none;
   }
 

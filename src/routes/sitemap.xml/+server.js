@@ -5,23 +5,13 @@ export const prerender = true;
 
 const staticRoutes = ['/', '/about', '/blog'];
 
-/** @param {string} value */
-function escapeXml(value) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&apos;');
-}
-
 export function GET() {
   const routes = [
     ...staticRoutes,
     ...posts.filter((post) => !post.draft).map((post) => `/blog/${post.slug}`),
   ];
   const urls = routes
-    .map((route) => `  <url><loc>${escapeXml(canonicalUrl(route))}</loc></url>`)
+    .map((route) => `  <url><loc>${canonicalUrl(route).replaceAll('&', '&amp;')}</loc></url>`)
     .join('\n');
 
   return new Response(
