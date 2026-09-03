@@ -2,6 +2,8 @@
 
 A responsive personal portfolio showcasing my work across full-stack web, mobile and assistive technology.
 
+![Portfolio home page](images/screenshot-home.png)
+
 ## Overview
 
 The site presents selected projects, technical skills, professional experience, blog posts and contact details. It is built with SvelteKit and fully prerendered as a static site, with no server runtime or analytics.
