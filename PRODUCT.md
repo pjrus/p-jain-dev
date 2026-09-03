@@ -35,7 +35,7 @@ The combination — hardware-adjacent assistive technology, real production empl
 
 - Visitors reach the site from LinkedIn, GitHub, or a job application; there is no organic search discovery to design for.
 - The dominant visit is short and often mobile. Depth must be available but never a prerequisite for the core impression.
-- Recruiters frequently want the résumé as a file. `public/Paarangat-Jain-Resume.pdf` is linked directly from the hero and must stay easy to reach.
+- Recruiters frequently want the résumé as a file. `static/Paarangat-Jain-Resume.pdf` is linked directly from the hero and must stay easy to reach.
 - Outbound links to live deployments and GitHub repositories are load-bearing evidence; a broken or dead project link costs more credibility than a missing one.
 - The site ships as a static build (Vite) with no backend and no analytics or CMS.
 
@@ -49,7 +49,7 @@ The combination — hardware-adjacent assistive technology, real production empl
 
 **Explicitly not planned:** per-project case-study pages and a revived algorithm-visualiser playground were considered and are not on the roadmap. Do not build toward them.
 
-**Legacy:** the static HTML site (`index.html` at root is now the Vite entry, but `about.html`, `portfolio.html`, `playground.html`, `template.html`, `about.html.bak`, `mobile-menu.js`, `theme-manager.js`, `styles/`, `styles.css`, `.htaccess`) is **not deployed** and is kept as reference for content and markup not yet ported. Do not treat it as design authority; do not delete it without asking.
+**Legacy:** the static HTML site (`index.html` at root is now the Vite entry, but `about.html`, `portfolio.html`, `playground.html`, `template.html`, `about.html.bak`, `mobile-menu.js`, `styles/`, `styles.css`) is **not deployed** and is kept as reference for content and markup not yet ported. Do not treat it as design authority; do not delete it without asking.
 
 **Voice and locale:** Australian English (`lang="en-AU"`), British spellings in existing copy ("organisation", "personalised"). First person, plain, understated — the copy claims less than the work supports and should keep doing so.
 
@@ -64,9 +64,9 @@ The combination — hardware-adjacent assistive technology, real production empl
 ## Evidence on Hand
 
 **Real and usable:**
-- Portrait: `public/images/paarangat-jain.webp`
-- Project screenshots: `public/images/` — `ressie.png`, `skill-issue.png`, `trackie-placeholder.svg`, `braille-quiz-app.png`, `tactile-display-project.png`, `pomo-app.jpeg`
-- Résumé PDF: `public/Paarangat-Jain-Resume.pdf`
+- Portrait: `static/images/paarangat-jain.webp`
+- Project screenshots: `static/images/` — `ressie.png`, `skill-issue.png`, `trackie.png`, `puzzie.png`, `mazzie.png`, `braille-quiz-app.png`, `pomo-app.jpeg`, `portfolio.png`
+- Résumé PDF: `static/Paarangat-Jain-Resume.pdf`
 - Live deployments: Ressie (ressie.onrender.com) and Skilliton (Firebase-hosted)
 - Public source on GitHub for Ressie, Skilliton, Trackie, and the Pomodoro timer
 - Verifiable affiliations: PlasmIT Vector, Ocean Connect, Monash Assistive Technology Team; UniHack 2026 participation

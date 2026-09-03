@@ -75,7 +75,6 @@ src/
 └── app.html               HTML document template
 static/
 ├── images/                Project screenshots and portrait
-├── .htaccess              Apache clean-URL and error rules
 └── Paarangat-Jain-Resume.pdf
 svelte.config.js           SvelteKit, mdsvex and static adapter configuration
 vite.config.js             Vite configuration
@@ -111,7 +110,7 @@ Create the static production build:
 npm run build
 ```
 
-Deploy the generated `build/` directory to any static hosting provider. All routes are prerendered, and `404.html` is generated as the fallback page. The included `static/.htaccess` provides clean URLs when hosting with Apache.
+Deploy the generated `build/` directory to any static hosting provider. All routes are prerendered, and `404.html` is generated as the fallback page.
 
 ## Accessibility
 
