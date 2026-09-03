@@ -53,6 +53,10 @@
   --accent-strong: #ffffff;
 }
 
+.hero-copy h1 {
+  font-size: var(--h1-size, clamp(2.6rem, 4.3vw, 4.4rem));
+}
+
 .hero-role {
   margin-top: 1.1rem;
   color: var(--ink);

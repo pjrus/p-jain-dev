@@ -8,6 +8,10 @@
   gap: 1.1rem;
 }
 
+.section-heading h1 {
+  font-size: var(--h1-size, clamp(2.6rem, 4.3vw, 4.4rem));
+}
+
 .section-heading-grid > p {
   max-width: var(--measure);
   color: var(--muted);

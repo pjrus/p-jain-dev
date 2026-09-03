@@ -71,7 +71,7 @@ h3 {
 
 h1 {
   max-width: var(--h1-measure);
-  font-size: clamp(2.6rem, 4.3vw, 4.4rem);
+  font-size: var(--h1-size, clamp(2.6rem, 4.3vw, 4.4rem));
   font-weight: 700;
 }
 
@@ -144,7 +144,7 @@ em {
 @media (max-width: 700px) {
   h1 {
     max-width: none;
-    font-size: clamp(2.4rem, 11vw, 3.2rem);
+    font-size: var(--h1-size, clamp(2.4rem, 11vw, 3.2rem));
   }
 
   h2 {
