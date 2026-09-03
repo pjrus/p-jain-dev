@@ -72,6 +72,7 @@
       >
         <IconLinkedin size={20} />
       </a>
+      <!-- Temporarily hidden
       <button
         class="header-social theme-toggle"
         type="button"
@@ -81,6 +82,7 @@
       >
         <ThemeIcon dark={isDark} />
       </button>
+      -->
       <button
         id="menu-toggle"
         class="menu-toggle"
