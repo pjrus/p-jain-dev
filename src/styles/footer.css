@@ -14,7 +14,6 @@
 
 @media (max-width: 700px) {
   .footer-inner {
-    justify-content: center;
     min-height: 0;
     padding-block: 2.5rem;
   }

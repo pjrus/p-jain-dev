@@ -91,20 +91,12 @@
   background: var(--surface);
 }
 
+/* .button.button-primary carries the box, fill and shadow; this adds only the
+   form-specific height and the top margin that separates it from the fields. */
 .contact-submit {
-  display: inline-flex;
   min-height: 3.6rem;
-  align-items: center;
-  justify-content: center;
-  gap: var(--control-gap);
   margin-top: 0.35rem;
-  border: 1px solid var(--primary);
-  border-radius: 0;
-  padding: 0.9rem 1.25rem;
-  background: var(--primary);
-  box-shadow: var(--shadow);
-  color: var(--primary-ink);
-  font-weight: 600;
+  border-color: var(--primary);
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }

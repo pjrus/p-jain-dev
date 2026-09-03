@@ -52,7 +52,6 @@ src/
     └── sitemap.xml/         Generated static route list
 
 static/
-├── .htaccess                Apache clean-URL and error fallback rules
 ├── images/                  Public project and personal images
 └── Paarangat-Jain-Resume.pdf
 ```
@@ -145,8 +144,7 @@ the exception.
 
 Run `npm run build` to create the `build/` directory, then upload that
 directory to a static host. For GitHub Pages, configure `BASE_PATH` to the
-repository path before building. Apache deployments can use the included
-`static/.htaccess` for clean URLs and the generated 404 fallback.
+repository path before building.
 
 ## Extension guide
 

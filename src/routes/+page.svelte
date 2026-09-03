@@ -146,7 +146,7 @@
     <div class="project-actions">
       {#if projects.length > initiallyVisibleProjects}
         <button
-          class="project-toggle"
+          class="button project-toggle"
           type="button"
           aria-controls="project-grid"
           aria-expanded={showAllProjects}
@@ -236,7 +236,7 @@
         <textarea id="contact-message" name="message" rows="4" placeholder="What would you like to talk about?" required></textarea>
       </div>
 
-      <button class="contact-submit" type="submit">
+      <button class="button button-primary contact-submit" type="submit">
         Send message
         <ArrowIcon />
       </button>

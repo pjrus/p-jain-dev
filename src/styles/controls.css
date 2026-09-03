@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--control-gap);
+  border-radius: 0;
   font-weight: 600;
   text-decoration: none;
 }
