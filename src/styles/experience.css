@@ -10,7 +10,16 @@
 .experience-list {
   position: relative;
   margin-left: calc(var(--exp-rail-offset) / 2 - 0.5px);
-  border-left: 1px solid var(--line);
+}
+
+.experience-list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -0.5px;
+  width: 1px;
+  background: var(--line);
 }
 
 /* Item text lands on the same x as the heading text (icon + gap). */

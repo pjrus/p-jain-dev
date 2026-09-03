@@ -12,7 +12,7 @@
   }
 
   to {
-    clip-path: inset(0);
+    clip-path: inset(-2rem);
     opacity: 1;
     transform: translate(0, 0);
   }
@@ -32,11 +32,20 @@
 }
 
 :root.motion-reveals-ready [data-reveal='experience-rail'] {
-  transform: translateY(-0.75rem);
+  clip-path: none;
+  opacity: 1;
+  transform: none;
+}
+
+:root.motion-reveals-ready [data-reveal='experience-rail']::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root.motion-reveals-ready [data-reveal='experience-item'] {
-  clip-path: inset(0 100% 0 0);
+  clip-path: inset(-1rem 100% -1rem -1rem);
+  opacity: 0;
   transform: translateX(-0.75rem);
 }
 
@@ -69,12 +78,15 @@
 }
 
 :root.motion-reveals-ready [data-reveal='experience-rail'].is-visible {
-  --reveal-y: -0.75rem;
-  animation-duration: 620ms;
+  animation: none;
+}
+
+:root.motion-reveals-ready [data-reveal='experience-rail'].is-visible::before {
+  transform: scaleY(1);
 }
 
 :root.motion-reveals-ready [data-reveal='experience-item'].is-visible {
-  --reveal-clip: inset(0 100% 0 0);
+  --reveal-clip: inset(-1rem 100% -1rem -1rem);
   --reveal-x: -0.75rem;
   animation-duration: 440ms;
 }
