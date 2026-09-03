@@ -1,5 +1,5 @@
 <script>
-  import { assetUrl, canonicalUrl, defaultImage, siteName } from '$lib/seo.js';
+  import { canonicalUrl, defaultImage, siteName } from '$lib/seo.js';
 
   let {
     title,
@@ -16,7 +16,7 @@
   } = $props();
 
   const url = $derived(canonicalUrl(path));
-  const imageUrl = $derived(assetUrl(image));
+  const imageUrl = $derived(canonicalUrl(image));
   // Prevent a user-controlled title or summary from closing the JSON-LD block.
   const jsonLdText = $derived(
     jsonLd ? JSON.stringify(jsonLd).replaceAll('<', '\\u003c') : '',

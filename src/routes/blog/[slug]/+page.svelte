@@ -3,7 +3,7 @@
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import { formatDate } from '$lib/posts.js';
-  import { assetUrl, canonicalUrl } from '$lib/seo.js';
+  import { canonicalUrl } from '$lib/seo.js';
 
   /** @type {{ data: import('./$types').PageData }} */
   let { data } = $props();
@@ -18,7 +18,7 @@
     datePublished: data.post.date,
     dateModified: data.post.date,
     url: postUrl,
-    image: assetUrl('/images/portfolio.png'),
+    image: canonicalUrl('/images/portfolio.png'),
     author: {
       '@type': 'Person',
       name: 'Paarangat Jain',
