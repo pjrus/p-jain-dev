@@ -70,6 +70,7 @@
   --measure-lg: 62rem;
   --h1-measure: 14ch;
   --h2-measure: 13ch;
+  --h1-size: clamp(2.6rem, 4.3vw, 4.4rem);
 
   /* Accent rule used by hero facts and project detail blocks -------------- */
   --accent-bar: 2px;
@@ -115,6 +116,7 @@
   :root {
     --section-space: 3.25rem;
     --heading-space: clamp(1.75rem, 7vw, 2.75rem);
+    --h1-size: clamp(2.4rem, 11vw, 3.2rem);
     --exp-rail-offset: 2.5rem;
     --exp-gap: 0.75rem;
   }
