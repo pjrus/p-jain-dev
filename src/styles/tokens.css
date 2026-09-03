@@ -54,9 +54,9 @@
   --stack-space: clamp(2.5rem, 4vw, 3rem);
 
   /* Surfaces ------------------------------------------------------------- */
-  --card-pad: clamp(1.5rem, 3vw, 2.25rem);
+  --card-pad: clamp(1.4rem, 2.5vw, 1.85rem);
   --card-pad-sm: 1.15rem;
-  --card-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --card-gap: clamp(1.25rem, 2.5vw, 1.75rem);
 
   /* Controls ------------------------------------------------------------- */
   --control-h: 3.25rem;
@@ -71,6 +71,8 @@
   --h1-measure: 14ch;
   --h2-measure: 13ch;
   --h1-size: clamp(2.6rem, 4.3vw, 4.4rem);
+  --h2-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  --h3-size: clamp(1.3rem, 1.8vw, 1.65rem);
 
   /* Accent rule used by hero facts and project detail blocks -------------- */
   --accent-bar: 2px;
