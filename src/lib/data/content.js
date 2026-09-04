@@ -128,6 +128,21 @@ export const projects = [
     github: 'https://github.com/pjrus/braille-quiz-game',
     visit: 'https://pjrus.github.io/braille-quiz-game/',
   },
+  {
+    title: 'Inkboard',
+    description:
+      'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
+    problem:
+      'Digital note-taking tools often require an account or server round-trip, and rarely combine freehand drawing, typed text and PDF annotation in one offline-first canvas.',
+    architecture:
+      'A TypeScript and Vite application stores boards in IndexedDB behind a CRDT, with focal-point zoom, pressure-aware drawing and offline font and PDF export.',
+    outcome:
+      'An infinite, multi-board canvas with pen and text tools, object eraser, CRDT-aware undo/redo and autosave, requiring no account or server.',
+    image: `${base}/images/inkboard.png`,
+    alt: 'Inkboard infinite canvas application',
+    tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
+    github: 'https://github.com/pjrus/inkboard',
+  },
 ];
 
 export const stack = [
