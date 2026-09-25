@@ -114,6 +114,8 @@
   --exp-gap: 1.25rem;
   --exp-role: clamp(1.2rem, 2.2vw, 1.65rem);
   --exp-marker: 0.85rem;
+  /* One gap between role, organisation, location and summary. */
+  --exp-stack-gap: 0.5rem;
 }
 
 /* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
