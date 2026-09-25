@@ -1,22 +1,20 @@
 <script>
-  import { canonicalUrl, defaultImage, siteName } from '$lib/seo.js';
+  import { canonicalUrl, siteName } from '$lib/seo.js';
 
   let {
     title,
     description,
     path = '/',
     type = 'website',
-    image = defaultImage,
-    imageAlt = 'Paarangat Jain portfolio website',
     publishedTime = '',
-    modifiedTime = '',
     tags = [],
     noindex = false,
     jsonLd = null,
   } = $props();
 
+  const imageUrl = canonicalUrl('/images/portfolio.png');
+  const imageAlt = 'Paarangat Jain portfolio website';
   const url = $derived(canonicalUrl(path));
-  const imageUrl = $derived(canonicalUrl(image));
   // Prevent a user-controlled title or summary from closing the JSON-LD block.
   const jsonLdText = $derived(
     jsonLd ? JSON.stringify(jsonLd).replaceAll('<', '\\u003c') : '',
@@ -47,7 +45,6 @@
   {#if noindex}<meta name="robots" content="noindex, nofollow" />{/if}
   {#if type === 'article'}
     <meta property="article:published_time" content={publishedTime} />
-    {#if modifiedTime}<meta property="article:modified_time" content={modifiedTime} />{/if}
     {#each tags as tag}<meta property="article:tag" content={tag} />{/each}
   {/if}
 

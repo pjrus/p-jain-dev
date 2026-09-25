@@ -132,13 +132,11 @@
 
     <div class="project-grid" id="project-grid">
       {#each visibleProjects as project, index}
+        {@const extra = index >= initiallyVisibleProjects}
         <ProjectCard
           {project}
-          reveal={showAllProjects && index >= initiallyVisibleProjects}
-          revealDelay={showAllProjects && index >= initiallyVisibleProjects
-            ? Math.min(index - initiallyVisibleProjects, 2) * 65
-            : Math.min(index, 2) * 65}
-          revealOnScroll={index < initiallyVisibleProjects}
+          {extra}
+          revealDelay={Math.min(extra ? index - initiallyVisibleProjects : index, 2) * 65}
         />
       {/each}
     </div>

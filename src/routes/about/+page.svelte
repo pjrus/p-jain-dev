@@ -1,7 +1,6 @@
 <script>
   import { base } from '$app/paths';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import { stack } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const aboutDescription =
