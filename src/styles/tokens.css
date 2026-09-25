@@ -153,12 +153,13 @@
   /* Signal blue splits in two here. Lightening the cobalt far enough to read
      as text on black drains its chroma into periwinkle, and no single blue
      carries both a white label and 4.5:1 text on these surfaces. So:
-     - fill: the light-mode cobalt, unchanged. White labels clear 5.7:1 on
-       it, and thin rails and markers still hold 3:1 against the canvas.
+     - fill: the brand hue (oklch h 265) lifted brighter and more saturated
+       so it holds its own on black. White labels clear 4.9:1, and thin rails
+       and markers sit near 4:1 against the canvas.
      - text: lightened only as far as AA needs and turned a few degrees
        toward azure, where sRGB keeps more chroma, so it stays a vivid blue
        instead of going lavender (6.1:1 on cards, 6.6:1 on the canvas). */
-  --primary: #315ed6;
+  --primary: #3667ed;
   --primary-ink: #ffffff;
   --primary-strong: #5397fc;
   /* Pinned to the brand cobalt so project-card actions stay put even if the
