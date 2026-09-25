@@ -71,7 +71,7 @@
   max-width: var(--measure);
   margin-top: 1.5rem;
   color: var(--ink);
-  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  font-size: var(--text-desc);
   line-height: 1.55;
 }
 

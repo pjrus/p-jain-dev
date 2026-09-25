@@ -100,7 +100,7 @@
   max-width: var(--measure-lg);
   margin-top: 0.85rem;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: var(--text-desc);
   line-height: 1.75;
 }
 

@@ -31,7 +31,7 @@
   margin-top: 1.1rem;
   max-width: var(--post-measure);
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: var(--text-desc);
 }
 
 .post-lede + .tag-list {
@@ -47,7 +47,7 @@
   max-width: var(--post-measure);
   margin-top: var(--stack-space);
   margin-inline: auto;
-  font-size: 1.1rem;
+  font-size: var(--text-desc);
   line-height: 1.7;
 }
 
