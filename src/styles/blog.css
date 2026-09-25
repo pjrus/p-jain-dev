@@ -34,7 +34,7 @@
 }
 
 .blog-title-marker {
-  color: var(--primary);
+  color: var(--primary-strong);
 }
 
 /* Post index -------------------------------------------------------------
@@ -109,11 +109,11 @@
 }
 
 .post-item-title a:hover {
-  color: var(--primary);
+  color: var(--primary-strong);
 }
 
 .post-marker {
-  color: var(--primary);
+  color: var(--primary-strong);
 }
 
 .post-summary {
@@ -148,7 +148,7 @@
 }
 
 .post-thumb-placeholder {
-  color: var(--primary);
+  color: var(--primary-strong);
   font-family: var(--font-mono);
   font-size: var(--text-entry-title);
   font-weight: 700;

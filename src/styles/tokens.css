@@ -9,6 +9,13 @@
   --muted: #182238;
   --primary: #315ed6;
   --primary-ink: #ffffff;
+  /* Signal blue set as text. Fills and text want different blues on a dark
+     canvas (see the dark theme), so they are separate roles; on this light
+     canvas the one cobalt clears 5.7:1 and serves both. */
+  --primary-strong: #315ed6;
+  /* Fill for the project cards' primary link. Follows --primary in light
+     mode; dark mode keeps the brand cobalt here (see the dark theme). */
+  --card-primary: var(--primary);
   --accent: #ed6a4b;
 
   /* The accent at a lightness that clears 4.5:1 on white and on the canvas.
@@ -111,6 +118,7 @@
   /* Accent rule used by hero facts and project detail blocks -------------- */
   --accent-bar: 2px;
   --accent-bar-gap: 1rem;
+  --accent-bar-color: var(--accent);
 
   /* Experience timeline geometry ------------------------------------------ */
   --exp-rail-offset: 4.25rem;
@@ -123,27 +131,52 @@
 
 /* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
    surface lightness rather than by tinting the greys toward the brand hue,
-   so blue and coral only ever appear as action, state or emphasis. */
+   so blue and coral only ever appear as action, state or emphasis (the tint
+   chip keeps its trace of blue because it is a state fill in both themes).
+   Components read roles only; nothing below the token layer names a colour. */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  /* Elevation ladder: canvas -> card -> chip, each step readable on the last. */
-  --background: #161616;
-  --surface: #151517;
-  --tint: #202024;
+  /* Elevation ladder: canvas -> card -> chip, each step lighter than the last
+     so cards lift off the page without leaning on the shadow. */
+  --background: #0f0f10;
+  --surface: #18181b;
+  /* The light tint is the signal blue at a whisper; this keeps that
+     relationship, so hover fills and chips still belong to the blue. */
+  --tint: #232b3a;
 
+  /* Text: >= 15:1 for ink and >= 6.5:1 for muted on every surface above. */
   --ink: #ffffff;
   --nav-ink: #ffffff;
-  --muted: #a5a5a7;
-  --primary: #7ba2ff;
-  --primary-ink: #0a0a0a;
+  --muted: #b0b0b5;
+
+  /* Signal blue splits in two here. Lightening the cobalt far enough to read
+     as text on black drains its chroma into periwinkle, and no single blue
+     carries both a white label and 4.5:1 text on these surfaces. So:
+     - fill: the light-mode cobalt, unchanged. White labels clear 5.7:1 on
+       it, and thin rails and markers still hold 3:1 against the canvas.
+     - text: lightened only as far as AA needs and turned a few degrees
+       toward azure, where sRGB keeps more chroma, so it stays a vivid blue
+       instead of going lavender (6.1:1 on cards, 6.6:1 on the canvas). */
+  --primary: #315ed6;
+  --primary-ink: #ffffff;
+  --primary-strong: #5397fc;
+  /* Pinned to the brand cobalt so project-card actions stay put even if the
+     dark fill above is retuned; white labels clear 5.7:1 on it. */
+  --card-primary: #315ed6;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;
 
-  --line: #34343a;
-  --line-strong: #6a6a6d;
-  --header-surface: #151517;
+  /* Coral lifted for a black canvas goes salmon, and beside the cobalt button
+     and portrait ring it reads as a third, unrelated colour. The evidence
+     rail joins the blue instead, as the blockquote rail already does. */
+  --accent-bar-color: var(--primary);
+
+  --line: #2e2e34;
+  /* 3:1 against the canvas and cards, for control boundaries. */
+  --line-strong: #6e6e74;
+  --header-surface: #18181b;
 
   --frame: #000000;
 

@@ -22,13 +22,6 @@
   box-shadow: var(--shadow);
 }
 
-/* Dark mode gives the primary hero action a stronger blue treatment. */
-:root[data-theme='dark'] .button-primary {
-  border-color: #3b83f6;
-  background: #3b83f6;
-  color: #ffffff;
-}
-
 /* Matches button height so both align in a row, while the rule stays
    tucked under the label instead of at the bottom of the hit area. */
 .text-link {
@@ -50,5 +43,5 @@
 
 .text-link:hover,
 .project-links a:hover {
-  color: var(--primary);
+  color: var(--primary-strong);
 }

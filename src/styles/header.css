@@ -190,16 +190,16 @@
   gap: 2rem;
 }
 
-:root[data-theme='dark'] .mobile-menu::backdrop {
-  background: rgba(0, 0, 0, 0.65);
-}
-
 /* ::backdrop does not inherit page custom properties in every engine, so the
    scrim carries literal colours. */
 .mobile-menu::backdrop {
   background: rgba(24, 34, 56, 0.45);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+}
+
+:root[data-theme='dark'] .mobile-menu::backdrop {
+  background: rgba(0, 0, 0, 0.65);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -249,7 +249,7 @@
 }
 
 .mobile-menu-nav a[aria-current='page'] {
-  color: var(--primary);
+  color: var(--primary-strong);
 }
 
 .mobile-menu-foot {

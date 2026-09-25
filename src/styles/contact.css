@@ -104,17 +104,6 @@
   color: var(--background);
 }
 
-:root[data-theme='dark'] .contact-submit {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--primary-ink);
-}
-
-:root[data-theme='dark'] .contact-submit:hover {
-  border-color: var(--primary);
-  background: var(--primary);
-}
-
 .contact-form-note {
   color: var(--muted);
   font-size: 0.78rem;
@@ -148,7 +137,7 @@
 }
 
 .contact-links a:hover {
-  color: var(--primary);
+  color: var(--primary-strong);
   text-decoration-color: currentColor;
 }
 

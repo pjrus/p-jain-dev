@@ -7,6 +7,7 @@ colors:
   ink: "#182238"
   muted: "#182238"
   signal-blue: "#315ed6"
+  signal-blue-strong: "#315ed6"
   primary-ink: "#ffffff"
   flare-coral: "#ed6a4b"
   flare-coral-strong: "#d13813"
@@ -141,7 +142,7 @@ The system is built once in light and dark, sharing every structural token (spac
 - Monospace (IBM Plex Mono) reserved for metadata: eyebrows, kickers, tags, timestamps, periods — always uppercase, always tracked wide.
 - One ambient shadow token does all elevation work; there is no multi-level shadow scale.
 - Two accent colours with distinct jobs: signal blue for interaction and structure, flare coral for alert-grade emphasis and status.
-- A visible accent rail (2px border) marks "this is evidence" — hero facts, project detail blocks, alternating project cards.
+- A visible accent rail (2px border) marks "this is evidence" — hero facts, project detail blocks, alternating project cards. Its colour is `--accent-bar-color`: coral in light mode, signal blue in dark mode, where lifted coral turns salmon beside the cobalt button and portrait ring.
 
 ## Colors
 
@@ -149,6 +150,8 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 
 ### Primary
 - **Signal Blue** (`#315ed6`): the system's one interactive colour — primary buttons, links, the contact panel, the experience-timeline rail and marker, emphasised words inside headings (`em`). If it's clickable or marks "you are here," it's this blue.
+
+**The Two-Blue Rule.** Signal blue has two roles: `--primary` for fills and graphics (button backgrounds, markers, rails, the portrait ring, selection) and `--primary-strong` for blue text (links, hover labels, stack titles, organisations, code keywords). In light mode both are `#315ed6`. In dark mode they split, because lightening the cobalt enough to read as text on black drains it into periwinkle: the fill keeps the light-mode cobalt `#315ed6` unchanged (white labels 5.7:1, thin rails and markers above 3:1 against the canvas) while thin rails and markers keep 3:1 against the canvas, and the text blue is `#5397fc`, lifted only as far as AA needs and turned slightly toward azure to keep its chroma (6.1:1 on cards). Never set blue text with `--primary`.
 
 ### Secondary
 - **Flare Coral** (`#ed6a4b`) and its text-safe deepening **Flare Coral Strong** (`#d13813`): an alert/status accent, never used for primary actions. Plain coral appears only in graphics-scale contexts (the hero status dot) where its lighter, warmer value doesn't carry a text-contrast obligation; Flare Coral Strong is the version used for small text and focus rings, because it clears 4.5:1 on both the canvas and white surfaces. **The Two-Coral Rule.** Never use plain `--accent` for text or a focus ring — use `--accent-strong` there; plain `--accent` is reserved for shapes large enough to not need the extra contrast margin.
@@ -158,7 +161,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 - **Muted** (`#182238` in light mode): secondary text uses the same ink colour as primary copy, with hierarchy carried by size, weight and spacing rather than grey. Dark mode retains a softer secondary value for legibility against the near-black canvas.
 - **Background** (`#fafbfe`): the page canvas, a soft near-white rather than pure white.
 - **Surface** (`#ffffff`): cards and raised panels, distinguished from the canvas by being genuinely whiter.
-- **Tint** (`#e5edfb`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
+- **Tint** (`#e5edfb`; dark `#232b3a`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
 - **Line** (`#d9e0ea`): hairline dividers and card borders — the resting border colour everywhere except the header cluster, whose boxes sit at full `--ink`.
 
 ### Named Rules

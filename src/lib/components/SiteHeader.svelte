@@ -9,24 +9,41 @@
   import IconUser from './IconUser.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
 
+  const THEME_KEY = 'portfolio-theme';
+
   let isDark = $state(false);
   let isMenuOpen = $state(false);
   /** @type {HTMLDialogElement | undefined} */
   let menuEl = $state();
 
+  /** @param {'dark' | 'light'} theme */
+  function applyTheme(theme) {
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    isDark = theme === 'dark';
+    // Browser chrome follows the canvas token rather than a second copy of it.
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', getComputedStyle(root).getPropertyValue('--background').trim());
+  }
+
   onMount(() => {
-    // The inline script in app.html has already applied the saved theme before
-    // first paint; this only syncs the toggle's state with what is on screen.
-    isDark = document.documentElement.dataset.theme === 'dark';
+    // The inline script in app.html has already applied the theme before first
+    // paint; this syncs the toggle and browser chrome with what is on screen.
+    applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
   });
 
   // A tap on a menu link shouldn't leave the full-screen menu open behind the new view.
   afterNavigate(closeMenu);
 
   function toggleTheme() {
-    isDark = !isDark;
-    localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
-    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    const theme = isDark ? 'light' : 'dark';
+    applyTheme(theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // Storage blocked: the choice still holds for this page view.
+    }
   }
 
   function openMenu() {
@@ -72,7 +89,6 @@
       >
         <IconLinkedin size={20} />
       </a>
-      <!-- Temporarily hidden
       <button
         class="header-social theme-toggle"
         type="button"
@@ -82,7 +98,6 @@
       >
         <ThemeIcon dark={isDark} />
       </button>
-      -->
       <button
         id="menu-toggle"
         class="menu-toggle"
