@@ -71,16 +71,6 @@ export const projects = [
     visit: 'https://pjrus.github.io/mazzie/',
   },
   {
-    title: 'Braille Character Quiz Game',
-    description:
-      'An interactive learning game for practising Braille letters, numbers and symbols through timed challenges.',
-    image: `${base}/images/braille-quiz-app.png`,
-    alt: 'Braille Character Quiz Game interface',
-    tags: ['Next.js', 'React', 'TypeScript', 'Accessibility', 'Local-first'],
-    github: 'https://github.com/pjrus/braille-quiz-game',
-    visit: 'https://pjrus.github.io/braille-quiz-game/',
-  },
-  {
     title: 'Inkboard',
     description:
       'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
