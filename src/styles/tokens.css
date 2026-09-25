@@ -69,8 +69,10 @@
      actually sees between two of them is twice this value. Read it as a
      half-interval when tuning. */
   --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
-  /* Tighter home sections that follow a bordered neighbour. */
+  /* Tighter rhythm for the card-grid home sections (projects, stack). */
   --section-space-compact: clamp(3rem, 4vw, 4rem);
+  /* Header to the first line of a non-home page. Its own role, so it keeps
+     its 3rem floor on phones rather than following --section-space. */
   --page-top-space: clamp(3rem, 4vw, 4rem);
   /* Page and section titles lead directly into their content. Hero sections
      keep their own, more generous rhythm. */
