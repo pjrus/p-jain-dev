@@ -4,10 +4,6 @@
   border-top: 1px solid var(--line);
 }
 
-.projects .section-heading {
-  margin-bottom: var(--page-heading-gap);
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .project-card--revealed {
     --reveal-y: -0.6rem;
@@ -19,7 +15,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(2, auto);
-  gap: var(--card-gap, clamp(1.25rem, 2.5vw, 1.75rem));
+  gap: var(--card-gap);
 }
 
 .project-card {
@@ -46,7 +42,7 @@
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
-  padding: var(--card-pad, clamp(1.4rem, 2.5vw, 1.85rem));
+  padding: var(--card-pad);
   gap: 1.5rem;
 }
 
@@ -74,7 +70,7 @@
 }
 
 .project-description {
-  margin-top: 0.85rem;
+  margin-top: var(--summary-gap);
   max-width: var(--measure);
   color: var(--muted);
   font-size: var(--text-desc);
@@ -152,7 +148,7 @@
   display: grid;
   grid-template-columns: 1fr;
   flex: 1;
-  padding: 0 var(--card-pad, clamp(1.4rem, 2.5vw, 1.85rem)) var(--card-pad, clamp(1.4rem, 2.5vw, 1.85rem));
+  padding: 0 var(--card-pad) var(--card-pad);
   gap: 1.75rem;
 }
 
@@ -161,8 +157,8 @@
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-label);
   text-transform: uppercase;
 }
 

@@ -17,7 +17,7 @@
   gap: var(--control-gap);
   margin-bottom: 1.25rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-label-md);
   text-transform: uppercase;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .post-lede {
-  margin-top: 1.1rem;
+  margin-top: var(--lede-gap);
   max-width: var(--post-measure);
   color: var(--muted);
   font-size: var(--text-desc);
@@ -48,7 +48,7 @@
   margin-top: var(--stack-space);
   margin-inline: auto;
   font-size: var(--text-desc);
-  line-height: 1.7;
+  line-height: var(--leading-prose);
 }
 
 .prose > * + * {
@@ -68,7 +68,7 @@
 .prose h2 {
   font-size: clamp(1.45rem, 2.2vw, 2rem);
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--tracking-display);
 }
 
 .prose h3 {

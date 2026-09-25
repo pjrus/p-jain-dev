@@ -68,10 +68,10 @@
   background: var(--tint);
   color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--text-label-sm);
   font-weight: 600;
   letter-spacing: 0.09em;
-  line-height: 1.4;
+  line-height: var(--leading-label);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -98,7 +98,7 @@
 
 .experience-summary {
   max-width: var(--measure-lg);
-  margin-top: 0.85rem;
+  margin-top: var(--summary-gap);
   color: var(--muted);
   font-size: var(--text-desc);
   line-height: 1.75;

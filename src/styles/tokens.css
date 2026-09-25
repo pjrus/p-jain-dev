@@ -37,23 +37,51 @@
   --font-mono: 'IBM Plex Mono', monospace;
   /* Descriptive copy: hero intro, bios, summaries, blog posts. */
   --text-desc: clamp(1.02rem, 1.3vw, 1.15rem);
+  --leading-desc: 1.6;
+  /* Long-form article body reads a touch looser than summary copy. */
+  --leading-prose: 1.7;
+
+  /* Mono, uppercase metadata: eyebrows, captions, periods, form labels. */
+  --text-label: 0.7rem;
+  --text-label-sm: 0.75rem;
+  --text-label-md: 0.8rem;
+  --tracking-label: 0.08em;
+  --leading-label: 1.4;
+
+  /* Display headings and their article-scale counterparts. */
+  --tracking-display: -0.04em;
+  /* Blog entry titles, shared by the post index and its empty state. */
+  --text-entry-title: clamp(1.4rem, 2.2vw, 1.9rem);
 
   /* Layout grid ---------------------------------------------------------- */
   --shell-max: 69rem;
   --gutter: 1.5rem;
-  --header-h: 5.5rem;
+  /* The fixed header is a floating bar inset from the top of the viewport;
+     the content offset beneath it is the sum of the two. */
+  --header-offset: 1.5rem;
+  --header-bar-h: 4rem;
+  --header-h: calc(var(--header-offset) + var(--header-bar-h));
 
   /* Vertical rhythm ------------------------------------------------------ */
   /* Sections carry this as symmetric padding-block, so the interval a visitor
      actually sees between two of them is twice this value. Read it as a
      half-interval when tuning. */
   --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
+  /* Tighter home sections that follow a bordered neighbour. */
+  --section-space-compact: clamp(3rem, 4vw, 4rem);
   --page-top-space: clamp(3rem, 4vw, 4rem);
-  --heading-space: clamp(2.25rem, 4vw, 3.75rem);
   /* Page and section titles lead directly into their content. Hero sections
      keep their own, more generous rhythm. */
   --page-heading-gap: 1.25rem;
   --stack-space: clamp(2.5rem, 4vw, 3rem);
+  /* Heading to the lede or role line directly beneath it. */
+  --lede-gap: 1.1rem;
+  /* Item title to its summary paragraph. */
+  --summary-gap: 0.85rem;
+  /* Space between entries in a list (posts, experience roles). */
+  --item-space: clamp(2rem, 3.5vw, 3.25rem);
+  /* Wide horizontal gutter between a meta column and its content. */
+  --column-gap-lg: clamp(2rem, 5vw, 4.5rem);
 
   /* Surfaces ------------------------------------------------------------- */
   --card-pad: clamp(1.4rem, 2.5vw, 1.85rem);
@@ -62,7 +90,6 @@
 
   /* Controls ------------------------------------------------------------- */
   --control-h: 3.25rem;
-  --control-h-md: 2.9rem;
   --control-h-sm: 2.65rem;
   --control-pad-x: 1.25rem;
   --control-gap: 0.65rem;
@@ -119,7 +146,6 @@
 @media (max-width: 700px) {
   :root {
     --section-space: 3.25rem;
-    --heading-space: clamp(1.75rem, 7vw, 2.75rem);
     --h1-size: clamp(2.4rem, 11vw, 3.2rem);
     --exp-rail-offset: 2.5rem;
     --exp-gap: 0.75rem;

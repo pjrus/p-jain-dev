@@ -1,5 +1,5 @@
 .stack {
-  padding-block: clamp(3rem, 4vw, 4rem);
+  padding-block: var(--section-space-compact);
   border-top: 1px solid var(--line);
 }
 
@@ -10,7 +10,7 @@
 }
 
 .stack-card {
-  padding: var(--card-pad, clamp(1.4rem, 2.5vw, 1.85rem));
+  padding: var(--card-pad);
   border: 1px solid transparent;
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -29,7 +29,7 @@
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
+  line-height: var(--leading-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }

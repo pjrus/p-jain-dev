@@ -205,7 +205,7 @@
 </section>
 
 <section class="contact section" id="contact" aria-labelledby="contact-title">
-  <div class="contact-inner">
+  <div class="shell contact-inner">
     <header class="contact-intro" data-reveal="contact-intro">
       <h2 id="contact-title">Let’s make something useful.</h2>
       <p>
