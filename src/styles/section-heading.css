@@ -5,15 +5,7 @@
 .section-heading-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-}
-
-.section-heading h1 {
-  font-size: var(--h1-size, clamp(2.6rem, 4.3vw, 4.4rem));
-}
-
-.section-heading h2 {
-  font-size: var(--h2-size, clamp(2.2rem, 3.8vw, 3.4rem));
+  gap: var(--lede-gap);
 }
 
 .section-heading-grid > p {

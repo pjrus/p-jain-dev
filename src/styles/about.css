@@ -36,10 +36,10 @@
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-label);
   text-transform: uppercase;
 }
 

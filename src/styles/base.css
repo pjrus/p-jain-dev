@@ -66,23 +66,23 @@ h2,
 h3 {
   font-family: var(--font-display);
   line-height: 1.06;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--tracking-display);
 }
 
 h1 {
   max-width: var(--h1-measure);
-  font-size: var(--h1-size, clamp(2.6rem, 4.3vw, 4.4rem));
+  font-size: var(--h1-size);
   font-weight: 700;
 }
 
 h2 {
   max-width: var(--h2-measure);
-  font-size: var(--h2-size, clamp(2.2rem, 3.8vw, 3.4rem));
+  font-size: var(--h2-size);
   font-weight: 600;
 }
 
 h3 {
-  font-size: var(--h3-size, clamp(1.3rem, 1.8vw, 1.65rem));
+  font-size: var(--h3-size);
   font-weight: 600;
 }
 
@@ -144,7 +144,6 @@ em {
 @media (max-width: 700px) {
   h1 {
     max-width: none;
-    font-size: var(--h1-size, clamp(2.4rem, 11vw, 3.2rem));
   }
 
   h2 {

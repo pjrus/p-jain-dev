@@ -2,10 +2,6 @@
   border-top: 1px solid var(--line);
 }
 
-.blog .section-heading {
-  margin-bottom: var(--page-heading-gap);
-}
-
 .blog .section-heading-grid {
   max-width: 58rem;
 }
@@ -64,7 +60,7 @@
 .post-item article {
   display: grid;
   grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
-  column-gap: clamp(2rem, 5vw, 4.5rem);
+  column-gap: var(--column-gap-lg);
   width: 100%;
   align-items: start;
 }
@@ -77,9 +73,9 @@
   gap: 0.75rem;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -95,7 +91,7 @@
   max-width: 32ch;
   margin-top: 0;
   font-family: var(--font-mono);
-  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-size: var(--text-entry-title);
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.12;
