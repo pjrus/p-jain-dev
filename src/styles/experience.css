@@ -85,15 +85,18 @@
   font-family: var(--font-mono);
 }
 
+/* Organisation and location were tuned against a 1.05rem summary; they scale
+   with --text-desc by the same ratio so the three lines keep their balance,
+   never dropping below those original sizes. */
 .organisation {
   color: var(--primary);
-  font-size: 1rem;
+  font-size: max(1rem, calc(var(--text-desc) / 1.05));
 }
 
 .location {
   margin-top: 0.2rem;
   color: var(--muted);
-  font-size: var(--text-label-md);
+  font-size: max(0.78rem, calc(var(--text-desc) * 0.78 / 1.05));
 }
 
 .experience-summary {
