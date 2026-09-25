@@ -1,13 +1,14 @@
 <script>
   import ArrowIcon from './ArrowIcon.svelte';
 
-  let { project, reveal = false, revealDelay = 0, revealOnScroll = false } = $props();
+  // `extra` cards appear via "Show more" and animate in at once; the rest reveal on scroll.
+  let { project, extra = false, revealDelay = 0 } = $props();
 </script>
 
 <article
   class="project-card"
-  class:project-card--revealed={reveal}
-  data-reveal={revealOnScroll ? 'project-card' : undefined}
+  class:project-card--revealed={extra}
+  data-reveal={extra ? undefined : 'project-card'}
   style={`--reveal-delay: ${revealDelay}ms`}
 >
   <div class="project-summary">

@@ -16,7 +16,6 @@
     headline: data.post.title,
     description: data.post.summary,
     datePublished: data.post.date,
-    dateModified: data.post.date,
     url: postUrl,
     image: canonicalUrl('/images/portfolio.png'),
     author: {
@@ -43,7 +42,6 @@
   path={`/blog/${data.post.slug}`}
   type="article"
   publishedTime={data.post.date}
-  modifiedTime={data.post.date}
   tags={data.post.tags}
   noindex={data.post.draft}
   jsonLd={postJsonLd}

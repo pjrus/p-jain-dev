@@ -6,10 +6,7 @@ export const prerender = true;
 const staticRoutes = ['/', '/about', '/blog'];
 
 export function GET() {
-  const routes = [
-    ...staticRoutes,
-    ...posts.filter((post) => !post.draft).map((post) => `/blog/${post.slug}`),
-  ];
+  const routes = [...staticRoutes, ...posts.map((post) => `/blog/${post.slug}`)];
   const urls = routes
     .map((route) => `  <url><loc>${canonicalUrl(route).replaceAll('&', '&amp;')}</loc></url>`)
     .join('\n');
