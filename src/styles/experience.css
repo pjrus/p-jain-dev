@@ -25,7 +25,7 @@
 /* Item text lands on the same x as the heading text (icon + gap). */
 .experience-item {
   position: relative;
-  padding: 0 0 clamp(2rem, 3vw, 3rem) calc(var(--exp-rail-offset) / 2 + var(--exp-gap) - 0.5px);
+  padding: 0 0 var(--item-space) calc(var(--exp-rail-offset) / 2 + var(--exp-gap) - 0.5px);
 }
 
 .experience-item:last-child {
@@ -70,7 +70,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-label-sm);
   font-weight: 600;
-  letter-spacing: 0.09em;
+  letter-spacing: var(--tracking-label);
   line-height: var(--leading-label);
   text-transform: uppercase;
   white-space: nowrap;
@@ -93,7 +93,7 @@
 .location {
   margin-top: 0.2rem;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--text-label-md);
 }
 
 .experience-summary {
@@ -101,7 +101,7 @@
   margin-top: var(--summary-gap);
   color: var(--muted);
   font-size: var(--text-desc);
-  line-height: 1.75;
+  line-height: var(--leading-desc);
 }
 
 @media (max-width: 700px) {

@@ -1,6 +1,6 @@
 .projects {
   --h2-measure: none;
-  padding-top: clamp(3rem, 5vw, 4.5rem);
+  padding-top: var(--section-space-compact);
   border-top: 1px solid var(--line);
 }
 
@@ -74,7 +74,7 @@
   max-width: var(--measure);
   color: var(--muted);
   font-size: var(--text-desc);
-  line-height: 1.6;
+  line-height: var(--leading-desc);
 }
 
 .tag-list {
@@ -84,11 +84,11 @@
 }
 
 .tag-list li {
-  padding: 0.35rem 0.62rem;
+  padding: 0.35rem 0.6rem;
   border: 1px solid var(--line);
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: var(--text-label-sm);
   font-weight: 500;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
@@ -109,7 +109,7 @@
 }
 
 .project-links a {
-  min-height: 3.1rem;
+  min-height: var(--control-h);
   padding: 0 1rem;
   border: 1px solid var(--line-strong);
   font-family: var(--font-mono);
@@ -155,7 +155,7 @@
 .project-stack h4 {
   margin: 0 0 0.85rem;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--text-label-md);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   line-height: var(--leading-label);

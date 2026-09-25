@@ -146,6 +146,7 @@
 @media (max-width: 700px) {
   :root {
     --section-space: 3.25rem;
+    --section-space-compact: var(--section-space);
     --h1-size: clamp(2.4rem, 11vw, 3.2rem);
     --exp-rail-offset: 2.5rem;
     --exp-gap: 0.75rem;

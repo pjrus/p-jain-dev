@@ -54,7 +54,7 @@
   align-items: center;
   gap: 0.6rem;
   min-height: var(--control-h-sm);
-  padding: 0 1.05rem;
+  padding: 0 1rem;
   border: 1px solid var(--ink);
   color: var(--ink);
   font-family: var(--font-mono);

@@ -12,7 +12,7 @@
   max-width: var(--measure);
   color: var(--muted);
   font-size: var(--text-desc);
-  line-height: 1.55;
+  line-height: var(--leading-desc);
 }
 
 /* Let the stack summary use the full section measure. */
