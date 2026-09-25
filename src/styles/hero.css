@@ -151,6 +151,7 @@
 
   .hero-copy > h1 {
     order: 2;
+    margin-inline: auto;
   }
 
   .hero-role {
