@@ -8,6 +8,7 @@ import { dev } from '$app/environment';
  * @property {string} summary
  * @property {string[]} tags
  * @property {boolean} draft
+ * @property {string} [thumbnail] Image path under `static/`, e.g. `/images/post.png`.
  */
 
 /**
@@ -17,6 +18,7 @@ import { dev } from '$app/environment';
  * @property {string} summary
  * @property {string[]} [tags]
  * @property {boolean} [draft]
+ * @property {string} [thumbnail]
  */
 
 /**
@@ -48,6 +50,7 @@ export const posts = Object.entries(frontmatter)
     summary: meta.summary,
     tags: meta.tags ?? [],
     draft: meta.draft ?? false,
+    thumbnail: meta.thumbnail,
   }))
   .filter((post) => dev || !post.draft)
   .sort((a, b) => b.date.localeCompare(a.date));
