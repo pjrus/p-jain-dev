@@ -129,3 +129,11 @@
     --page-heading-gap: 0.75rem;
   }
 }
+
+/* Tablets get the single-column layout with room to spare, so scale the
+   whole rem system up rather than leaving phone-sized type in a wide column. */
+@media (min-width: 701px) and (max-width: 900px) {
+  html {
+    font-size: 112.5%;
+  }
+}
