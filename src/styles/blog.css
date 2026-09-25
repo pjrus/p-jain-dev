@@ -120,7 +120,7 @@
   margin-top: 0.75rem;
   max-width: 50rem;
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: var(--text-desc);
 }
 
 .post-tags {

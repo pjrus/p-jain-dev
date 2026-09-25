@@ -35,6 +35,8 @@
   --font-display: 'Bricolage Grotesque', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
+  /* Descriptive copy: hero intro, bios, summaries, blog posts. */
+  --text-desc: clamp(1.02rem, 1.3vw, 1.15rem);
 
   /* Layout grid ---------------------------------------------------------- */
   --shell-max: 69rem;

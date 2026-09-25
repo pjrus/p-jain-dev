@@ -19,7 +19,7 @@
 .section-heading-grid > p {
   max-width: var(--measure);
   color: var(--muted);
-  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  font-size: var(--text-desc);
   line-height: 1.55;
 }
 
