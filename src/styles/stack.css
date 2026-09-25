@@ -27,7 +27,7 @@
   border-bottom: 1px solid var(--line);
   color: var(--primary);
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: var(--text-label-md);
   font-weight: 600;
   line-height: var(--leading-label);
   letter-spacing: var(--tracking-label);

@@ -68,7 +68,7 @@
   margin-top: 1.5rem;
   color: var(--ink);
   font-size: var(--text-desc);
-  line-height: 1.55;
+  line-height: var(--leading-desc);
 }
 
 .hero-actions {

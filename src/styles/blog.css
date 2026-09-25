@@ -30,7 +30,7 @@
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-mono);
-  font-size: 1.4rem;
+  font-size: var(--text-entry-title);
   font-weight: 700;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -53,7 +53,7 @@
 
 .post-item {
   min-width: 0;
-  padding-block: clamp(2rem, 4vw, 3.5rem);
+  padding-block: var(--item-space);
   border-bottom: 1px solid var(--line);
 }
 
@@ -113,7 +113,7 @@
 
 .post-summary {
   grid-column: 2;
-  margin-top: 0.75rem;
+  margin-top: var(--summary-gap);
   max-width: 50rem;
   color: var(--muted);
   font-size: var(--text-desc);

@@ -22,42 +22,38 @@ typography:
     letterSpacing: "-0.04em"
   headline:
     fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "clamp(2.6rem, 5vw, 5rem)"
+    fontSize: "clamp(2.2rem, 3.8vw, 3.4rem)"
     fontWeight: 600
     lineHeight: 1.06
     letterSpacing: "-0.04em"
   title:
     fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "clamp(1.45rem, 2.2vw, 2rem)"
+    fontSize: "clamp(1.3rem, 1.8vw, 1.65rem)"
     fontWeight: 600
     lineHeight: 1.06
     letterSpacing: "-0.04em"
+  entry-title:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)"
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: "0.01em"
   body:
     fontFamily: "'DM Sans', sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.65
-  label:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "0.09em"
+  body-lg:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: "clamp(1.02rem, 1.3vw, 1.15rem)"
+    fontWeight: 400
+    lineHeight: 1.6
   brand:
     fontFamily: "'Bricolage Grotesque', sans-serif"
     fontSize: "1.8rem"
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "-0.05em"
-  control:
-    fontFamily: "'DM Sans', sans-serif"
-    fontSize: "0.8rem"
-    fontWeight: 600
-  body-lg:
-    fontFamily: "'DM Sans', sans-serif"
-    fontSize: "1.1rem"
-    fontWeight: 400
-    lineHeight: 1.55
   label-xs:
     fontFamily: "'IBM Plex Mono', monospace"
     fontSize: "0.7rem"
@@ -66,30 +62,39 @@ typography:
     letterSpacing: "0.08em"
   label-sm:
     fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.78rem"
-    fontWeight: 500
+    fontSize: "0.75rem"
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: "0.08em"
   label-md:
+    fontFamily: "'IBM Plex Mono', monospace"
+    fontSize: "0.8rem"
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: "0.08em"
+  nav:
     fontFamily: "'IBM Plex Mono', monospace"
     fontSize: "0.85rem"
     fontWeight: 600
-    letterSpacing: "0.06em"
-  label-detail:
+    letterSpacing: "0.08em"
+  cta:
     fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.82rem"
-    lineHeight: 1.65
-  label-lg:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.88rem"
+    fontSize: "0.92rem"
     fontWeight: 600
 rounded:
   base: "0px"
 spacing:
   gutter: "1.5rem"
   control-pad-x: "1.25rem"
-  card-pad: "clamp(1.5rem, 3vw, 2.25rem)"
-  card-gap: "clamp(1.5rem, 3vw, 2.5rem)"
-  heading-space: "clamp(2.25rem, 4vw, 3.75rem)"
+  control-h: "3.25rem"
+  card-pad: "clamp(1.4rem, 2.5vw, 1.85rem)"
+  card-gap: "clamp(1.25rem, 2.5vw, 1.75rem)"
+  lede-gap: "1.1rem"
+  summary-gap: "0.85rem"
+  item-space: "clamp(2rem, 3.5vw, 3.25rem)"
+  column-gap-lg: "clamp(2rem, 5vw, 4.5rem)"
   section-space: "clamp(3.5rem, 5.5vw, 5.5rem)"
+  section-space-compact: "clamp(3rem, 4vw, 4rem)"
 components:
   button-primary:
     backgroundColor: "{colors.signal-blue}"
@@ -105,18 +110,18 @@ components:
     backgroundColor: "{colors.signal-blue}"
     textColor: "{colors.primary-ink}"
     rounded: "{rounded.base}"
-    typography: "{typography.label-lg}"
-    padding: "0 0.9rem"
-    height: "2.9rem"
+    typography: "{typography.cta}"
+    padding: "0 1rem"
+    height: "3.25rem"
   project-link-primary-hover:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.background}"
   tag:
     backgroundColor: "transparent"
     textColor: "{colors.muted}"
-    typography: "{typography.label-xs}"
+    typography: "{typography.label-sm}"
     rounded: "{rounded.base}"
-    padding: "0.32rem 0.55rem"
+    padding: "0.35rem 0.6rem"
 ---
 
 # Design System: Paarangat Jain — Portfolio
@@ -168,25 +173,29 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 **Character:** A confident, slightly condensed grotesque for anything that needs to announce itself (headings), paired with a plain, highly legible humanist sans for reading (body copy), and a monospace held in reserve exclusively for metadata — the pairing reads as "headline / prose / data" rather than a two-font system.
 
 ### Hierarchy
-- **Display** (700, `clamp(2.6rem, 4.3vw, 4.4rem)`, line-height 1.06): the `h1` only — one per page, capped at a 14-character measure so it wraps deliberately rather than by accident. Under 700px it steps down to its own mobile clamp (`clamp(2.4rem, 11vw, 3.2rem)`) rather than continuing the desktop curve, so it never collapses below a readable size on narrow viewports.
-- **Headline** (600, `clamp(2.6rem, 5vw, 5rem)`, line-height 1.06): section titles (`h2`) — "Experience log", "Have a useful problem to solve?"
-- **Title** (600, `clamp(1.45rem, 2.2vw, 2rem)`, line-height 1.06): card and item titles (`h3`) — project names, experience roles.
-- **Brand** (700, 1.8rem, letter-spacing -0.05em): the header wordmark only ("PJ.") — display-family but its own fixed size, never reused elsewhere.
+Every size below is a custom property in `src/styles/tokens.css`; components reference the token, never the literal.
+
+- **Display** (700, `--h1-size`, line-height 1.06): the `h1` only — one per page, capped at a 14-character measure so it wraps deliberately rather than by accident. Under 700px the token steps down to its own mobile clamp (`clamp(2.4rem, 11vw, 3.2rem)`) rather than continuing the desktop curve.
+- **Headline** (600, `--h2-size`, line-height 1.06): section titles (`h2`).
+- **Title** (600, `--h3-size`, line-height 1.06): card titles (`h3`) — project names.
+- **Entry title** (mono 700, `--text-entry-title`, uppercase): blog post titles on the index and the empty-state stand-in that mirrors them.
+- **Brand** (700, 1.8rem, letter-spacing -0.05em): the header wordmark only ("PJ.") — its own fixed size, never reused elsewhere.
 - **Body** (400, 1rem, line-height 1.65): running copy, capped at a 38rem (`--measure`) or 62rem (`--measure-lg`) measure depending on context.
-- **Body Large** (400, 1.1rem, line-height 1.55): intro and summary copy that needs more presence than running body text — the hero intro and section-heading summaries scale within a rem of this step (hero intro clamps up to 1.15rem at wide viewports, the experience-summary sits a touch under at 1.05rem); no two contexts share a single fixed value, each is tuned to its column width around this canonical size.
-- **Control** (600, 0.8rem): UI microcopy that isn't a metadata label — icon-button accessible text, the header "Let's talk" CTA.
-- **Label** (600, 0.75rem, letter-spacing 0.09em, uppercase): the base metadata size — eyebrows, project kickers, experience periods.
-- **Label scale** (mono, always tracked, never used for anything a visitor reads at length): the label role isn't one fixed size but a tight scale for different metadata weights, from the smallest supporting marks up to CTA text: **XS** 0.7rem (hero facts, with the portrait caption and tag chips sitting a hair under at 0.68rem and 0.67rem respectively — hand-tuned to their tighter containers rather than snapped to the step), **SM** 0.78rem (experience location), **base** 0.75rem (see Label, above), **Detail** 0.82rem (project outcome callouts), **MD** 0.85rem (project detail-block headings), **LG** 0.88rem (project-link CTA text — Source / View project).
+- **Description** (400, `--text-desc`, line-height `--leading-desc` 1.6): hero intro, section summaries, project and experience summaries, the contact intro, post ledes. Long-form article bodies use the same size at `--leading-prose` (1.7).
+- **Label scale** (mono 600, uppercase, `--tracking-label` 0.08em, `--leading-label` 1.4): **XS** `--text-label` 0.7rem (hero facts, captions, post meta, form labels), **SM** `--text-label-sm` 0.75rem (experience periods, tag chips, contact links), **MD** `--text-label-md` 0.8rem (stack card titles, project detail headings, back links, experience location).
+- **Nav / CTA** (mono 600): header nav boxes at 0.85rem and project-link CTAs at 0.92rem — control text rather than metadata, so they sit just above the label scale.
+
+Display headings share `--tracking-display` (-0.04em).
 
 ### Named Rules
 **The Mono-Is-Metadata Rule.** IBM Plex Mono never appears in a sentence a visitor reads start to finish. It marks status, category, or position — eyebrows, kickers, periods, tags — and nowhere else.
-**The Tuned-Step Rule.** A handful of mono and body sizes sit within ±0.03rem of a documented step rather than snapping to it exactly (tag chips, the portrait caption, the experience summary, the footer note). That's deliberate per-component tuning against a specific container, not drift — don't "fix" them to the exact step, and don't add a new token for every one-off delta either.
+**The Snap-To-Step Rule.** Metadata and description sizes snap to their token; a new in-between size needs a reason strong enough to become a token of its own. One-off literals are reserved for geometry (icons, hairlines, optical nudges) and single-use display pieces like the brand.
 
 ## Layout
 
-A single centred shell (`max-width: 1180px`, 1.5rem gutter) holds every section; two-column splits (hero, about, contact) use a shared `minmax(0, 1.1fr) minmax(20rem, 0.8fr)` ratio so the wider content column and the narrower visual/action column repeat as one grammar rather than three different layouts. All two-column splits collapse to a single column together at 900px, and the header drops from floating-pill to a static, full-width bar with the nav wrapping to a second row at 700px.
+A single centred shell (`--shell-max` 69rem, 1.5rem gutter) holds every section; two-column splits (hero, about, contact) use a shared `minmax(0, 1.1fr) minmax(20rem, 0.8fr)` ratio so the wider content column and the narrower visual/action column repeat as one grammar rather than three different layouts. All two-column splits collapse to a single column together at 900px, and the header drops from floating-pill to a static, full-width bar with the nav wrapping to a second row at 700px.
 
-Vertical rhythm runs on one clamp-based interval (`--section-space`, 3.5–5.5rem) applied as symmetric `padding-block`, so the visible gap between two sections is always double that value. Heading-to-content spacing, card padding, and card gaps each get their own smaller clamp so density scales with viewport without a proliferation of one-off values.
+Vertical rhythm runs on one clamp-based interval (`--section-space`, 3.5–5.5rem) applied as symmetric `padding-block`, so the visible gap between two sections is always double that value. Home sections that follow a bordered neighbour (projects, stack) use the tighter `--section-space-compact`. Inside sections, a small set of semantic gaps carries the recurring relationships: `--page-heading-gap` (title to content), `--lede-gap` (heading to its lede), `--summary-gap` (item title to summary), `--item-space` (between list entries), `--column-gap-lg` (meta column to content), plus `--card-pad` and `--card-gap` for surfaces.
 
 Project cards use their own internal two-part grid: a summary row (fixed-width media + flexible body) over a details row (two-column problem/architecture vs. outcome/stack), both sharing the same horizontal card padding so the card reads as one consistent frame rather than stacked panels.
 

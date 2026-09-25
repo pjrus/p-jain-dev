@@ -18,6 +18,7 @@
   margin-bottom: 1.25rem;
   font-family: var(--font-mono);
   font-size: var(--text-label-md);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -35,7 +36,7 @@
 }
 
 .post-lede + .tag-list {
-  margin-top: 1.35rem;
+  margin-top: 1.5rem;
 }
 
 /* Post body -------------------------------------------------------------
