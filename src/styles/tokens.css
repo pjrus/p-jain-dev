@@ -5,6 +5,7 @@
   --background: #fafbfe;
   --surface: #ffffff;
   --ink: #182238;
+  --nav-ink: #000000;
   --muted: #182238;
   --primary: #315ed6;
   --primary-ink: #ffffff;
@@ -132,6 +133,7 @@
   --tint: #202024;
 
   --ink: #ffffff;
+  --nav-ink: #ffffff;
   --muted: #a5a5a7;
   --primary: #7ba2ff;
   --primary-ink: #0a0a0a;
