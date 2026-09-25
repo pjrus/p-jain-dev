@@ -95,7 +95,7 @@
    with --text-desc by the same ratio so the three lines keep their balance,
    never dropping below those original sizes. */
 .organisation {
-  color: var(--primary);
+  color: var(--primary-strong);
   font-size: max(1rem, calc(var(--text-desc) / 1.05));
 }
 

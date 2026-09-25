@@ -46,13 +46,6 @@
   gap: clamp(2rem, 3vw, 2.75rem);
 }
 
-/* Keep dark-mode hero actions monochrome while using coral for evidence rails. */
-:root[data-theme='dark'] .hero {
-  --primary: #ffffff;
-  --accent: #ff8a6c;
-  --accent-strong: #ffffff;
-}
-
 .hero-role {
   margin-top: var(--lede-gap);
   color: var(--ink);
@@ -87,7 +80,7 @@
 
 .hero-facts div {
   padding-left: var(--accent-bar-gap);
-  border-left: var(--accent-bar) solid var(--accent);
+  border-left: var(--accent-bar) solid var(--accent-bar-color);
 }
 
 .hero-facts dt {

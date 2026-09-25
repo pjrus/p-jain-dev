@@ -117,8 +117,8 @@
 }
 
 .project-links .project-link-primary {
-  border-color: var(--primary);
-  background: var(--primary);
+  border-color: var(--card-primary);
+  background: var(--card-primary);
   color: var(--primary-ink);
 }
 
@@ -126,21 +126,6 @@
   border-color: var(--ink);
   background: var(--ink);
   color: var(--background);
-}
-
-/* Dark theme: the primary project link inverts to white-on-black instead of
-   the signal blue, which was low-contrast against the black canvas' hover
-   state. Hover reveals the blue instead, so the swap still reads as feedback. */
-:root[data-theme='dark'] .project-links .project-link-primary {
-  border-color: #ffffff;
-  background: #ffffff;
-  color: #000000;
-}
-
-:root[data-theme='dark'] .project-links .project-link-primary:hover {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--primary-ink);
 }
 
 /* Keep the detail panel aligned with the summary's internal padding. */
