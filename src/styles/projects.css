@@ -73,7 +73,7 @@
   margin-top: var(--summary-gap);
   max-width: var(--measure);
   color: var(--muted);
-  font-size: var(--text-desc);
+  font-size: var(--text-desc-sm);
   line-height: var(--leading-desc);
 }
 
