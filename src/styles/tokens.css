@@ -13,8 +13,8 @@
      canvas (see the dark theme), so they are separate roles; on this light
      canvas the one cobalt clears 5.7:1 and serves both. */
   --primary-strong: #315ed6;
-  /* Fill for the project cards' primary link. Follows --primary in light
-     mode; dark mode keeps the brand cobalt here (see the dark theme). */
+  /* Fill for the project cards' primary link. Follows --primary in both
+     themes; kept as its own role so the cards can be tuned separately. */
   --card-primary: var(--primary);
   --accent: #ed6a4b;
 
@@ -162,9 +162,6 @@
   --primary: #3667ed;
   --primary-ink: #ffffff;
   --primary-strong: #5397fc;
-  /* Pinned to the brand cobalt so project-card actions stay put even if the
-     dark fill above is retuned; white labels clear 5.7:1 on it. */
-  --card-primary: #315ed6;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;
