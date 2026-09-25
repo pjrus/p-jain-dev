@@ -39,10 +39,19 @@
       {#each posts as post (post.slug)}
         <li class="post-item">
           <article>
-            <p class="post-meta">
-              <time datetime={post.date}>{formatDate(post.date)}</time>
-              {#if post.draft}<span class="post-draft">Draft</span>{/if}
-            </p>
+            <div class="post-aside">
+              <p class="post-meta">
+                <time datetime={post.date}>{formatDate(post.date)}</time>
+                {#if post.draft}<span class="post-draft">Draft</span>{/if}
+              </p>
+              <a class="post-thumb" href={`${base}/blog/${post.slug}`} tabindex="-1" aria-hidden="true">
+                {#if post.thumbnail}
+                  <img src={`${base}${post.thumbnail}`} alt="" loading="lazy" />
+                {:else}
+                  <span class="post-thumb-placeholder">&gt;_</span>
+                {/if}
+              </a>
+            </div>
             <h3 class="post-item-title">
               <a href={`${base}/blog/${post.slug}`}><span class="post-marker" aria-hidden="true">&gt;</span> {post.title}</a>
             </h3>
