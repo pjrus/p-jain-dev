@@ -16,6 +16,8 @@
   /* Fill for the project cards' primary link. Follows --primary in both
      themes; kept as its own role so the cards can be tuned separately. */
   --card-primary: var(--primary);
+  /* The hero's role caption. Ink here; blue in dark mode. */
+  --hero-role-ink: var(--ink);
   --accent: #ed6a4b;
 
   /* The accent at a lightness that clears 4.5:1 on white and on the canvas.
@@ -139,11 +141,11 @@
 
   /* Elevation ladder: canvas -> card -> chip, each step lighter than the last
      so cards lift off the page without leaning on the shadow. */
-  --background: #0f0f10;
-  --surface: #18181b;
+  --background: #080808;
+  --surface: #111113;
   /* The light tint is the signal blue at a whisper; this keeps that
      relationship, so hover fills and chips still belong to the blue. */
-  --tint: #232b3a;
+  --tint: #1b2230;
 
   /* Text: >= 15:1 for ink and >= 6.5:1 for muted on every surface above. */
   --ink: #ffffff;
@@ -162,6 +164,7 @@
   --primary: #3667ed;
   --primary-ink: #ffffff;
   --primary-strong: #5397fc;
+  --hero-role-ink: #8ab8ff;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;
@@ -171,10 +174,10 @@
      rail joins the blue instead, as the blockquote rail already does. */
   --accent-bar-color: var(--primary);
 
-  --line: #2e2e34;
+  --line: #26262b;
   /* 3:1 against the canvas and cards, for control boundaries. */
   --line-strong: #6e6e74;
-  --header-surface: #18181b;
+  --header-surface: #111113;
 
   --frame: #000000;
 

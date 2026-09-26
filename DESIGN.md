@@ -161,7 +161,7 @@ A near-monochrome ink-on-paper base with two working accents, each colour assign
 - **Muted** (`#182238` in light mode): secondary text uses the same ink colour as primary copy, with hierarchy carried by size, weight and spacing rather than grey. Dark mode retains a softer secondary value for legibility against the near-black canvas.
 - **Background** (`#fafbfe`): the page canvas, a soft near-white rather than pure white.
 - **Surface** (`#ffffff`): cards and raised panels, distinguished from the canvas by being genuinely whiter.
-- **Tint** (`#e5edfb`; dark `#232b3a`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
+- **Tint** (`#e5edfb`; dark `#1b2230`): a pale blue wash for small filled chips (capability numbers' backdrop is not this, but the experience-icon plate and nav-hover state are).
 - **Line** (`#d9e0ea`): hairline dividers and card borders — the resting border colour everywhere except the header cluster, whose boxes sit at full `--ink`.
 
 ### Named Rules
