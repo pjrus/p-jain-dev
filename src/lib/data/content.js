@@ -81,6 +81,23 @@ export const projects = [
   },
 ];
 
+export const education = [
+  {
+    period: 'Jan 2024 — Jun 2027',
+    institution: 'Monash University',
+    location: 'Clayton, Victoria',
+    award: 'Bachelor of Computer Science',
+    detail: 'Mathematics minor · WAM 73.8 · GPA 3.000',
+  },
+  {
+    period: 'Jan 2019 — Dec 2023',
+    institution: 'Viewbank College',
+    location: 'Rosanna, Victoria',
+    award: 'Victorian Certificate of Education (VCE)',
+    detail: 'ATAR 90.15',
+  },
+];
+
 export const stack = [
   {
     label: 'Languages & frameworks',
@@ -94,12 +111,12 @@ export const stack = [
 
 export const experience = [
   {
-    period: 'Jun 2026 — present',
+    period: 'Jun 2026 — Sep 2026',
     role: 'Full-stack engineering intern',
     organisation: 'PlasmIT Vector',
     location: 'Docklands, Victoria, Australia · Remote',
     summary:
-      'Assisting with the design and development of full-stack applications across frontend, backend and database components. I collaborate on implementation, testing and documentation while gaining hands-on experience across the software development lifecycle.',
+      'Assisted with the design and development of full-stack applications across frontend, backend and database components. Collaborated on implementation, testing and documentation while gaining hands-on experience across the software development lifecycle.',
   },
   {
     period: 'Mar 2026 — present',

@@ -33,3 +33,14 @@
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
+
+.education-institution {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.education-award,
+.education-location {
+  margin-top: 0.35rem;
+  color: var(--muted);
+}
