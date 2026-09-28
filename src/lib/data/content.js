@@ -127,14 +127,6 @@ export const experience = [
       'Maintaining the Ocean Connect website so program, event and initiative information stays accurate and reachable. I reorganise content for clearer navigation and usability for volunteers and community members, and help strengthen how the organisation communicates its marine conservation work.',
   },
   {
-    period: 'Mar 2026 — present',
-    role: 'Outreach officer',
-    organisation: 'Monash Assistive Technology Team',
-    location: 'Clayton, Victoria, Australia',
-    summary:
-      'Engaging with schools that support students with disabilities to build partnerships for technology-driven empowerment. I communicate the team’s mission to stakeholders, coordinate collaborative workshops and programs, and maintain those relationships between initiatives.',
-  },
-  {
     period: 'Feb 2026 — present',
     role: 'Operations officer',
     organisation: 'Monash Assistive Technology Team',
@@ -149,6 +141,14 @@ export const experience = [
     location: 'Clayton, Victoria, Australia',
     summary:
       'Working with our academic supervisor to define the goals and strategy for developing low-cost tactile and refreshable Braille displays, and coordinating the project officers building them. I run user interviews and design surveys to keep the work user-centred, and lead development of the React Native application that supports the display.',
+  },
+  {
+    period: 'Mar 2026 — Jul 2026',
+    role: 'Outreach officer',
+    organisation: 'Monash Assistive Technology Team',
+    location: 'Clayton, Victoria, Australia',
+    summary:
+      'Engaged with schools that support students with disabilities to build partnerships for technology-driven empowerment. Communicated the team’s mission to stakeholders, coordinated collaborative workshops and programs, and maintained those relationships between initiatives.',
   },
   {
     period: 'Mar 2025 — Aug 2025',
