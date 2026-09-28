@@ -7,7 +7,7 @@
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import SectionHeading from '$lib/components/SectionHeading.svelte';
-  import { experience, projects, stack } from '$lib/data/content.js';
+  import { education, experience, projects, stack } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -155,6 +155,21 @@
         </button>
       {/if}
     </div>
+  </div>
+</section>
+
+<section class="stack shell section" id="education">
+  <SectionHeading title="Education." reveal />
+
+  <div class="stack-grid">
+    {#each education as item, index}
+      <div class="stack-card education-card" data-reveal="stack-card" style={`--reveal-delay: ${index * 90}ms`}>
+        <h3 class="stack-card-title">// {item.period}</h3>
+        <p class="education-institution">{item.institution}</p>
+        <p class="education-award">{item.award} · {item.detail}</p>
+        <p class="education-location">{item.location}</p>
+      </div>
+    {/each}
   </div>
 </section>
 
