@@ -41,6 +41,15 @@ export const projects = [
     github: 'https://github.com/pjrus/p-jain-dev',
   },
   {
+    title: 'Inkboard',
+    description:
+      'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
+    image: `${base}/images/inkboard.png`,
+    alt: 'Inkboard infinite canvas application',
+    tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
+    github: 'https://github.com/pjrus/inkboard',
+  },
+  {
     title: 'Pomodoro timer',
     description:
       'A focused iOS timer that keeps the essential work-and-rest rhythm simple and pleasant to use.',
@@ -69,15 +78,6 @@ export const projects = [
     tags: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Vitest', 'Local-first'],
     github: 'https://github.com/pjrus/mazzie',
     visit: 'https://pjrus.github.io/mazzie/',
-  },
-  {
-    title: 'Inkboard',
-    description:
-      'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
-    image: `${base}/images/inkboard.png`,
-    alt: 'Inkboard infinite canvas application',
-    tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
-    github: 'https://github.com/pjrus/inkboard',
   },
 ];
 
