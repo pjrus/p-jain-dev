@@ -158,6 +158,7 @@
   </div>
 </section>
 
+<!-- Education section hidden for now; restore by removing this comment.
 <section class="stack shell section" id="education">
   <SectionHeading title="Education." reveal />
 
@@ -172,6 +173,7 @@
     {/each}
   </div>
 </section>
+-->
 
 <section class="stack shell section" id="stack">
   <SectionHeading
