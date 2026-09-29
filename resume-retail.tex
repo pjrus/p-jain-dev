@@ -1,0 +1,118 @@
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[left=1cm,right=1cm,top=0.6cm,bottom=0.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\definecolor{ink}{HTML}{202124}
+\definecolor{muted}{HTML}{5F6368}
+
+\pagestyle{empty}
+\color{ink}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=1pt,topsep=2pt,parsep=0pt,after=\vspace{4pt}}
+\titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{5pt}{0pt}
+
+\newcommand{\resumeEntry}[4]{%
+  \par\addvspace{5pt}%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textit{#2} \\
+    {\color{muted}#3} & {\color{muted}\textit{#4}}
+  \end{tabularx}
+  \vspace{1pt}
+}
+
+\newcommand{\resumeJob}[4]{%
+  \par\addvspace{5pt}%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1}{\color{muted}\ \textbar{}\ #3} & \textit{#2}
+  \end{tabularx}
+  \vspace{-11pt}
+}
+
+\newcommand{\resumeProject}[3]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textit{#2}
+  \end{tabularx}
+  \textit{\color{muted}#3}
+  \vspace{1pt}
+}
+
+\begin{document}
+\fontsize{11.2}{13.4}\selectfont
+
+{\centering
+  {\LARGE\bfseries Paarangat Jain}\par
+  \vspace{3pt}
+  0410 215 889 \textbar{} \href{mailto:paarangat@gmail.com}{paarangat@gmail.com} \textbar{}
+  \href{https://linkedin.com/in/paarangat-jain}{linkedin.com/in/paarangat-jain} \textbar{}
+  \href{https://p-jain.dev}{p-jain.dev}\par
+}
+
+\section{Summary}
+University student with a strong people focus and a habit of listening before offering solutions. Experienced in interviewing and supporting members of the community, including people who are blind or have low vision, and in explaining things simply and patiently. Leads a small team with consistently positive feedback on communication and support. Seeking a retail role where every customer feels heard and looked after.
+
+\section{Education}
+\resumeJob{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science, WAM: 73.8, GPA: 3.000}{}
+\resumeJob{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{}
+
+\section{Experience}
+
+\resumeJob{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
+\begin{itemize}
+  \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
+  \item Collaborated on implementation, testing and documentation across the software development lifecycle.
+\end{itemize}
+
+\resumeJob{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Support the day-to-day operations of a student team delivering accessibility-focused projects.
+  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
+  \item Contribute to the team's coordination, communication and internal workflows, helping new and existing members find what they need.
+\end{itemize}
+
+\resumeJob{Projects Officer $\rightarrow$ Project Coordinator}{Mar. 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Led a team building low-cost assistive technology for blind and low-vision users, keeping everyone supported, motivated and on track.
+  \item Conducted user interviews and surveys to understand people's needs and recommend the right solutions.
+  \item Explained technical ideas clearly to non-technical users, supervisors and stakeholders.
+  \item Received more than 90\% positive feedback from team members for effective leadership and communication.
+\end{itemize}
+
+\resumeJob{Outreach Officer}{Feb. 2026 -- Jul. 2026}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Aided in building partnerships with schools supporting students with disabilities, promoting technology-driven empowerment.
+  \item Aided in communicating the team's mission to stakeholders and coordinating collaborative workshops and programs.
+  \item Aided in maintaining ongoing relationships with school contacts between initiatives.
+\end{itemize}
+
+\section{Volunteering}
+\resumeJob{Volunteer -- Open Day}{2 Aug. 2026}{Monash University}{Clayton, VIC}
+\begin{itemize}
+  \item Volunteered at the Monash Open Day event, assisting prospective students and visitors on the day.
+  \item Welcomed and guided visitors, answering questions about the university in a friendly and approachable way.
+  \item Worked alongside staff and other volunteers to keep the event running smoothly during a busy, high-traffic day.
+\end{itemize}
+
+\resumeJob{Volunteer -- Website Support \& Management}{Mar. 2026 -- Present}{Ocean Connect}{Remote}
+\begin{itemize}
+  \item Help volunteers and community members find accurate, up-to-date programme and event information.
+  \item Organise content so it is clear, easy to navigate and easy to use.
+\end{itemize}
+
+\section{Skills}
+\textbf{Customer service:} active listening, patient troubleshooting, explaining technical concepts simply, user interviews and surveys\\
+\textbf{Teamwork:} coordinating and guiding a team, clear communication, positive peer feedback\\
+\textbf{Technology:} consumer electronics, Arduino, Windows, macOS, Linux, basic hardware and software troubleshooting
+
+\end{document}
