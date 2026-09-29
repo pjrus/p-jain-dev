@@ -296,3 +296,10 @@
     justify-content: center;
   }
 }
+
+/* Theme switch crossfade (see toggleTheme). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+}
