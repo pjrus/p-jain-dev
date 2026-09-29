@@ -38,7 +38,13 @@
 
   function toggleTheme() {
     const theme = isDark ? 'light' : 'dark';
-    applyTheme(theme);
+    // View transition crossfades the whole page in one pass, so every surface
+    // changes together in both directions; falls back to an instant swap.
+    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.startViewTransition(() => applyTheme(theme));
+    } else {
+      applyTheme(theme);
+    }
     try {
       localStorage.setItem(THEME_KEY, theme);
     } catch {
