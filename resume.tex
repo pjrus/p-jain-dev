@@ -12,6 +12,9 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
 
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{\underline{#2}}}
+
 \definecolor{ink}{HTML}{202124}
 \definecolor{muted}{HTML}{5F6368}
 
@@ -56,6 +59,7 @@
 \begin{itemize}
   \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
   \item Collaborated on implementation, testing and documentation across the software development lifecycle.
+  \item Worked with the team to deliver features and resolve issues across the stack, following agreed development practices.
 \end{itemize}
 
 \resumeEntry{Web Developer}{Mar. 2026 -- Present}{Ocean Connect}{Remote}
@@ -65,13 +69,6 @@
   \item Apply web development skills to strengthen the organisation's digital presence and its mission of raising awareness about marine biodiversity and coastal conservation.
 \end{itemize}
 
-\resumeEntry{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
-\begin{itemize}
-  \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
-  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
-  \item Contribute to the organisation's coordination, communication and operational workflows.
-\end{itemize}
-
 \resumeEntry{Project Coordinator}{Aug. 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
 \begin{itemize}
   \item Lead collaboration with the academic supervisor to define project goals and strategies for developing low-cost tactile and refreshable Braille displays.
@@ -79,6 +76,13 @@
   \item Conduct user interviews and design surveys to gather insights for user-centred development.
   \item Lead development of the React Native mobile application supporting the tactile display project.
   \item Received more than 90\% positive feedback from team members for effective leadership and communication.
+\end{itemize}
+
+\resumeEntry{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
+  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
+  \item Contribute to the organisation's coordination, communication and operational workflows.
 \end{itemize}
 
 \resumeEntry{Projects Officer}{Mar. 2025 -- Aug. 2025}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
@@ -114,9 +118,10 @@
   \item Stored data in the browser with IndexedDB and used a CRDT-based model for conflict-free state.
 \end{itemize}
 
-\resumeProject{Personal Portfolio Website}{Jan. 2025 -- Present}{Web development, VPS \textbar{} \href{https://p-jain.dev}{p-jain.dev} \textbar{} \href{https://github.com/pjrus/p-jain-dev}{GitHub}}
+\resumeProject{Personal Portfolio Website}{Jan. 2025 -- Present}{SvelteKit, JavaScript, CSS, VPS \textbar{} \href{https://p-jain.dev}{p-jain.dev} \textbar{} \href{https://github.com/pjrus/p-jain-dev}{GitHub}}
 \begin{itemize}
-  \item Developed and maintain a portfolio website showcasing projects and technical skills.
+  \item Developed and maintain a SvelteKit portfolio website showcasing projects and technical skills.
+  \item Built a responsive, accessible interface presenting shipped software, accessibility work and experience across web, mobile and hardware.
   \item Deployed the site on a virtual private server with custom domain configuration.
 \end{itemize}
 
