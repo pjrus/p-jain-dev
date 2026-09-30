@@ -19,16 +19,16 @@
 \color{ink}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\setlist[itemize]{leftmargin=1.25em,itemsep=1pt,topsep=2pt,parsep=0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=0pt,topsep=1pt,parsep=0pt}
 \titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
-\titlespacing*{\section}{0pt}{9pt}{5pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
 \newcommand{\resumeEntry}[4]{%
   \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \textbf{#1} & \textit{#2} \\
+    \textbf{#1} & \textit{#2} \\[-1pt]
     {\color{muted}#3} & {\color{muted}\textit{#4}}
   \end{tabularx}
-  \vspace{1pt}
+  \vspace{-1pt}
 }
 
 \newcommand{\resumeProject}[3]{%
@@ -36,7 +36,7 @@
     \textbf{#1} & \textit{#2}
   \end{tabularx}
   \textit{\color{muted}#3}
-  \vspace{1pt}
+  \vspace{-1pt}
 }
 
 \begin{document}
@@ -54,7 +54,6 @@
 \resumeEntry{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
 
 \section{Experience}
-
 \resumeEntry{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
 \begin{itemize}
   \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
