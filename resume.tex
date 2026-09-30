@@ -24,11 +24,9 @@
 \titlespacing*{\section}{0pt}{6pt}{3pt}
 
 \newcommand{\resumeEntry}[4]{%
-  \begin{tabularx}{\textwidth}{@{}Xr@{}}
-    \textbf{#1} & \textit{#2} \\[-1pt]
-    {\color{muted}#3} & {\color{muted}\textit{#4}}
-  \end{tabularx}
-  \vspace{-1pt}
+  \noindent\textbf{#1}\hfill\textit{#2}\par
+  \noindent{\color{muted}#3\hfill\textit{#4}}\par
+  \vspace{1pt}
 }
 
 \newcommand{\resumeProject}[3]{%
