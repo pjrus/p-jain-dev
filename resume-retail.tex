@@ -10,6 +10,8 @@
 \usepackage{tabularx}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{\underline{#2}}}
 \usepackage{titlesec}
 
 \definecolor{ink}{HTML}{202124}
@@ -59,11 +61,12 @@
   \href{https://p-jain.dev}{p-jain.dev}\par
 }
 
-\section{Summary}
+\vspace{6pt}
 University student with a strong people focus and a habit of listening before offering solutions. Experienced in interviewing and supporting members of the community, including people who are blind or have low vision, and in explaining things simply and patiently. Leads a small team with consistently positive feedback on communication and support. Seeking a customer-facing role where everyone feels heard and looked after.
 
 \section{Education}
 \resumeJob{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science, WAM: 73.8, GPA: 3.000}{}
+\par\vspace{3pt}\noindent\textbf{Key subjects:} IT Professional Practice (FIT1049); Computer Science Project 1 (FIT3161)
 
 \section{Experience}
 
@@ -86,7 +89,7 @@ University student with a strong people focus and a habit of listening before of
 \begin{itemize}
   \item Welcomed feedback and acted on it straight away, learning new tasks quickly and taking ownership of my work.
   \item Worked closely with a team, and was described by my supervisor as motivated, dependable and adaptable.
-  \item Approached tasks thoughtfully and asked questions to understand the reasons behind how things are done, not just the steps.
+  \item Contributed to day-to-day team tasks, checking work carefully and keeping clear written records.
 \end{itemize}
 
 \resumeJob{Volunteer -- Open Day}{2 Aug. 2026}{Monash University}{Clayton, VIC}
