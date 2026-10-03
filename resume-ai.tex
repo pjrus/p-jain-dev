@@ -1,0 +1,146 @@
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\let\oldhref\href
+\renewcommand{\href}[2]{\oldhref{#1}{\underline{#2}}}
+
+\definecolor{ink}{HTML}{202124}
+\definecolor{muted}{HTML}{5F6368}
+
+\pagestyle{empty}
+\color{ink}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=0pt,topsep=1pt,parsep=0pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\resumeEntry}[4]{%
+  \noindent\textbf{#1}\hfill\textit{#2}\par
+  \noindent{\color{muted}#3\hfill\textit{#4}}\par
+  \vspace{1pt}
+}
+
+\newcommand{\resumeProject}[3]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textit{#2}
+  \end{tabularx}
+  \textit{\color{muted}#3}
+  \vspace{-1pt}
+}
+
+\begin{document}
+
+{\centering
+  {\LARGE\bfseries Paarangat Jain}\par
+  \vspace{3pt}
+  0410 215 889 \textbar{} \href{mailto:paarangat@gmail.com}{paarangat@gmail.com} \textbar{}
+  \href{https://linkedin.com/in/paarangat-jain}{linkedin.com/in/paarangat-jain} \textbar{}
+  \href{https://p-jain.dev}{p-jain.dev}\par
+}
+
+\section{Education}
+\resumeEntry{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science (Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
+\resumeEntry{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
+
+\section{Experience}
+\resumeEntry{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
+\begin{itemize}
+  \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
+  \item Collaborated on implementation, testing and documentation across the software development lifecycle.
+  \item Worked with the team to deliver features and resolve issues across the stack, following agreed development practices.
+\end{itemize}
+
+\resumeEntry{Web Developer}{Mar. 2026 -- Present}{Ocean Connect}{Remote}
+\begin{itemize}
+  \item Support the development, management and maintenance of Ocean Connect's website, keeping programme, event and community initiative information clear, accessible and up to date.
+  \item Improve site structure and update content so volunteers and community members can easily engage with environmental education and citizen science initiatives.
+  \item Apply web development skills to strengthen the organisation's digital presence and its mission of raising awareness about marine biodiversity and coastal conservation.
+\end{itemize}
+
+\resumeEntry{Project Coordinator}{Aug. 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Lead collaboration with the academic supervisor to define project goals and strategies for developing low-cost tactile and refreshable Braille displays.
+  \item Guide and coordinate project officers in brainstorming and developing accessibility technology.
+  \item Conduct user interviews and design surveys to gather insights for user-centred development.
+  \item Lead development of the React Native mobile application supporting the tactile display project.
+  \item Received more than 90\% positive feedback from team members for effective leadership and communication.
+\end{itemize}
+
+\resumeEntry{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
+  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
+  \item Contribute to the organisation's coordination, communication and operational workflows.
+\end{itemize}
+
+\resumeEntry{Projects Officer}{Mar. 2025 -- Aug. 2025}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Collaborated with the academic supervisor and fellow officers to brainstorm accessibility solutions.
+  \item Assisted in the design, development and testing of tactile display components for blind and low-vision users.
+\end{itemize}
+
+\section{Projects}
+\resumeProject{Skill-Issue (Skilliton)}{Feb. 2026}{Next.js, TypeScript, Firebase, Genkit, Gemini, Claude Code, Tailwind CSS \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://studio--studio-818276670-ce8c7.us-central1.hosted.app}{Live}}
+\begin{itemize}
+  \item Built an AI-powered peer-to-peer skill exchange platform at UniHack 2026, enabling university students to find partners for skill swaps.
+  \item Developed the full-stack application with Next.js, TypeScript and Firebase Authentication with Google OAuth support.
+  \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
+  \item Implemented booking with Google Meet links and downloadable calendar events.
+\end{itemize}
+
+\resumeProject{Trackie}{Apr. 2026 -- Present}{Next.js, React, TypeScript, dnd-kit, Claude Code \textbar{} \href{https://github.com/pjrus/trackie}{GitHub} \textbar{} \href{https://pjrus.github.io/trackie/kanban/}{Live}}
+\begin{itemize}
+  \item Built a private, local-first workspace for tracking job applications from first save through to offer.
+  \item Implemented a drag-and-drop Kanban board with dnd-kit, keeping all data stored locally in the browser.
+\end{itemize}
+
+\resumeProject{Ressie}{Apr. 2026 -- Present}{React, Vite, Node.js, Express, Tectonic \textbar{} \href{https://github.com/pjrus/ressie}{GitHub} \textbar{} \href{https://ressie.onrender.com/}{Live}}
+\begin{itemize}
+  \item Built a local-first resume builder that turns structured form data into polished LaTeX.
+  \item Added live PDF preview and multiple templates, compiling documents server-side with Tectonic.
+\end{itemize}
+
+\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
+\begin{itemize}
+  \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation.
+  \item Stored data in the browser with IndexedDB and used a CRDT-based model for conflict-free state.
+\end{itemize}
+
+\resumeProject{Personal Portfolio Website}{Jan. 2025 -- Present}{SvelteKit, JavaScript, CSS, VPS \textbar{} \href{https://p-jain.dev}{p-jain.dev} \textbar{} \href{https://github.com/pjrus/p-jain-dev}{GitHub}}
+\begin{itemize}
+  \item Developed and maintain a SvelteKit portfolio website showcasing projects and technical skills.
+  \item Built a responsive, accessible interface presenting shipped software, accessibility work and experience across web, mobile and hardware.
+  \item Deployed the site on a virtual private server with custom domain configuration.
+\end{itemize}
+
+\resumeProject{Pomodoro Timer App}{Dec. 2025 -- Present}{React Native, Expo, TypeScript \textbar{} \href{https://github.com/pjrus/pomo-app}{GitHub}}
+\begin{itemize}
+  \item Developed a full-featured iOS productivity application using React Native and Expo.
+  \item Integrated ambient sound playback, haptic feedback and multi-theme support.
+  \item Designed modular components with file-based routing and persistent local storage.
+\end{itemize}
+
+\section{Technical Skills}
+\textbf{Languages:} Haskell, Python, JavaScript, PHP, MySQL, R, TypeScript, HTML/CSS\\
+\textbf{AI \& agentic engineering:} Claude Code, agentic AI engineering (designing agent workflows, tool use and prompt/context engineering; reviewing and verifying AI-generated code), Google Genkit, Gemini, AI-assisted development\\
+\textbf{Operating systems:} Linux (Manjaro), macOS, Windows\\
+\textbf{Technologies:} React Native, React, Next.js, Expo, Docker, Git, Arduino, MongoDB, Figma, VPS deployment, functional programming, statistical analysis
+
+\section{Certifications}
+Deloitte Australia Technology Job Simulation (2025)\\
+Google Technical Support Fundamentals Certificate (Grade: 98.35\%)\\
+FreeCodeCamp Responsive Web Design Certification
+
+\end{document}
