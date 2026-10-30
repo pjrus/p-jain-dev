@@ -34,7 +34,7 @@
 
 .project-card:hover,
 .project-card:focus-within {
-  border-color: var(--ink);
+  border-color: var(--primary);
 }
 
 .project-summary {
