@@ -94,7 +94,7 @@
 }
 
 .tag-list li:hover {
-  border-color: var(--ink);
+  border-color: var(--primary);
   color: var(--ink);
 }
 
@@ -179,7 +179,7 @@
 }
 
 .project-toggle:hover {
-  border-color: var(--ink);
+  border-color: var(--primary);
   background: var(--ink);
   color: var(--background);
 }
