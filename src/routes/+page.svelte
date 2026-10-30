@@ -118,7 +118,7 @@
 
   <div class="hero-visual" aria-label="Portrait and current work">
     <figure class="portrait-card">
-      <img src={`${base}/images/paarangat-jain.webp`} alt="Paarangat Jain smiling in formal attire" />
+      <img src={`${base}/images/paarangat-jain.webp`} alt="Paarangat Jain smiling outdoors, wearing glasses and a grey t-shirt" />
     </figure>
   </div>
 </section>
