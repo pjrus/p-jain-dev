@@ -96,7 +96,7 @@
   font-weight: 600;
 }
 
-/* Portrait sits in normal flow and uses a black/white rectangular frame that follows the theme. */
+/* Portrait sits in normal flow and uses a black/white ring that follows the theme. */
 .hero-visual {
   display: flex;
   min-width: 0;
@@ -106,9 +106,10 @@
 
 .portrait-card {
   width: min(100%, 21.5rem);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1;
   overflow: hidden;
   border: clamp(0.15rem, 0.3vw, 0.2rem) solid var(--portrait-ring);
+  border-radius: 50%;
   background: var(--frame);
 }
 
