@@ -18,7 +18,7 @@
 }
 
 .stack-card:hover {
-  border-color: var(--ink);
+  border-color: var(--primary);
 }
 
 .stack-card-title {
