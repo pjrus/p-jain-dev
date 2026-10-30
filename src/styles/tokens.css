@@ -14,12 +14,13 @@
      canvas the one green clears 4.6:1 and serves both. */
   --primary-strong: #14852f;
   /* Filled buttons: hero CTA, contact submit, project cards' primary link.
-     Red in both themes; white labels clear 4.8:1. */
-  --button: #dc2626;
+     Ink fill with a canvas-coloured label, so black on light, white on dark. */
+  --button: var(--ink);
+  --button-ink: var(--background);
   /* Fill for the project cards' primary link. Follows --button in both
      themes; kept as its own role so the cards can be tuned separately. */
   --card-primary: var(--button);
-  /* The hero's role caption. Ink here; green in dark mode. */
+  /* The hero's role caption. Plain ink: black on light, white on dark. */
   --hero-role-ink: var(--ink);
   --accent: #ed6a4b;
 
@@ -161,7 +162,6 @@
   --primary: #14852f;
   --primary-ink: #ffffff;
   --primary-strong: #2ee86b;
-  --hero-role-ink: #86efac;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;

@@ -119,13 +119,13 @@
 .project-links .project-link-primary {
   border-color: var(--card-primary);
   background: var(--card-primary);
-  color: var(--primary-ink);
+  color: var(--button-ink);
 }
 
 .project-links .project-link-primary:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--background);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
 }
 
 /* Keep the detail panel aligned with the summary's internal padding. */
