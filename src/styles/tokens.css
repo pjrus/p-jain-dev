@@ -7,16 +7,16 @@
   --ink: #182238;
   --nav-ink: #000000;
   --muted: #182238;
-  --primary: #315ed6;
+  --primary: #2f7a3c;
   --primary-ink: #ffffff;
-  /* Signal blue set as text. Fills and text want different blues on a dark
+  /* Signal green set as text. Fills and text want different greens on a dark
      canvas (see the dark theme), so they are separate roles; on this light
-     canvas the one cobalt clears 5.7:1 and serves both. */
-  --primary-strong: #315ed6;
+     canvas the one green clears 5.1:1 and serves both. */
+  --primary-strong: #2f7a3c;
   /* Fill for the project cards' primary link. Follows --primary in both
      themes; kept as its own role so the cards can be tuned separately. */
   --card-primary: var(--primary);
-  /* The hero's role caption. Ink here; blue in dark mode. */
+  /* The hero's role caption. Ink here; green in dark mode. */
   --hero-role-ink: var(--ink);
   --accent: #ed6a4b;
 
@@ -26,7 +26,7 @@
      obligation. */
   --accent-strong: #d13813;
 
-  --tint: #e5edfb;
+  --tint: #e4f2e7;
   --line: #d9e0ea;
 
   /* The boundary of an interactive control, kept separate from the
@@ -133,8 +133,8 @@
 
 /* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
    surface lightness rather than by tinting the greys toward the brand hue,
-   so blue and coral only ever appear as action, state or emphasis (the tint
-   chip keeps its trace of blue because it is a state fill in both themes).
+   so green and coral only ever appear as action, state or emphasis (the tint
+   chip keeps its trace of green because it is a state fill in both themes).
    Components read roles only; nothing below the token layer names a colour. */
 :root[data-theme='dark'] {
   color-scheme: dark;
@@ -143,35 +143,29 @@
      so cards lift off the page without leaning on the shadow. */
   --background: #080808;
   --surface: #111113;
-  /* The light tint is the signal blue at a whisper; this keeps that
-     relationship, so hover fills and chips still belong to the blue. */
-  --tint: #1b2230;
+  /* The light tint is the signal green at a whisper; this keeps that
+     relationship, so hover fills and chips still belong to the green. */
+  --tint: #18241b;
 
   /* Text: >= 15:1 for ink and >= 6.5:1 for muted on every surface above. */
   --ink: #ffffff;
   --nav-ink: #ffffff;
   --muted: #b0b0b5;
 
-  /* Signal blue splits in two here. Lightening the cobalt far enough to read
-     as text on black drains its chroma into periwinkle, and no single blue
-     carries both a white label and 4.5:1 text on these surfaces. So:
-     - fill: the brand hue (oklch h 265) lifted brighter and more saturated
-       so it holds its own on black. White labels clear 4.9:1, and thin rails
-       and markers sit near 4:1 against the canvas.
-     - text: lightened only as far as AA needs and turned a few degrees
-       toward azure, where sRGB keeps more chroma, so it stays a vivid blue
-       instead of going lavender (6.1:1 on cards, 6.6:1 on the canvas). */
-  --primary: #3667ed;
+  /* Signal green splits in two here: a fill that carries white labels
+     (4.8:1) and a lighter text green that clears AA on every dark surface
+     (8.5:1 on cards, 9:1 on the canvas). */
+  --primary: #2a823c;
   --primary-ink: #ffffff;
-  --primary-strong: #5397fc;
-  --hero-role-ink: #8ab8ff;
+  --primary-strong: #4fc46b;
+  --hero-role-ink: #9be3ad;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;
 
-  /* Coral lifted for a black canvas goes salmon, and beside the cobalt button
+  /* Coral lifted for a black canvas goes salmon, and beside the green button
      and portrait ring it reads as a third, unrelated colour. The evidence
-     rail joins the blue instead, as the blockquote rail already does. */
+     rail joins the green instead, as the blockquote rail already does. */
   --accent-bar-color: var(--primary);
 
   --line: #26262b;
