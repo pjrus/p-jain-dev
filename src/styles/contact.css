@@ -99,9 +99,9 @@
 }
 
 .contact-submit:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--background);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
 }
 
 .contact-form-note {
