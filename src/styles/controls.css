@@ -17,7 +17,7 @@
 }
 
 .button-primary {
-  background: var(--primary);
+  background: var(--button);
   color: var(--primary-ink);
   box-shadow: var(--shadow);
 }

@@ -7,15 +7,18 @@
   --ink: #182238;
   --nav-ink: #000000;
   --muted: #182238;
-  --primary: #2f7a3c;
+  --primary: #14852f;
   --primary-ink: #ffffff;
   /* Signal green set as text. Fills and text want different greens on a dark
      canvas (see the dark theme), so they are separate roles; on this light
-     canvas the one green clears 5.1:1 and serves both. */
-  --primary-strong: #2f7a3c;
-  /* Fill for the project cards' primary link. Follows --primary in both
+     canvas the one green clears 4.6:1 and serves both. */
+  --primary-strong: #14852f;
+  /* Filled buttons: hero CTA, contact submit, project cards' primary link.
+     Red in both themes; white labels clear 4.8:1. */
+  --button: #dc2626;
+  /* Fill for the project cards' primary link. Follows --button in both
      themes; kept as its own role so the cards can be tuned separately. */
-  --card-primary: var(--primary);
+  --card-primary: var(--button);
   /* The hero's role caption. Ink here; green in dark mode. */
   --hero-role-ink: var(--ink);
   --accent: #ed6a4b;
@@ -26,7 +29,7 @@
      obligation. */
   --accent-strong: #d13813;
 
-  --tint: #e4f2e7;
+  --tint: #dcf7e3;
   --line: #d9e0ea;
 
   /* The boundary of an interactive control, kept separate from the
@@ -145,7 +148,7 @@
   --surface: #111113;
   /* The light tint is the signal green at a whisper; this keeps that
      relationship, so hover fills and chips still belong to the green. */
-  --tint: #18241b;
+  --tint: #112a18;
 
   /* Text: >= 15:1 for ink and >= 6.5:1 for muted on every surface above. */
   --ink: #ffffff;
@@ -153,12 +156,12 @@
   --muted: #b0b0b5;
 
   /* Signal green splits in two here: a fill that carries white labels
-     (4.8:1) and a lighter text green that clears AA on every dark surface
-     (8.5:1 on cards, 9:1 on the canvas). */
-  --primary: #2a823c;
+     (4.7:1) and a lighter text green that clears AA on every dark surface
+     (11.6:1 on cards). */
+  --primary: #14852f;
   --primary-ink: #ffffff;
-  --primary-strong: #4fc46b;
-  --hero-role-ink: #9be3ad;
+  --primary-strong: #2ee86b;
+  --hero-role-ink: #86efac;
   --accent: #ff8a6c;
   /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
   --accent-strong: #ff8a6c;
