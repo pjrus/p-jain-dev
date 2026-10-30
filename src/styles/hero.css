@@ -108,7 +108,7 @@
   width: min(100%, 21.5rem);
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border: clamp(0.15rem, 0.3vw, 0.2rem) solid var(--portrait-ring);
+  border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--portrait-ring);
   background: var(--frame);
 }
 
