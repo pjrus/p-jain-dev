@@ -40,7 +40,6 @@
 
   /* Plinth behind the portrait. */
   --frame: #182238;
-  --portrait-ring: #000000;
 
   --shadow: 0 14px 30px rgba(24, 34, 56, 0.09);
   --font-display: 'Bricolage Grotesque', sans-serif;
@@ -138,7 +137,6 @@
    chip keeps its trace of blue because it is a state fill in both themes).
    Components read roles only; nothing below the token layer names a colour. */
 :root[data-theme='dark'] {
-  --portrait-ring: #ffffff;
   color-scheme: dark;
 
   /* Elevation ladder: canvas -> card -> chip, each step lighter than the last
