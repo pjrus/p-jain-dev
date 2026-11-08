@@ -65,7 +65,7 @@ The combination — hardware-adjacent assistive technology, real production empl
 
 **Real and usable:**
 - Portrait: `static/images/paarangat-jain.webp`
-- Project screenshots: `static/images/` — `ressie.png`, `skill-issue.png`, `trackie.png`, `puzzie.png`, `mazzie.png`, `pomo-app.jpeg`, `portfolio.png`
+- Project screenshots: `static/images/` — `ressie.png`, `skill-issue.png`, `visualiser.png`, `trackie.png`, `pomo-app.jpeg`, `portfolio.png`, `inkboard.png`
 - Résumé PDF: `static/Paarangat-Jain-Resume.pdf`
 - Live deployments: Ressie (ressie.onrender.com) and Skilliton (Firebase-hosted)
 - Public source on GitHub for Ressie, Skilliton, Trackie, and the Pomodoro timer

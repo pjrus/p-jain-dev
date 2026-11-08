@@ -12,14 +12,14 @@ export const projects = [
     visit: 'https://studio--studio-818276670-ce8c7.us-central1.hosted.app',
   },
   {
-    title: 'Trackie',
+    title: 'Braille Keyboard Visualiser',
     description:
-      'A private, local-first workspace for tracking job applications from first save through to offer.',
-    image: `${base}/images/trackie.png`,
-    alt: 'Trackie job application Kanban board',
-    tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
-    github: 'https://github.com/pjrus/trackie',
-    visit: 'https://pjrus.github.io/trackie/kanban/',
+      'A 3D interactive visualiser for exploring Hable-inspired braille keyboard layouts, Perkins-style chord typing and custom key mappings.',
+    image: `${base}/images/visualiser.png`,
+    alt: 'Braille Keyboard Visualiser 3D layout interface',
+    tags: ['Next.js', 'React', 'Three.js', 'TypeScript', 'WebGL'],
+    github: 'https://github.com/pjrus/braille-keyboard-visualizer',
+    visit: 'https://pjrus.github.io/braille-keyboard-visualizer/',
   },
   {
     title: 'Ressie',
@@ -30,6 +30,16 @@ export const projects = [
     tags: ['React', 'Vite', 'Node.js', 'Express', 'Tectonic'],
     github: 'https://github.com/pjrus/ressie',
     visit: 'https://ressie.onrender.com/',
+  },
+  {
+    title: 'Trackie',
+    description:
+      'A private, local-first workspace for tracking job applications from first save through to offer.',
+    image: `${base}/images/trackie.png`,
+    alt: 'Trackie job application Kanban board',
+    tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'dnd-kit'],
+    github: 'https://github.com/pjrus/trackie',
+    visit: 'https://pjrus.github.io/trackie/kanban/',
   },
   {
     title: 'Portfolio website',
@@ -58,26 +68,6 @@ export const projects = [
     alt: 'Pomodoro timer mobile app',
     tags: ['React Native', 'Expo', 'TypeScript', 'Local storage'],
     github: 'https://github.com/pjrus/pomo-app',
-  },
-  {
-    title: 'Puzzie',
-    description:
-      'A local-first puzzle platform with daily challenges across word, number, logic and grid-based formats.',
-    image: `${base}/images/puzzie.png`,
-    alt: 'Puzzie puzzle platform homepage with a featured daily challenge',
-    tags: ['Next.js', 'React', 'TypeScript', 'Local-first', 'Tailwind CSS'],
-    github: 'https://github.com/pjrus/puzzie',
-    visit: 'https://pjrus.github.io/puzzie/',
-  },
-  {
-    title: 'Mazzie',
-    description:
-      'A daily equation puzzle where every guess must be mathematically valid and balance correctly.',
-    image: `${base}/images/mazzie.png`,
-    alt: 'Mazzie daily equation puzzle interface',
-    tags: ['SvelteKit', 'Svelte 5', 'TypeScript', 'Vitest', 'Local-first'],
-    github: 'https://github.com/pjrus/mazzie',
-    visit: 'https://pjrus.github.io/mazzie/',
   },
 ];
 
