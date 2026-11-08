@@ -96,7 +96,7 @@
   font-weight: 600;
 }
 
-/* Portrait sits in normal flow and uses the primary colour as a crisp ring. */
+/* Portrait sits in normal flow. */
 .hero-visual {
   display: flex;
   min-width: 0;
@@ -108,7 +108,6 @@
   width: min(100%, 21.5rem);
   aspect-ratio: 1;
   overflow: hidden;
-  border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--primary);
   border-radius: 50%;
   background: var(--frame);
 }
