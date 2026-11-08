@@ -29,6 +29,7 @@ export const projects = [
     alt: 'Inkboard infinite canvas application',
     tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
     github: 'https://github.com/pjrus/inkboard',
+    visit: 'https://pjrus.github.io/inkboard/',
   },
   {
     title: 'Ressie',
