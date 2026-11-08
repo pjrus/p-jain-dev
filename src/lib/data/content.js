@@ -22,6 +22,15 @@ export const projects = [
     visit: 'https://pjrus.github.io/braille-keyboard-visualizer/',
   },
   {
+    title: 'Inkboard',
+    description:
+      'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
+    image: `${base}/images/inkboard.png`,
+    alt: 'Inkboard infinite canvas application',
+    tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
+    github: 'https://github.com/pjrus/inkboard',
+  },
+  {
     title: 'Ressie',
     description:
       'A local-first resume builder that turns structured form data into polished LaTeX, with live PDF preview and multiple templates.',
@@ -49,15 +58,6 @@ export const projects = [
     alt: 'Personal portfolio website homepage',
     tags: ['SvelteKit', 'JavaScript', 'CSS', 'Accessibility'],
     github: 'https://github.com/pjrus/p-jain-dev',
-  },
-  {
-    title: 'Inkboard',
-    description:
-      'A local-first infinite canvas for handwriting, typed notes and PDF annotation.',
-    image: `${base}/images/inkboard.png`,
-    alt: 'Inkboard infinite canvas application',
-    tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'Local-first'],
-    github: 'https://github.com/pjrus/inkboard',
   },
   {
     title: 'Pomodoro timer',
