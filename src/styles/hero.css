@@ -40,10 +40,10 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(17.5rem, 0.85fr);
   align-items: center;
   padding-block: clamp(3.5rem, 6vw, 5.5rem) var(--section-space);
-  gap: clamp(2rem, 3vw, 2.75rem);
+  gap: clamp(1.6rem, 2.5vw, 2.25rem);
 }
 
 .hero-role {
@@ -105,7 +105,7 @@
 }
 
 .portrait-card {
-  width: min(100%, 21.5rem);
+  width: min(100%, 18.5rem);
   aspect-ratio: 1;
   overflow: hidden;
   border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--primary);
@@ -168,7 +168,7 @@
   }
 
   .portrait-card {
-    width: min(100%, 22rem);
+    width: min(100%, 18.5rem);
   }
 }
 
@@ -214,6 +214,6 @@
   }
 
   .portrait-card {
-    width: min(82vw, 22rem);
+    width: min(75vw, 18.5rem);
   }
 }
