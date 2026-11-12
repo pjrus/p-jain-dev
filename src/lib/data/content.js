@@ -60,16 +60,6 @@ export const projects = [
     tags: ['SvelteKit', 'JavaScript', 'CSS', 'Accessibility'],
     github: 'https://github.com/pjrus/p-jain-dev',
   },
-  {
-    title: 'Pomodoro timer',
-    description:
-      'A focused iOS timer that keeps the essential work-and-rest rhythm simple and pleasant to use.',
-    image: `${base}/images/pomo-app.jpeg`,
-    imagePosition: 'center 20%',
-    alt: 'Pomodoro timer mobile app',
-    tags: ['React Native', 'Expo', 'TypeScript', 'Local storage'],
-    github: 'https://github.com/pjrus/pomo-app',
-  },
 ];
 
 export const education = [
