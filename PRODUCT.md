@@ -67,7 +67,7 @@ The combination — hardware-adjacent assistive technology, real production empl
 - Portrait: `static/images/paarangat-jain.webp`
 - Project screenshots: `static/images/` — `ressie.png`, `skill-issue.png`, `visualiser.png`, `trackie.png`, `pomo-app.jpeg`, `portfolio.png`, `inkboard.png`
 - Résumé PDF: `static/Paarangat-Jain-Resume.pdf`
-- Live deployments: Ressie (ressie.onrender.com) and Skilliton (Firebase-hosted)
+- Live deployments: Ressie (pjrus.github.io/ressie) and Skilliton (Firebase-hosted)
 - Public source on GitHub for Ressie, Skilliton, Trackie, and the Pomodoro timer
 - Verifiable affiliations: PlasmIT Vector, Ocean Connect, Monash Assistive Technology Team; UniHack 2026 participation
 

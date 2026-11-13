@@ -34,12 +34,12 @@ export const projects = [
   {
     title: 'Ressie',
     description:
-      'A local-first resume builder that turns structured form data into polished LaTeX, with live PDF preview and multiple templates.',
+      'A local-first resume builder that turns structured form data into polished LaTeX, rendered statically in JavaScript with live preview and multiple templates.',
     image: `${base}/images/ressie.png`,
     alt: 'Ressie resume builder dashboard',
-    tags: ['React', 'Vite', 'Node.js', 'Express', 'Tectonic'],
+    tags: ['React', 'Vite', 'JavaScript', 'LaTeX', 'Local-first'],
     github: 'https://github.com/pjrus/ressie',
-    visit: 'https://ressie.onrender.com/',
+    visit: 'https://pjrus.github.io/ressie/',
   },
   {
     title: 'Trackie',
