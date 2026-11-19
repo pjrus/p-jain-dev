@@ -1,48 +1,49 @@
 /* ============================================================================
-   About Page
+   About Page: balanced 2-column narrative + photo & equal-height education row
    ========================================================================== */
 
 .about-page {
   display: grid;
-  gap: 40px;
+  gap: 36px;
 }
 
 .about-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(32px, 5vw, 64px);
-  align-items: start;
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
 }
 
 .about-copy {
   display: grid;
-  gap: 20px;
+  gap: 18px;
   max-width: var(--measure);
   font-size: 1.0625rem;
-  line-height: 1.7;
+  line-height: 1.68;
   color: var(--ink);
 }
 
 .about-figure {
   overflow: hidden;
   border-radius: var(--r-md);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
 
 .about-figure img {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
 .about-education {
-  margin-top: 24px;
-  padding-top: 40px;
+  margin-top: 12px;
+  padding-top: 36px;
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .education-grid {
@@ -53,9 +54,9 @@
 
 .education-card {
   padding: 24px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
-  background: var(--surface);
+  background: var(--surface-raised);
   display: grid;
   gap: 8px;
 }
@@ -75,5 +76,6 @@
   .about-layout,
   .education-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
