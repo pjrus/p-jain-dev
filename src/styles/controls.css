@@ -38,7 +38,7 @@
 
 .btn--secondary {
   border-color: var(--line-strong);
-  background: var(--surface-raised);
+  background: transparent;
   color: var(--ink);
 }
 

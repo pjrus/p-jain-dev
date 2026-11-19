@@ -1,37 +1,38 @@
 /* ============================================================================
-   Design System Tokens: Stone & Blueprint (taste-skill dealt palette + Geist)
+   Design System Tokens: Crisp Architectural White & Deep Obsidian Dark
+   High-contrast WCAG 2.2 AA/AAA palette + Geist / Geist Mono typography
    Harmonized with ScrollCraft floor tokens (--sc-*)
    ========================================================================== */
 
 :root {
-  /* Core palette (dealt: stone-blueprint) */
-  --bg: #dfdedb;
-  --surface: #d3d2ce;
-  --surface-raised: #e8e7e4;
-  --ink: #26251e;
-  --muted: #55534b;
-  --accent: #2456d6;
-  --accent-hover: #1c44b0;
+  /* Light mode: crisp gallery white + deep graphite ink + blueprint cobalt */
+  --bg: #fbfbfa;
+  --surface: #f2f2f0;
+  --surface-raised: #ffffff;
+  --ink: #111110;
+  --muted: #4b4b47;
+  --accent: #1d4ed8;
+  --accent-hover: #173fb0;
   --accent-ink: #ffffff;
-  --action: #2456d6;
+  --action: #1d4ed8;
   --action-ink: #ffffff;
-  --line: rgba(38, 37, 30, 0.14);
-  --line-strong: rgba(38, 37, 30, 0.28);
-  --tint: rgba(38, 37, 30, 0.055);
-  --accent-tint: rgba(36, 86, 214, 0.1);
+  --line: rgba(17, 17, 16, 0.12);
+  --line-strong: rgba(17, 17, 16, 0.24);
+  --tint: rgba(17, 17, 16, 0.045);
+  --accent-tint: rgba(29, 78, 216, 0.085);
 
-  /* Inverted dark gallery room tokens */
-  --inv-bg: #26251e;
-  --inv-surface: #313029;
-  --inv-surface-raised: #3b3a32;
-  --inv-ink: #ebeae6;
-  --inv-muted: #b5b3ac;
-  --inv-accent: #7aa2ff;
-  --inv-accent-ink: #161612;
-  --inv-line: rgba(235, 234, 230, 0.15);
-  --inv-line-strong: rgba(235, 234, 230, 0.3);
+  /* Inverted obsidian dark gallery room tokens */
+  --inv-bg: #0a0a0c;
+  --inv-surface: #131317;
+  --inv-surface-raised: #1b1b21;
+  --inv-ink: #f7f7f8;
+  --inv-muted: #a9a9b3;
+  --inv-accent: #7da8ff;
+  --inv-accent-ink: #0a0a0c;
+  --inv-line: rgba(247, 247, 248, 0.15);
+  --inv-line-strong: rgba(247, 247, 248, 0.3);
 
-  /* Compatibility aliases for blog/post/theme-color */
+  /* Compatibility aliases */
   --background: var(--bg);
   --primary: var(--accent);
   --primary-strong: var(--accent);
@@ -80,14 +81,14 @@
   --r-lg: 18px;
   --r-btn: 8px;
 
-  /* Elevation (canvas-tinted offset + soft blur + 1px edge light) */
-  --shadow-sm: 0 1px 2px rgba(38, 37, 30, 0.08), 0 4px 12px -2px rgba(38, 37, 30, 0.08);
-  --shadow-md: 0 2px 6px rgba(38, 37, 30, 0.09), 0 14px 32px -8px rgba(38, 37, 30, 0.14);
-  --shadow-lg: 0 4px 12px rgba(38, 37, 30, 0.1), 0 24px 56px -16px rgba(38, 37, 30, 0.22);
-  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+  /* Elevation (subtle canvas-tinted shadows + crisp edge light) */
+  --shadow-sm: 0 1px 2px rgba(17, 17, 16, 0.06), 0 4px 12px -2px rgba(17, 17, 16, 0.06);
+  --shadow-md: 0 2px 6px rgba(17, 17, 16, 0.07), 0 14px 32px -8px rgba(17, 17, 16, 0.11);
+  --shadow-lg: 0 4px 12px rgba(17, 17, 16, 0.08), 0 24px 56px -16px rgba(17, 17, 16, 0.16);
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.85);
   --shadow: var(--shadow-sm);
 
-  /* Motion tokens (harmonized with taste-skill motion.md & scrollcraft) */
+  /* Motion tokens */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
   --m-in: 150ms;
@@ -115,36 +116,36 @@
   --sc-r-lg: var(--r-lg);
 }
 
-/* Explicit dark theme (visitor-toggled, never default) */
+/* Dark mode: deeper obsidian dark with high-contrast AAA ink & cobalt accent */
 :root[data-theme='dark'] {
-  --bg: #181815;
-  --surface: #22211d;
-  --surface-raised: #2b2a25;
-  --ink: #ecebe6;
-  --muted: #b0aea6;
-  --accent: #7aa2ff;
-  --accent-hover: #96b5ff;
-  --accent-ink: #121317;
-  --action: #7aa2ff;
-  --action-ink: #121317;
-  --line: rgba(236, 235, 230, 0.14);
-  --line-strong: rgba(236, 235, 230, 0.28);
-  --tint: rgba(236, 235, 230, 0.06);
-  --accent-tint: rgba(122, 162, 255, 0.14);
+  --bg: #08080a;
+  --surface: #111115;
+  --surface-raised: #17171c;
+  --ink: #f6f6f8;
+  --muted: #a6a6b0;
+  --accent: #7aa8ff;
+  --accent-hover: #97bcff;
+  --accent-ink: #08080a;
+  --action: #7aa8ff;
+  --action-ink: #08080a;
+  --line: rgba(246, 246, 248, 0.14);
+  --line-strong: rgba(246, 246, 248, 0.28);
+  --tint: rgba(246, 246, 248, 0.06);
+  --accent-tint: rgba(122, 168, 255, 0.14);
 
-  --inv-bg: #10100e;
-  --inv-surface: #1b1a17;
-  --inv-surface-raised: #24231f;
-  --inv-ink: #ecebe6;
-  --inv-muted: #b0aea6;
-  --inv-accent: #7aa2ff;
-  --inv-accent-ink: #121317;
-  --inv-line: rgba(236, 235, 230, 0.14);
-  --inv-line-strong: rgba(236, 235, 230, 0.28);
+  --inv-bg: #040406;
+  --inv-surface: #101014;
+  --inv-surface-raised: #18181f;
+  --inv-ink: #f6f6f8;
+  --inv-muted: #a8a8b2;
+  --inv-accent: #7aa8ff;
+  --inv-accent-ink: #040406;
+  --inv-line: rgba(246, 246, 248, 0.15);
+  --inv-line-strong: rgba(246, 246, 248, 0.3);
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.34), 0 6px 16px -4px rgba(0, 0, 0, 0.42);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.36), 0 16px 36px -10px rgba(0, 0, 0, 0.54);
-  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.4), 0 28px 64px -18px rgba(0, 0, 0, 0.68);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 6px 16px -4px rgba(0, 0, 0, 0.52);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.5), 0 16px 36px -10px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.55), 0 28px 64px -18px rgba(0, 0, 0, 0.78);
   --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 

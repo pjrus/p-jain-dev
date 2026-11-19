@@ -1,5 +1,6 @@
 /* ============================================================================
    Act 6: Grounded Contact & Closing Plate
+   Shared equal-edge 6/6 split at x = 732px on 1440px
    ========================================================================== */
 
 .contact {
@@ -9,19 +10,20 @@
 
 .contact-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
   align-items: start;
 }
 
 .contact-aside {
   display: grid;
   gap: 20px;
+  padding-right: clamp(0px, 2vw, 40px);
 }
 
 .contact-lede {
   max-width: 44ch;
-  color: var(--muted);
+  color: var(--ink);
   font-size: var(--t-lead);
   line-height: 1.56;
 }
@@ -160,14 +162,20 @@
 }
 
 .form-status {
+  min-height: 1.25em;
   color: var(--ink);
   font-size: var(--t-small);
   font-weight: 500;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .contact-aside {
+    padding-right: 0;
   }
 }
 

@@ -227,17 +227,17 @@
 }
 
 @media (max-width: 900px) {
-  .primary-nav {
+  .site-header .primary-nav {
     display: none;
   }
 
-  .menu-toggle {
+  .site-header .menu-toggle {
     display: inline-flex;
   }
 }
 
 @media (max-width: 640px) {
-  .header-cta {
+  .site-header .header-cta {
     display: none;
   }
 }

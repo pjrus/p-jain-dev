@@ -1,10 +1,10 @@
 @import './styles/tokens.css';
 @import './styles/base.css';
+@import './styles/controls.css';
 @import './styles/motion.css';
 @import './styles/header.css';
 @import './styles/hero.css';
 @import './styles/about.css';
-@import './styles/controls.css';
 @import './styles/section-heading.css';
 @import './styles/blog.css';
 @import './styles/post.css';

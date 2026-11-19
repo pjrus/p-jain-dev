@@ -1,5 +1,5 @@
 /* ============================================================================
-   Act 3 (PEAK): Inverted dark graphite Selected Work Horizontal Gallery Rail
+   Act 3 (PEAK): Inverted dark obsidian Selected Work Horizontal Gallery Rail
    ========================================================================== */
 
 .projects {
@@ -11,8 +11,8 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  padding-top: calc(var(--nav-h) + clamp(20px, 3vh, 36px));
-  padding-bottom: clamp(20px, 3vh, 36px);
+  padding-top: calc(var(--nav-h) + clamp(20px, 2.5vh, 32px));
+  padding-bottom: clamp(24px, 3vh, 36px);
   background: var(--inv-bg);
   color: var(--inv-ink);
 }
@@ -33,7 +33,7 @@
 
 .projects-lede {
   max-width: 48ch;
-  color: var(--inv-muted);
+  color: var(--inv-ink);
   font-size: var(--t-body);
   line-height: 1.5;
 }
@@ -66,7 +66,7 @@
 }
 
 .jump-pill {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid var(--inv-line);
   border-radius: var(--r-sm);
@@ -104,7 +104,6 @@
   padding-inline: max(var(--gut), calc((100vw - var(--maxw)) / 2));
   flex: 1;
   min-height: 0;
-  max-height: 570px;
 }
 
 .project-card {
@@ -145,7 +144,7 @@
 .project-media img {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: top center;
   transition: transform var(--m-image-out) var(--ease);
@@ -162,14 +161,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 16px;
-  padding: 20px 22px 22px;
+  gap: 14px;
+  padding: 18px 20px 20px;
   flex: 1;
 }
 
 .project-top {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .project-top .meta-label {
@@ -178,11 +177,10 @@
 
 .project-top h3 {
   color: var(--inv-ink);
-  font-size: 1.375rem;
 }
 
 .project-description {
-  color: var(--inv-muted);
+  color: var(--inv-ink);
   font-size: var(--t-small);
   line-height: 1.54;
 }
@@ -234,12 +232,11 @@
 }
 
 .project-end-copy {
-  color: var(--inv-muted);
+  color: var(--inv-ink);
   font-size: var(--t-body);
   line-height: 1.56;
 }
 
-/* Tablet & mobile tuning: keep full cards cleanly inside 100svh */
 @media (max-width: 960px) {
   .projects-hud {
     align-items: flex-start;
@@ -254,7 +251,7 @@
   .projects-stage {
     gap: 14px;
     padding-top: calc(var(--nav-h) + 16px);
-    padding-bottom: 18px;
+    padding-bottom: 20px;
   }
 
   .projects-lede {
@@ -267,7 +264,6 @@
 
   .project-rail {
     gap: 16px;
-    max-height: 600px;
   }
 
   .project-card {
@@ -277,10 +273,6 @@
   .project-content {
     padding: 16px;
     gap: 12px;
-  }
-
-  .project-top h3 {
-    font-size: 1.2rem;
   }
 
   .project-end-card {

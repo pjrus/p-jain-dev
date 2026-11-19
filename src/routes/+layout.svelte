@@ -48,7 +48,6 @@
 
     <div class="footer-legal">
       <p>© {year} Paarangat Jain</p>
-      <p>Built with SvelteKit · WCAG 2.2 AA target</p>
     </div>
   </div>
 </footer>

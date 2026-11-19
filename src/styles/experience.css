@@ -1,5 +1,6 @@
 /* ============================================================================
-   Act 5: Experience Ledger with ScrollCraft --sc-p vertical cobalt spine
+   Act 5: Experience & Education Ledger with ScrollCraft --sc-p vertical spine
+   Shared equal-edge 6/6 split at x = 732px on 1440px
    ========================================================================== */
 
 .experience {
@@ -8,21 +9,54 @@
 
 .experience-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
-  gap: clamp(32px, 5vw, 64px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
   align-items: start;
 }
 
 .experience-header {
   display: grid;
-  gap: 14px;
+  gap: 20px;
+  padding-right: clamp(0px, 2vw, 40px);
 }
 
 .experience-intro {
-  color: var(--muted);
+  color: var(--ink);
+  font-size: var(--t-lead);
+  line-height: 1.56;
+  max-width: 44ch;
+}
+
+.experience-education {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.edu-mini-card {
+  display: grid;
+  gap: 6px;
+  padding: 20px 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-raised);
+}
+
+.edu-award {
+  color: var(--ink);
   font-size: var(--t-body);
-  line-height: 1.58;
-  max-width: 34ch;
+  font-weight: 500;
+}
+
+.edu-detail {
+  color: var(--muted);
+  font-size: var(--t-small);
+}
+
+.experience-action {
+  margin-top: 8px;
 }
 
 .experience-ledger {
@@ -52,14 +86,14 @@
 
 .experience-list {
   display: grid;
-  gap: 32px;
+  gap: 28px;
 }
 
 .experience-item {
   position: relative;
   display: grid;
   gap: 8px;
-  padding-bottom: 28px;
+  padding-bottom: 24px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -94,14 +128,13 @@
 .experience-org {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 8px;
+  align-items: baseline;
+  gap: 4px 8px;
   font-size: var(--t-small);
   font-weight: 500;
   color: var(--ink);
 }
 
-.experience-sep,
 .experience-loc {
   font-weight: 400;
   color: var(--muted);
@@ -110,15 +143,19 @@
 .experience-summary {
   margin-top: 4px;
   max-width: var(--measure);
-  color: var(--muted);
+  color: var(--ink);
   font-size: var(--t-body);
   line-height: 1.62;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .experience-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 32px;
+  }
+
+  .experience-header {
+    padding-right: 0;
   }
 }
 

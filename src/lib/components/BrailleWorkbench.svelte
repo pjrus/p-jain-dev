@@ -169,12 +169,14 @@
         {/each}
       </div>
 
-      <div class="bench-presets" role="group" aria-label="Preset tactile words">
+      <div class="bench-presets" role="tablist" aria-label="Preset tactile words">
         {#each PRESETS as word}
           <button
             type="button"
+            role="tab"
             class="preset-btn"
             class:is-active={activePreset === word}
+            aria-selected={activePreset === word}
             onclick={() => loadPreset(word)}
           >
             {word}

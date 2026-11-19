@@ -1,128 +1,54 @@
 ---
 name: Paarangat Jain — Portfolio
-description: A technical dossier for a developer and accessibility advocate — evidence-first, sharp-edged, and quietly confident.
+description: A tactile, scroll-driven portfolio for a Melbourne full-stack and assistive-tech developer.
 colors:
-  background: "#fafbfe"
-  surface: "#ffffff"
-  ink: "#182238"
-  muted: "#182238"
-  signal-blue: "#315ed6"
-  signal-blue-strong: "#315ed6"
+  background: "#fbfbfa"
+  surface: "#f2f2f0"
+  surface-raised: "#ffffff"
+  ink: "#111110"
+  muted: "#4b4b47"
+  signal-blue: "#1d4ed8"
+  signal-blue-strong: "#173fb0"
   primary-ink: "#ffffff"
-  flare-coral: "#ed6a4b"
-  flare-coral-strong: "#d13813"
-  tint: "#e5edfb"
-  line: "#d9e0ea"
-  frame: "#182238"
+  dark-background: "#08080a"
+  dark-surface: "#111115"
+  dark-ink: "#f6f6f8"
+  dark-accent: "#7aa8ff"
+  line: "rgba(17, 17, 16, 0.12)"
 typography:
   display:
-    fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "clamp(2.6rem, 4.3vw, 4.4rem)"
-    fontWeight: 700
-    lineHeight: 1.06
-    letterSpacing: "-0.04em"
+    fontFamily: "'Geist', system-ui, sans-serif"
+    fontSize: "clamp(2.5rem, 4.4vw, 4.5rem)"
+    fontWeight: 500
+    lineHeight: 1.02
+    letterSpacing: "-0.045em"
   headline:
-    fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "clamp(2.2rem, 3.8vw, 3.4rem)"
-    fontWeight: 600
-    lineHeight: 1.06
-    letterSpacing: "-0.04em"
+    fontFamily: "'Geist', system-ui, sans-serif"
+    fontSize: "clamp(1.875rem, 2.8vw, 3rem)"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "-0.035em"
   title:
-    fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "clamp(1.3rem, 1.8vw, 1.65rem)"
-    fontWeight: 600
-    lineHeight: 1.06
-    letterSpacing: "-0.04em"
-  entry-title:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)"
-    fontWeight: 700
-    lineHeight: 1.12
-    letterSpacing: "0.01em"
+    fontFamily: "'Geist', system-ui, sans-serif"
+    fontSize: "clamp(1.25rem, 1.5vw, 1.5rem)"
+    fontWeight: 500
+    lineHeight: 1.24
+    letterSpacing: "-0.02em"
   body:
-    fontFamily: "'DM Sans', sans-serif"
+    fontFamily: "'Geist', system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.65
-  body-lg:
-    fontFamily: "'DM Sans', sans-serif"
-    fontSize: "clamp(1.02rem, 1.3vw, 1.15rem)"
-    fontWeight: 400
-    lineHeight: 1.6
-  brand:
-    fontFamily: "'Bricolage Grotesque', sans-serif"
-    fontSize: "1.8rem"
-    fontWeight: 700
-    lineHeight: 1
-    letterSpacing: "-0.05em"
-  label-xs:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.7rem"
-    fontWeight: 600
+    lineHeight: 1.62
+  mono:
+    fontFamily: "'Geist Mono', ui-monospace, monospace"
+    fontSize: "0.8125rem"
+    fontWeight: 500
     lineHeight: 1.4
-    letterSpacing: "0.08em"
-  label-sm:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "0.08em"
-  label-md:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.8rem"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "0.08em"
-  nav:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.85rem"
-    fontWeight: 600
-    letterSpacing: "0.08em"
-  cta:
-    fontFamily: "'IBM Plex Mono', monospace"
-    fontSize: "0.92rem"
-    fontWeight: 600
 rounded:
-  base: "0px"
-spacing:
-  gutter: "1.5rem"
-  control-pad-x: "1.25rem"
-  control-h: "3.25rem"
-  card-pad: "clamp(1.4rem, 2.5vw, 1.85rem)"
-  card-gap: "clamp(1.25rem, 2.5vw, 1.75rem)"
-  lede-gap: "1.1rem"
-  summary-gap: "0.85rem"
-  item-space: "clamp(2rem, 3.5vw, 3.25rem)"
-  column-gap-lg: "clamp(2rem, 5vw, 4.5rem)"
-  section-space: "clamp(3.5rem, 5.5vw, 5.5rem)"
-  section-space-compact: "clamp(3rem, 4vw, 4rem)"
-components:
-  button-primary:
-    backgroundColor: "{colors.signal-blue}"
-    textColor: "{colors.primary-ink}"
-    rounded: "{rounded.base}"
-    padding: "0.8rem 1.25rem"
-  button-light:
-    backgroundColor: "{colors.primary-ink}"
-    textColor: "{colors.signal-blue}"
-    rounded: "{rounded.base}"
-    padding: "0.8rem 1.25rem"
-  project-link-primary:
-    backgroundColor: "{colors.signal-blue}"
-    textColor: "{colors.primary-ink}"
-    rounded: "{rounded.base}"
-    typography: "{typography.cta}"
-    padding: "0 1rem"
-    height: "3.25rem"
-  project-link-primary-hover:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.background}"
-  tag:
-    backgroundColor: "transparent"
-    textColor: "{colors.muted}"
-    typography: "{typography.label-sm}"
-    rounded: "{rounded.base}"
-    padding: "0.35rem 0.6rem"
+  sm: "6px"
+  md: "12px"
+  lg: "18px"
+  btn: "8px"
 ---
 
 # Design System: Paarangat Jain — Portfolio
