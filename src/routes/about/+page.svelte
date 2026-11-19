@@ -1,7 +1,6 @@
 <script>
   import { base } from '$app/paths';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import { education } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const aboutDescription =
@@ -57,20 +56,5 @@
         loading="lazy"
       />
     </figure>
-  </div>
-
-  <div class="about-education">
-    <h2>Education</h2>
-    <div class="education-grid">
-      {#each education as item}
-        <article class="education-card">
-          <p class="meta-label">{item.period}</p>
-          <h3>{item.institution}</h3>
-          <p class="education-award">{item.award}</p>
-          <p class="education-detail">{item.detail}</p>
-          <p class="education-location">{item.location}</p>
-        </article>
-      {/each}
-    </div>
   </div>
 </section>
