@@ -582,15 +582,32 @@ html.m-enter-done .hero-copy > *:nth-child(4) {
 
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 20px;
   }
 
   .hero-copy {
-    padding-right: 0;
+    display: contents;
   }
 
   .hero-copy h1 {
+    order: 1;
     max-width: 18ch;
+  }
+
+  .hero-stage {
+    order: 2;
+  }
+
+  .hero-intro {
+    order: 3;
+  }
+
+  .hero-actions {
+    order: 4;
+  }
+
+  .hero-facts {
+    order: 5;
   }
 
   .statement-top {
@@ -680,7 +697,7 @@ html.m-enter-done .hero-copy > *:nth-child(4) {
     padding-bottom: 32px;
   }
 
-  .hero-copy {
+  .hero-inner {
     gap: 16px;
   }
 

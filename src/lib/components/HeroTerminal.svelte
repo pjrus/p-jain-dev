@@ -71,14 +71,14 @@
     function tick() {
       if (currentRun !== runId) return;
       if (typedCount >= ALL_TOTAL) return;
-      // Slightly snappier cadence on longer bio prose, crisp keystroke rhythm on command
-      const step = typedCount < CMD_TOTAL ? 1 : 2;
-      const delay = typedCount < CMD_TOTAL ? 52 : 20;
+      // Snappy keystroke rhythm on command, rapid terminal stream on bio output (~1.5s total)
+      const step = typedCount < CMD_TOTAL ? 1 : 5;
+      const delay = typedCount < CMD_TOTAL ? 24 : 14;
       typedCount = Math.min(ALL_TOTAL, typedCount + step);
       window.setTimeout(tick, delay);
     }
 
-    window.setTimeout(tick, 220);
+    window.setTimeout(tick, 80);
   }
 
   onMount(() => {
