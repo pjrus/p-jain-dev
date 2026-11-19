@@ -160,11 +160,11 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  gap: 10%;
+  gap: 5%;
 }
 
 .project-btn {
-  flex: 0 0 45%;
+  flex: 0 0 47.5%;
   min-width: 0;
   min-height: 44px;
   padding: 0 12px;
