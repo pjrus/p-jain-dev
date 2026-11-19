@@ -1,219 +1,345 @@
-/* The homepage opens like a field report: the reading column registers first,
-   then the portrait and any newly requested evidence follow its order. Both
-   wipe top-to-bottom, as if a shade were lifting to reveal each block. */
-@keyframes hero-copy-register {
-  from {
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(-1rem);
-  }
-
-  62% {
-    clip-path: inset(0);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes hero-visual-register {
-  from {
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(-1.25rem);
-  }
-
-  to {
-    clip-path: inset(0);
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-copy {
-    animation: hero-copy-register 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .hero-visual {
-    animation: hero-visual-register 720ms cubic-bezier(0.16, 1, 0.3, 1) 110ms both;
-  }
-}
+/* ============================================================================
+   Hero (Act 1): 4-plane dimensional blueprint hero + quiet Statement (Act 2)
+   ========================================================================== */
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  position: relative;
+  min-height: 100svh;
+  display: flex;
   align-items: center;
-  padding-block: clamp(3.5rem, 6vw, 5.5rem) var(--section-space);
-  gap: clamp(0.25rem, 0.6vw, 0.5rem);
+  padding-top: calc(var(--nav-h) + clamp(32px, 4.5vw, 56px));
+  padding-bottom: clamp(40px, 5vw, 64px);
+  overflow: clip;
+  background: var(--bg);
 }
 
-.hero-role {
-  margin-top: var(--lede-gap);
-  color: var(--hero-role-ink);
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2vw, 1.55rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+/* Far plane: subtle blueprint coordinate grid */
+.hero-plane--grid {
+  position: absolute;
+  inset: -40px 0 -40px 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(38, 37, 30, 0.16) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 75%, transparent 100%);
+}
+
+:root[data-theme='dark'] .hero-plane--grid {
+  background-image:
+    radial-gradient(circle, rgba(236, 235, 230, 0.13) 1px, transparent 1px);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 4.5vw, 64px);
+  align-items: center;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+}
+
+.hero-copy h1 {
+  max-width: 14ch;
 }
 
 .hero-intro {
-  max-width: var(--measure);
-  margin-top: 1.5rem;
-  color: var(--ink);
-  font-size: var(--text-desc);
-  line-height: var(--leading-desc);
+  max-width: 50ch;
+  color: var(--muted);
+  font-size: var(--t-lead);
+  line-height: 1.54;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 2rem;
-  gap: 1.25rem;
+  gap: 12px;
+  margin-top: 4px;
 }
 
 .hero-facts {
-  display: flex;
-  margin-top: clamp(2rem, 4.5vw, 3.5rem);
-  gap: var(--column-gap-lg);
-}
-
-.hero-facts div {
-  padding-left: var(--accent-bar-gap);
-  border-left: var(--accent-bar) solid var(--accent-bar-color);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 20px;
+  margin: 12px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
 .hero-facts dt {
-  color: var(--muted);
   font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: var(--t-label);
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 4px;
 }
 
 .hero-facts dd {
-  margin-top: 0.2rem;
-  font-weight: 600;
+  margin: 0;
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink);
 }
 
-/* Portrait sits in normal flow and uses the primary colour as a crisp ring. */
-.hero-visual {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  justify-content: center;
+/* Layered dimensional visual stage (midground specimen + foreground tactile chip) */
+.hero-stage {
+  position: relative;
+  display: grid;
+  align-items: start;
 }
 
-.portrait-card {
-  width: min(100%, 19rem);
-  aspect-ratio: 1;
+.specimen-frame {
   overflow: hidden;
-  border: clamp(0.3rem, 0.6vw, 0.45rem) solid var(--primary);
-  border-radius: 50%;
-  background: var(--frame);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  box-shadow: var(--edge-light), var(--shadow-lg);
 }
 
-.portrait-card img {
+.specimen-frame img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  object-position: center 38%;
+  object-position: left center;
 }
 
-@media (max-width: 900px) {
+.hero-plane--foreground {
+  position: relative;
+  z-index: 3;
+  margin-top: -32px;
+  margin-left: -20px;
+  max-width: 410px;
+}
+
+.tactile-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  box-shadow: var(--edge-light), var(--shadow-md);
+}
+
+.tactile-chip-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+
+.tactile-chip-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.tactile-chip-title {
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.tactile-chip-role {
+  margin-top: 2px;
+  font-size: var(--t-label);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.tactile-chip-cell {
+  display: grid;
+  grid-template-columns: repeat(2, 7px);
+  grid-template-rows: repeat(3, 7px);
+  gap: 4px;
+  padding: 8px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.chip-dot.is-up {
+  background: var(--action);
+}
+
+/* ============================================================================
+   Act 2: Quiet Statement (word-highlight dealt moment)
+   ========================================================================== */
+
+.statement {
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  min-height: clamp(460px, 66svh, 680px);
+  display: flex;
+  align-items: center;
+}
+
+.statement-inner {
+  display: grid;
+  gap: 24px;
+}
+
+.statement-heading {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+}
+
+.word-highlight-text {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: clamp(1.75rem, 3.3vw, 3.2rem);
+  line-height: 1.18;
+  letter-spacing: var(--display-tracking);
+  max-width: 28ch;
+  text-wrap: pretty;
+}
+
+.wh-word {
+  color: color-mix(in oklab, var(--ink) 56%, var(--bg));
+  transition: color 180ms var(--ease);
+}
+
+.wh-word.is-lit {
+  color: var(--ink);
+}
+
+strong.wh-word {
+  font-weight: inherit;
+}
+
+strong.wh-word.is-lit {
+  color: var(--action);
+}
+
+/* Hero load entrance (once on load, never traps content under no-JS / reduced motion) */
+html.m-enter:not(.m-enter-done) .hero-copy > * {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+}
+
+html.m-enter-done .hero-copy > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 540ms var(--ease-enter),
+    transform 540ms var(--ease-enter);
+}
+
+html.m-enter-done .hero-copy > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+
+html.m-enter-done .hero-copy > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+html.m-enter-done .hero-copy > *:nth-child(4) {
+  transition-delay: 200ms;
+}
+
+html.m-enter:not(.m-enter-done) .specimen-frame img {
+  transform: scale(1.03);
+}
+
+html.m-enter-done .specimen-frame img {
+  transform: scale(1);
+  transition: transform 900ms var(--ease-enter);
+}
+
+/* Separate tablet & mobile art direction */
+@media (max-width: 960px) {
   .hero {
+    min-height: 100svh;
+    align-items: start;
+  }
+
+  .hero-inner {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
-    text-align: center;
+    gap: 28px;
   }
 
-  /* On mobile, lead with the portrait and centre the hero content while
-     keeping the desktop two-column composition unchanged. */
+  .hero-copy h1 {
+    max-width: 18ch;
+  }
+
+  .hero-plane--foreground {
+    margin-top: 14px;
+    margin-left: 0;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
   .hero-copy {
-    display: contents;
+    gap: 18px;
   }
 
-  .hero-visual {
-    order: 1;
-    justify-content: center;
-  }
-
-  .hero-copy > h1 {
-    order: 2;
-    margin-inline: auto;
-  }
-
-  .hero-role {
-    order: 3;
-    margin-top: 0;
-  }
-
-  .hero-intro {
-    order: 4;
-    margin-inline: auto;
-    margin-top: 0;
+  .hero-copy h1 {
+    font-size: clamp(2.1rem, 8.8vw, 2.75rem);
+    line-height: 1.06;
   }
 
   .hero-actions {
-    order: 5;
-    justify-content: center;
-    margin-top: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
   }
 
   .hero-facts {
-    order: 6;
-    justify-content: center;
-    margin-top: 0;
-    text-align: left;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .portrait-card {
-    width: min(100%, 19rem);
-  }
-}
-
-@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
-  .hero-copy {
-    animation: none;
+  .statement {
+    min-height: 0;
+    padding-block: 72px;
   }
 
-  .hero-copy > * {
-    animation: hero-copy-register 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .hero-copy > .hero-role {
-    animation-delay: 55ms;
-  }
-
-  .hero-copy > .hero-intro {
-    animation-delay: 110ms;
-  }
-
-  .hero-copy > .hero-actions {
-    animation-delay: 165ms;
-  }
-
-  .hero-copy > .hero-facts {
-    animation-delay: 220ms;
-  }
-
-  .hero-visual {
-    animation-delay: 0ms;
+  .word-highlight-text {
+    font-size: clamp(1.5rem, 6.4vw, 2.1rem);
   }
 }
 
-@media (max-width: 700px) {
-  .hero {
-    padding-top: 2.5rem;
+@media (prefers-reduced-motion: reduce) {
+  .wh-word {
+    color: var(--ink);
+    transition: none;
   }
 
-  .hero-facts {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
+  strong.wh-word {
+    color: var(--action);
   }
 
-  .portrait-card {
-    width: min(75vw, 19rem);
+  html.m-enter .hero-copy > *,
+  html.m-enter .specimen-frame img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

@@ -1,191 +1,317 @@
+/* ============================================================================
+   Act 3 (PEAK): Inverted dark graphite Selected Work Horizontal Gallery Rail
+   ========================================================================== */
+
 .projects {
-  --h2-measure: none;
-  padding-top: var(--section-space-compact);
-  border-top: 1px solid var(--line);
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .project-card--revealed {
-    --reveal-y: -0.6rem;
-    animation: viewport-register 420ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
+.projects-stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: calc(var(--nav-h) + clamp(20px, 3vh, 36px));
+  padding-bottom: clamp(20px, 3vh, 36px);
+  background: var(--inv-bg);
+  color: var(--inv-ink);
+}
+
+.projects-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  flex-shrink: 0;
+}
+
+.projects-title-group {
+  display: grid;
+  gap: 8px;
+}
+
+.projects-lede {
+  max-width: 48ch;
+  color: var(--inv-muted);
+  font-size: var(--t-body);
+  line-height: 1.5;
+}
+
+.projects-hud {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.braille-chapter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--inv-line);
+  border-radius: var(--r-sm);
+  background: var(--inv-surface);
+}
+
+.braille-chapter-badge .meta-label {
+  color: var(--inv-ink);
+}
+
+.projects-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.jump-pill {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--inv-line);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--inv-muted);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  cursor: pointer;
+  transition:
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease),
+    color var(--m-out) var(--ease);
+}
+
+.jump-pill.is-current {
+  border-color: var(--inv-accent);
+  background: var(--inv-accent);
+  color: var(--inv-accent-ink);
+  font-weight: 500;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .jump-pill:not(.is-current):hover {
+    border-color: var(--inv-ink);
+    color: var(--inv-ink);
   }
 }
 
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, auto);
-  gap: var(--card-gap);
+/* Horizontal gallery rail (driven by ScrollCraft data-sc-pan) */
+.project-rail {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  width: max-content;
+  padding-inline: max(var(--gut), calc((100vw - var(--maxw)) / 2));
+  flex: 1;
+  min-height: 0;
+  max-height: 570px;
 }
 
 .project-card {
-  /* Share summary and detail tracks across cards so variable copy does not
-     shift the stack or action row out of alignment. */
-  display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
-  min-width: 0;
-  row-gap: 0;
-  border: 1px solid transparent;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  transition: border-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  width: clamp(320px, 34vw, 456px);
+  flex: 0 0 auto;
+  border: 1px solid var(--inv-line);
+  border-radius: var(--r-md);
+  background: var(--inv-surface);
+  overflow: hidden;
+  transition:
+    transform var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease);
 }
 
-.project-card:hover,
-.project-card:focus-within {
-  border-color: var(--primary);
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--inv-line-strong);
+    transition-duration: 180ms;
+  }
 }
 
-.project-summary {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  align-content: start;
-  padding: var(--card-pad);
-  gap: 1.5rem;
+.project-media {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--inv-line);
+  background: var(--inv-bg);
+  flex-shrink: 0;
 }
 
-.project-image-wrap {
+.project-media-link {
+  display: block;
+  overflow: hidden;
+}
+
+.project-media img {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--background);
-}
-
-.project-image-wrap img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
+  object-position: top center;
+  transition: transform var(--m-image-out) var(--ease);
 }
 
-.project-body {
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-media img {
+    transform: scale(1.028);
+    transition-duration: var(--m-image);
+  }
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 22px;
+  flex: 1;
+}
+
+.project-top {
   display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  min-height: 0;
-  gap: 1.5rem;
+  gap: 8px;
+}
+
+.project-top .meta-label {
+  color: var(--inv-accent);
+}
+
+.project-top h3 {
+  color: var(--inv-ink);
+  font-size: 1.375rem;
 }
 
 .project-description {
-  margin-top: var(--summary-gap);
-  max-width: var(--measure);
-  color: var(--muted);
-  font-size: var(--text-desc-sm);
-  line-height: var(--leading-desc);
+  color: var(--inv-muted);
+  font-size: var(--t-small);
+  line-height: 1.54;
 }
 
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+.project-foot {
+  display: grid;
+  gap: 14px;
 }
 
-.tag-list li {
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 500;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.tag-list li:hover {
-  border-color: var(--primary);
-  color: var(--ink);
+.project-foot .tag-list li {
+  border-color: var(--inv-line);
+  color: var(--inv-ink);
+  font-size: var(--t-label);
 }
 
 .project-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.project-links > :only-child {
-  grid-column: 1 / -1;
-}
-
-.project-links a {
-  min-height: var(--control-h);
-  padding: 0 1rem;
-  border: 1px solid var(--line-strong);
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
-}
-
-.project-links .project-link-primary {
-  border-color: var(--card-primary);
-  background: var(--card-primary);
-  color: var(--button-ink);
-}
-
-.project-links .project-link-primary:hover {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--primary-ink);
-}
-
-/* Keep the detail panel aligned with the summary's internal padding. */
-.project-details {
-  display: grid;
-  grid-template-columns: 1fr;
-  flex: 1;
-  padding: 0 var(--card-pad) var(--card-pad);
-  gap: 1.75rem;
-}
-
-.project-stack h4 {
-  margin: 0 0 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  line-height: var(--leading-label);
-  text-transform: uppercase;
-}
-
-.project-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  gap: 10px;
+}
+
+.project-btn {
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: var(--t-small);
+}
+
+.project-btn--source {
+  border-color: var(--inv-line-strong);
+  color: var(--inv-ink);
+}
+
+.project-end-card {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 1rem 1.5rem;
-  margin-top: var(--stack-space);
+  align-items: flex-start;
+  gap: 16px;
+  width: clamp(290px, 28vw, 380px);
+  flex: 0 0 auto;
+  padding: 32px;
+  border: 1px solid var(--inv-line);
+  border-radius: var(--r-md);
+  background: var(--inv-surface);
 }
 
-/* .button carries the shared control box; only the mono label and the
-   outlined resting state differ. */
-.project-toggle {
-  min-width: 12rem;
-  border-color: var(--ink);
-  background: var(--surface);
-  color: var(--ink);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-  transition: background-color 0.15s ease, color 0.15s ease;
+.project-end-card .meta-label {
+  color: var(--inv-accent);
 }
 
-.project-toggle svg {
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+.project-end-copy {
+  color: var(--inv-muted);
+  font-size: var(--t-body);
+  line-height: 1.56;
 }
 
-.project-toggle[aria-expanded='true'] svg {
-  transform: rotate(-90deg);
+/* Tablet & mobile tuning: keep full cards cleanly inside 100svh */
+@media (max-width: 960px) {
+  .projects-hud {
+    align-items: flex-start;
+  }
+
+  .projects-jump {
+    display: none;
+  }
 }
 
-.project-toggle:hover {
-  border-color: var(--primary);
-  background: var(--ink);
-  color: var(--background);
+@media (max-width: 640px) {
+  .projects-stage {
+    gap: 14px;
+    padding-top: calc(var(--nav-h) + 16px);
+    padding-bottom: 18px;
+  }
+
+  .projects-lede {
+    font-size: var(--t-small);
+  }
+
+  .braille-chapter-badge {
+    display: none;
+  }
+
+  .project-rail {
+    gap: 16px;
+    max-height: 600px;
+  }
+
+  .project-card {
+    width: min(84vw, 336px);
+  }
+
+  .project-content {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .project-top h3 {
+    font-size: 1.2rem;
+  }
+
+  .project-end-card {
+    width: min(84vw, 320px);
+    padding: 24px;
+  }
 }
 
-@media (max-width: 900px) {
-  .project-grid {
-    grid-template-columns: 1fr;
+/* Reduced motion: zero vertical pin tax, clean native horizontal scroll gallery */
+@media (prefers-reduced-motion: reduce) {
+  .projects[data-sc-act='pan'] {
+    height: auto !important;
+  }
+
+  .projects-stage {
+    position: relative !important;
+    height: auto !important;
+    padding-block: 64px;
+    gap: 32px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+
+  .project-card,
+  .project-end-card {
+    scroll-snap-align: start;
+  }
+
+  .project-card:hover,
+  .project-card:hover .project-media img {
+    transform: none;
   }
 }

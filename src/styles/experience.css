@@ -1,123 +1,129 @@
+/* ============================================================================
+   Act 5: Experience Ledger with ScrollCraft --sc-p vertical cobalt spine
+   ========================================================================== */
+
 .experience {
-  --h2-measure: none;
+  border-top: 1px solid var(--line);
 }
 
-.experience-heading {
-  margin-bottom: var(--page-heading-gap);
+.experience-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.36fr) minmax(0, 0.64fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
 }
 
-/* Keep the rail and role content aligned beneath the heading. */
-.experience-list {
+.experience-header {
+  display: grid;
+  gap: 14px;
+}
+
+.experience-intro {
+  color: var(--muted);
+  font-size: var(--t-body);
+  line-height: 1.58;
+  max-width: 34ch;
+}
+
+.experience-ledger {
   position: relative;
-  margin-left: calc(var(--exp-rail-offset) / 2 - 0.5px);
+  padding-left: 28px;
 }
 
-.experience-list::before {
-  content: '';
+.experience-spine {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -0.5px;
-  width: 1px;
+  top: 8px;
+  bottom: 8px;
+  left: 5px;
+  width: 2px;
   background: var(--line);
+  overflow: hidden;
 }
 
-/* Item text lands on the same x as the heading text (icon + gap). */
+.experience-spine-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--action);
+  transform-origin: 50% 0%;
+  transform: scaleY(var(--sc-p, 1));
+  will-change: transform;
+}
+
+.experience-list {
+  display: grid;
+  gap: 32px;
+}
+
 .experience-item {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--exp-stack-gap);
-  padding: 0 0 var(--item-space) calc(var(--exp-rail-offset) / 2 + var(--exp-gap) - 0.5px);
+  display: grid;
+  gap: 8px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
 }
 
 .experience-item:last-child {
   padding-bottom: 0;
+  border-bottom: 0;
 }
 
-/* Centred on the rail, and on the first line of the role title. */
-.experience-marker {
+.experience-node {
   position: absolute;
-  top: calc(var(--exp-role) * 0.65 - var(--exp-marker) / 2);
-  left: calc(var(--exp-marker) / -2 - 0.5px);
-  width: var(--exp-marker);
-  height: var(--exp-marker);
-  border: 0.2rem solid var(--background);
-  background: var(--primary);
+  top: 9px;
+  left: -27px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--action);
+  background: var(--surface);
 }
 
-.experience-item-heading {
+.experience-item-top {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 2rem;
-}
-
-.experience-item h3 {
-  font-family: var(--font-mono);
-  font-size: var(--exp-role);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-  text-transform: uppercase;
+  gap: 6px 16px;
 }
 
 .experience-period {
-  display: inline-flex;
-  align-items: center;
-  flex: 0 0 auto;
-  min-height: calc(var(--exp-role) * 1.3);
-  padding: 0.35rem 0.8rem;
-  background: var(--tint);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: var(--text-label-sm);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  line-height: var(--leading-label);
-  text-transform: uppercase;
-  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-.experience-meta {
+.experience-org {
   display: flex;
-  flex-direction: column;
-  gap: var(--exp-stack-gap);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ink);
 }
 
-.organisation,
-.location {
-  font-family: var(--font-mono);
-  line-height: var(--leading-label);
-}
-
-/* Organisation and location were tuned against a 1.05rem summary; they scale
-   with --text-desc by the same ratio so the three lines keep their balance,
-   never dropping below those original sizes. */
-.organisation {
-  color: var(--primary-strong);
-  font-size: max(1rem, calc(var(--text-desc) / 1.05));
-}
-
-.location {
+.experience-sep,
+.experience-loc {
+  font-weight: 400;
   color: var(--muted);
-  font-size: max(0.78rem, calc(var(--text-desc) * 0.78 / 1.05));
 }
 
 .experience-summary {
-  max-width: var(--measure-lg);
+  margin-top: 4px;
+  max-width: var(--measure);
   color: var(--muted);
-  font-size: var(--text-desc);
-  line-height: var(--leading-desc);
+  font-size: var(--t-body);
+  line-height: 1.62;
 }
 
-@media (max-width: 700px) {
-  .experience-item-heading {
-    flex-direction: column;
-    gap: var(--exp-stack-gap);
+@media (max-width: 900px) {
+  .experience-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
+}
 
-  .experience-period {
-    white-space: normal;
+@media (prefers-reduced-motion: reduce) {
+  .experience-spine-fill {
+    transform: scaleY(1);
   }
 }

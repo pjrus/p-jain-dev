@@ -1,13 +1,15 @@
 <script>
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
+  import { encodeBrailleWord } from '$lib/braille.js';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
+  import BrailleWorkbench from '$lib/components/BrailleWorkbench.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import SectionHeading from '$lib/components/SectionHeading.svelte';
-  import { education, experience, projects, stack } from '$lib/data/content.js';
+  import WordHighlight from '$lib/components/WordHighlight.svelte';
+  import { experience, projects, stack, tactileWork } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -38,43 +40,135 @@
     ],
   };
 
-  const initiallyVisibleProjects = 3;
-  let showAllProjects = $state(false);
-  let visibleProjects = $derived(
-    showAllProjects ? projects : projects.slice(0, initiallyVisibleProjects),
-  );
+  const statementSegments = [
+    { text: 'Software should run reliably on your own machine and stay reachable for everyone who uses it. I build' },
+    { text: 'local-first web tools,', strong: true },
+    { text: 'production mobile apps', strong: true },
+    { text: 'and' },
+    { text: 'affordable tactile Braille hardware', strong: true },
+    { text: 'for blind and low-vision users.' },
+  ];
+
+  const heroGlyphDots = [1, 2, 3, 4]; // Grade-1 Braille 'P'
+
+  /** @type {HTMLElement | undefined} */
+  let pageRoot = $state();
+  /** @type {HTMLElement | undefined} */
+  let projectsActEl = $state();
+  /** @type {HTMLElement | undefined} */
+  let projectRailEl = $state();
+
+  let activeProjectIndex = $state(0);
+
+  let activeProjectCell = $derived.by(() => {
+    const title = projects[activeProjectIndex]?.title ?? 'Work';
+    return encodeBrailleWord(title.slice(0, 1))[0] ?? { char: 'W', dots: [2, 4, 5, 6] };
+  });
+
+  // Form validation state (validated on submit, never while typing)
+  let nameError = $state('');
+  let emailError = $state('');
+  let messageError = $state('');
+  let formStatus = $state('');
+
+  /**
+   * Scrolls the pinned horizontal gallery act to bring a specific project card into view.
+   * @param {number} index
+   */
+  function jumpToProject(index) {
+    if (!projectsActEl || !projectRailEl) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      const card = projectRailEl.children[index];
+      if (card instanceof HTMLElement) {
+        card.scrollIntoView({ behavior: 'auto', inline: 'start', block: 'nearest' });
+      }
+      activeProjectIndex = index;
+      return;
+    }
+
+    const rect = projectsActEl.getBoundingClientRect();
+    const actTop = rect.top + window.scrollY;
+    const travel = Math.max(projectsActEl.offsetHeight - window.innerHeight, 1);
+    const total = Math.max(projects.length, 1);
+    const targetP = total > 1 ? index / total : 0;
+    window.scrollTo({ top: Math.round(actTop + travel * targetP), behavior: 'smooth' });
+  }
+
+  /**
+   * Keeps keyboard focus inside the horizontal pan rail aligned with the viewport.
+   * @param {FocusEvent} event
+   */
+  function handleRailFocus(event) {
+    if (!projectsActEl || !projectRailEl) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const card = target.closest('.project-card, .project-end-card');
+    if (!card) return;
+    const cards = Array.from(projectRailEl.children);
+    const idx = cards.indexOf(card);
+    if (idx === -1) return;
+
+    const over = projectRailEl.scrollWidth - window.innerWidth;
+    if (over <= 0) return;
+
+    const cardLeft = card instanceof HTMLElement ? card.offsetLeft : 0;
+    const desiredOffset = Math.max(0, Math.min(over, cardLeft - 80));
+    const targetP = desiredOffset / (over * 1.06);
+    const actTop = projectsActEl.getBoundingClientRect().top + window.scrollY;
+    const travel = Math.max(projectsActEl.offsetHeight - window.innerHeight, 1);
+    window.scrollTo({ top: Math.round(actTop + travel * Math.min(1, targetP)), behavior: 'instant' });
+  }
 
   onMount(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    /** @type {{ destroy: () => void; layout: () => void } | null} */
+    let scInstance = null;
+    let disposed = false;
+    let pollTimer = 0;
 
-    const targets = document.querySelectorAll('[data-reveal]');
-    if (targets.length === 0) return;
+    function mountEngine() {
+      if (disposed || !pageRoot) return;
+      const SC = /** @type {any} */ (window).ScrollCraft;
+      if (SC && typeof SC.mount === 'function') {
+        scInstance = SC.mount(pageRoot);
+        document.documentElement.classList.add('m-enter-done');
+        return;
+      }
+      pollTimer = window.setTimeout(mountEngine, 40);
+    }
 
-    document.documentElement.classList.add('motion-reveals-ready');
+    mountEngine();
 
-    // Each surface registers once, a little before it reaches the bottom edge.
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      },
-      { rootMargin: '0px 0px -12% 0px' },
-    );
+    // Sync active project indicator from the pan act's --sc-p scroll progress
+    let raf = 0;
+    function syncActiveProject() {
+      raf = 0;
+      if (!projectsActEl) return;
+      const rawP = parseFloat(projectsActEl.style.getPropertyValue('--sc-p') || '0');
+      if (Number.isNaN(rawP)) return;
+      const idx = Math.min(projects.length - 1, Math.max(0, Math.floor(rawP * projects.length)));
+      if (idx !== activeProjectIndex) activeProjectIndex = idx;
+    }
 
-    for (const target of targets) observer.observe(target);
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(syncActiveProject);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    syncActiveProject();
 
     return () => {
-      observer.disconnect();
-      document.documentElement.classList.remove('motion-reveals-ready');
+      disposed = true;
+      if (pollTimer) clearTimeout(pollTimer);
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      scInstance?.destroy();
     };
   });
 
   /**
-   * Opens the visitor's email client with their message ready to send.
-   * This keeps the static portfolio useful without pretending to submit to a backend.
+   * Validates inputs and opens the visitor's email client with details populated.
    * @param {SubmitEvent} event
    */
   function sendContactMessage(event) {
@@ -86,200 +180,389 @@
     const name = String(formData.get('name') ?? '').trim();
     const email = String(formData.get('email') ?? '').trim();
     const message = String(formData.get('message') ?? '').trim();
+
+    nameError = name ? '' : 'Write your name.';
+    emailError = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      ? ''
+      : 'Write an email address with an @ symbol.';
+    messageError = message ? '' : 'Write a short note about what you would like to discuss.';
+
+    const errors = [
+      nameError && 'contact-name',
+      emailError && 'contact-email',
+      messageError && 'contact-message',
+    ].filter(Boolean);
+
+    if (errors.length > 0) {
+      formStatus = `${errors.length} ${errors.length === 1 ? 'field needs' : 'fields need'} attention.`;
+      const firstId = String(errors[0]);
+      document.getElementById(firstId)?.focus();
+      return;
+    }
+
+    formStatus = 'Opening your email app with your draft.';
     const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
     const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`);
-
     window.location.href = `mailto:paarangatj@gmail.com?subject=${subject}&body=${body}`;
   }
 </script>
 
 <SeoHead
-  title="Paarangat Jain — Developer & accessibility advocate"
-  description="Paarangat Jain is a Melbourne-based developer building accessible, useful software across web, mobile and assistive technology."
+  title="Paarangat Jain: full-stack and assistive-tech developer in Melbourne"
+  description="Paarangat Jain is a Melbourne-based developer building local-first web software, mobile applications and affordable tactile Braille hardware."
   jsonLd={homeJsonLd}
 />
 
-<section class="hero shell" id="top">
-  <div class="hero-copy">
-    <h1><em>Paarangat Jain</em></h1>
-    <p class="hero-role">Developer &amp; computer science student</p>
-    <p class="hero-intro">
-      I build practical software across full-stack web, mobile and assistive technology — from production healthcare tools to low-cost tactile displays designed with blind and low-vision users.
-    </p>
-    <div class="hero-actions">
-      <a class="button button-primary" href="#projects">See my work <ArrowIcon direction="down" /></a>
-      <a class="text-link" href={`${base}/Paarangat-Jain-Resume.pdf`} target="_blank">Read my résumé <ArrowIcon /></a>
-    </div>
-    <dl class="hero-facts">
-      <div><dt>Focus</dt><dd>Accessible products</dd></div>
-      <div><dt>Stack</dt><dd>Web · mobile · hardware</dd></div>
-    </dl>
-  </div>
+<div class="portfolio-root" bind:this={pageRoot}>
+  <!-- ACT 1: Dimensional 4-plane blueprint hero -->
+  <section class="hero" id="top" data-sc-act="flow" data-enter aria-labelledby="hero-title">
+    <div class="hero-plane hero-plane--grid" data-sc-parallax="-0.6" aria-hidden="true"></div>
 
-  <div class="hero-visual" aria-label="Portrait and current work">
-    <figure class="portrait-card">
-      <img src={`${base}/images/paarangat-jain.webp`} alt="Paarangat Jain smiling in formal attire" />
-    </figure>
-  </div>
-</section>
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <h1 id="hero-title">Paarangat Jain, full-stack and assistive-tech developer.</h1>
+        <p class="hero-intro">
+          Melbourne computer science student at Monash University building local-first web tools, healthcare software and affordable tactile Braille displays for blind and low-vision users.
+        </p>
 
-<section class="projects section" id="projects">
-  <div class="shell">
-    <SectionHeading
-      title="Projects"
-      reveal
-    />
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="#projects">
+            See my work <ArrowIcon direction="down" />
+          </a>
+          <a
+            class="btn btn--secondary"
+            href={`${base}/Paarangat-Jain-Resume.pdf`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read my résumé <ArrowIcon />
+          </a>
+        </div>
 
-    <div class="project-grid" id="project-grid">
-      {#each visibleProjects as project, index}
-        {@const extra = index >= initiallyVisibleProjects}
-        <ProjectCard
-          {project}
-          {extra}
-          revealDelay={Math.min(extra ? index - initiallyVisibleProjects : index, 2) * 65}
-        />
-      {/each}
-    </div>
-
-    <div class="project-actions">
-      {#if projects.length > initiallyVisibleProjects}
-        <button
-          class="button project-toggle"
-          type="button"
-          aria-controls="project-grid"
-          aria-expanded={showAllProjects}
-          onclick={() => (showAllProjects = !showAllProjects)}
-        >
-          {showAllProjects ? 'Show less' : 'Show more'}
-          <ArrowIcon direction="down" />
-        </button>
-      {/if}
-    </div>
-  </div>
-</section>
-
-<!-- Education section hidden for now; restore by removing this comment.
-<section class="stack shell section" id="education">
-  <SectionHeading title="Education." reveal />
-
-  <div class="stack-grid">
-    {#each education as item, index}
-      <div class="stack-card education-card" data-reveal="stack-card" style={`--reveal-delay: ${index * 90}ms`}>
-        <h3 class="stack-card-title">// {item.period}</h3>
-        <p class="education-institution">{item.institution}</p>
-        <p class="education-award">{item.award} · {item.detail}</p>
-        <p class="education-location">{item.location}</p>
+        <dl class="hero-facts">
+          <div>
+            <dt>Location</dt>
+            <dd>Melbourne, Victoria</dd>
+          </div>
+          <div>
+            <dt>Degree</dt>
+            <dd>Monash CS (2024–2027)</dd>
+          </div>
+          <div>
+            <dt>Scope</dt>
+            <dd>Web, mobile, hardware</dd>
+          </div>
+        </dl>
       </div>
-    {/each}
-  </div>
-</section>
--->
 
-<section class="stack shell section" id="stack">
-  <SectionHeading
-    title="What I build with."
-    summary="Languages, frameworks and tools I reach for most across web, mobile and hardware projects."
-    reveal
-  />
+      <div class="hero-stage" aria-label="Braille Keyboard Visualiser specimen and developer profile">
+        <div class="hero-plane hero-plane--plate" data-sc-parallax="-0.25">
+          <figure class="specimen-frame">
+            <img
+              src={`${base}/images/visualiser.png`}
+              alt="Braille Keyboard Visualiser 3D tactile keyboard layout model"
+              width="2880"
+              height="1800"
+              fetchpriority="high"
+            />
+          </figure>
+        </div>
 
-  <div class="stack-grid">
-    {#each stack as group, index}
-      <div class="stack-card" data-reveal="stack-card" style={`--reveal-delay: ${index * 90}ms`}>
-        <h3 class="stack-card-title">// {group.label}</h3>
-        <ul class="tag-list" aria-label={group.label}>
-          {#each group.items as item}<li>{item}</li>{/each}
-        </ul>
+        <div class="hero-plane hero-plane--foreground" data-sc-parallax="0.35">
+          <div class="tactile-chip">
+            <img
+              class="tactile-chip-avatar"
+              src={`${base}/images/paarangat-jain.webp`}
+              alt="Paarangat Jain portrait"
+              width="64"
+              height="64"
+            />
+            <div class="tactile-chip-copy">
+              <p class="tactile-chip-title">Monash Assistive Technology Team</p>
+              <p class="tactile-chip-role">Project coordinator · tactile displays &amp; React Native</p>
+            </div>
+            <span class="tactile-chip-cell" aria-hidden="true">
+              {#each [1, 4, 2, 5, 3, 6] as dot}
+                <span class="chip-dot" class:is-up={heroGlyphDots.includes(dot)}></span>
+              {/each}
+            </span>
+          </div>
+        </div>
       </div>
-    {/each}
-  </div>
-</section>
+    </div>
+  </section>
 
-<section class="experience shell section" id="experience">
-  <div class="experience-heading" data-reveal="section-heading">
-    <h2>Experience</h2>
-  </div>
+  <!-- ACT 2: Quiet statement beat (dealt taste-skill moment: word-highlight) -->
+  <section
+    class="statement section"
+    id="statement"
+    data-sc-act="flow"
+    data-moment="word-highlight"
+    aria-labelledby="statement-title"
+  >
+    <div class="wrap statement-inner">
+      <h2 id="statement-title" class="meta-label statement-heading">Engineering focus</h2>
+      <WordHighlight segments={statementSegments} />
+    </div>
+  </section>
 
-  <div class="experience-list" data-reveal="experience-rail">
-    {#each experience as item, index}
-      <article
-        class="experience-item"
-        data-reveal="experience-item"
-        style={`--reveal-delay: ${Math.min(index, 4) * 70}ms`}
+  <!-- ACT 3 (PEAK): Inverted dark graphite Selected Work horizontal gallery rail -->
+  <section
+    class="projects band--dark"
+    id="projects"
+    data-sc-act="pan"
+    data-sc-span="3.2"
+    aria-labelledby="projects-title"
+    bind:this={projectsActEl}
+  >
+    <div class="projects-stage" data-sc-stage>
+      <div class="wrap projects-head">
+        <div class="projects-title-group">
+          <h2 id="projects-title">Selected work</h2>
+          <p class="projects-lede">
+            Six shipped applications across local-first web software, 3D assistive hardware tools and AI workflows.
+          </p>
+        </div>
+
+        <div class="projects-hud">
+          <div class="braille-chapter-badge" aria-live="polite">
+            <span class="mini-cell mini-cell--inv" aria-hidden="true">
+              {#each [1, 4, 2, 5, 3, 6] as dot}
+                <span class="mini-dot" class:is-up={activeProjectCell.dots.includes(dot)}></span>
+              {/each}
+            </span>
+            <span class="meta-label">
+              {projects[activeProjectIndex]?.title}
+            </span>
+          </div>
+
+          <nav class="projects-jump" aria-label="Jump to project">
+            {#each projects as proj, idx}
+              <button
+                type="button"
+                class="jump-pill"
+                class:is-current={idx === activeProjectIndex}
+                aria-current={idx === activeProjectIndex ? 'true' : undefined}
+                onclick={() => jumpToProject(idx)}
+              >
+                {proj.title.split(' ')[0]}
+              </button>
+            {/each}
+          </nav>
+        </div>
+      </div>
+
+      <div
+        class="project-rail"
+        data-sc-pan="0.06"
+        bind:this={projectRailEl}
+        onfocusin={handleRailFocus}
       >
-        <span class="experience-marker" aria-hidden="true"></span>
-        <div class="experience-item-heading">
-          <h3>{item.role}</h3>
-          <p class="experience-period">{item.period}</p>
+        {#each projects as project, index (project.id)}
+          <ProjectCard {project} {index} />
+        {/each}
+
+        <aside class="project-end-card" aria-label="More code on GitHub">
+          <p class="meta-label">Public repositories</p>
+          <h3>Inspect the full commit history</h3>
+          <p class="project-end-copy">
+            Every live tool in this gallery links directly to its repository on GitHub, alongside coursework and hardware prototypes.
+          </p>
+          <a class="btn btn--primary" href="https://github.com/pjrus" target="_blank" rel="noreferrer">
+            View GitHub profile <ArrowIcon />
+          </a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 4: Assistive Hardware, Signature Interactive Braille Workbench & Stack -->
+  <section class="tactile section" id="tactile" data-sc-act="flow" aria-labelledby="tactile-title">
+    <div class="wrap tactile-grid">
+      <div class="tactile-info">
+        <div class="section-heading">
+          <div class="section-heading-grid">
+            <h2 id="tactile-title">Assistive hardware and stack</h2>
+            <p>{tactileWork.summary}</p>
+          </div>
         </div>
-        <div class="experience-meta">
-          <p class="organisation">@ {item.organisation}</p>
-          <p class="location">{item.location}</p>
+
+        <dl class="pillar-list">
+          {#each tactileWork.pillars as pillar}
+            <div class="pillar-row">
+              <dt>{pillar.label}</dt>
+              <dd>{pillar.detail}</dd>
+            </div>
+          {/each}
+        </dl>
+
+        <div class="stack-spec">
+          {#each stack as group}
+            <div class="stack-group">
+              <h3>{group.label}</h3>
+              <ul class="tag-list" aria-label={group.label}>
+                {#each group.items as item}<li>{item}</li>{/each}
+              </ul>
+            </div>
+          {/each}
         </div>
-        <p class="experience-summary">{item.summary}</p>
-      </article>
-    {/each}
-  </div>
-</section>
-
-<section class="contact section" id="contact" aria-labelledby="contact-title">
-  <div class="shell contact-inner">
-    <header class="contact-intro" data-reveal="contact-intro">
-      <h2 id="contact-title">Let’s make something useful.</h2>
-      <p>
-        I’m always open to thoughtful opportunities, collaborations and projects — or a good conversation about accessible technology.
-      </p>
-    </header>
-
-    <form
-      class="contact-form"
-      data-reveal="contact-form"
-      style="--reveal-delay: 90ms"
-      onsubmit={sendContactMessage}
-    >
-      <div class="form-field">
-        <label for="contact-name">Name</label>
-        <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
       </div>
 
-      <div class="form-field">
-        <label for="contact-email">Email</label>
-        <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+      <div class="tactile-bench-wrap" data-sc-reveal="up" data-sc-reveal-at="0.04 0.30">
+        <BrailleWorkbench />
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 5: Experience Ledger with scroll-drawn vertical cobalt spine -->
+  <section
+    class="experience band--surface section"
+    id="experience"
+    data-sc-act="flow"
+    aria-labelledby="experience-title"
+  >
+    <div class="wrap experience-grid">
+      <div class="experience-header">
+        <h2 id="experience-title">Experience</h2>
+        <p class="experience-intro">
+          Industry software engineering, community web delivery and multi-role leadership across assistive hardware.
+        </p>
       </div>
 
-      <div class="form-field">
-        <label for="contact-message">Message</label>
-        <textarea id="contact-message" name="message" rows="4" placeholder="What would you like to talk about?" required></textarea>
+      <div class="experience-ledger">
+        <div class="experience-spine" aria-hidden="true">
+          <span class="experience-spine-fill"></span>
+        </div>
+
+        <div class="experience-list" data-sc-in data-sc-stagger="60">
+          {#each experience as item}
+            <article class="experience-item">
+              <span class="experience-node" aria-hidden="true"></span>
+              <div class="experience-item-top">
+                <h3>{item.role}</h3>
+                <p class="meta-label experience-period">{item.period}</p>
+              </div>
+              <p class="experience-org">
+                <span>{item.organisation}</span>
+                <span class="experience-sep" aria-hidden="true">·</span>
+                <span class="experience-loc">{item.location}</span>
+              </p>
+              <p class="experience-summary">{item.summary}</p>
+            </article>
+          {/each}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 6: Grounded Contact & Closing Plate -->
+  <section class="contact section" id="contact" data-sc-act="flow" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div class="contact-aside">
+        <h2 id="contact-title">Contact and links</h2>
+        <p class="contact-lede">
+          Open to graduate and junior full-stack engineering roles in Melbourne, as well as collaborations in assistive technology and accessible software.
+        </p>
+
+        <nav class="contact-channels" aria-label="Direct contact channels">
+          <a class="channel-row" href="mailto:paarangatj@gmail.com">
+            <span class="channel-label">Email</span>
+            <span class="channel-value">paarangatj@gmail.com <ArrowIcon /></span>
+          </a>
+          <a
+            class="channel-row"
+            href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="channel-label">
+              <IconLinkedin size={16} /> LinkedIn
+            </span>
+            <span class="channel-value">paarangat-jain <ArrowIcon /></span>
+          </a>
+          <a class="channel-row" href="https://github.com/pjrus" target="_blank" rel="noreferrer">
+            <span class="channel-label">
+              <IconGithub size={16} /> GitHub
+            </span>
+            <span class="channel-value">github.com/pjrus <ArrowIcon /></span>
+          </a>
+          <a
+            class="channel-row"
+            href={`${base}/Paarangat-Jain-Resume.pdf`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="channel-label">Résumé</span>
+            <span class="channel-value">Download PDF <ArrowIcon /></span>
+          </a>
+        </nav>
       </div>
 
-      <button class="button button-primary contact-submit" type="submit">
-        Send message
-        <ArrowIcon />
-      </button>
-      <p class="contact-form-note">Opens your email app with the details filled in.</p>
-    </form>
+      <form
+        class="contact-form"
+        action="mailto:paarangatj@gmail.com"
+        method="post"
+        enctype="text/plain"
+        novalidate
+        onsubmit={sendContactMessage}
+      >
+        <div class="form-field">
+          <label for="contact-name">Name</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            aria-invalid={nameError ? 'true' : undefined}
+            aria-describedby={nameError ? 'contact-name-err' : undefined}
+            required
+          />
+          {#if nameError}
+            <p id="contact-name-err" class="field-error">{nameError}</p>
+          {/if}
+        </div>
 
-    <nav
-      class="contact-links"
-      data-reveal="contact-links"
-      style="--reveal-delay: 180ms"
-      aria-label="Other ways to connect"
-    >
-      <a href="mailto:paarangatj@gmail.com">
-        <span class="contact-link-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
-            <path d="M3 6.5h18v11H3zM3.5 7l8.5 7 8.5-7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-          </svg>
-        </span>
-        Email
-      </a>
-      <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer">
-        <span class="contact-link-icon" aria-hidden="true"><IconLinkedin size={15} /></span>
-        LinkedIn
-      </a>
-      <a href="https://github.com/pjrus" target="_blank" rel="noreferrer">
-        <span class="contact-link-icon" aria-hidden="true"><IconGithub size={16} /></span>
-        GitHub
-      </a>
-    </nav>
-  </div>
-</section>
+        <div class="form-field">
+          <label for="contact-email">Email</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            aria-invalid={emailError ? 'true' : undefined}
+            aria-describedby={emailError ? 'contact-email-err' : undefined}
+            required
+          />
+          {#if emailError}
+            <p id="contact-email-err" class="field-error">{emailError}</p>
+          {/if}
+        </div>
+
+        <div class="form-field">
+          <label for="contact-message">Message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="4"
+            aria-invalid={messageError ? 'true' : undefined}
+            aria-describedby={messageError ? 'contact-message-err' : undefined}
+            required
+          ></textarea>
+          {#if messageError}
+            <p id="contact-message-err" class="field-error">{messageError}</p>
+          {/if}
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn--primary contact-submit" type="submit">
+            Send message <ArrowIcon />
+          </button>
+          <p class="form-note">Opens your email app with the message filled in.</p>
+          {#if formStatus}
+            <p class="form-status" role="status">{formStatus}</p>
+          {/if}
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

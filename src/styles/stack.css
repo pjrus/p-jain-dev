@@ -1,46 +1,335 @@
-.stack {
-  padding-block: var(--section-space-compact);
+/* ============================================================================
+   Act 4: Assistive Hardware, Signature Braille Workbench & Stack Spec Sheet
+   ========================================================================== */
+
+.tactile {
+  background: var(--bg);
   border-top: 1px solid var(--line);
 }
 
-.stack-grid {
+.tactile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: var(--card-gap);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
 }
 
-.stack-card {
-  padding: var(--card-pad);
-  border: 1px solid transparent;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  transition: border-color 0.15s ease;
+.tactile-info {
+  display: grid;
+  gap: 28px;
 }
 
-.stack-card:hover {
-  border-color: var(--primary);
+.tactile-info .section-heading {
+  margin-bottom: 0;
 }
 
-.stack-card-title {
-  margin-bottom: 1.15rem;
-  padding-bottom: 0.85rem;
+.pillar-list {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.pillar-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.38fr) minmax(0, 1fr);
+  gap: 8px 20px;
+  padding-block: 16px;
   border-bottom: 1px solid var(--line);
-  color: var(--primary-strong);
-  font-family: var(--font-mono);
-  font-size: var(--text-label-md);
-  font-weight: 600;
-  line-height: var(--leading-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
 }
 
-.education-institution {
-  font-size: 1.15rem;
-  font-weight: 600;
+.pillar-row dt {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: var(--t-small);
 }
 
-.education-award,
-.education-location {
-  margin-top: 0.35rem;
+.pillar-row dd {
+  margin: 0;
   color: var(--muted);
+  font-size: var(--t-small);
+  line-height: 1.55;
+}
+
+.stack-spec {
+  display: grid;
+  gap: 24px;
+  padding-top: 8px;
+}
+
+.stack-group {
+  display: grid;
+  gap: 12px;
+}
+
+.stack-group h3 {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+
+/* Signature Move: Tactile 6-Dot Perkins Braille Workbench */
+.tactile-bench-wrap {
+  min-width: 0;
+}
+
+.braille-bench {
+  display: grid;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  background: var(--surface-raised);
+  box-shadow: var(--edge-light), var(--shadow-md);
+}
+
+.bench-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bench-title {
+  margin-top: 4px;
+}
+
+.bench-glyph {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.bench-unicode {
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--action);
+}
+
+.bench-decoded {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.bench-body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.pin-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(84px, 96px));
+  gap: 12px;
+}
+
+.pin-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 82px;
+  padding: 12px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    transform var(--m-out) var(--ease),
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease);
+}
+
+.pin-cap {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  background: var(--bg);
+  box-shadow: inset 0 2px 3px rgba(38, 37, 30, 0.14);
+  transition:
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease),
+    transform var(--m-out) var(--ease);
+}
+
+.pin-btn.is-raised {
+  border-color: var(--action);
+  background: var(--accent-tint);
+  transform: translateY(-2px);
+}
+
+.pin-btn.is-raised .pin-cap {
+  border-color: var(--action);
+  background: var(--action);
+  box-shadow: 0 3px 8px rgba(36, 86, 214, 0.3);
+  transform: scale(1.08);
+}
+
+.pin-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  color: var(--muted);
+}
+
+.pin-meta kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.bench-readout {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.readout-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 92px;
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: var(--inv-bg);
+  color: var(--inv-ink);
+  align-items: center;
+}
+
+.readout-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 30px;
+}
+
+.mini-cell {
+  display: grid;
+  grid-template-columns: repeat(2, 6px);
+  grid-template-rows: repeat(3, 6px);
+  gap: 4px;
+}
+
+.mini-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(235, 234, 230, 0.22);
+}
+
+.mini-dot.is-up {
+  background: var(--inv-accent);
+}
+
+.readout-char {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  color: var(--inv-ink);
+}
+
+.bench-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset-btn {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  cursor: pointer;
+  transition:
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease),
+    color var(--m-out) var(--ease);
+}
+
+.preset-btn.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.bench-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bench-commit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.bench-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 1040px) {
+  .tactile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .pillar-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .bench-body {
+    grid-template-columns: 1fr;
+  }
+
+  .pin-matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bench-actions {
+    flex-direction: column;
+  }
+
+  .bench-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-btn,
+  .pin-cap {
+    transition: none;
+    transform: none !important;
+  }
 }
