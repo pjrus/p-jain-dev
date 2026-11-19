@@ -300,7 +300,6 @@
         <p class="meta-label">Skills</p>
         {#each stack as group}
           <div class="stack-mini-card">
-            <h3 class="stack-mini-title">// {group.label}</h3>
             <ul class="tag-list" aria-label={group.label}>
               {#each group.items as item}<li>{item}</li>{/each}
             </ul>
