@@ -1,6 +1,6 @@
 /* ============================================================================
    Act 5: Experience & Education Ledger with ScrollCraft --sc-p vertical spine
-   Shared equal-edge 6/6 split at x = 732px on 1440px
+   Balanced asymmetric split (0.78fr / 1.22fr) with sticky left context column
    ========================================================================== */
 
 .experience {
@@ -9,36 +9,37 @@
 
 .experience-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(32px, 4vw, 56px);
   align-items: start;
 }
 
 .experience-header {
+  position: sticky;
+  top: calc(var(--nav-h) + 28px);
   display: grid;
-  gap: 20px;
-  padding-right: clamp(0px, 2vw, 40px);
+  gap: 14px;
 }
 
 .experience-intro {
   color: var(--ink);
   font-size: var(--t-lead);
-  line-height: 1.56;
-  max-width: 44ch;
+  line-height: 1.5;
+  max-width: 40ch;
 }
 
 .experience-education {
   display: grid;
-  gap: 14px;
-  margin-top: 12px;
-  padding-top: 24px;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 
 .edu-mini-card {
   display: grid;
-  gap: 6px;
-  padding: 20px 22px;
+  gap: 4px;
+  padding: 14px 18px;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
   background: var(--surface-raised);
@@ -56,7 +57,7 @@
 }
 
 .experience-action {
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .experience-ledger {
@@ -86,14 +87,14 @@
 
 .experience-list {
   display: grid;
-  gap: 28px;
+  gap: 22px;
 }
 
 .experience-item {
   position: relative;
   display: grid;
-  gap: 8px;
-  padding-bottom: 24px;
+  gap: 6px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -142,10 +143,10 @@
 
 .experience-summary {
   margin-top: 4px;
-  max-width: var(--measure);
+  max-width: 66ch;
   color: var(--ink);
   font-size: var(--t-body);
-  line-height: 1.62;
+  line-height: 1.58;
 }
 
 @media (max-width: 960px) {
@@ -155,7 +156,7 @@
   }
 
   .experience-header {
-    padding-right: 0;
+    position: static;
   }
 }
 

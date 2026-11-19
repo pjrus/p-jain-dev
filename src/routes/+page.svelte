@@ -472,7 +472,7 @@
         <span class="experience-spine-fill"></span>
       </div>
 
-      <div class="experience-list" data-sc-in data-sc-stagger="50">
+      <div class="experience-list" data-sc-in data-sc-stagger="35">
         {#each experience as item}
           <article class="experience-item">
             <span class="experience-node" aria-hidden="true"></span>
