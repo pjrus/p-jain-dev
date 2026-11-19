@@ -1,47 +1,147 @@
-.button,
-.text-link,
-.project-links a {
+/* ============================================================================
+   Controls: One button system (solid + outline), animated underline links
+   Follows taste-skill motion.md hover/press numbers strictly
+   ========================================================================== */
+
+.btn,
+.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--control-gap);
-  border-radius: 0;
-  font-weight: 600;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-btn);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
   text-decoration: none;
+  transition:
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease),
+    color var(--m-out) var(--ease),
+    transform var(--m-out) var(--ease);
 }
 
-.button {
-  min-height: var(--control-h);
-  padding: 0.8rem var(--control-pad-x);
-  border: 1px solid transparent;
-}
-
+.btn--primary,
 .button-primary {
-  background: var(--button);
-  color: var(--button-ink);
-  box-shadow: var(--shadow);
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--action-ink);
 }
 
-/* Matches button height so both align in a row, while the rule stays
-   tucked under the label instead of at the bottom of the hit area. */
-.text-link {
+.btn--secondary {
+  border-color: var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn svg,
+.button svg {
+  flex-shrink: 0;
+  transition: transform var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover,
+  .button:hover {
+    background: var(--tint);
+    border-color: var(--ink);
+    transition-duration: var(--m-in);
+  }
+
+  .btn--primary:hover,
+  .button-primary:hover {
+    background: color-mix(in oklab, var(--action) 86%, var(--ink));
+    border-color: color-mix(in oklab, var(--action) 86%, var(--ink));
+    color: var(--action-ink);
+  }
+
+  .btn--secondary:hover {
+    background: var(--tint);
+    border-color: var(--ink);
+  }
+
+  .btn:hover svg,
+  .button:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+.btn:active,
+.button:active {
+  transform: translateY(1px) scale(0.985);
+  transition-duration: var(--m-press);
+}
+
+/* Text link: faint resting hairline + crisp ink underline draw left-to-right */
+.text-link,
+.link {
   position: relative;
-  min-height: var(--control-h);
-  padding-block: 0.8rem;
-  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding-block: 6px;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(var(--line-strong), var(--line-strong));
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 8px), 0 calc(100% - 8px);
+  background-size: 0% 1px, 100% 1px;
+  transition:
+    color var(--m-out) var(--ease),
+    background-size var(--m-out) var(--ease);
 }
 
-.text-link::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0.55rem;
-  left: 0;
-  height: 1px;
-  background: currentColor;
+.text-link svg,
+.link svg {
+  transition: transform var(--m-out) var(--ease);
 }
 
-.text-link:hover,
-.project-links a:hover {
-  color: var(--primary-strong);
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover,
+  .link:hover {
+    color: var(--action);
+    background-size: 100% 1px, 100% 1px;
+    transition-duration: var(--m-in);
+  }
+
+  .text-link:hover svg,
+  .link:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+.text-link:focus-visible,
+.link:focus-visible {
+  color: var(--action);
+  background-size: 100% 1px, 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .button,
+  .btn svg,
+  .button svg,
+  .text-link,
+  .link,
+  .text-link svg,
+  .link svg {
+    transition-property: color, background-color, border-color;
+    transition-duration: 120ms;
+    transform: none !important;
+  }
 }

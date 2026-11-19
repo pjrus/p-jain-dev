@@ -97,4 +97,21 @@
     opacity: 1;
     transition-delay: 110ms;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-icon svg,
+    .rays {
+      transition: opacity 140ms ease;
+      transition-delay: 0ms;
+    }
+
+    .sun,
+    .moon,
+    .is-dark .sun,
+    .is-dark .moon,
+    .rays,
+    .is-dark .rays {
+      transform: none;
+    }
+  }
 </style>

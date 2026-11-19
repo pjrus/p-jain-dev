@@ -17,37 +17,44 @@
       name: 'Paarangat Jain',
       url: canonicalUrl('/'),
       image: canonicalUrl('/images/paarangat-jain.webp'),
-      jobTitle: 'Developer and accessibility advocate',
+      jobTitle: 'Developer & Accessibility Advocate',
     },
   };
 </script>
 
 <SeoHead
-  title="About — Paarangat Jain"
+  title="About: Paarangat Jain"
   description={aboutDescription}
   path="/about"
   jsonLd={aboutJsonLd}
 />
 
-<section class="about about-page shell section page-section" aria-labelledby="about-title">
-  <h1 id="about-title" class="about-title">Code, people and useful problems.</h1>
+<section class="about about-page wrap page-section" aria-labelledby="about-title">
+  <h1 id="about-title">Code, people and useful problems.</h1>
 
-  <figure class="about-figure">
-    <img
-      src={`${base}/images/dharamshala.jpg`}
-      alt="Dharamshala beneath the Dhauladhar mountain range in India"
-    />
-    <figcaption>Dharamshala, India · a favourite place</figcaption>
-  </figure>
+  <div class="about-layout">
+    <div class="about-copy">
+      <p>
+        Hi, I’m Paarangat Jain. I’m a computer science student at Monash University, developer and accessibility advocate drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
+      </p>
+      <p>
+        As Project Coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat in Melbourne, keeping up with K-dramas and Netflix, or catching the latest Marvel film.
+      </p>
+      <div>
+        <a class="btn btn--primary" href={`${base}/Paarangat-Jain-Resume.pdf`} target="_blank" rel="noreferrer">
+          Read résumé
+        </a>
+      </div>
+    </div>
 
-  <div class="about-copy">
-    <p>
-      Hi, I’m Paarangat Jain. I’m a computer science student at Monash University, developer and accessibility advocate drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
-    </p>
-    <br>
-    <p>
-      As project coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat, keeping up with K-dramas and Netflix, or catching the latest Marvel film.
-    </p>
+    <figure class="about-figure">
+      <img
+        src={`${base}/images/dharamshala.jpg`}
+        alt="Dharamshala beneath the Dhauladhar mountain range in India"
+        width="1200"
+        height="900"
+        loading="lazy"
+      />
+    </figure>
   </div>
-
 </section>
