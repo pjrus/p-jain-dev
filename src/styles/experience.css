@@ -109,9 +109,9 @@
   left: -27px;
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: 0;
   border: 2px solid var(--action);
-  background: var(--surface);
+  background: var(--bg);
 }
 
 .experience-item-top {

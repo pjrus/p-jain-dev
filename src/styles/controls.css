@@ -65,7 +65,7 @@
   }
 
   .btn--secondary:hover {
-    background: var(--surface);
+    background: var(--tint);
     border-color: var(--ink);
   }
 

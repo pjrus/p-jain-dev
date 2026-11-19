@@ -5,32 +5,32 @@
    ========================================================================== */
 
 :root {
-  /* Light mode: crisp gallery white + deep graphite ink + blueprint cobalt */
-  --bg: #fbfbfa;
-  --surface: #f2f2f0;
+  /* Light mode: pure architectural white + crisp near-black ink + blueprint cobalt */
+  --bg: #ffffff;
+  --surface: #ffffff;
   --surface-raised: #ffffff;
-  --ink: #111110;
-  --muted: #4b4b47;
+  --ink: #0a0a0a;
+  --muted: #454545;
   --accent: #1d4ed8;
   --accent-hover: #173fb0;
   --accent-ink: #ffffff;
   --action: #1d4ed8;
   --action-ink: #ffffff;
-  --line: rgba(17, 17, 16, 0.12);
-  --line-strong: rgba(17, 17, 16, 0.24);
-  --tint: rgba(17, 17, 16, 0.045);
-  --accent-tint: rgba(29, 78, 216, 0.085);
+  --line: rgba(10, 10, 10, 0.14);
+  --line-strong: rgba(10, 10, 10, 0.28);
+  --tint: rgba(10, 10, 10, 0.04);
+  --accent-tint: rgba(29, 78, 216, 0.07);
 
-  /* Inverted obsidian dark gallery room tokens */
-  --inv-bg: #0a0a0c;
-  --inv-surface: #131317;
-  --inv-surface-raised: #1b1b21;
-  --inv-ink: #f7f7f8;
-  --inv-muted: #a9a9b3;
+  /* Inverted pure-black gallery room tokens */
+  --inv-bg: #000000;
+  --inv-surface: #0a0a0a;
+  --inv-surface-raised: #111111;
+  --inv-ink: #ffffff;
+  --inv-muted: #b0b0b6;
   --inv-accent: #7da8ff;
-  --inv-accent-ink: #0a0a0c;
-  --inv-line: rgba(247, 247, 248, 0.15);
-  --inv-line-strong: rgba(247, 247, 248, 0.3);
+  --inv-accent-ink: #000000;
+  --inv-line: rgba(255, 255, 255, 0.16);
+  --inv-line-strong: rgba(255, 255, 255, 0.32);
 
   /* Compatibility aliases */
   --background: var(--bg);
@@ -75,17 +75,18 @@
   --padt: clamp(72px, 8vw, 120px);
   --padb: clamp(56px, 6vw, 88px);
 
-  /* Radius scale (soft) */
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 18px;
-  --r-btn: 8px;
+  /* Radius scale (sharp squares everywhere; --r-pill strictly for status pills) */
+  --r-sm: 0px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --r-btn: 0px;
+  --r-pill: 9999px;
 
-  /* Elevation (subtle canvas-tinted shadows + crisp edge light) */
-  --shadow-sm: 0 1px 2px rgba(17, 17, 16, 0.06), 0 4px 12px -2px rgba(17, 17, 16, 0.06);
-  --shadow-md: 0 2px 6px rgba(17, 17, 16, 0.07), 0 14px 32px -8px rgba(17, 17, 16, 0.11);
-  --shadow-lg: 0 4px 12px rgba(17, 17, 16, 0.08), 0 24px 56px -16px rgba(17, 17, 16, 0.16);
-  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  /* Elevation (crisp architectural hairlines with minimal pure-neutral lift) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px -4px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 8px 28px -8px rgba(0, 0, 0, 0.1);
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 1);
   --shadow: var(--shadow-sm);
 
   /* Motion tokens */
@@ -116,37 +117,37 @@
   --sc-r-lg: var(--r-lg);
 }
 
-/* Dark mode: deeper obsidian dark with high-contrast AAA ink & cobalt accent */
+/* Dark mode: pure black ground with crisp hairlines, AAA ink & cobalt accent */
 :root[data-theme='dark'] {
-  --bg: #08080a;
-  --surface: #111115;
-  --surface-raised: #17171c;
-  --ink: #f6f6f8;
-  --muted: #a6a6b0;
+  --bg: #000000;
+  --surface: #000000;
+  --surface-raised: #08080a;
+  --ink: #ffffff;
+  --muted: #b0b0b6;
   --accent: #7aa8ff;
   --accent-hover: #97bcff;
-  --accent-ink: #08080a;
+  --accent-ink: #000000;
   --action: #7aa8ff;
-  --action-ink: #08080a;
-  --line: rgba(246, 246, 248, 0.14);
-  --line-strong: rgba(246, 246, 248, 0.28);
-  --tint: rgba(246, 246, 248, 0.06);
+  --action-ink: #000000;
+  --line: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.32);
+  --tint: rgba(255, 255, 255, 0.07);
   --accent-tint: rgba(122, 168, 255, 0.14);
 
-  --inv-bg: #040406;
-  --inv-surface: #101014;
-  --inv-surface-raised: #18181f;
-  --inv-ink: #f6f6f8;
-  --inv-muted: #a8a8b2;
+  --inv-bg: #000000;
+  --inv-surface: #08080a;
+  --inv-surface-raised: #101014;
+  --inv-ink: #ffffff;
+  --inv-muted: #b0b0b6;
   --inv-accent: #7aa8ff;
-  --inv-accent-ink: #040406;
-  --inv-line: rgba(246, 246, 248, 0.15);
-  --inv-line-strong: rgba(246, 246, 248, 0.3);
+  --inv-accent-ink: #000000;
+  --inv-line: rgba(255, 255, 255, 0.16);
+  --inv-line-strong: rgba(255, 255, 255, 0.32);
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 6px 16px -4px rgba(0, 0, 0, 0.52);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.5), 0 16px 36px -10px rgba(0, 0, 0, 0.65);
-  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.55), 0 28px 64px -18px rgba(0, 0, 0, 0.78);
-  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 18px -4px rgba(0, 0, 0, 0.72);
+  --shadow-lg: 0 8px 32px -8px rgba(0, 0, 0, 0.85);
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 @media (max-width: 640px) {

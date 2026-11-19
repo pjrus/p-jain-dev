@@ -18,7 +18,7 @@
     name: 'Paarangat Jain',
     url: canonicalUrl('/'),
     image: canonicalUrl('/images/paarangat-jain.webp'),
-    jobTitle: 'Developer and accessibility advocate',
+    jobTitle: 'Developer & Accessibility Advocate',
     description:
       'Melbourne-based developer building accessible, useful software across web, mobile and assistive technology.',
     email: 'mailto:paarangatj@gmail.com',
@@ -345,7 +345,7 @@
             />
             <div class="specimen-identity">
               <p class="specimen-org">Monash Assistive Technology Team</p>
-              <p class="specimen-role">Project coordinator · tactile displays &amp; React Native</p>
+              <p class="specimen-role">Project Coordinator · Tactile Displays &amp; React Native</p>
             </div>
           </div>
 
@@ -371,7 +371,7 @@
         <div class="hero-evidence-bar">
           <div>
             <p class="meta-label">Industry experience</p>
-            <p class="evidence-value">PlasmIT Vector · Full-stack intern</p>
+            <p class="evidence-value">PlasmIT Vector · Full-Stack Engineering Intern</p>
           </div>
           <div>
             <p class="meta-label">Shipped software</p>

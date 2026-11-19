@@ -2,19 +2,20 @@
 name: Paarangat Jain — Portfolio
 description: A tactile, scroll-driven portfolio for a Melbourne full-stack and assistive-tech developer.
 colors:
-  background: "#fbfbfa"
-  surface: "#f2f2f0"
+  background: "#ffffff"
+  surface: "#ffffff"
   surface-raised: "#ffffff"
-  ink: "#111110"
-  muted: "#4b4b47"
+  ink: "#0a0a0a"
+  muted: "#454545"
   signal-blue: "#1d4ed8"
   signal-blue-strong: "#173fb0"
   primary-ink: "#ffffff"
-  dark-background: "#08080a"
-  dark-surface: "#111115"
-  dark-ink: "#f6f6f8"
+  dark-background: "#000000"
+  dark-surface: "#000000"
+  dark-surface-raised: "#08080a"
+  dark-ink: "#ffffff"
   dark-accent: "#7aa8ff"
-  line: "rgba(17, 17, 16, 0.12)"
+  line: "rgba(10, 10, 10, 0.14)"
 typography:
   display:
     fontFamily: "'Geist', system-ui, sans-serif"
@@ -45,10 +46,11 @@ typography:
     fontWeight: 500
     lineHeight: 1.4
 rounded:
-  sm: "6px"
-  md: "12px"
-  lg: "18px"
-  btn: "8px"
+  sm: "0px"
+  md: "0px"
+  lg: "0px"
+  btn: "0px"
+  pill: "9999px"
 ---
 
 # Design System: Paarangat Jain — Portfolio

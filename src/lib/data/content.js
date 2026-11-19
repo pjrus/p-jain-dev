@@ -76,7 +76,7 @@ export const projects = [
 
 export const tactileWork = {
   organisation: 'Monash Assistive Technology Team',
-  role: 'Project coordinator & operations officer',
+  role: 'Project Coordinator & Operations Officer',
   summary:
     'I coordinate development of low-cost tactile and refreshable Braille displays for blind and low-vision users, lead the React Native companion app that drives them, and run user interviews with schools and participants.',
   pillars: [
@@ -149,7 +149,7 @@ export const stack = [
 export const experience = [
   {
     period: 'Jun 2026 – Sep 2026',
-    role: 'Full-stack engineering intern',
+    role: 'Full-Stack Engineering Intern',
     organisation: 'PlasmIT Vector',
     location: 'Docklands, Victoria, Australia · Remote',
     summary:
@@ -157,7 +157,7 @@ export const experience = [
   },
   {
     period: 'Mar 2026 – present',
-    role: 'Web developer',
+    role: 'Web Developer',
     organisation: 'Ocean Connect',
     location: 'Remote',
     summary:
@@ -165,7 +165,7 @@ export const experience = [
   },
   {
     period: 'Feb 2026 – present',
-    role: 'Operations officer',
+    role: 'Operations Officer',
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
@@ -173,7 +173,7 @@ export const experience = [
   },
   {
     period: 'Aug 2025 – present',
-    role: 'Project coordinator',
+    role: 'Project Coordinator',
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
@@ -181,7 +181,7 @@ export const experience = [
   },
   {
     period: 'Mar 2026 – Jul 2026',
-    role: 'Outreach officer',
+    role: 'Outreach Officer',
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
@@ -189,7 +189,7 @@ export const experience = [
   },
   {
     period: 'Mar 2025 – Aug 2025',
-    role: 'Projects officer',
+    role: 'Projects Officer',
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
