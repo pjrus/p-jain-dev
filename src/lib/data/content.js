@@ -6,10 +6,10 @@ export const projects = [
     title: 'Skilliton',
     kind: 'UniHack 2026 web app',
     description:
-      'An AI-assisted peer skill exchange built at UniHack 2026, matching students and helping them organise sessions.',
+      'An AI-assisted peer skill exchange built at UniHack 2026 — created primarily utilising Antigravity to match students and help them organise sessions.',
     image: `${base}/images/skill-issue.png`,
     alt: 'Skilliton peer skill exchange web interface showing skill matching inputs and recommended student profiles',
-    tags: ['Next.js', 'Firebase', 'TypeScript', 'Genkit', 'Gemini'],
+    tags: ['Antigravity', 'Next.js', 'Firebase', 'TypeScript', 'Genkit', 'Gemini'],
     github: 'https://github.com/pjrus/unihack-2026-final',
     visit: 'https://studio--studio-818276670-ce8c7.us-central1.hosted.app',
   },
