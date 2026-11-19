@@ -3,6 +3,8 @@
   import { afterNavigate } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/state';
+  import IconGithub from './IconGithub.svelte';
+  import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
 
   const THEME_KEY = 'portfolio-theme';
@@ -88,6 +90,26 @@
         <ThemeIcon dark={isDark} />
       </button>
 
+      <a
+        class="header-icon-btn header-social-btn"
+        href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="LinkedIn"
+      >
+        <IconLinkedin size={17} />
+      </a>
+
+      <a
+        class="header-icon-btn header-social-btn"
+        href="https://github.com/pjrus"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="GitHub"
+      >
+        <IconGithub size={18} />
+      </a>
+
       <a class="btn btn--primary header-cta" href={`${base}/#contact`}>
         Contact me
       </a>
@@ -147,6 +169,26 @@
     </nav>
 
     <div class="mobile-menu-foot">
+      <div class="mobile-menu-socials">
+        <a
+          class="btn btn--secondary"
+          href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
+          target="_blank"
+          rel="noreferrer"
+          onclick={closeMenu}
+        >
+          <IconLinkedin size={16} /> LinkedIn
+        </a>
+        <a
+          class="btn btn--secondary"
+          href="https://github.com/pjrus"
+          target="_blank"
+          rel="noreferrer"
+          onclick={closeMenu}
+        >
+          <IconGithub size={16} /> GitHub
+        </a>
+      </div>
       <a class="btn btn--primary" href={`${base}/#contact`} onclick={closeMenu}>
         Contact me
       </a>
