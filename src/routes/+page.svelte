@@ -2,10 +2,9 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
-  import HeroStatus from '$lib/components/HeroStatus.svelte';
+  import FieldProfile from '$lib/components/FieldProfile.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
-  import ProfileDossier from '$lib/components/ProfileDossier.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import { buildContactMailto, validateContact } from '$lib/contact.js';
@@ -255,15 +254,12 @@
     </div>
 
     <div class="hero-stage">
-      <HeroStatus />
+      <FieldProfile />
     </div>
   </div>
 </section>
 
-<!-- ACT 2: Sticky split-scroll personal profile & live skill dossier -->
-<ProfileDossier />
-
-<!-- ACT 3 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
+<!-- ACT 2 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
 <section
   class="projects section"
   id="projects"

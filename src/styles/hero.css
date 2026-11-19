@@ -260,15 +260,6 @@ html.m-enter-done .hero-stage {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wh-word {
-    color: var(--ink);
-    transition: none;
-  }
-
-  strong.wh-word {
-    color: var(--link);
-  }
-
   html.m-enter .hero-copy > *,
   html.m-enter .hero-stage {
     opacity: 1 !important;
