@@ -5,6 +5,7 @@
   import HeroStatus from '$lib/components/HeroStatus.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
+  import ProfileDossier from '$lib/components/ProfileDossier.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import { education, experience, projects, status } from '$lib/data/content.js';
@@ -242,6 +243,9 @@
     </div>
   </div>
 </section>
+
+<!-- ACT 2: Sticky split-scroll personal profile & live skill dossier -->
+<ProfileDossier />
 
 <!-- ACT 3 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
 <section

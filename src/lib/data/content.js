@@ -173,3 +173,34 @@ export const status = {
     { label: 'Based', value: 'Melbourne', note: 'Victoria, Australia' },
   ],
 };
+
+// Act 2: Scroll-driven personal profile dossier (equal-height portrait plate + concise summary)
+export const profileDossier = {
+  skills: [
+    'TypeScript',
+    'React',
+    'Next.js',
+    'SvelteKit',
+    'React Native',
+    'Expo',
+    'IndexedDB & CRDTs',
+    'SQL & MongoDB',
+    'Three.js',
+    'Arduino',
+    'Python',
+    'Haskell',
+    'Gemini & Genkit',
+    'Docker & Linux VPS',
+    'WCAG & Accessibility',
+    'User Research',
+  ],
+  statement: [
+    { text: 'I’m a Monash computer science student in Melbourne building ' },
+    { text: 'practical, accessible software', strong: true },
+    { text: ' — from ' },
+    { text: 'local-first web tools', strong: true },
+    { text: ' and full-stack apps to ' },
+    { text: 'affordable tactile Braille hardware.', strong: true },
+  ],
+  bio: 'I like problems where engineering rigour and human usability meet: keeping user data private on-device, coordinating accessibility research with schools at Monash Assistive Technology Team, and shipping interfaces that work cleanly with keyboards and screen readers. Away from the editor, I’m usually finding somewhere new to eat in Melbourne, watching K-dramas, or catching the latest Marvel film.',
+};
