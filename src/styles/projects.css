@@ -29,13 +29,6 @@
   gap: 8px;
 }
 
-.projects-lede {
-  max-width: 52ch;
-  color: var(--body-ink);
-  font-size: var(--t-body);
-  line-height: 1.54;
-}
-
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -88,6 +81,7 @@
 
 .project-media {
   position: relative;
+  padding: 16px 16px 0;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   background: var(--bg);
@@ -97,6 +91,8 @@
 .project-media-link {
   display: block;
   overflow: hidden;
+  border: 1px solid var(--line);
+  border-bottom: 0;
 }
 
 .project-media img {
@@ -217,6 +213,10 @@
   .project-card {
     grid-row: auto;
     grid-template-rows: auto auto;
+  }
+
+  .project-media {
+    padding: 12px 12px 0;
   }
 
   .project-top {
