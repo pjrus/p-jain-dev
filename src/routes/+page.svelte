@@ -187,7 +187,7 @@
     <div class="hero-copy">
       <h1 id="hero-title">Paarangat Jain, developer in Melbourne.</h1>
       <p class="hero-intro">
-        Computer science student at Monash University building local-first web tools, healthcare software and affordable tactile Braille displays for blind and low-vision users.
+        Computer science student at Monash University exploring how AI and other emerging technologies can solve real problems, from local-first web tools to healthcare software and affordable tactile Braille displays.
       </p>
 
       <div class="hero-actions">
