@@ -53,7 +53,13 @@
     {
       id: 'local-first',
       title: 'Local-first web tools',
-      nodes: ['Browser UI', 'IndexedDB / CRDT', 'Static export'],
+      short: 'Offline browser storage with static export',
+      stages: [
+        { role: 'Surface', name: 'Browser UI', note: 'Canvas, Kanban and structured forms' },
+        { role: 'Storage', name: 'IndexedDB & CRDT', note: 'Private state kept on your device' },
+        { role: 'Output', name: 'LaTeX & PDF', note: 'Static client-side document rendering' },
+      ],
+      artefacts: ['Inkboard', 'Ressie', 'Trackie'],
       detail:
         'Inkboard, Ressie and Trackie run directly on your machine with offline storage and zero account lock-in.',
       href: '#projects',
@@ -62,8 +68,14 @@
     },
     {
       id: 'fullstack-mobile',
-      title: 'Full-stack and mobile delivery',
-      nodes: ['React / Next.js', 'Typed APIs', 'SQL / Firebase'],
+      title: 'Full-stack and mobile',
+      short: 'Healthcare, community web and hackathon shipping',
+      stages: [
+        { role: 'Client', name: 'React & Next.js', note: 'Responsive web and React Native interfaces' },
+        { role: 'Logic', name: 'TypeScript APIs', note: 'Validation, matching and workflow services' },
+        { role: 'Data', name: 'SQL & Firebase', note: 'Relational schemas and hosted real-time state' },
+      ],
+      artefacts: ['PlasmIT Vector', 'Ocean Connect', 'Skilliton'],
       detail:
         'Healthcare software engineering at PlasmIT Vector, community web delivery at Ocean Connect and UniHack 2026.',
       href: '#experience',
@@ -73,7 +85,13 @@
     {
       id: 'tactile-hardware',
       title: 'Tactile Braille hardware',
-      nodes: ['React Native', 'Arduino control', '6-dot pin array'],
+      short: 'Low-cost refreshable displays for blind users',
+      stages: [
+        { role: 'Companion', name: 'React Native app', note: 'Accessible mobile control and chord input' },
+        { role: 'Firmware', name: 'Arduino control', note: 'Actuator timing and serial communication' },
+        { role: 'Output', name: '6-dot pin array', note: 'Refreshable Grade-1 tactile Braille cells' },
+      ],
+      artefacts: ['MATT Display', 'Braille Visualiser', 'School workshops'],
       detail:
         'Coordinating affordable refreshable Braille displays and school workshops with the Monash Assistive Technology Team.',
       href: '#tactile',
@@ -81,6 +99,33 @@
       projectIndex: null,
     },
   ];
+
+  let activeTrackIndex = $state(0);
+  let activeTrack = $derived(domainTracks[activeTrackIndex] ?? domainTracks[0]);
+
+  /**
+   * Keyboard arrow navigation for the domain track tablist (WCAG APG).
+   * @param {KeyboardEvent} event
+   * @param {number} index
+   */
+  function handleTrackKeyDown(event, index) {
+    let next = -1;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      next = (index + 1) % domainTracks.length;
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      next = (index - 1 + domainTracks.length) % domainTracks.length;
+    } else if (event.key === 'Home') {
+      next = 0;
+    } else if (event.key === 'End') {
+      next = domainTracks.length - 1;
+    }
+    if (next !== -1) {
+      event.preventDefault();
+      activeTrackIndex = next;
+      const nextEl = document.getElementById(`track-tab-${domainTracks[next].id}`);
+      nextEl?.focus();
+    }
+  }
 
   // Live tactile cells spelling "M A T T" in the hero schematic plate
   const heroBrailleRow = encodeBrailleWord('MATT');
@@ -338,7 +383,7 @@
   </div>
 </section>
 
-<!-- ACT 2: Software and tactile hardware — compact thesis + 3-track architecture bento -->
+<!-- ACT 2: Software and tactile hardware — asymmetric interactive architecture showcase -->
 <section
   class="statement band--surface"
   id="statement"
@@ -348,47 +393,86 @@
   <div class="wrap statement-inner">
     <div class="statement-top">
       <div class="statement-lead">
-        <p class="meta-label">Three connected tracks</p>
         <h2 id="statement-title">Software and tactile hardware</h2>
+        <p class="statement-sub">
+          Select a track to inspect how each system moves from interface to output.
+        </p>
       </div>
       <div class="statement-thesis">
         <WordHighlight segments={statementSegments} />
       </div>
     </div>
 
-    <div class="domain-bento">
-      {#each domainTracks as track (track.id)}
-        <article class="domain-card">
-          <div class="domain-card-body">
-            <div class="domain-flow" aria-hidden="true">
-              {#each track.nodes as node, idx}
-                <span class="flow-node">{node}</span>
-                {#if idx < track.nodes.length - 1}
-                  <span class="flow-sep">→</span>
-                {/if}
-              {/each}
-            </div>
-            <h3>{track.title}</h3>
-            <p class="domain-detail">{track.detail}</p>
+    <div class="domain-showcase">
+      <div
+        id="domain-panel"
+        class="domain-panel"
+        role="tabpanel"
+        aria-labelledby={`track-tab-${activeTrack.id}`}
+      >
+        <div class="domain-panel-head">
+          <div>
+            <p class="meta-label">System architecture</p>
+            <h3>{activeTrack.title}</h3>
           </div>
+          <ul class="tag-list domain-artefacts" aria-label={`${activeTrack.title} shipped work`}>
+            {#each activeTrack.artefacts as item}<li>{item}</li>{/each}
+          </ul>
+        </div>
 
-          <div class="domain-card-foot">
-            {#if track.projectIndex !== null}
-              <button
-                type="button"
-                class="text-link domain-link-btn"
-                onclick={() => jumpToProject(track.projectIndex ?? 0)}
-              >
-                {track.cta} <ArrowIcon />
-              </button>
-            {:else}
-              <a class="text-link" href={track.href}>
-                {track.cta} <ArrowIcon />
-              </a>
-            {/if}
-          </div>
-        </article>
-      {/each}
+        <ol class="pipeline-grid" aria-label={`${activeTrack.title} architecture stages`}>
+          {#each activeTrack.stages as stage, idx}
+            <li class="pipeline-stage">
+              <div class="pipeline-stage-head">
+                <span class="meta-label">{stage.role}</span>
+                {#if idx < activeTrack.stages.length - 1}
+                  <span class="pipeline-arrow" aria-hidden="true">→</span>
+                {/if}
+              </div>
+              <p class="pipeline-name">{stage.name}</p>
+              <p class="pipeline-note">{stage.note}</p>
+            </li>
+          {/each}
+        </ol>
+
+        <div class="domain-panel-foot">
+          <p class="domain-detail">{activeTrack.detail}</p>
+          {#if activeTrack.projectIndex !== null}
+            <button
+              type="button"
+              class="btn btn--primary domain-cta"
+              onclick={() => jumpToProject(activeTrack.projectIndex ?? 0)}
+            >
+              {activeTrack.cta} <ArrowIcon />
+            </button>
+          {:else}
+            <a class="btn btn--primary domain-cta" href={activeTrack.href}>
+              {activeTrack.cta} <ArrowIcon />
+            </a>
+          {/if}
+        </div>
+      </div>
+
+      <div class="domain-index" role="tablist" aria-label="Engineering tracks">
+        {#each domainTracks as track, idx (track.id)}
+          {@const selected = idx === activeTrackIndex}
+          <button
+            id={`track-tab-${track.id}`}
+            type="button"
+            role="tab"
+            class="track-tab"
+            class:is-selected={selected}
+            aria-selected={selected}
+            aria-controls="domain-panel"
+            tabindex={selected ? 0 : -1}
+            onclick={() => (activeTrackIndex = idx)}
+            onkeydown={(e) => handleTrackKeyDown(e, idx)}
+          >
+            <span class="track-tab-title">{track.title}</span>
+            <span class="track-tab-short">{track.short}</span>
+          </button>
+        {/each}
+      </div>
     </div>
   </div>
 </section>
