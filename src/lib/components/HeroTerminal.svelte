@@ -14,8 +14,8 @@
       key: '',
       text: 'Developer and accessibility advocate building full-stack products, mobile apps and affordable tactile Braille displays with the Monash Assistive Technology Team.',
     },
-    { kind: 'kv', key: 'role', text: 'Full-Stack Engineering Intern @ PlasmIT Vector' },
-    { kind: 'kv', key: 'focus', text: 'Local-first web · React Native · assistive hardware' },
+    { kind: 'kv', key: 'skills', text: 'TypeScript · React & Next.js · Python · Gemini & Genkit AI' },
+    { kind: 'kv', key: 'focus', text: 'Local-first web · AI workflows · assistive hardware' },
     { kind: 'kv', key: 'off-duty', text: 'Melbourne food spots · K-dramas & Netflix · Marvel films' },
   ];
 
