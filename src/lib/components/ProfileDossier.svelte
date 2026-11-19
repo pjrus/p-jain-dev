@@ -4,6 +4,7 @@
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import WordHighlight from '$lib/components/WordHighlight.svelte';
   import { profileDossier } from '$lib/data/content.js';
+  import { clamp01, onScrollFrame } from '$lib/scroll.js';
 
   const { skills, statement, bio } = profileDossier;
 
@@ -20,11 +21,10 @@
       return;
     }
 
-    let rafId = 0;
+    const mqPhone = window.matchMedia('(max-width: 640px)');
 
-    function updateScroll() {
-      rafId = 0;
-      if (!sectionEl) return;
+    return onScrollFrame(() => {
+      if (!sectionEl || mqPhone.matches) return;
 
       const vh = window.innerHeight || 900;
       const rect = sectionEl.getBoundingClientRect();
@@ -34,32 +34,17 @@
       const endY = vh * 0.24;
       const rawP = (startY - rect.top) / Math.max(1, startY - endY);
       const atBottom = vh + window.scrollY >= document.documentElement.scrollHeight - 4;
-      const p = atBottom ? 1 : Math.max(0, Math.min(1, rawP));
+      const p = atBottom ? 1 : clamp01(rawP);
 
       progress = p;
       litCount = Math.round(p * skills.length);
-    }
-
-    function schedule() {
-      if (!rafId) rafId = requestAnimationFrame(updateScroll);
-    }
-
-    updateScroll();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule, { passive: true });
-
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-    };
+    });
   });
 </script>
 
 <section
   class="profile section"
   id="about-me"
-  data-sc-act="flow"
   aria-labelledby="profile-title"
   style:--profile-p={progress.toFixed(4)}
   bind:this={sectionEl}

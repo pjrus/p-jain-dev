@@ -8,7 +8,9 @@
   import ProfileDossier from '$lib/components/ProfileDossier.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
+  import { buildContactMailto, validateContact } from '$lib/contact.js';
   import { education, experience, projects, status } from '$lib/data/content.js';
+  import { clamp01, onScrollFrame } from '$lib/scroll.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -42,7 +44,12 @@
   const initiallyVisibleProjects = 3;
 
   /** @type {HTMLElement | undefined} */
-  let projectsActEl = $state();
+  let heroEl = $state();
+  /** @type {HTMLElement | undefined} */
+  let heroGridEl = $state();
+  /** @type {HTMLElement | undefined} */
+  let experienceEl = $state();
+
   let showAllProjects = $state(false);
   let visibleProjects = $derived(
     showAllProjects ? projects : projects.slice(0, initiallyVisibleProjects)
@@ -54,25 +61,38 @@
   let messageError = $state('');
   let formStatus = $state('');
 
-  onMount(() => {
-    /** @type {{ destroy: () => void; layout: () => void } | null} */
-    let scInstance = null;
-    let disposed = false;
-    let pollTimer = 0;
+  /**
+   * Normalised flow progress (0..1) from entering bottom to leaving top of viewport.
+   * Computed live from getBoundingClientRect so layout shifts (e.g. expanding projects)
+   * never leave cached coordinates stale.
+   * @param {HTMLElement} el
+   * @param {number} vh
+   */
+  function sectionProgress(el, vh) {
+    const rect = el.getBoundingClientRect();
+    return clamp01((vh - rect.top) / Math.max(1, rect.height + vh));
+  }
 
-    function mountEngine() {
-      if (disposed) return;
-      const rootEl = document.getElementById('main-content');
-      const SC = /** @type {any} */ (window).ScrollCraft;
-      if (rootEl && SC && typeof SC.mount === 'function') {
-        scInstance = SC.mount(rootEl);
-        document.documentElement.classList.add('m-enter-done');
-        return;
-      }
-      pollTimer = window.setTimeout(mountEngine, 40);
+  onMount(() => {
+    document.documentElement.classList.add('m-enter-done');
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion && experienceEl) {
+      experienceEl.style.setProperty('--sc-p', '1');
     }
 
-    mountEngine();
+    const stopScroll = reducedMotion
+      ? () => {}
+      : onScrollFrame(() => {
+          const vh = window.innerHeight || 900;
+          if (heroEl && heroGridEl) {
+            const p = sectionProgress(heroEl, vh);
+            heroGridEl.style.transform = `translate3d(0,${(-0.6 * (p - 0.5) * 100).toFixed(2)}px,0)`;
+          }
+          if (experienceEl) {
+            experienceEl.style.setProperty('--sc-p', sectionProgress(experienceEl, vh).toFixed(4));
+          }
+        });
 
     // Scroll-triggered fade-in reveals (triggers when content enters the lower-middle viewport)
     const rootEl = document.getElementById('main-content');
@@ -125,9 +145,7 @@
     }
 
     return () => {
-      disposed = true;
-      if (pollTimer) clearTimeout(pollTimer);
-      scInstance?.destroy();
+      stopScroll();
       revealObserver?.disconnect();
       if (onScrollBottom) window.removeEventListener('scroll', onScrollBottom);
       document.documentElement.classList.remove('reveal-ready');
@@ -144,15 +162,15 @@
     if (!(form instanceof HTMLFormElement)) return;
 
     const formData = new FormData(form);
-    const name = String(formData.get('name') ?? '').trim();
-    const email = String(formData.get('email') ?? '').trim();
-    const message = String(formData.get('message') ?? '').trim();
+    const result = validateContact({
+      name: String(formData.get('name') ?? ''),
+      email: String(formData.get('email') ?? ''),
+      message: String(formData.get('message') ?? ''),
+    });
 
-    nameError = name ? '' : 'Write your name.';
-    emailError = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      ? ''
-      : 'Write an email address with an @ symbol.';
-    messageError = message ? '' : 'Write a short note about what you would like to discuss.';
+    nameError = result.nameError;
+    emailError = result.emailError;
+    messageError = result.messageError;
 
     const errors = [
       nameError && 'contact-name',
@@ -160,7 +178,7 @@
       messageError && 'contact-message',
     ].filter(Boolean);
 
-    if (errors.length > 0) {
+    if (!result.valid) {
       formStatus = `${errors.length} ${errors.length === 1 ? 'field needs' : 'fields need'} attention.`;
       const firstId = String(errors[0]);
       document.getElementById(firstId)?.focus();
@@ -168,9 +186,7 @@
     }
 
     formStatus = 'Opening your email app with your draft.';
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`);
-    window.location.href = `mailto:paarangatj@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = buildContactMailto(result.trimmed);
   }
 </script>
 
@@ -181,8 +197,8 @@
 />
 
 <!-- ACT 1: Dimensional 4-plane architectural hero -->
-<section class="hero" id="top" data-sc-act="flow" data-enter aria-labelledby="hero-title">
-  <div class="hero-plane hero-plane--grid" data-sc-parallax="-0.6" aria-hidden="true"></div>
+<section class="hero" id="top" aria-labelledby="hero-title" bind:this={heroEl}>
+  <div class="hero-plane hero-plane--grid" aria-hidden="true" bind:this={heroGridEl}></div>
 
   <div class="wrap hero-inner">
     <div class="hero-copy">
@@ -251,9 +267,7 @@
 <section
   class="projects section"
   id="projects"
-  data-sc-act="flow"
   aria-labelledby="projects-title"
-  bind:this={projectsActEl}
 >
   <div class="wrap projects-shell">
     <div class="projects-head" data-reveal>
@@ -295,8 +309,8 @@
 <section
   class="experience band--surface section"
   id="experience"
-  data-sc-act="flow"
   aria-labelledby="experience-title"
+  bind:this={experienceEl}
 >
   <div class="wrap experience-grid">
     <div class="experience-header" data-reveal>
@@ -355,7 +369,7 @@
 </section>
 
 <!-- ACT 6: Grounded Contact & Closing Plate -->
-<section class="contact section" id="contact" data-sc-act="flow" aria-labelledby="contact-title">
+<section class="contact section" id="contact" aria-labelledby="contact-title">
   <div class="wrap contact-grid">
     <div class="contact-aside" data-reveal>
       <h2 id="contact-title">Contact and portfolio links</h2>

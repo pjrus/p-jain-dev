@@ -10,6 +10,7 @@
 
   const Content = $derived(data.content);
   const postUrl = $derived(canonicalUrl(`/blog/${data.post.slug}`));
+  const postImage = $derived(data.post.thumbnail ?? '/images/portfolio.png');
   const postJsonLd = $derived({
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -17,7 +18,7 @@
     description: data.post.summary,
     datePublished: data.post.date,
     url: postUrl,
-    image: canonicalUrl('/images/portfolio.png'),
+    image: canonicalUrl(postImage),
     author: {
       '@type': 'Person',
       name: 'Paarangat Jain',
@@ -41,6 +42,7 @@
   description={data.post.summary}
   path={`/blog/${data.post.slug}`}
   type="article"
+  image={postImage}
   publishedTime={data.post.date}
   tags={data.post.tags}
   noindex={data.post.draft}

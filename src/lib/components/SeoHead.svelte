@@ -6,13 +6,14 @@
     description,
     path = '/',
     type = 'website',
+    image = '/images/portfolio.png',
     publishedTime = '',
     tags = [],
     noindex = false,
     jsonLd = null,
   } = $props();
 
-  const imageUrl = canonicalUrl('/images/portfolio.png');
+  const imageUrl = $derived(canonicalUrl(image));
   const imageAlt = 'Paarangat Jain portfolio website';
   const url = $derived(canonicalUrl(path));
   // Prevent a user-controlled title or summary from closing the JSON-LD block.

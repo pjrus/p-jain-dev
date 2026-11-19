@@ -1,7 +1,6 @@
 /* ============================================================================
    Design System Tokens: Crisp Architectural White & Deep Obsidian Dark
    High-contrast WCAG 2.2 AA/AAA palette + Geist / Geist Mono typography
-   Harmonized with ScrollCraft floor tokens (--sc-*)
    ========================================================================== */
 
 :root {
@@ -23,23 +22,6 @@
   --line-strong: rgba(10, 10, 10, 0.28);
   --tint: rgba(10, 10, 10, 0.04);
   --accent-tint: rgba(29, 78, 216, 0.07);
-
-  /* Inverted pure-black gallery room tokens */
-  --inv-bg: #000000;
-  --inv-surface: #0a0a0a;
-  --inv-surface-raised: #111111;
-  --inv-ink: #ffffff;
-  --inv-muted: #b0b0b6;
-  --inv-accent: #7da8ff;
-  --inv-accent-ink: #000000;
-  --inv-line: rgba(255, 255, 255, 0.16);
-  --inv-line-strong: rgba(255, 255, 255, 0.32);
-
-  /* Compatibility aliases */
-  --background: var(--bg);
-  --primary: var(--accent);
-  --primary-strong: var(--accent);
-  --accent-strong: var(--accent);
 
   /* Typography (dealt: geist) */
   --font-display: 'Geist', system-ui, -apple-system, sans-serif;
@@ -100,24 +82,6 @@
   --m-press: 90ms;
   --m-image: 600ms;
   --m-image-out: 400ms;
-
-  /* ScrollCraft engine overrides */
-  --sc-canvas: var(--bg);
-  --sc-surface: var(--surface);
-  --sc-ink: var(--ink);
-  --sc-ink-soft: var(--muted);
-  --sc-accent: var(--accent);
-  --sc-accent-ink: var(--accent-ink);
-  --sc-hairline: var(--line);
-  --sc-hairline-strong: var(--line-strong);
-  --sc-font-display: var(--font-display);
-  --sc-font-text: var(--font-text);
-  --sc-font-mono: var(--font-mono);
-  --sc-maxw: var(--maxw);
-  --sc-gutter: var(--gut);
-  --sc-r-sm: var(--r-sm);
-  --sc-r-md: var(--r-md);
-  --sc-r-lg: var(--r-lg);
 }
 
 /* Dark mode: pure black ground with crisp hairlines, AAA ink & cobalt accent */
@@ -139,16 +103,6 @@
   --line-strong: rgba(255, 255, 255, 0.32);
   --tint: rgba(255, 255, 255, 0.07);
   --accent-tint: rgba(29, 78, 216, 0.14);
-
-  --inv-bg: #000000;
-  --inv-surface: #08080a;
-  --inv-surface-raised: #101014;
-  --inv-ink: #ffffff;
-  --inv-muted: #b0b0b6;
-  --inv-accent: #1d4ed8;
-  --inv-accent-ink: #ffffff;
-  --inv-line: rgba(255, 255, 255, 0.16);
-  --inv-line-strong: rgba(255, 255, 255, 0.32);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
   --shadow-md: 0 4px 18px -4px rgba(0, 0, 0, 0.72);

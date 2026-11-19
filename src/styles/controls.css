@@ -3,8 +3,7 @@
    Follows taste-skill motion.md hover/press numbers strictly
    ========================================================================== */
 
-.btn,
-.button {
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -29,8 +28,7 @@
     transform var(--m-out) var(--ease);
 }
 
-.btn--primary,
-.button-primary {
+.btn--primary {
   border-color: var(--action);
   background: var(--action);
   color: var(--action-ink);
@@ -42,22 +40,19 @@
   color: var(--ink);
 }
 
-.btn svg,
-.button svg {
+.btn svg {
   flex-shrink: 0;
   transition: transform var(--m-out) var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover,
-  .button:hover {
+  .btn:hover {
     background: var(--tint);
     border-color: var(--ink);
     transition-duration: var(--m-in);
   }
 
-  .btn--primary:hover,
-  .button-primary:hover {
+  .btn--primary:hover {
     background: var(--accent-hover);
     border-color: var(--accent-hover);
     color: var(--action-ink);
@@ -68,21 +63,18 @@
     border-color: var(--ink);
   }
 
-  .btn:hover svg,
-  .button:hover svg {
+  .btn:hover svg {
     transform: translateX(3px);
   }
 }
 
-.btn:active,
-.button:active {
+.btn:active {
   transform: translateY(1px) scale(0.985);
   transition-duration: var(--m-press);
 }
 
 /* Text link: faint resting hairline + crisp ink underline draw left-to-right */
-.text-link,
-.link {
+.text-link {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -106,40 +98,32 @@
     background-size var(--m-out) var(--ease);
 }
 
-.text-link svg,
-.link svg {
+.text-link svg {
   transition: transform var(--m-out) var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .text-link:hover,
-  .link:hover {
+  .text-link:hover {
     color: var(--link-hover);
     background-size: 100% 1px, 100% 1px;
     transition-duration: var(--m-in);
   }
 
-  .text-link:hover svg,
-  .link:hover svg {
+  .text-link:hover svg {
     transform: translateX(3px);
   }
 }
 
-.text-link:focus-visible,
-.link:focus-visible {
+.text-link:focus-visible {
   color: var(--link);
   background-size: 100% 1px, 100% 1px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .btn,
-  .button,
   .btn svg,
-  .button svg,
   .text-link,
-  .link,
-  .text-link svg,
-  .link svg {
+  .text-link svg {
     transition-property: color, background-color, border-color;
     transition-duration: 120ms;
     transform: none !important;

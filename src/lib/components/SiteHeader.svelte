@@ -55,8 +55,11 @@
     menuEl?.close();
   }
 
-  const isBlog = $derived(page.url.pathname.includes('/blog'));
-  const isAbout = $derived(page.url.pathname.endsWith('/about'));
+  const pathname = $derived(page.url.pathname.replace(/\/+$/, '') || '/');
+  const isBlog = $derived(
+    pathname === `${base}/blog` || pathname.startsWith(`${base}/blog/`),
+  );
+  const isAbout = $derived(pathname === `${base}/about`);
 </script>
 
 <header class="site-header">

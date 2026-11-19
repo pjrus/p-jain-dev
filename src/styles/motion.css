@@ -1,11 +1,8 @@
 /* ============================================================================
    Motion polish & reduced-motion guardrails
-   Works alongside untouched /vendor/scrollcraft/scrollcraft.css
    ========================================================================== */
 
 /* Keep flow reveals visible when JS hasn't armed them yet */
-html:not(.sc-ready) [data-sc-in],
-html:not(.sc-ready) [data-sc-stagger] > *,
 html:not(.reveal-ready) [data-reveal],
 html:not(.reveal-ready) [data-reveal-stagger] > * {
   opacity: 1;

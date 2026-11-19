@@ -125,6 +125,15 @@ figure {
 img,
 svg {
   display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
 a {
@@ -137,24 +146,6 @@ a {
   outline: 2px solid var(--action);
   outline-offset: 2px;
   border-radius: var(--r-sm);
-}
-
-/* Inverted dark room utility (restates color so inherited ink updates cleanly) */
-.band--dark {
-  --bg: var(--inv-bg);
-  --surface: var(--inv-surface);
-  --surface-raised: var(--inv-surface-raised);
-  --ink: var(--inv-ink);
-  --body-ink: #e4e4e7;
-  --muted: var(--inv-muted);
-  --accent: var(--inv-accent);
-  --accent-ink: var(--inv-accent-ink);
-  --action: var(--inv-accent);
-  --action-ink: var(--inv-accent-ink);
-  --line: var(--inv-line);
-  --line-strong: var(--inv-line-strong);
-  background: var(--inv-bg);
-  color: var(--inv-ink);
 }
 
 .band--surface {

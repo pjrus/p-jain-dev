@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { clamp01, onScrollFrame } from '$lib/scroll.js';
 
   /**
    * Scroll-scrubbed statement illumination (dealt taste-skill moment: word-highlight).
@@ -33,34 +34,17 @@
       return;
     }
 
-    let frame = 0;
-
-    function update() {
-      frame = 0;
+    return onScrollFrame(() => {
       if (!rootEl) return;
       const rect = rootEl.getBoundingClientRect();
       const vh = window.innerHeight || 900;
       const start = vh * 0.84;
       const end = vh * 0.36;
       const raw = (start - rect.top) / Math.max(1, start - end + rect.height * 0.7);
-      const t = Math.max(0, Math.min(1, raw));
+      const t = clamp01(raw);
       const atBottom = vh + window.scrollY >= document.documentElement.scrollHeight - 4;
       revealedCount = atBottom ? words.length : Math.round(t * words.length);
-    }
-
-    function schedule() {
-      if (!frame) frame = requestAnimationFrame(update);
-    }
-
-    update();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule, { passive: true });
-
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-    };
+    });
   });
 </script>
 

@@ -74,27 +74,6 @@ export const projects = [
   },
 ];
 
-export const tactileWork = {
-  organisation: 'Monash Assistive Technology Team',
-  role: 'Project Coordinator & Operations Officer',
-  summary:
-    'I coordinate development of low-cost tactile and refreshable Braille displays for blind and low-vision users, lead the React Native companion app that drives them, and run user interviews with schools and participants.',
-  pillars: [
-    {
-      label: 'Hardware & software',
-      detail: 'Refreshable tactile Braille display prototypes paired with a React Native companion application.',
-    },
-    {
-      label: 'User-centred research',
-      detail: 'Direct user interviews, design surveys and collaborative school workshops across Melbourne.',
-    },
-    {
-      label: 'Interactive chord testing',
-      detail: 'Click any dot below or hold F, D, S (dots 1 to 3) and J, K, L (dots 4 to 6) to chord Grade-1 Braille.',
-    },
-  ],
-};
-
 export const education = [
   {
     period: 'Jan 2024 – Jun 2027',
