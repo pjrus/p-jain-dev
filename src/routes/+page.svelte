@@ -391,38 +391,40 @@
 
 <!-- ACT 4: Assistive Hardware, Signature Interactive Braille Workbench & Stack -->
 <section class="tactile section" id="tactile" data-sc-act="flow" aria-labelledby="tactile-title">
-  <div class="wrap tactile-grid">
-    <div class="tactile-info">
-      <div class="section-heading">
-        <div class="section-heading-grid">
-          <h2 id="tactile-title">Assistive hardware and tech stack</h2>
-          <p>{tactileWork.summary}</p>
+  <div class="wrap tactile-shell">
+    <div class="tactile-grid">
+      <div class="tactile-info">
+        <div class="section-heading">
+          <div class="section-heading-grid">
+            <h2 id="tactile-title">Assistive hardware and tech stack</h2>
+            <p>{tactileWork.summary}</p>
+          </div>
         </div>
+
+        <dl class="pillar-list">
+          {#each tactileWork.pillars as pillar}
+            <div class="pillar-row">
+              <dt>{pillar.label}</dt>
+              <dd>{pillar.detail}</dd>
+            </div>
+          {/each}
+        </dl>
       </div>
 
-      <dl class="pillar-list">
-        {#each tactileWork.pillars as pillar}
-          <div class="pillar-row">
-            <dt>{pillar.label}</dt>
-            <dd>{pillar.detail}</dd>
-          </div>
-        {/each}
-      </dl>
-
-      <div class="stack-spec">
-        {#each stack as group}
-          <div class="stack-group">
-            <p class="meta-label">{group.label}</p>
-            <ul class="tag-list" aria-label={group.label}>
-              {#each group.items as item}<li>{item}</li>{/each}
-            </ul>
-          </div>
-        {/each}
+      <div class="tactile-bench-wrap" data-sc-reveal="up" data-sc-reveal-at="0.04 0.28">
+        <BrailleWorkbench />
       </div>
     </div>
 
-    <div class="tactile-bench-wrap" data-sc-reveal="up" data-sc-reveal-at="0.04 0.28">
-      <BrailleWorkbench />
+    <div class="stack-spec">
+      {#each stack as group}
+        <div class="stack-group">
+          <p class="meta-label">{group.label}</p>
+          <ul class="tag-list" aria-label={group.label}>
+            {#each group.items as item}<li>{item}</li>{/each}
+          </ul>
+        </div>
+      {/each}
     </div>
   </div>
 </section>
