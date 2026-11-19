@@ -7,6 +7,7 @@
 <article
   class="project-card"
   class:project-card--revealed={extra}
+  class:is-visible={extra}
   style={`--reveal-delay: ${revealDelay}ms`}
 >
   <div class="project-summary">

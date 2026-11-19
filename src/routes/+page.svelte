@@ -7,8 +7,7 @@
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import WordHighlight from '$lib/components/WordHighlight.svelte';
-  import { education, experience, projects } from '$lib/data/content.js';
+  import { education, experience, projects, stack } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -39,93 +38,6 @@
     ],
   };
 
-  const statementSegments = [
-    { text: 'Software should run reliably on your own machine and stay reachable for everyone who uses it. I build' },
-    { text: 'local-first web tools,', strong: true },
-    { text: 'production mobile apps', strong: true },
-    { text: 'and' },
-    { text: 'affordable tactile Braille hardware', strong: true },
-    { text: 'for blind and low-vision users.' },
-  ];
-
-  const domainTracks = [
-    {
-      id: 'local-first',
-      title: 'Local-first web tools',
-      short: 'Offline browser storage with static export',
-      stages: [
-        { role: 'Surface', name: 'Browser UI', note: 'Canvas, Kanban and structured forms' },
-        { role: 'Storage', name: 'IndexedDB & CRDT', note: 'Private state kept on your device' },
-        { role: 'Output', name: 'LaTeX & PDF', note: 'Static client-side document rendering' },
-      ],
-      artefacts: ['Inkboard', 'Ressie', 'Trackie'],
-      detail:
-        'Inkboard, Ressie and Trackie run directly on your machine with offline storage and zero account lock-in.',
-      href: '#projects',
-      cta: 'Inspect shipped apps',
-      projectIndex: 2,
-    },
-    {
-      id: 'fullstack-mobile',
-      title: 'Full-stack and mobile',
-      short: 'Healthcare, community web and hackathon shipping',
-      stages: [
-        { role: 'Client', name: 'React & Next.js', note: 'Responsive web and React Native interfaces' },
-        { role: 'Logic', name: 'TypeScript APIs', note: 'Validation, matching and workflow services' },
-        { role: 'Data', name: 'SQL & Firebase', note: 'Relational schemas and hosted real-time state' },
-      ],
-      artefacts: ['PlasmIT Vector', 'Ocean Connect', 'Skilliton'],
-      detail:
-        'Healthcare software engineering at PlasmIT Vector, community web delivery at Ocean Connect and UniHack 2026.',
-      href: '#experience',
-      cta: 'Read experience log',
-      projectIndex: null,
-    },
-    {
-      id: 'tactile-hardware',
-      title: 'Tactile Braille hardware',
-      short: 'Low-cost refreshable displays for blind users',
-      stages: [
-        { role: 'Companion', name: 'React Native app', note: 'Accessible mobile control and chord input' },
-        { role: 'Firmware', name: 'Arduino control', note: 'Actuator timing and serial communication' },
-        { role: 'Output', name: '6-dot pin array', note: 'Refreshable Grade-1 tactile Braille cells' },
-      ],
-      artefacts: ['MATT Display', 'Braille Visualiser', 'School workshops'],
-      detail:
-        'Coordinating affordable refreshable Braille displays and school workshops with the Monash Assistive Technology Team.',
-      href: '#projects',
-      cta: 'Inspect Braille visualiser',
-      projectIndex: 1,
-    },
-  ];
-
-  let activeTrackIndex = $state(0);
-  let activeTrack = $derived(domainTracks[activeTrackIndex] ?? domainTracks[0]);
-
-  /**
-   * Keyboard arrow navigation for the domain track tablist (WCAG APG).
-   * @param {KeyboardEvent} event
-   * @param {number} index
-   */
-  function handleTrackKeyDown(event, index) {
-    let next = -1;
-    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-      next = (index + 1) % domainTracks.length;
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-      next = (index - 1 + domainTracks.length) % domainTracks.length;
-    } else if (event.key === 'Home') {
-      next = 0;
-    } else if (event.key === 'End') {
-      next = domainTracks.length - 1;
-    }
-    if (next !== -1) {
-      event.preventDefault();
-      activeTrackIndex = next;
-      const nextEl = document.getElementById(`track-tab-${domainTracks[next].id}`);
-      nextEl?.focus();
-    }
-  }
-
   const initiallyVisibleProjects = 3;
 
   /** @type {HTMLElement | undefined} */
@@ -140,16 +52,6 @@
   let emailError = $state('');
   let messageError = $state('');
   let formStatus = $state('');
-
-  /**
-   * Scrolls to the projects section and expands all cards if the target is beyond the initial row.
-   * @param {number} index
-   */
-  function jumpToProject(index) {
-    if (index >= initiallyVisibleProjects) showAllProjects = true;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    projectsActEl?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-  }
 
   onMount(() => {
     /** @type {{ destroy: () => void; layout: () => void } | null} */
@@ -171,10 +73,63 @@
 
     mountEngine();
 
+    // Scroll-triggered fade-in reveals (triggers when content enters the lower-middle viewport)
+    const rootEl = document.getElementById('main-content');
+    /** @type {IntersectionObserver | null} */
+    let revealObserver = null;
+    /** @type {(() => void) | null} */
+    let onScrollBottom = null;
+
+    if (rootEl) {
+      const targets = Array.from(rootEl.querySelectorAll('[data-reveal]'));
+      /** @param {Element} el */
+      const revealEl = (el) => {
+        if (el.classList.contains('is-visible')) return;
+        el.classList.add('is-visible');
+        const stagger = parseFloat(el.getAttribute('data-reveal-stagger') ?? '');
+        if (!Number.isNaN(stagger)) {
+          Array.from(el.children).forEach((kid, i) => {
+            if (kid instanceof HTMLElement) {
+              kid.style.transitionDelay = `${i * stagger}ms`;
+            }
+            kid.classList.add('is-visible');
+          });
+        }
+        revealObserver?.unobserve(el);
+      };
+
+      document.documentElement.classList.add('reveal-ready');
+
+      if ('IntersectionObserver' in window) {
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) revealEl(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -28% 0px', threshold: 0.05 }
+        );
+        targets.forEach((el) => revealObserver?.observe(el));
+
+        // Ensure bottom-of-page sections (e.g. Contact on tall screens) always reveal at scroll end
+        onScrollBottom = () => {
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
+            targets.forEach((el) => revealEl(el));
+          }
+        };
+        window.addEventListener('scroll', onScrollBottom, { passive: true });
+      } else {
+        targets.forEach((el) => revealEl(el));
+      }
+    }
+
     return () => {
       disposed = true;
       if (pollTimer) clearTimeout(pollTimer);
       scInstance?.destroy();
+      revealObserver?.disconnect();
+      if (onScrollBottom) window.removeEventListener('scroll', onScrollBottom);
+      document.documentElement.classList.remove('reveal-ready');
     };
   });
 
@@ -271,104 +226,6 @@
   </div>
 </section>
 
-<!-- ACT 2: Software and tactile hardware — asymmetric interactive architecture showcase -->
-<section
-  class="statement band--surface"
-  id="statement"
-  data-sc-act="flow"
-  aria-labelledby="statement-title"
->
-  <div class="wrap statement-inner">
-    <div class="statement-top">
-      <div class="statement-lead">
-        <h2 id="statement-title">Software and tactile hardware</h2>
-        <p class="statement-sub">
-          Select a track to inspect how each system moves from interface to output.
-        </p>
-      </div>
-      <div class="statement-thesis">
-        <WordHighlight segments={statementSegments} />
-      </div>
-    </div>
-
-    <div class="domain-showcase">
-      <div
-        id="domain-panel"
-        class="domain-panel"
-        role="tabpanel"
-        aria-labelledby={`track-tab-${activeTrack.id}`}
-      >
-        {#key activeTrack.id}
-          <div class="domain-panel-body">
-            <div class="domain-panel-head">
-              <div>
-                <p class="meta-label">System architecture</p>
-                <h3>{activeTrack.title}</h3>
-              </div>
-              <ul class="tag-list domain-artefacts" aria-label={`${activeTrack.title} shipped work`}>
-                {#each activeTrack.artefacts as item}<li>{item}</li>{/each}
-              </ul>
-            </div>
-
-            <ol class="pipeline-grid" aria-label={`${activeTrack.title} architecture stages`}>
-              {#each activeTrack.stages as stage, idx}
-                <li class="pipeline-stage" style={`--stage-index: ${idx}`}>
-                  <div class="pipeline-stage-head">
-                    <span class="meta-label">{stage.role}</span>
-                    {#if idx < activeTrack.stages.length - 1}
-                      <span class="pipeline-arrow" aria-hidden="true">→</span>
-                    {/if}
-                  </div>
-                  <p class="pipeline-name">{stage.name}</p>
-                  <p class="pipeline-note">{stage.note}</p>
-                </li>
-              {/each}
-            </ol>
-
-            <div class="domain-panel-foot">
-              <p class="domain-detail">{activeTrack.detail}</p>
-              {#if activeTrack.projectIndex !== null}
-                <button
-                  type="button"
-                  class="btn btn--primary domain-cta"
-                  onclick={() => jumpToProject(activeTrack.projectIndex ?? 0)}
-                >
-                  {activeTrack.cta} <ArrowIcon />
-                </button>
-              {:else}
-                <a class="btn btn--primary domain-cta" href={activeTrack.href}>
-                  {activeTrack.cta} <ArrowIcon />
-                </a>
-              {/if}
-            </div>
-          </div>
-        {/key}
-      </div>
-
-      <div class="domain-index" role="tablist" aria-label="Engineering tracks">
-        {#each domainTracks as track, idx (track.id)}
-          {@const selected = idx === activeTrackIndex}
-          <button
-            id={`track-tab-${track.id}`}
-            type="button"
-            role="tab"
-            class="track-tab"
-            class:is-selected={selected}
-            aria-selected={selected}
-            aria-controls="domain-panel"
-            tabindex={selected ? 0 : -1}
-            onclick={() => (activeTrackIndex = idx)}
-            onkeydown={(e) => handleTrackKeyDown(e, idx)}
-          >
-            <span class="track-tab-title">{track.title}</span>
-            <span class="track-tab-short">{track.short}</span>
-          </button>
-        {/each}
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ACT 3 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
 <section
   class="projects section"
@@ -378,16 +235,13 @@
   bind:this={projectsActEl}
 >
   <div class="wrap projects-shell">
-    <div class="projects-head">
+    <div class="projects-head" data-reveal>
       <div class="projects-title-group">
         <h2 id="projects-title">Shipped software projects</h2>
-        <p class="projects-lede">
-          Six applications across local-first web software, 3D assistive hardware tools and AI workflows.
-        </p>
       </div>
     </div>
 
-    <div class="project-grid" id="project-grid">
+    <div class="project-grid" id="project-grid" data-reveal data-reveal-stagger="70">
       {#each visibleProjects as project, index (project.id)}
         {@const extra = index >= initiallyVisibleProjects}
         <ProjectCard
@@ -400,7 +254,7 @@
     </div>
 
     {#if projects.length > initiallyVisibleProjects}
-      <div class="project-actions">
+      <div class="project-actions" data-reveal>
         <button
           class="btn project-toggle"
           type="button"
@@ -424,7 +278,7 @@
   aria-labelledby="experience-title"
 >
   <div class="wrap experience-grid">
-    <div class="experience-header">
+    <div class="experience-header" data-reveal>
       <h2 id="experience-title">Engineering experience and education</h2>
       <p class="experience-intro">
         Healthcare full-stack delivery, community web maintenance and leadership across assistive hardware.
@@ -439,6 +293,18 @@
             <p class="edu-award">{item.award}</p>
             <p class="edu-detail">{item.detail} · {item.location}</p>
           </article>
+        {/each}
+      </div>
+
+      <div class="experience-stack">
+        <p class="meta-label">Skills</p>
+        {#each stack as group}
+          <div class="stack-mini-card">
+            <h3 class="stack-mini-title">// {group.label}</h3>
+            <ul class="tag-list" aria-label={group.label}>
+              {#each group.items as item}<li>{item}</li>{/each}
+            </ul>
+          </div>
         {/each}
       </div>
 
@@ -459,7 +325,7 @@
         <span class="experience-spine-fill"></span>
       </div>
 
-      <div class="experience-list" data-sc-in data-sc-stagger="35">
+      <div class="experience-list" data-reveal data-reveal-stagger="45">
         {#each experience as item}
           <article class="experience-item">
             <span class="experience-node" aria-hidden="true"></span>
@@ -482,7 +348,7 @@
 <!-- ACT 6: Grounded Contact & Closing Plate -->
 <section class="contact section" id="contact" data-sc-act="flow" aria-labelledby="contact-title">
   <div class="wrap contact-grid">
-    <div class="contact-aside">
+    <div class="contact-aside" data-reveal>
       <h2 id="contact-title">Contact and portfolio links</h2>
       <p class="contact-lede">
         Open to graduate and junior full-stack engineering roles in Melbourne, as well as collaborations in assistive technology and accessible software.
@@ -524,6 +390,7 @@
 
     <form
       class="contact-form"
+      data-reveal
       action="mailto:paarangatj@gmail.com"
       method="post"
       enctype="text/plain"
