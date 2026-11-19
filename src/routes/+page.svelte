@@ -7,7 +7,7 @@
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import { education, experience, projects, stack } from '$lib/data/content.js';
+  import { education, experience, projects } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -293,17 +293,6 @@
             <p class="edu-award">{item.award}</p>
             <p class="edu-detail">{item.detail} · {item.location}</p>
           </article>
-        {/each}
-      </div>
-
-      <div class="experience-stack">
-        <p class="meta-label">Skills</p>
-        {#each stack as group}
-          <div class="stack-mini-card">
-            <ul class="tag-list" aria-label={group.label}>
-              {#each group.items as item}<li>{item}</li>{/each}
-            </ul>
-          </div>
         {/each}
       </div>
 

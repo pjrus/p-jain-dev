@@ -112,40 +112,6 @@ export const education = [
   },
 ];
 
-export const stack = [
-  {
-    label: 'Languages & frameworks',
-    items: [
-      'TypeScript',
-      'JavaScript',
-      'Python',
-      'Haskell',
-      'PHP',
-      'R',
-      'HTML/CSS',
-      'React',
-      'React Native',
-      'Next.js',
-      'Expo',
-    ],
-  },
-  {
-    label: 'Tools & platforms',
-    items: [
-      'Docker',
-      'Git',
-      'MongoDB',
-      'MySQL',
-      'Arduino',
-      'Figma',
-      'VPS deployment',
-      'Linux (Manjaro)',
-      'macOS',
-      'Windows',
-    ],
-  },
-];
-
 export const experience = [
   {
     period: 'Jun 2026 – Sep 2026',
