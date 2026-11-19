@@ -119,11 +119,6 @@
   transition-duration: var(--m-press);
 }
 
-.header-cta {
-  padding-inline: 18px;
-  font-size: 0.9375rem;
-}
-
 .menu-toggle {
   display: none;
 }
@@ -243,7 +238,6 @@
 }
 
 @media (max-width: 640px) {
-  .site-header .header-cta,
   .site-header .header-social-btn {
     display: none;
   }

@@ -80,16 +80,6 @@
     </nav>
 
     <div class="header-actions">
-      <button
-        class="header-icon-btn theme-toggle"
-        type="button"
-        aria-pressed={isDark}
-        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-        onclick={toggleTheme}
-      >
-        <ThemeIcon dark={isDark} />
-      </button>
-
       <a
         class="header-icon-btn header-social-btn"
         href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
@@ -110,10 +100,6 @@
         <IconGithub size={18} />
       </a>
 
-      <a class="btn btn--primary header-cta" href={`${base}/#contact`}>
-        Contact me
-      </a>
-
       <button
         id="menu-toggle"
         class="header-icon-btn menu-toggle"
@@ -126,6 +112,16 @@
         <span class="menu-icon" class:is-open={isMenuOpen} aria-hidden="true">
           <span></span><span></span><span></span>
         </span>
+      </button>
+
+      <button
+        class="header-icon-btn theme-toggle"
+        type="button"
+        aria-pressed={isDark}
+        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        onclick={toggleTheme}
+      >
+        <ThemeIcon dark={isDark} />
       </button>
     </div>
   </div>
