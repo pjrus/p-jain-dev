@@ -98,7 +98,15 @@ export const experience = [
     organisation: 'PlasmIT Vector',
     location: 'Docklands, Victoria, Australia · Remote',
     summary:
-      'Assisted with designing and developing full-stack applications across frontend, backend and database components. Collaborated with the team across implementation, testing, documentation and cross-stack issue resolution following agreed development practices.',
+      'Built both mobile and Next.js full-stack applications across frontend, backend and database components. Collaborated with the team on implementation, testing, documentation and cross-stack issue resolution following agreed development practices.',
+  },
+  {
+    period: 'Aug 2025 – present',
+    role: 'Project Coordinator',
+    organisation: 'Monash Assistive Technology Team',
+    location: 'Clayton, Victoria, Australia',
+    summary:
+      'Lead collaboration with the academic supervisor to define goals and strategy for low-cost tactile and refreshable Braille displays, guiding project officers in developing accessibility technology. Design surveys for user-centred development, lead the supporting React Native mobile app, and received over 90% positive team feedback for leadership and communication.',
   },
   {
     period: 'Mar 2026 – present',
@@ -115,14 +123,6 @@ export const experience = [
     location: 'Clayton, Victoria, Australia',
     summary:
       'Assist with MATT’s technical operations to support delivery of accessibility-focused projects. Collaborate with peers on technical initiatives and internal processes while contributing to team coordination, communication and operational workflows.',
-  },
-  {
-    period: 'Aug 2025 – present',
-    role: 'Project Coordinator',
-    organisation: 'Monash Assistive Technology Team',
-    location: 'Clayton, Victoria, Australia',
-    summary:
-      'Lead collaboration with the academic supervisor to define goals and strategy for low-cost tactile and refreshable Braille displays, guiding project officers in developing accessibility technology. Conduct user interviews and surveys for user-centred design, lead the supporting React Native mobile app, and received over 90% positive team feedback for leadership and communication.',
   },
   {
     period: 'Mar 2026 – Jul 2026',
