@@ -98,11 +98,6 @@
   color: var(--ink);
 }
 
-/* Status rows merged into the facts: phones only (desktop shows the plate) */
-.hero-fact--status {
-  display: none;
-}
-
 .hero-fact-dot {
   display: inline-block;
   width: 8px;
@@ -138,23 +133,19 @@
 }
 
 /* Hero load entrance */
-html.m-enter:not(.m-enter-done) .hero-copy > *,
+html.m-enter:not(.m-enter-done) .hero-copy > *:not(h1),
 html.m-enter:not(.m-enter-done) .hero-stage {
   opacity: 0;
   transform: translate3d(0, 12px, 0);
 }
 
-html.m-enter-done .hero-copy > *,
+html.m-enter-done .hero-copy > *:not(h1),
 html.m-enter-done .hero-stage {
   opacity: 1;
   transform: none;
   transition:
     opacity 540ms var(--ease-enter),
     transform 540ms var(--ease-enter);
-}
-
-html.m-enter-done .hero-copy > *:nth-child(2) {
-  transition-delay: 60ms;
 }
 
 html.m-enter-done .hero-copy > *:nth-child(3) {
@@ -247,11 +238,6 @@ html.m-enter-done .hero-stage {
 
   .hero-facts dt {
     margin-bottom: 2px;
-  }
-
-  /* The plate's rows live in the facts list here, so the plate itself hides */
-  .hero-fact--status {
-    display: block;
   }
 
   .hero-stage {

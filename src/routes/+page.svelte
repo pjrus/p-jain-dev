@@ -2,13 +2,14 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
+  import CharRevealText from '$lib/components/CharRevealText.svelte';
   import FieldProfile from '$lib/components/FieldProfile.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import { buildContactMailto, validateContact } from '$lib/contact.js';
-  import { education, experience, projects, status } from '$lib/data/content.js';
+  import { education, experience, heroFacts, projects } from '$lib/data/content.js';
   import { clamp01, onScrollFrame } from '$lib/scroll.js';
   import { canonicalUrl } from '$lib/seo.js';
 
@@ -209,7 +210,7 @@
         height="300"
         loading="lazy"
       />
-      <h1 id="hero-title">Paarangat Jain, developer in Melbourne.</h1>
+      <CharRevealText id="hero-title" text="Paarangat Jain, developer in Melbourne." />
       <p class="hero-intro">
         Computer science student at Monash University exploring how AI and other emerging technologies can solve real problems, from local-first web tools to healthcare software and affordable tactile Braille displays.
       </p>
@@ -229,27 +230,15 @@
       </div>
 
       <dl class="hero-facts">
-        {#each status.rows.filter((row) => row.label !== 'Based') as row}
-          <div class="hero-fact--status">
+        {#each heroFacts as row (row.label)}
+          <div>
             <dt>{row.label}</dt>
             <dd>
               {#if row.open}<span class="hero-fact-dot" aria-hidden="true"></span>{/if}{row.value}
-              <span class="hero-fact-note">{row.note}</span>
+              {#if row.note}<span class="hero-fact-note">{row.note}</span>{/if}
             </dd>
           </div>
         {/each}
-        <div>
-          <dt>Location</dt>
-          <dd>Melbourne, Victoria</dd>
-        </div>
-        <div>
-          <dt>Degree</dt>
-          <dd>Monash CS (2024–2027)</dd>
-        </div>
-        <div>
-          <dt>Scope</dt>
-          <dd>Web, mobile, hardware</dd>
-        </div>
       </dl>
     </div>
 

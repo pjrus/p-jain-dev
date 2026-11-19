@@ -59,6 +59,19 @@ test('built static site excludes drafts, includes routes, and has no scrollcraft
   assert.ok(sitemapXml.includes('<loc>https://pjrus.github.io/about</loc>'));
   assert.ok(sitemapXml.includes('<loc>https://pjrus.github.io/blog</loc>'));
 
+  const heroMatch = indexHtml.match(/<h1[^>]*id="hero-title"[\s\S]*?<\/h1>/);
+  assert.ok(heroMatch, 'index.html should include #hero-title');
+  assert.ok(
+    heroMatch[0].includes('aria-label="Paarangat Jain, developer in Melbourne."'),
+    '#hero-title should preserve full plain-text aria-label'
+  );
+  const wordMatches = heroMatch[0].match(/class="char-reveal-word[^"]*"/g) ?? [];
+  assert.equal(wordMatches.length, 5, '#hero-title should split into 5 word spans');
+  const charMatches = heroMatch[0].match(/class="char-reveal-char[^"]*"/g) ?? [];
+  assert.equal(charMatches.length, 35, '#hero-title should split into 35 character spans');
+  assert.ok(heroMatch[0].includes('--char-delay: 0ms'), 'first char should start at 0ms delay');
+  assert.ok(heroMatch[0].includes('--char-delay: 22ms'), 'second char should stagger by 22ms');
+
   const postFiles = fs.readdirSync(POSTS_DIR).filter((file) => file.endsWith('.md'));
   for (const file of postFiles) {
     const slug = file.replace(/\.md$/, '');

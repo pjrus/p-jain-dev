@@ -1,9 +1,9 @@
 <script>
   import { base } from '$app/paths';
-  import { skills } from '$lib/data/content.js';
+  import { heroFacts } from '$lib/data/content.js';
 </script>
 
-<aside class="dossier-plate" aria-label="Paarangat Jain field profile and skills">
+<aside class="dossier-plate" aria-label="Paarangat Jain field profile">
   <header class="dossier-head">
     <span class="dossier-kicker">Field profile</span>
     <span class="dossier-location">Melbourne, AU</span>
@@ -27,18 +27,17 @@
     </div>
   </div>
 
-  <div class="dossier-skills" aria-label="Technical skills">
-    <div class="dossier-skills-head">
-      <span class="meta-label">Skills</span>
-      <span class="dossier-skills-count">{skills.length} tools</span>
-    </div>
-
-    <ul class="dossier-skill-list">
-      {#each skills as skill (skill)}
-        <li class="dossier-skill">{skill}</li>
-      {/each}
-    </ul>
-  </div>
+  <dl class="dossier-facts" aria-label="Availability, focus, and scope">
+    {#each heroFacts as row (row.label)}
+      <div class="dossier-fact">
+        <dt>{row.label}</dt>
+        <dd>
+          {#if row.open}<span class="dossier-fact-dot" aria-hidden="true"></span>{/if}{row.value}
+          {#if row.note}<span class="dossier-fact-note">{row.note}</span>{/if}
+        </dd>
+      </div>
+    {/each}
+  </dl>
 </aside>
 
 <style>
@@ -134,42 +133,54 @@
     text-transform: uppercase;
   }
 
-  .dossier-skills {
+  .dossier-facts {
+    margin: 0;
+  }
+
+  .dossier-fact {
     display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
     gap: 12px;
-    padding: 18px;
-  }
-
-  .dossier-skills-head {
-    display: flex;
     align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
   }
 
-  .dossier-skills-count {
-    color: var(--muted);
+  .dossier-fact:last-child {
+    border-bottom: 0;
+  }
+
+  .dossier-fact dt {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.03em;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .dossier-skill-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-
-  .dossier-skill {
-    padding: 5px 9px;
-    border: 1px solid var(--line-strong);
-    background: var(--surface-raised);
-    color: var(--ink);
-    font-family: var(--font-mono);
-    font-size: 0.78125rem;
+    font-size: var(--t-label);
     font-weight: 500;
-    line-height: 1.25;
+    color: var(--muted);
+  }
+
+  .dossier-fact dd {
+    margin: 0;
+    font-size: var(--t-small);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .dossier-fact-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: var(--r-pill);
+    background: var(--link);
+    box-shadow: 0 0 0 3px var(--accent-tint);
+    vertical-align: 1px;
+  }
+
+  .dossier-fact-note {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-weight: 450;
   }
 
   @media (max-width: 920px) {
@@ -184,8 +195,9 @@
       height: 84px;
     }
 
-    .dossier-skills {
-      padding: 16px;
+    .dossier-fact {
+      grid-template-columns: 100px minmax(0, 1fr);
+      padding: 12px 16px;
     }
   }
 </style>

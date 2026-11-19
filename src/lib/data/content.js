@@ -153,6 +153,12 @@ export const status = {
   ],
 };
 
+/** @type {Array<{ label: string, value: string, note?: string, open?: boolean }>} */
+export const heroFacts = [
+  ...status.rows.filter((row) => row.label === 'Availability' || row.label === 'Focus'),
+  { label: 'Scope', value: 'Web, mobile, hardware' },
+];
+
 export const skills = [
   'TypeScript',
   'React',
