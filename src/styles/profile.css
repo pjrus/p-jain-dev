@@ -295,14 +295,8 @@ strong.wh-word.is-lit {
 }
 
 @media (max-width: 640px) {
-  .dossier-identity {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 14px;
-  }
-
-  .dossier-portrait {
-    width: 72px;
-    height: 72px;
+  .profile-rail {
+    display: none;
   }
 
   .profile-footer-actions {
