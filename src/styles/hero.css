@@ -217,36 +217,44 @@
 }
 
 /* ============================================================================
-   Act 2: Quiet Statement (word-highlight dealt moment) — full calm screen
+   Act 2: Software and tactile hardware — compact thesis + 3-track bento
+   Eliminates vertical dead space and bridges Hero (#top) -> Projects (#projects)
    ========================================================================== */
 
 .statement {
   border-top: 1px solid var(--line);
-  background: var(--bg);
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  padding-top: calc(var(--nav-h) + 48px);
-  padding-bottom: 64px;
+  padding-block: clamp(56px, 6.5vw, 88px);
 }
 
 .statement-inner {
   display: grid;
-  gap: 32px;
+  gap: clamp(28px, 3.5vw, 40px);
+}
+
+.statement-top {
+  display: grid;
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  gap: 20px clamp(24px, 4vw, 56px);
+  align-items: end;
+}
+
+.statement-lead {
+  display: grid;
+  gap: 8px;
 }
 
 .word-highlight-text {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.375rem, 2.3vw, 2.25rem);
-  line-height: 1.32;
-  letter-spacing: -0.025em;
-  max-width: 34ch;
+  font-size: clamp(1.25rem, 1.85vw, 1.6875rem);
+  line-height: 1.38;
+  letter-spacing: -0.02em;
+  max-width: 44ch;
   text-wrap: pretty;
 }
 
 .wh-word {
-  color: color-mix(in oklab, var(--ink) 62%, var(--bg));
+  color: color-mix(in oklab, var(--ink) 64%, var(--surface));
   transition: color 180ms var(--ease);
 }
 
@@ -260,6 +268,85 @@ strong.wh-word {
 
 strong.wh-word.is-lit {
   color: var(--action);
+}
+
+.domain-bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.domain-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-raised);
+  box-shadow: var(--edge-light), var(--shadow-sm);
+  transition:
+    transform var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .domain-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ink);
+    transition-duration: 180ms;
+  }
+}
+
+.domain-card-body {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.domain-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.flow-node {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.flow-sep {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--action);
+}
+
+.domain-detail {
+  color: var(--ink);
+  font-size: var(--t-small);
+  line-height: 1.56;
+}
+
+.domain-card-foot {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.domain-link-btn {
+  padding-inline: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 /* Hero load entrance */
@@ -291,9 +378,9 @@ html.m-enter-done .hero-copy > *:nth-child(4) {
 /* Separate tablet & mobile art direction */
 @media (max-width: 960px) {
   .hero {
-    min-height: 100svh;
+    min-height: auto;
     padding-top: calc(var(--nav-h) + 28px);
-    padding-bottom: 40px;
+    padding-bottom: 44px;
   }
 
   .hero-inner {
@@ -307,6 +394,16 @@ html.m-enter-done .hero-copy > *:nth-child(4) {
 
   .hero-copy h1 {
     max-width: 18ch;
+  }
+
+  .statement-top {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .domain-bento {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }
 

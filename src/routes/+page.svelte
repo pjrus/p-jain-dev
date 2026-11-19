@@ -49,6 +49,39 @@
     { text: 'for blind and low-vision users.' },
   ];
 
+  const domainTracks = [
+    {
+      id: 'local-first',
+      title: 'Local-first web tools',
+      nodes: ['Browser UI', 'IndexedDB / CRDT', 'Static export'],
+      detail:
+        'Inkboard, Ressie and Trackie run directly on your machine with offline storage and zero account lock-in.',
+      href: '#projects',
+      cta: 'Inspect shipped apps',
+      projectIndex: 2,
+    },
+    {
+      id: 'fullstack-mobile',
+      title: 'Full-stack and mobile delivery',
+      nodes: ['React / Next.js', 'Typed APIs', 'SQL / Firebase'],
+      detail:
+        'Healthcare software engineering at PlasmIT Vector, community web delivery at Ocean Connect and UniHack 2026.',
+      href: '#experience',
+      cta: 'Read experience log',
+      projectIndex: null,
+    },
+    {
+      id: 'tactile-hardware',
+      title: 'Tactile Braille hardware',
+      nodes: ['React Native', 'Arduino control', '6-dot pin array'],
+      detail:
+        'Coordinating affordable refreshable Braille displays and school workshops with the Monash Assistive Technology Team.',
+      href: '#tactile',
+      cta: 'Test Braille workbench',
+      projectIndex: null,
+    },
+  ];
+
   // Live tactile cells spelling "M A T T" in the hero schematic plate
   const heroBrailleRow = encodeBrailleWord('MATT');
 
@@ -305,16 +338,58 @@
   </div>
 </section>
 
-<!-- ACT 2: Quiet statement beat (dealt taste-skill moment: word-highlight) -->
+<!-- ACT 2: Software and tactile hardware — compact thesis + 3-track architecture bento -->
 <section
-  class="statement section"
+  class="statement band--surface"
   id="statement"
   data-sc-act="flow"
   aria-labelledby="statement-title"
 >
   <div class="wrap statement-inner">
-    <h2 id="statement-title">Software and tactile hardware</h2>
-    <WordHighlight segments={statementSegments} />
+    <div class="statement-top">
+      <div class="statement-lead">
+        <p class="meta-label">Three connected tracks</p>
+        <h2 id="statement-title">Software and tactile hardware</h2>
+      </div>
+      <div class="statement-thesis">
+        <WordHighlight segments={statementSegments} />
+      </div>
+    </div>
+
+    <div class="domain-bento">
+      {#each domainTracks as track (track.id)}
+        <article class="domain-card">
+          <div class="domain-card-body">
+            <div class="domain-flow" aria-hidden="true">
+              {#each track.nodes as node, idx}
+                <span class="flow-node">{node}</span>
+                {#if idx < track.nodes.length - 1}
+                  <span class="flow-sep">→</span>
+                {/if}
+              {/each}
+            </div>
+            <h3>{track.title}</h3>
+            <p class="domain-detail">{track.detail}</p>
+          </div>
+
+          <div class="domain-card-foot">
+            {#if track.projectIndex !== null}
+              <button
+                type="button"
+                class="text-link domain-link-btn"
+                onclick={() => jumpToProject(track.projectIndex ?? 0)}
+              >
+                {track.cta} <ArrowIcon />
+              </button>
+            {:else}
+              <a class="text-link" href={track.href}>
+                {track.cta} <ArrowIcon />
+              </a>
+            {/if}
+          </div>
+        </article>
+      {/each}
+    </div>
   </div>
 </section>
 
