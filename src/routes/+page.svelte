@@ -3,14 +3,13 @@
   import { base } from '$app/paths';
   import { encodeBrailleWord } from '$lib/braille.js';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
-  import BrailleWorkbench from '$lib/components/BrailleWorkbench.svelte';
   import HeroTerminal from '$lib/components/HeroTerminal.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
   import WordHighlight from '$lib/components/WordHighlight.svelte';
-  import { education, experience, projects, stack, tactileWork } from '$lib/data/content.js';
+  import { education, experience, projects } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -95,9 +94,9 @@
       artefacts: ['MATT Display', 'Braille Visualiser', 'School workshops'],
       detail:
         'Coordinating affordable refreshable Braille displays and school workshops with the Monash Assistive Technology Team.',
-      href: '#tactile',
-      cta: 'Test Braille workbench',
-      projectIndex: null,
+      href: '#projects',
+      cta: 'Inspect Braille visualiser',
+      projectIndex: 1,
     },
   ];
 
@@ -650,47 +649,7 @@
   </div>
 </section>
 
-<!-- ACT 4: Assistive Hardware, Signature Interactive Braille Workbench & Stack -->
-<section class="tactile section" id="tactile" data-sc-act="flow" aria-labelledby="tactile-title">
-  <div class="wrap tactile-shell">
-    <div class="tactile-grid">
-      <div class="tactile-info">
-        <div class="section-heading">
-          <div class="section-heading-grid">
-            <h2 id="tactile-title">Assistive hardware and tech stack</h2>
-            <p>{tactileWork.summary}</p>
-          </div>
-        </div>
-
-        <dl class="pillar-list">
-          {#each tactileWork.pillars as pillar}
-            <div class="pillar-row">
-              <dt>{pillar.label}</dt>
-              <dd>{pillar.detail}</dd>
-            </div>
-          {/each}
-        </dl>
-      </div>
-
-      <div class="tactile-bench-wrap" data-sc-reveal="up" data-sc-reveal-at="0.04 0.28">
-        <BrailleWorkbench />
-      </div>
-    </div>
-
-    <div class="stack-spec">
-      {#each stack as group}
-        <div class="stack-group">
-          <p class="meta-label">{group.label}</p>
-          <ul class="tag-list" aria-label={group.label}>
-            {#each group.items as item}<li>{item}</li>{/each}
-          </ul>
-        </div>
-      {/each}
-    </div>
-  </div>
-</section>
-
-<!-- ACT 5: Experience & Education Ledger with scroll-drawn vertical cobalt spine -->
+<!-- ACT 4: Experience & Education Ledger with scroll-drawn vertical cobalt spine -->
 <section
   class="experience band--surface section"
   id="experience"

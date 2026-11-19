@@ -31,7 +31,6 @@
 
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href={`${base}/#projects`}>Projects</a>
-        <a href={`${base}/#tactile`}>Assistive tech</a>
         <a href={`${base}/#experience`}>Experience</a>
         <a href={`${base}/about`}>About</a>
         <a href={`${base}/blog`}>Blog</a>

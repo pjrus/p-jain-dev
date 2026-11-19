@@ -69,6 +69,24 @@
   color: var(--inv-ink);
 }
 
+.mini-cell {
+  display: grid;
+  grid-template-columns: repeat(2, 6px);
+  grid-template-rows: repeat(3, 6px);
+  gap: 4px;
+}
+
+.mini-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(247, 247, 248, 0.24);
+}
+
+.mini-dot.is-up {
+  background: var(--inv-accent);
+}
+
 .projects-arrows {
   display: inline-flex;
   gap: 6px;
