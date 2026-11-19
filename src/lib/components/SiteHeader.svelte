@@ -73,9 +73,6 @@
     </a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href={`${base}/#projects`}>Projects</a>
-      <a href={`${base}/#tactile`}>Assistive tech</a>
-      <a href={`${base}/#experience`}>Experience</a>
       <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}>About</a>
       <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}>Blog</a>
     </nav>
@@ -145,9 +142,6 @@
     </div>
 
     <nav class="mobile-menu-nav" aria-label="Mobile navigation">
-      <a href={`${base}/#projects`} onclick={closeMenu}>Projects</a>
-      <a href={`${base}/#tactile`} onclick={closeMenu}>Assistive tech</a>
-      <a href={`${base}/#experience`} onclick={closeMenu}>Experience</a>
       <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined} onclick={closeMenu}>About</a>
       <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined} onclick={closeMenu}>Blog</a>
     </nav>
