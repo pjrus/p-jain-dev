@@ -458,47 +458,51 @@
         role="tabpanel"
         aria-labelledby={`track-tab-${activeTrack.id}`}
       >
-        <div class="domain-panel-head">
-          <div>
-            <p class="meta-label">System architecture</p>
-            <h3>{activeTrack.title}</h3>
-          </div>
-          <ul class="tag-list domain-artefacts" aria-label={`${activeTrack.title} shipped work`}>
-            {#each activeTrack.artefacts as item}<li>{item}</li>{/each}
-          </ul>
-        </div>
-
-        <ol class="pipeline-grid" aria-label={`${activeTrack.title} architecture stages`}>
-          {#each activeTrack.stages as stage, idx}
-            <li class="pipeline-stage">
-              <div class="pipeline-stage-head">
-                <span class="meta-label">{stage.role}</span>
-                {#if idx < activeTrack.stages.length - 1}
-                  <span class="pipeline-arrow" aria-hidden="true">→</span>
-                {/if}
+        {#key activeTrack.id}
+          <div class="domain-panel-body">
+            <div class="domain-panel-head">
+              <div>
+                <p class="meta-label">System architecture</p>
+                <h3>{activeTrack.title}</h3>
               </div>
-              <p class="pipeline-name">{stage.name}</p>
-              <p class="pipeline-note">{stage.note}</p>
-            </li>
-          {/each}
-        </ol>
+              <ul class="tag-list domain-artefacts" aria-label={`${activeTrack.title} shipped work`}>
+                {#each activeTrack.artefacts as item}<li>{item}</li>{/each}
+              </ul>
+            </div>
 
-        <div class="domain-panel-foot">
-          <p class="domain-detail">{activeTrack.detail}</p>
-          {#if activeTrack.projectIndex !== null}
-            <button
-              type="button"
-              class="btn btn--primary domain-cta"
-              onclick={() => jumpToProject(activeTrack.projectIndex ?? 0, true)}
-            >
-              {activeTrack.cta} <ArrowIcon />
-            </button>
-          {:else}
-            <a class="btn btn--primary domain-cta" href={activeTrack.href}>
-              {activeTrack.cta} <ArrowIcon />
-            </a>
-          {/if}
-        </div>
+            <ol class="pipeline-grid" aria-label={`${activeTrack.title} architecture stages`}>
+              {#each activeTrack.stages as stage, idx}
+                <li class="pipeline-stage" style={`--stage-index: ${idx}`}>
+                  <div class="pipeline-stage-head">
+                    <span class="meta-label">{stage.role}</span>
+                    {#if idx < activeTrack.stages.length - 1}
+                      <span class="pipeline-arrow" aria-hidden="true">→</span>
+                    {/if}
+                  </div>
+                  <p class="pipeline-name">{stage.name}</p>
+                  <p class="pipeline-note">{stage.note}</p>
+                </li>
+              {/each}
+            </ol>
+
+            <div class="domain-panel-foot">
+              <p class="domain-detail">{activeTrack.detail}</p>
+              {#if activeTrack.projectIndex !== null}
+                <button
+                  type="button"
+                  class="btn btn--primary domain-cta"
+                  onclick={() => jumpToProject(activeTrack.projectIndex ?? 0, true)}
+                >
+                  {activeTrack.cta} <ArrowIcon />
+                </button>
+              {:else}
+                <a class="btn btn--primary domain-cta" href={activeTrack.href}>
+                  {activeTrack.cta} <ArrowIcon />
+                </a>
+              {/if}
+            </div>
+          </div>
+        {/key}
       </div>
 
       <div class="domain-index" role="tablist" aria-label="Engineering tracks">

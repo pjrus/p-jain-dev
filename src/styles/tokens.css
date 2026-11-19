@@ -9,8 +9,9 @@
   --bg: #ffffff;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --ink: #0a0a0a;
-  --muted: #454545;
+  --ink: #09090b;
+  --body-ink: #18181b;
+  --muted: #3f3f46;
   --accent: #1d4ed8;
   --accent-hover: #173fb0;
   --accent-ink: #ffffff;
@@ -45,7 +46,7 @@
 
   --display-weight: 500;
   --display-tracking: -0.035em;
-  --display-tracking-xl: -0.045em;
+  --display-tracking-xl: -0.04em;
 
   /* Fluid type ramp (sentence case, >= 13px floor, >= 16px reading copy) */
   --t-h1: clamp(2.5rem, 4.4vw, 4.5rem);
@@ -123,7 +124,8 @@
   --surface: #000000;
   --surface-raised: #08080a;
   --ink: #ffffff;
-  --muted: #b0b0b6;
+  --body-ink: #e4e4e7;
+  --muted: #b4b4bc;
   --accent: #7aa8ff;
   --accent-hover: #97bcff;
   --accent-ink: #000000;

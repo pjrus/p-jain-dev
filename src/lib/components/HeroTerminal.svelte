@@ -39,8 +39,11 @@
     return out;
   }
 
+  /** @type {HTMLElement | undefined} */
+  let frameEl = $state();
   let typedCount = $state(ALL_TOTAL);
   let reducedMotion = $state(false);
+  let isOffscreen = $state(false);
   let runId = 0;
 
   let cmdTyped = $derived(sliceCommand(Math.min(typedCount, CMD_TOTAL)));
@@ -92,14 +95,31 @@
 
     startTyping();
 
+    const observer =
+      typeof IntersectionObserver !== 'undefined' && frameEl
+        ? new IntersectionObserver(
+            (entries) => {
+              isOffscreen = !entries[0]?.isIntersecting;
+            },
+            { threshold: 0.05 }
+          )
+        : null;
+    if (observer && frameEl) observer.observe(frameEl);
+
     return () => {
       runId += 1;
+      observer?.disconnect();
       mq.removeEventListener('change', onChange);
     };
   });
 </script>
 
-<div class="terminal-frame" aria-label="Personal terminal bio for Paarangat Jain">
+<div
+  class="terminal-frame"
+  class:is-offscreen={isOffscreen}
+  bind:this={frameEl}
+  aria-label="Personal terminal bio for Paarangat Jain"
+>
   <div class="terminal-chrome">
     <div class="terminal-identity">
       <span class="terminal-mark" aria-hidden="true">›_</span>

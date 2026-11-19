@@ -22,10 +22,10 @@ body {
   margin: 0;
   padding: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--body-ink);
   font-family: var(--font-text);
   font-size: var(--t-body);
-  font-weight: 400;
+  font-weight: 450;
   line-height: 1.62;
   letter-spacing: -0.005em;
   overflow-x: clip;
@@ -36,6 +36,11 @@ body {
 :root[data-theme='dark'] body {
   line-height: 1.66;
   letter-spacing: 0.002em;
+}
+
+::selection {
+  background: var(--action);
+  color: var(--action-ink);
 }
 
 main {
@@ -65,7 +70,7 @@ footer {
   padding-bottom: clamp(64px, 8vw, 112px);
 }
 
-/* Headings: Geist 500, tight optical tracking, sentence case, never bold-and-big */
+/* Headings: Geist 500 across sections, tighter Semibold in Hero */
 h1,
 h2,
 h3,
@@ -73,7 +78,7 @@ h4 {
   margin: 0;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
-  color: inherit;
+  color: var(--ink);
   text-wrap: balance;
 }
 
@@ -140,6 +145,7 @@ a {
   --surface: var(--inv-surface);
   --surface-raised: var(--inv-surface-raised);
   --ink: var(--inv-ink);
+  --body-ink: #e4e4e7;
   --muted: var(--inv-muted);
   --accent: var(--inv-accent);
   --accent-ink: var(--inv-accent-ink);

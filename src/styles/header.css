@@ -109,7 +109,6 @@
   .header-icon-btn:hover {
     background: var(--tint);
     border-color: var(--ink);
-    transform: translateY(-1px);
     transition-duration: var(--m-in);
   }
 }

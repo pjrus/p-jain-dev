@@ -5,8 +5,9 @@ colors:
   background: "#ffffff"
   surface: "#ffffff"
   surface-raised: "#ffffff"
-  ink: "#0a0a0a"
-  muted: "#454545"
+  ink: "#09090b"
+  body-ink: "#18181b"
+  muted: "#3f3f46"
   signal-blue: "#1d4ed8"
   signal-blue-strong: "#173fb0"
   primary-ink: "#ffffff"
@@ -20,9 +21,9 @@ typography:
   display:
     fontFamily: "'Geist', system-ui, sans-serif"
     fontSize: "clamp(2.5rem, 4.4vw, 4.5rem)"
-    fontWeight: 500
+    fontWeight: 650
     lineHeight: 1.02
-    letterSpacing: "-0.045em"
+    letterSpacing: "-0.038em"
   headline:
     fontFamily: "'Geist', system-ui, sans-serif"
     fontSize: "clamp(1.875rem, 2.8vw, 3rem)"
@@ -38,7 +39,7 @@ typography:
   body:
     fontFamily: "'Geist', system-ui, sans-serif"
     fontSize: "1rem"
-    fontWeight: 400
+    fontWeight: 450
     lineHeight: 1.62
   mono:
     fontFamily: "'Geist Mono', ui-monospace, monospace"
