@@ -543,36 +543,38 @@
       novalidate
       onsubmit={sendContactMessage}
     >
-      <div class="form-field">
-        <label for="contact-name">Name</label>
-        <input
-          id="contact-name"
-          name="name"
-          type="text"
-          autocomplete="name"
-          aria-invalid={nameError ? 'true' : undefined}
-          aria-describedby={nameError ? 'contact-name-err' : undefined}
-          required
-        />
-        {#if nameError}
-          <p id="contact-name-err" class="field-error">{nameError}</p>
-        {/if}
-      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="contact-name">Name</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            aria-invalid={nameError ? 'true' : undefined}
+            aria-describedby={nameError ? 'contact-name-err' : undefined}
+            required
+          />
+          {#if nameError}
+            <p id="contact-name-err" class="field-error">{nameError}</p>
+          {/if}
+        </div>
 
-      <div class="form-field">
-        <label for="contact-email">Email</label>
-        <input
-          id="contact-email"
-          name="email"
-          type="email"
-          autocomplete="email"
-          aria-invalid={emailError ? 'true' : undefined}
-          aria-describedby={emailError ? 'contact-email-err' : undefined}
-          required
-        />
-        {#if emailError}
-          <p id="contact-email-err" class="field-error">{emailError}</p>
-        {/if}
+        <div class="form-field">
+          <label for="contact-email">Email</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            aria-invalid={emailError ? 'true' : undefined}
+            aria-describedby={emailError ? 'contact-email-err' : undefined}
+            required
+          />
+          {#if emailError}
+            <p id="contact-email-err" class="field-error">{emailError}</p>
+          {/if}
+        </div>
       </div>
 
       <div class="form-field">
@@ -580,7 +582,7 @@
         <textarea
           id="contact-message"
           name="message"
-          rows="4"
+          rows="3"
           aria-invalid={messageError ? 'true' : undefined}
           aria-describedby={messageError ? 'contact-message-err' : undefined}
           required
