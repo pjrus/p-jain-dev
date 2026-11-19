@@ -531,9 +531,9 @@
   </div>
 </section>
 
-<!-- ACT 3 (PEAK): Inverted dark Selected Work native horizontal-scroll gallery -->
+<!-- ACT 3 (PEAK): Selected Work native horizontal-scroll gallery (vertical on mobile) -->
 <section
-  class="projects band--dark"
+  class="projects"
   id="projects"
   data-sc-act="flow"
   aria-labelledby="projects-title"

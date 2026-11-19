@@ -1,14 +1,13 @@
 /* ============================================================================
-   Act 3 (PEAK): Inverted dark Selected Work Native Horizontal Gallery
-   Vertical scroll flows freely past the section; horizontal scroll / controls
-   browse through all 6 projects without pinning or hijacking vertical scroll.
+   Act 3 (PEAK): Selected Work Native Horizontal Gallery (Vertical on Mobile)
+   Follows active theme: pure white in light mode, pure black in dark mode.
    ========================================================================== */
 
 .projects {
   position: relative;
-  border-top: 1px solid var(--inv-line);
-  background: var(--inv-bg);
-  color: var(--inv-ink);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
 }
 
 .projects-stage {
@@ -16,8 +15,8 @@
   flex-direction: column;
   gap: 24px;
   padding-block: clamp(56px, 6.5vw, 88px);
-  background: var(--inv-bg);
-  color: var(--inv-ink);
+  background: var(--bg);
+  color: var(--ink);
 }
 
 .projects-head {
@@ -36,7 +35,7 @@
 
 .projects-lede {
   max-width: 48ch;
-  color: var(--inv-ink);
+  color: var(--body-ink);
   font-size: var(--t-body);
   line-height: 1.5;
 }
@@ -60,13 +59,13 @@
   gap: 10px;
   min-height: 44px;
   padding: 6px 14px;
-  border: 1px solid var(--inv-line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-pill);
-  background: var(--inv-surface);
+  background: var(--surface-raised);
 }
 
 .braille-chapter-badge .meta-label {
-  color: var(--inv-ink);
+  color: var(--ink);
 }
 
 .mini-cell {
@@ -80,12 +79,12 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(247, 247, 248, 0.24);
+  background: var(--line-strong);
   transition: background-color 180ms var(--ease), transform 180ms var(--ease);
 }
 
 .mini-dot.is-up {
-  background: var(--inv-accent);
+  background: var(--action);
   transform: scale(1.12);
 }
 
@@ -101,10 +100,10 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid var(--inv-line-strong);
+  border: 1px solid var(--line-strong);
   border-radius: 0;
   background: transparent;
-  color: var(--inv-ink);
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 1rem;
   cursor: pointer;
@@ -121,9 +120,9 @@
 
 @media (hover: hover) and (pointer: fine) {
   .rail-nav-btn:not(:disabled):hover {
-    border-color: var(--inv-accent);
-    background: var(--inv-accent);
-    color: var(--inv-accent-ink);
+    border-color: var(--action);
+    background: var(--action);
+    color: var(--action-ink);
   }
 }
 
@@ -136,10 +135,10 @@
 .jump-pill {
   min-height: 44px;
   padding: 0 12px;
-  border: 1px solid var(--inv-line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-sm);
   background: transparent;
-  color: var(--inv-muted);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: var(--t-label);
   cursor: pointer;
@@ -150,16 +149,16 @@
 }
 
 .jump-pill.is-current {
-  border-color: var(--inv-accent);
-  background: var(--inv-accent);
-  color: var(--inv-accent-ink);
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--action-ink);
   font-weight: 500;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .jump-pill:not(.is-current):hover {
-    border-color: var(--inv-ink);
-    color: var(--inv-ink);
+    border-color: var(--ink);
+    color: var(--ink);
   }
 }
 
@@ -190,16 +189,16 @@
   flex: 0 0 calc((100% - 48px) / 3);
   min-width: 0;
   scroll-snap-align: start;
-  border: 1px solid var(--inv-line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
-  background: var(--inv-surface);
+  background: var(--surface-raised);
   overflow: hidden;
   transition: border-color var(--m-out) var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .project-card:hover {
-    border-color: var(--inv-accent);
+    border-color: var(--action);
     transition-duration: 180ms;
   }
 }
@@ -207,8 +206,8 @@
 .project-media {
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--inv-line);
-  background: var(--inv-bg);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
   flex-shrink: 0;
 }
 
@@ -251,15 +250,15 @@
 }
 
 .project-top .meta-label {
-  color: var(--inv-accent);
+  color: var(--action);
 }
 
 .project-top h3 {
-  color: var(--inv-ink);
+  color: var(--ink);
 }
 
 .project-description {
-  color: var(--inv-ink);
+  color: var(--body-ink);
   font-size: var(--t-small);
   line-height: 1.54;
 }
@@ -276,8 +275,8 @@
 }
 
 .project-foot .tag-list li {
-  border-color: var(--inv-line);
-  color: var(--inv-ink);
+  border-color: var(--line-strong);
+  color: var(--ink);
   font-size: var(--t-label);
 }
 
@@ -295,8 +294,8 @@
 }
 
 .project-btn--source {
-  border-color: var(--inv-line-strong);
-  color: var(--inv-ink);
+  border-color: var(--line-strong);
+  color: var(--ink);
 }
 
 .project-end-card {
@@ -310,17 +309,17 @@
   min-width: 0;
   scroll-snap-align: start;
   padding: 32px;
-  border: 1px solid var(--inv-line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
-  background: var(--inv-surface);
+  background: var(--surface-raised);
 }
 
 .project-end-card .meta-label {
-  color: var(--inv-accent);
+  color: var(--action);
 }
 
 .project-end-copy {
-  color: var(--inv-ink);
+  color: var(--body-ink);
   font-size: var(--t-body);
   line-height: 1.56;
 }
@@ -337,9 +336,9 @@
   position: relative;
   flex: 1;
   height: 12px;
-  border: 1px solid var(--inv-line-strong);
+  border: 1px solid var(--line-strong);
   border-radius: 0;
-  background: var(--inv-surface);
+  background: var(--surface-raised);
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -353,26 +352,26 @@
 
 .rail-scrollbar.is-dragging {
   cursor: grabbing;
-  border-color: var(--inv-accent);
+  border-color: var(--action);
 }
 
 .rail-scrollbar-thumb {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: var(--inv-accent);
+  background: var(--action);
   border-radius: 0;
   transition: background-color var(--m-out) var(--ease);
 }
 
 .rail-scrollbar:hover .rail-scrollbar-thumb,
 .rail-scrollbar.is-dragging .rail-scrollbar-thumb {
-  background: var(--inv-ink);
+  background: var(--ink);
 }
 
 .rail-scroll-hint {
   flex-shrink: 0;
-  color: var(--inv-muted);
+  color: var(--muted);
 }
 
 @media (max-width: 1080px) {
@@ -408,14 +407,14 @@
 
 .projects-more-btn {
   width: 100%;
-  border-color: var(--inv-line-strong);
-  color: var(--inv-ink);
+  border-color: var(--line-strong);
+  color: var(--ink);
 }
 
 .projects-more-btn:hover {
-  background: var(--inv-surface);
-  border-color: var(--inv-accent);
-  color: var(--inv-ink);
+  background: var(--tint);
+  border-color: var(--action);
+  color: var(--ink);
 }
 
 @media (max-width: 640px) {
