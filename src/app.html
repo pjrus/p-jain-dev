@@ -1,27 +1,37 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-type="software" data-radius="soft" data-buttons="solid" data-motion>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#fafbfe" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="page-type" content="software" />
+    <meta name="site-kind" content="software" />
+    <meta name="theme-color" content="#dfdedb" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&family=Geist+Mono:wght@400..500&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233162db%22/><text y=%22.74em%22 x=%22.16em%22 font-size=%2268%22 font-family=%22Arial%22 font-weight=%22700%22 fill=%22white%22>P</text></svg>" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%232456d6%22/><circle cx=%2212%22 cy=%2210%22 r=%222.5%22 fill=%22%23dfdedb%22/><circle cx=%2220%22 cy=%2210%22 r=%222.5%22 fill=%22%23dfdedb%22/><circle cx=%2212%22 cy=%2216%22 r=%222.5%22 fill=%22%23dfdedb%22/><circle cx=%2212%22 cy=%2222%22 r=%222.5%22 fill=%22%23dfdedb%22/><circle cx=%2220%22 cy=%2216%22 r=%221.4%22 fill=%22%23dfdedb%22 opacity=%220.32%22/><circle cx=%2220%22 cy=%2222%22 r=%221.4%22 fill=%22%23dfdedb%22 opacity=%220.32%22/></svg>"
+    />
+    <link rel="stylesheet" href="%sveltekit.assets%/vendor/scrollcraft/scrollcraft.css" />
     <script>
-      // Pages are prerendered, so the theme has to be applied before the first
-      // paint — otherwise a dark-mode visitor sees a flash of the light canvas.
-      // Light is the default; dark only when the visitor has chosen it.
       try {
         document.documentElement.dataset.theme =
           localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light';
       } catch (error) {
         document.documentElement.dataset.theme = 'light';
       }
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('m-enter');
+        setTimeout(function () {
+          document.documentElement.classList.add('m-enter-done');
+        }, 700);
+      }
     </script>
+    <script defer src="%sveltekit.assets%/vendor/scrollcraft/scrollcraft.js"></script>
     %sveltekit.head%
   </head>
   <body data-sveltekit-preload-data="hover">

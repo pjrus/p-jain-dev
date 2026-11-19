@@ -3,10 +3,6 @@
   import { afterNavigate } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/state';
-  import IconDocument from './IconDocument.svelte';
-  import IconGithub from './IconGithub.svelte';
-  import IconLinkedin from './IconLinkedin.svelte';
-  import IconUser from './IconUser.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
 
   const THEME_KEY = 'portfolio-theme';
@@ -21,25 +17,20 @@
     const root = document.documentElement;
     root.dataset.theme = theme;
     isDark = theme === 'dark';
-    // Browser chrome follows the canvas token rather than a second copy of it.
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', getComputedStyle(root).getPropertyValue('--background').trim());
+    const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
+    if (bg) {
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
+    }
   }
 
   onMount(() => {
-    // The inline script in app.html has already applied the theme before first
-    // paint; this syncs the toggle and browser chrome with what is on screen.
     applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
   });
 
-  // A tap on a menu link shouldn't leave the full-screen menu open behind the new view.
   afterNavigate(closeMenu);
 
   function toggleTheme() {
     const theme = isDark ? 'light' : 'dark';
-    // View transition crossfades the whole page in one pass, so every surface
-    // changes together in both directions; falls back to an instant swap.
     if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.startViewTransition(() => applyTheme(theme));
     } else {
@@ -48,13 +39,12 @@
     try {
       localStorage.setItem(THEME_KEY, theme);
     } catch {
-      // Storage blocked: the choice still holds for this page view.
+      // Storage unavailable: preference still holds for this session.
     }
   }
 
   function openMenu() {
     isMenuOpen = true;
-    // showModal gives the focus trap, Escape-to-close and inert background.
     menuEl?.showModal();
   }
 
@@ -68,45 +58,49 @@
 </script>
 
 <header class="site-header">
-  <div class="shell header-inner">
-    <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, back to top">PJ<span>.</span></a>
+  <div class="wrap header-inner">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <circle cx="8" cy="6" r="2.2" fill="var(--action-ink)" />
+          <circle cx="16" cy="6" r="2.2" fill="var(--action-ink)" />
+          <circle cx="8" cy="12" r="2.2" fill="var(--action-ink)" />
+          <circle cx="8" cy="18" r="2.2" fill="var(--action-ink)" />
+          <circle cx="16" cy="12" r="1.3" fill="var(--action-ink)" opacity="0.35" />
+          <circle cx="16" cy="18" r="1.3" fill="var(--action-ink)" opacity="0.35" />
+        </svg>
+      </span>
+      <span>Paarangat Jain</span>
+    </a>
 
     <nav class="primary-nav" aria-label="Main navigation">
-      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser size={17} /> About</a>
-      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={17} /> Blog</a>
+      <a href={`${base}/#projects`}>Projects</a>
+      <a href={`${base}/#tactile`}>Assistive tech</a>
+      <a href={`${base}/#experience`}>Experience</a>
+      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}>About</a>
+      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}>Blog</a>
     </nav>
 
     <div class="header-actions">
-      <a
-        class="header-social"
-        href="https://github.com/pjrus"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="GitHub profile"
-      >
-        <IconGithub size={20} />
-      </a>
-      <a
-        class="header-social"
-        href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="LinkedIn profile"
-      >
-        <IconLinkedin size={20} />
-      </a>
       <button
-        class="header-social theme-toggle"
+        class="header-icon-btn theme-toggle"
         type="button"
         aria-pressed={isDark}
-        aria-label={isDark ? 'Switch to the light theme' : 'Switch to the dark theme'}
+        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
         onclick={toggleTheme}
       >
         <ThemeIcon dark={isDark} />
       </button>
+
+      <a class="btn btn--primary header-cta" href={`${base}/#contact`}>
+        Contact me
+      </a>
+
       <button
         id="menu-toggle"
-        class="menu-toggle"
+        class="header-icon-btn menu-toggle"
         type="button"
         aria-expanded={isMenuOpen}
         aria-controls="mobile-menu"
@@ -127,24 +121,55 @@
     bind:this={menuEl}
     onclose={() => (isMenuOpen = false)}
     onclick={(event) => {
-      // A click landing on the dialog itself is a click on its backdrop.
       if (event.target === menuEl) closeMenu();
     }}
   >
-    <nav class="mobile-menu-nav" aria-label="Mobile">
-      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined}><IconUser size={18} /> About</a>
-      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined}><IconDocument size={18} /> Blog</a>
-      <a href="https://github.com/pjrus" target="_blank" rel="noreferrer" onclick={closeMenu}>
-        <IconGithub size={18} /> GitHub
+    <div class="mobile-menu-head">
+      <a class="brand" href={`${base}/#top`} onclick={closeMenu}>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <circle cx="8" cy="6" r="2.2" fill="var(--action-ink)" />
+            <circle cx="16" cy="6" r="2.2" fill="var(--action-ink)" />
+            <circle cx="8" cy="12" r="2.2" fill="var(--action-ink)" />
+            <circle cx="8" cy="18" r="2.2" fill="var(--action-ink)" />
+            <circle cx="16" cy="12" r="1.3" fill="var(--action-ink)" opacity="0.35" />
+            <circle cx="16" cy="18" r="1.3" fill="var(--action-ink)" opacity="0.35" />
+          </svg>
+        </span>
+        <span>Paarangat Jain</span>
       </a>
-      <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer" onclick={closeMenu}>
-        <IconLinkedin size={18} /> LinkedIn
-      </a>
+      <button
+        class="header-icon-btn"
+        type="button"
+        aria-label="Close menu"
+        onclick={closeMenu}
+      >
+        <span class="menu-icon is-open" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+
+    <nav class="mobile-menu-nav" aria-label="Mobile navigation">
+      <a href={`${base}/#projects`} onclick={closeMenu}>Projects</a>
+      <a href={`${base}/#tactile`} onclick={closeMenu}>Assistive tech</a>
+      <a href={`${base}/#experience`} onclick={closeMenu}>Experience</a>
+      <a href={`${base}/about`} aria-current={isAbout ? 'page' : undefined} onclick={closeMenu}>About</a>
+      <a href={`${base}/blog`} aria-current={isBlog ? 'page' : undefined} onclick={closeMenu}>Blog</a>
     </nav>
 
     <div class="mobile-menu-foot">
-      <a class="button button-primary mobile-menu-contact" href="mailto:paarangatj@gmail.com" onclick={closeMenu}>
-        Let’s talk
+      <a class="btn btn--primary" href={`${base}/#contact`} onclick={closeMenu}>
+        Contact me
+      </a>
+      <a
+        class="btn btn--secondary"
+        href={`${base}/Paarangat-Jain-Resume.pdf`}
+        target="_blank"
+        rel="noreferrer"
+        onclick={closeMenu}
+      >
+        Read résumé
       </a>
     </div>
   </dialog>

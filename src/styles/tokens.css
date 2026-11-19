@@ -1,214 +1,158 @@
+/* ============================================================================
+   Design System Tokens: Stone & Blueprint (taste-skill dealt palette + Geist)
+   Harmonized with ScrollCraft floor tokens (--sc-*)
+   ========================================================================== */
+
 :root {
-  color-scheme: light;
+  /* Core palette (dealt: stone-blueprint) */
+  --bg: #dfdedb;
+  --surface: #d3d2ce;
+  --surface-raised: #e8e7e4;
+  --ink: #26251e;
+  --muted: #55534b;
+  --accent: #2456d6;
+  --accent-hover: #1c44b0;
+  --accent-ink: #ffffff;
+  --action: #2456d6;
+  --action-ink: #ffffff;
+  --line: rgba(38, 37, 30, 0.14);
+  --line-strong: rgba(38, 37, 30, 0.28);
+  --tint: rgba(38, 37, 30, 0.055);
+  --accent-tint: rgba(36, 86, 214, 0.1);
 
-  /* Core palette --------------------------------------------------------- */
-  --background: #fafbfe;
-  --surface: #ffffff;
-  --ink: #0a0a0f;
-  --nav-ink: #000000;
-  --muted: #0a0a0f;
-  --primary: #315ed6;
-  --primary-ink: #ffffff;
-  /* Signal blue set as text. Fills and text want different blues on a dark
-     canvas (see the dark theme), so they are separate roles; on this light
-     canvas the one cobalt clears 5.7:1 and serves both. */
-  --primary-strong: #315ed6;
-  /* Filled buttons: hero CTA, contact submit, project cards' primary link.
-     Signal-blue fill with a white label in both themes. */
-  --button: var(--primary);
-  --button-ink: var(--primary-ink);
-  /* Fill for the project cards' primary link. Follows --button in both
-     themes; kept as its own role so the cards can be tuned separately. */
-  --card-primary: var(--button);
-  /* The hero's role caption. Plain ink: black on light, white on dark. */
-  --hero-role-ink: var(--ink);
-  --accent: #ed6a4b;
+  /* Inverted dark gallery room tokens */
+  --inv-bg: #26251e;
+  --inv-surface: #313029;
+  --inv-surface-raised: #3b3a32;
+  --inv-ink: #ebeae6;
+  --inv-muted: #b5b3ac;
+  --inv-accent: #7aa2ff;
+  --inv-accent-ink: #161612;
+  --inv-line: rgba(235, 234, 230, 0.15);
+  --inv-line-strong: rgba(235, 234, 230, 0.3);
 
-  /* The accent at a lightness that clears 4.5:1 on white and on the canvas.
-     Small text and focus rings use this; the plain accent stays reserved for
-     graphics, where its lighter coral carries the brand without a contrast
-     obligation. */
-  --accent-strong: #d13813;
+  /* Compatibility aliases for blog/post/theme-color */
+  --background: var(--bg);
+  --primary: var(--accent);
+  --primary-strong: var(--accent);
+  --accent-strong: var(--accent);
 
-  --tint: #e5edfb;
-  --line: #d9e0ea;
+  /* Typography (dealt: geist) */
+  --font-display: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-text: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  /* The boundary of an interactive control, kept separate from the
-     decorative hairline so each theme can meet the 3:1 non-text minimum
-     without darkening every divider on the page. */
-  --line-strong: #d9e0ea;
+  --display-weight: 500;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.045em;
 
-  /* The floating header is its own plane. Light mode shares the canvas
-     colour; dark mode lifts the header off it. */
-  --header-surface: #fafbfe;
+  /* Fluid type ramp (sentence case, >= 13px floor, >= 16px reading copy) */
+  --t-h1: clamp(2.5rem, 4.4vw, 4.5rem);
+  --t-h2: clamp(1.875rem, 2.8vw, 3rem);
+  --t-h3: clamp(1.25rem, 1.5vw, 1.5rem);
+  --t-lead: clamp(1.125rem, 1.3vw, 1.3125rem);
+  --t-body: 1rem;
+  --t-small: 0.9375rem;
+  --t-label: 0.8125rem;
 
-  /* Plinth behind the portrait. */
-  --frame: #182238;
+  /* Spatial rhythm (4px base, equal edges: 80px at 1440 -> 1280px wrap) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
 
-  --shadow: 0 14px 30px rgba(24, 34, 56, 0.09);
-  --font-display: 'Bricolage Grotesque', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-  /* Descriptive copy: hero intro, bios, summaries, blog posts. */
-  --text-desc: clamp(1.02rem, 1.3vw, 1.15rem);
-  /* Card-scale description copy, sized to the narrower project cards. */
-  --text-desc-sm: clamp(0.96rem, 1.15vw, 1.05rem);
-  --leading-desc: 1.6;
-  /* Long-form article body reads a touch looser than summary copy. */
-  --leading-prose: 1.7;
+  --nav-h: 72px;
+  --gut: clamp(24px, 5.555vw, 80px);
+  --maxw: 1280px;
+  --measure: 62ch;
+  --padt: clamp(72px, 8vw, 120px);
+  --padb: clamp(56px, 6vw, 88px);
 
-  /* Mono, uppercase metadata: eyebrows, captions, periods, form labels. */
-  --text-label: 0.7rem;
-  --text-label-sm: 0.75rem;
-  --text-label-md: 0.8rem;
-  --tracking-label: 0.08em;
-  --leading-label: 1.4;
+  /* Radius scale (soft) */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-btn: 8px;
 
-  /* Display headings and their article-scale counterparts. */
-  --tracking-display: -0.04em;
-  /* Blog entry titles, shared by the post index and its empty state. */
-  --text-entry-title: clamp(1.4rem, 2.2vw, 1.9rem);
+  /* Elevation (canvas-tinted offset + soft blur + 1px edge light) */
+  --shadow-sm: 0 1px 2px rgba(38, 37, 30, 0.08), 0 4px 12px -2px rgba(38, 37, 30, 0.08);
+  --shadow-md: 0 2px 6px rgba(38, 37, 30, 0.09), 0 14px 32px -8px rgba(38, 37, 30, 0.14);
+  --shadow-lg: 0 4px 12px rgba(38, 37, 30, 0.1), 0 24px 56px -16px rgba(38, 37, 30, 0.22);
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+  --shadow: var(--shadow-sm);
 
-  /* Layout grid ---------------------------------------------------------- */
-  --shell-max: 69rem;
-  --gutter: 1.5rem;
-  /* The fixed header is a floating bar inset from the top of the viewport;
-     the content offset beneath it is the sum of the two. */
-  --header-offset: 1.5rem;
-  --header-bar-h: 4rem;
-  --header-h: calc(var(--header-offset) + var(--header-bar-h));
+  /* Motion tokens (harmonized with taste-skill motion.md & scrollcraft) */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --m-in: 150ms;
+  --m-out: 120ms;
+  --m-press: 90ms;
+  --m-image: 600ms;
+  --m-image-out: 400ms;
 
-  /* Vertical rhythm ------------------------------------------------------ */
-  /* Sections carry this as symmetric padding-block, so the interval a visitor
-     actually sees between two of them is twice this value. Read it as a
-     half-interval when tuning. */
-  --section-space: clamp(3.5rem, 5.5vw, 5.5rem);
-  /* Tighter rhythm for the card-grid home sections (projects, stack). */
-  --section-space-compact: clamp(3rem, 4vw, 4rem);
-  /* Header to the first line of a non-home page. Its own role, so it keeps
-     its 3rem floor on phones rather than following --section-space. */
-  --page-top-space: clamp(3rem, 4vw, 4rem);
-  /* Page and section titles lead directly into their content. Hero sections
-     keep their own, more generous rhythm. */
-  --page-heading-gap: 1.25rem;
-  --stack-space: clamp(2.5rem, 4vw, 3rem);
-  /* Heading to the lede or role line directly beneath it. */
-  --lede-gap: 1.1rem;
-  /* Item title to its summary paragraph. */
-  --summary-gap: 0.85rem;
-  /* Space between entries in a list (posts, experience roles). */
-  --item-space: clamp(2rem, 3.5vw, 3.25rem);
-  /* Wide horizontal gutter between a meta column and its content. */
-  --column-gap-lg: clamp(2rem, 5vw, 4.5rem);
-
-  /* Surfaces ------------------------------------------------------------- */
-  --card-pad: clamp(1.4rem, 2.5vw, 1.85rem);
-  --card-pad-sm: 1.15rem;
-  --card-gap: clamp(1.25rem, 2.5vw, 1.75rem);
-
-  /* Controls ------------------------------------------------------------- */
-  --control-h: 3.25rem;
-  --control-h-sm: 2.65rem;
-  --control-pad-x: 1.25rem;
-  --control-gap: 0.65rem;
-
-  /* Typography measures -------------------------------------------------- */
-  --measure: 38rem;
-  --measure-lg: 62rem;
-  --h1-measure: 14ch;
-  --h2-measure: 13ch;
-  --h1-size: clamp(2.6rem, 4.3vw, 4.4rem);
-  --h2-size: clamp(2.2rem, 3.8vw, 3.4rem);
-  --h3-size: clamp(1.3rem, 1.8vw, 1.65rem);
-
-  /* Accent rule used by hero facts and project detail blocks -------------- */
-  --accent-bar: 2px;
-  --accent-bar-gap: 1rem;
-  --accent-bar-color: var(--accent);
-
-  /* Experience timeline geometry ------------------------------------------ */
-  --exp-rail-offset: 4.25rem;
-  --exp-gap: 1.25rem;
-  --exp-role: clamp(1.2rem, 2.2vw, 1.65rem);
-  --exp-marker: 0.85rem;
-  /* One gap between role, organisation, location and summary. */
-  --exp-stack-gap: 0.5rem;
+  /* ScrollCraft engine overrides */
+  --sc-canvas: var(--bg);
+  --sc-surface: var(--surface);
+  --sc-ink: var(--ink);
+  --sc-ink-soft: var(--muted);
+  --sc-accent: var(--accent);
+  --sc-accent-ink: var(--accent-ink);
+  --sc-hairline: var(--line);
+  --sc-hairline-strong: var(--line-strong);
+  --sc-font-display: var(--font-display);
+  --sc-font-text: var(--font-text);
+  --sc-font-mono: var(--font-mono);
+  --sc-maxw: var(--maxw);
+  --sc-gutter: var(--gut);
+  --sc-r-sm: var(--r-sm);
+  --sc-r-md: var(--r-md);
+  --sc-r-lg: var(--r-lg);
 }
 
-/* Dark theme: a near-solid-black, neutral canvas. Elevation is carried by
-   surface lightness rather than by tinting the greys toward the brand hue,
-   so green and coral only ever appear as action, state or emphasis (the tint
-   chip keeps its trace of green because it is a state fill in both themes).
-   Components read roles only; nothing below the token layer names a colour. */
+/* Explicit dark theme (visitor-toggled, never default) */
 :root[data-theme='dark'] {
-  color-scheme: dark;
+  --bg: #181815;
+  --surface: #22211d;
+  --surface-raised: #2b2a25;
+  --ink: #ecebe6;
+  --muted: #b0aea6;
+  --accent: #7aa2ff;
+  --accent-hover: #96b5ff;
+  --accent-ink: #121317;
+  --action: #7aa2ff;
+  --action-ink: #121317;
+  --line: rgba(236, 235, 230, 0.14);
+  --line-strong: rgba(236, 235, 230, 0.28);
+  --tint: rgba(236, 235, 230, 0.06);
+  --accent-tint: rgba(122, 162, 255, 0.14);
 
-  /* Elevation ladder: canvas -> card -> chip, each step lighter than the last
-     so cards lift off the page without leaning on the shadow. */
-  --background: #080808;
-  --surface: #111113;
-  /* The light tint is the signal blue at a whisper; this keeps that
-     relationship, so hover fills and chips still belong to the blue. */
-  --tint: #1b2230;
+  --inv-bg: #10100e;
+  --inv-surface: #1b1a17;
+  --inv-surface-raised: #24231f;
+  --inv-ink: #ecebe6;
+  --inv-muted: #b0aea6;
+  --inv-accent: #7aa2ff;
+  --inv-accent-ink: #121317;
+  --inv-line: rgba(236, 235, 230, 0.14);
+  --inv-line-strong: rgba(236, 235, 230, 0.28);
 
-  /* Text: >= 15:1 for ink and >= 6.5:1 for muted on every surface above. */
-  --ink: #ffffff;
-  --nav-ink: #ffffff;
-  --muted: #b0b0b5;
-
-  /* Signal blue splits in two here. Lightening the cobalt far enough to read
-     as text on black drains its chroma into periwinkle, and no single blue
-     carries both a white label and 4.5:1 text on these surfaces. So:
-     - fill: the brand hue (oklch h 265) lifted brighter and more saturated
-       so it holds its own on black. White labels clear 4.9:1, and thin rails
-       and markers sit near 4:1 against the canvas.
-     - text: lightened only as far as AA needs and turned a few degrees
-       toward azure, where sRGB keeps more chroma, so it stays a vivid blue
-       instead of going lavender (6.1:1 on cards, 6.6:1 on the canvas). */
-  --primary: #3667ed;
-  --primary-ink: #ffffff;
-  --primary-strong: #5397fc;
-  --hero-role-ink: #8ab8ff;
-  --accent: #ff8a6c;
-  /* Already clears 4.5:1 on every dark surface, so the two coincide here. */
-  --accent-strong: #ff8a6c;
-
-  /* Coral lifted for a black canvas goes salmon, and beside the blue button
-     and portrait card it reads as a third, unrelated colour. The evidence
-     rail joins the blue instead, as the blockquote rail already does. */
-  --accent-bar-color: var(--primary);
-
-  --line: #26262b;
-  /* 3:1 against the canvas and cards, for control boundaries. */
-  --line-strong: #6e6e74;
-  --header-surface: #111113;
-
-  --frame: #000000;
-
-  /* Deep enough to register against a near-black canvas. */
-  --shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.34), 0 6px 16px -4px rgba(0, 0, 0, 0.42);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.36), 0 16px 36px -10px rgba(0, 0, 0, 0.54);
+  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.4), 0 28px 64px -18px rgba(0, 0, 0, 0.68);
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 640px) {
   :root {
-    --section-space: 3.25rem;
-    --section-space-compact: var(--section-space);
-    --h1-size: clamp(2.4rem, 11vw, 3.2rem);
-    --exp-rail-offset: 2.5rem;
-    --exp-gap: 0.75rem;
-  }
-}
-
-@media (min-width: 701px) {
-  :root {
-    --page-heading-gap: 0.75rem;
-  }
-}
-
-/* Tablets get the single-column layout with room to spare, so scale the
-   whole rem system up rather than leaving phone-sized type in a wide column. */
-@media (min-width: 701px) and (max-width: 900px) {
-  html {
-    font-size: 125%;
+    --nav-h: 56px;
+    --gut: 24px;
+    --padt: 72px;
+    --padb: 48px;
   }
 }

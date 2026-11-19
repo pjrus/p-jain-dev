@@ -37,7 +37,7 @@
 </script>
 
 <SeoHead
-  title={`${data.post.title} — Paarangat Jain`}
+  title={`${data.post.title}: Paarangat Jain`}
   description={data.post.summary}
   path={`/blog/${data.post.slug}`}
   type="article"

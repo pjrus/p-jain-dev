@@ -1,20 +1,73 @@
+/* ============================================================================
+   Site Footer: clean directory + legal row on equal content edges
+   ========================================================================== */
+
 .site-footer {
-  flex: 0 0 auto;
   border-top: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  padding-block: 48px 40px;
 }
 
-.footer-inner {
+.footer-grid {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  padding-block: 1.5rem;
-  color: var(--muted);
-  font-size: 0.85rem;
+  justify-content: space-between;
+  gap: 24px 32px;
 }
 
-@media (max-width: 700px) {
-  .footer-inner {
-    min-height: 0;
-    padding-block: 2.5rem;
+.footer-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-meta {
+  color: var(--muted);
+  font-size: var(--t-small);
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+}
+
+.footer-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: var(--t-small);
+  font-weight: 500;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 10px);
+  background-size: 0% 1px;
+  transition:
+    color var(--m-out) var(--ease),
+    background-size var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-nav a:hover {
+    color: var(--ink);
+    background-size: 100% 1px;
+    transition-duration: var(--m-in);
   }
+}
+
+.footer-legal {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  color: var(--muted);
+  font-size: var(--t-label);
 }

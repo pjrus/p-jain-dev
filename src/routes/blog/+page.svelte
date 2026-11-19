@@ -9,7 +9,7 @@
   const blogJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Blog — Paarangat Jain',
+    name: 'Blog: Paarangat Jain',
     url: canonicalUrl('/blog'),
     description: 'Notes on accessible software, assistive hardware and the things I build.',
     isPartOf: {
@@ -21,7 +21,7 @@
 </script>
 
 <SeoHead
-  title="Blog — Paarangat Jain"
+  title="Blog: Paarangat Jain"
   description="Notes on accessible software, assistive hardware and the things I build."
   path="/blog"
   jsonLd={blogJsonLd}

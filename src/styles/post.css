@@ -1,108 +1,89 @@
+/* ============================================================================
+   Blog Article Page
+   ========================================================================== */
+
 .post {
-  /* Keep the article rails slightly inside the site's long-form measure. */
-  --post-measure: 56rem;
+  --post-measure: 46rem;
 }
 
 .post-header {
   width: min(100%, var(--post-measure));
-  max-width: var(--post-measure);
   margin-inline: auto;
-  padding-bottom: var(--stack-space);
+  padding-bottom: 32px;
   border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
 }
 
 .post-back {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--control-gap);
-  margin-bottom: 1.25rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-label-md);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  justify-self: start;
 }
 
-/* Size, family and measure come from the global h1 rule. */
 .post-title {
-  max-width: none;
-  margin-top: 0.9rem;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.08;
 }
 
 .post-lede {
-  margin-top: var(--lede-gap);
-  max-width: var(--post-measure);
   color: var(--muted);
-  font-size: var(--text-desc);
+  font-size: var(--t-lead);
+  line-height: 1.55;
 }
-
-.post-lede + .tag-list {
-  margin-top: 1.5rem;
-}
-
-/* Post body -------------------------------------------------------------
-   Markdown output has no classes of its own, so the element selectors here
-   are scoped to .prose and are the only place raw tags are styled. */
 
 .prose {
   width: min(100%, var(--post-measure));
-  max-width: var(--post-measure);
-  margin-top: var(--stack-space);
+  margin-top: 36px;
   margin-inline: auto;
-  font-size: var(--text-desc);
-  line-height: var(--leading-prose);
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  color: var(--ink);
 }
 
 .prose > * + * {
-  margin-top: 1.15rem;
+  margin-top: 1.25rem;
 }
 
 .prose h2,
 .prose h3 {
-  max-width: none;
-  margin-top: 2.75rem;
-  font-family: var(--font-display);
-  line-height: 1.2;
+  margin-top: 2.5rem;
 }
-/* Section headings on the page are set at display scale; inside an article
-   they step down to the title and body-lg sizes so they read as subheadings
-   rather than as new sections of the site. */
+
 .prose h2 {
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  font-weight: 600;
-  letter-spacing: var(--tracking-display);
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
 }
 
 .prose h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .prose a {
-  color: var(--primary-strong);
+  color: var(--action);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
 .prose ul,
 .prose ol {
-  padding-left: 1.35rem;
+  padding-left: 1.4rem;
   list-style: revert;
 }
 
 .prose li + li {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
 }
 
 .prose blockquote {
-  padding-left: var(--accent-bar-gap);
-  border-left: var(--accent-bar) solid var(--primary);
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--action);
   color: var(--muted);
 }
 
 .prose img {
   width: 100%;
   height: auto;
-  box-shadow: var(--shadow);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
 }
 
 .prose hr {
@@ -112,19 +93,20 @@
 
 .prose code {
   padding: 0.15em 0.35em;
+  border-radius: 4px;
   background: var(--tint);
   font-family: var(--font-mono);
-  font-size: 0.9em;
+  font-size: 0.88em;
 }
 
 .prose pre {
   overflow-x: auto;
-  padding: var(--card-pad-sm);
+  padding: 20px;
   border: 1px solid var(--line);
+  border-radius: var(--r-md);
   background: var(--surface);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   line-height: 1.6;
-  tab-size: 2;
 }
 
 .prose pre code {
@@ -133,9 +115,6 @@
   font-size: 1em;
 }
 
-/* Prism token colours for the highlighting mdsvex applies to fenced code.
-   Kept to the palette so code reads the same as the rest of the page in both
-   themes, with only three roles: dimmed, signal, and value. */
 .prose .token.comment,
 .prose .token.punctuation,
 .prose .token.operator,
@@ -152,7 +131,7 @@
 .prose .token.property,
 .prose .token.attr-name,
 .prose .token.important {
-  color: var(--primary-strong);
+  color: var(--action);
 }
 
 .prose .token.string,
@@ -161,11 +140,12 @@
 .prose .token.datetime,
 .prose .token.boolean,
 .prose .token.regex {
-  color: var(--accent-strong);
+  color: var(--ink);
+  font-weight: 500;
 }
 
 .prose .token.function,
 .prose .token.class-name {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 500;
 }

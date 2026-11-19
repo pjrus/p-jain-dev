@@ -1,157 +1,153 @@
+/* ============================================================================
+   Fixed opaque site header: equal edges, 1px hairline, full-screen mobile dialog
+   ========================================================================== */
+
 .site-header {
   position: fixed;
-  z-index: 20;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding-top: var(--header-offset);
-  pointer-events: none;
+  inset: 0 0 auto 0;
+  z-index: 80;
+  height: var(--nav-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 
 .header-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  min-height: var(--header-bar-h);
-  gap: 1.5rem;
-  padding-inline: 1.7rem;
-  border: 1px solid var(--line);
-  background: var(--header-surface);
-  background: color-mix(in srgb, var(--header-surface) 85%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow);
-  pointer-events: auto;
+  justify-content: space-between;
+  gap: 24px;
+  height: 100%;
 }
 
 .brand {
-  grid-column: 1;
-  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--ink);
   font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  text-decoration: none;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.brand span {
-  color: var(--accent-strong);
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--action);
+  flex-shrink: 0;
 }
 
 .primary-nav {
-  grid-column: 2;
-  justify-self: center;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 28px;
 }
 
-/* Outlined boxes carrying an icon and a mono label, sharing the icon controls'
-   footprint so the whole right-hand cluster reads as one row of equal boxes. */
 .primary-nav a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  min-height: var(--control-h-sm);
-  padding: 0 1rem;
-  border: 1px solid var(--nav-ink);
-  color: var(--nav-ink);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  text-decoration: none;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 9px);
+  background-size: 0% 1px;
+  transition:
+    color var(--m-out) var(--ease),
+    background-size var(--m-out) var(--ease);
 }
 
-/* The boxes are already at full border strength at rest, so hover fills
-   rather than darkening the edge. */
-.primary-nav a:hover {
-  background: var(--tint);
+@media (hover: hover) and (pointer: fine) {
+  .primary-nav a:hover {
+    color: var(--ink);
+    background-size: 100% 1px;
+    transition-duration: var(--m-in);
+  }
 }
 
 .primary-nav a[aria-current='page'] {
-  background: var(--ink);
-  color: var(--background);
+  color: var(--ink);
+  background-size: 100% 2px;
 }
 
 .header-actions {
-  grid-column: 3;
-  justify-self: end;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-/* Icon-only square control: identical footprint to its siblings so the
-   header reads as one set. Each carries its name on aria-label. */
-.header-social {
+.header-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--control-h-sm);
-  min-height: var(--control-h-sm);
+  width: 44px;
+  height: 44px;
   padding: 0;
-  border: 1px solid var(--nav-ink);
-  background: transparent;
-  color: var(--nav-ink);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.15s ease;
-}
-
-.header-social:hover {
-  background: var(--tint);
-}
-
-/* Hidden on desktop; becomes the sole way into nav once it collapses. */
-.menu-toggle {
-  display: none;
-  width: var(--control-h-sm);
-  min-height: var(--control-h-sm);
   border: 1px solid var(--line-strong);
-  padding: 0;
+  border-radius: var(--r-btn);
   background: transparent;
   color: var(--ink);
   cursor: pointer;
+  transition:
+    background-color var(--m-out) var(--ease),
+    border-color var(--m-out) var(--ease),
+    transform var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .header-icon-btn:hover {
+    background: var(--tint);
+    border-color: var(--ink);
+    transform: translateY(-1px);
+    transition-duration: var(--m-in);
+  }
+}
+
+.header-icon-btn:active {
+  transform: translateY(1px) scale(0.985);
+  transition-duration: var(--m-press);
+}
+
+.header-cta {
+  padding-inline: 18px;
+  font-size: 0.9375rem;
+}
+
+.menu-toggle {
+  display: none;
 }
 
 .menu-icon {
-  position: relative;
-  display: block;
-  width: 20px;
-  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 18px;
+  height: 18px;
 }
 
 .menu-icon span {
-  position: absolute;
-  left: 0;
+  display: block;
   width: 100%;
   height: 1.5px;
   background: currentColor;
-  transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease;
-}
-
-.menu-icon span:nth-child(1) {
-  top: 0;
-}
-
-.menu-icon span:nth-child(2) {
-  top: 6px;
-}
-
-.menu-icon span:nth-child(3) {
-  top: 12px;
+  border-radius: 1px;
+  transition: transform 200ms var(--ease), opacity 160ms var(--ease);
 }
 
 .menu-icon.is-open span:nth-child(1) {
-  top: 6px;
-  transform: rotate(45deg);
+  transform: translateY(6.5px) rotate(45deg);
 }
 
 .menu-icon.is-open span:nth-child(2) {
@@ -159,147 +155,98 @@
 }
 
 .menu-icon.is-open span:nth-child(3) {
-  top: 6px;
-  transform: rotate(-45deg);
+  transform: translateY(-6.5px) rotate(-45deg);
 }
 
+/* Full-screen accessible mobile dialog menu */
 .mobile-menu {
-  /* <dialog> supplies the focus trap, Escape-to-close and inert background;
-     these rules only undo its default centred box and paint the surface. */
-  position: fixed;
-  top: calc(var(--header-h) - var(--header-offset));
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: auto;
-  width: auto;
+  width: 100%;
   max-width: none;
-  max-height: calc(100vh - var(--header-h) - var(--header-offset));
-  overflow-y: auto;
+  height: 100%;
+  max-height: none;
   margin: 0;
-  padding: 1.75rem;
-  border: 1px solid var(--line);
-  background: var(--surface);
+  padding: 0;
+  border: 0;
+  background: var(--bg);
   color: var(--ink);
-  box-shadow: var(--shadow);
-  pointer-events: auto;
+}
+
+.mobile-menu::backdrop {
+  background: rgba(24, 24, 21, 0.56);
 }
 
 .mobile-menu[open] {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
 
-/* ::backdrop does not inherit page custom properties in every engine, so the
-   scrim carries literal colours. */
-.mobile-menu::backdrop {
-  background: rgba(24, 34, 56, 0.45);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-}
-
-:root[data-theme='dark'] .mobile-menu::backdrop {
-  background: rgba(0, 0, 0, 0.65);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .mobile-menu[open] {
-    animation: mobile-menu-open 220ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .mobile-menu[open]::backdrop {
-    animation: mobile-menu-backdrop 180ms ease;
-  }
-}
-
-@keyframes mobile-menu-open {
-  from {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-}
-
-@keyframes mobile-menu-backdrop {
-  from {
-    opacity: 0;
-  }
+.mobile-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+  padding-inline: var(--gut);
+  border-bottom: 1px solid var(--line);
 }
 
 .mobile-menu-nav {
   display: flex;
   flex-direction: column;
+  padding: 24px var(--gut);
+  gap: 4px;
 }
 
 .mobile-menu-nav a {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding-block: 0.9rem;
+  justify-content: space-between;
+  min-height: 56px;
+  padding-inline: 4px;
   border-bottom: 1px solid var(--line);
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-decoration: none;
   color: var(--ink);
-}
-
-.mobile-menu-nav a:last-child {
-  border-bottom: none;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
 }
 
 .mobile-menu-nav a[aria-current='page'] {
-  color: var(--primary-strong);
+  color: var(--action);
 }
 
 .mobile-menu-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  margin-top: auto;
+  display: grid;
+  gap: 12px;
+  padding: 24px var(--gut) calc(24px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
 }
 
-.mobile-menu-contact {
-  flex-shrink: 0;
+.mobile-menu-foot .btn {
+  width: 100%;
 }
 
 @media (max-width: 900px) {
-  .primary-nav,
-  .header-actions .header-social:not(.theme-toggle) {
+  .primary-nav {
     display: none;
   }
 
   .menu-toggle {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
-@media (max-width: 700px) {
-  .header-inner {
-    padding-block: 0.6rem;
-  }
-
-  .mobile-menu {
-    left: var(--gutter);
-    right: var(--gutter);
-    padding: 1.5rem;
-  }
-
-  .mobile-menu-foot {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .mobile-menu-contact {
-    justify-content: center;
+@media (max-width: 640px) {
+  .header-cta {
+    display: none;
   }
 }
 
-/* Theme switch crossfade (see toggleTheme). */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.4s;
-  animation-timing-function: ease-in-out;
+@media (prefers-reduced-motion: reduce) {
+  .primary-nav a,
+  .header-icon-btn,
+  .menu-icon span {
+    transition-property: color, background-color, border-color, opacity;
+    transform: none !important;
+  }
 }
