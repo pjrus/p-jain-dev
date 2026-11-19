@@ -142,6 +142,7 @@
   let isDraggingRail = $state(false);
   let canScrollPrev = $state(false);
   let canScrollNext = $state(true);
+  let showAllMobileProjects = $state(false);
 
   let activeProjectCell = $derived.by(() => {
     const title = projects[activeProjectIndex]?.title ?? 'Work';
@@ -212,6 +213,7 @@
   function jumpToProject(index, scrollToSection = false) {
     if (!projectRailViewportEl || !projectRailEl) return;
     const clamped = Math.min(projects.length - 1, Math.max(0, index));
+    if (clamped >= 3) showAllMobileProjects = true;
     const card = projectRailEl.children[clamped];
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -606,7 +608,7 @@
       bind:this={projectRailViewportEl}
       onscroll={handleRailScroll}
     >
-      <div class="project-rail" bind:this={projectRailEl}>
+      <div class="project-rail" class:is-expanded={showAllMobileProjects} bind:this={projectRailEl}>
         {#each projects as project, index (project.id)}
           <ProjectCard {project} {index} />
         {/each}
@@ -622,6 +624,19 @@
           </a>
         </aside>
       </div>
+    </div>
+
+    <div class="wrap projects-mobile-more">
+      <button
+        type="button"
+        class="btn projects-more-btn"
+        aria-expanded={showAllMobileProjects}
+        aria-controls="project-rail-viewport"
+        onclick={() => (showAllMobileProjects = !showAllMobileProjects)}
+      >
+        {showAllMobileProjects ? 'Show fewer projects' : `Show ${projects.length - 3} more projects`}
+        <ArrowIcon direction={showAllMobileProjects ? 'up' : 'down'} />
+      </button>
     </div>
 
     <div class="wrap projects-rail-foot">
