@@ -98,7 +98,7 @@ export const experience = [
     organisation: 'PlasmIT Vector',
     location: 'Docklands, Victoria, Australia · Remote',
     summary:
-      'Assisted with the design and development of full-stack applications across frontend, backend and database components. Collaborated on implementation, testing and documentation while gaining hands-on experience across the software development lifecycle.',
+      'Assisted with designing and developing full-stack applications across frontend, backend and database components. Collaborated with the team across implementation, testing, documentation and cross-stack issue resolution following agreed development practices.',
   },
   {
     period: 'Mar 2026 – present',
@@ -106,7 +106,7 @@ export const experience = [
     organisation: 'Ocean Connect',
     location: 'Remote',
     summary:
-      'Maintaining the Ocean Connect website so program, event and initiative information stays accurate and reachable. I reorganise content for clearer navigation and usability for volunteers and community members, and help strengthen how the organisation communicates its marine conservation work.',
+      'Support the development, management and maintenance of Ocean Connect’s website so programme, event and community initiative details stay clear, accessible and up to date. Improve site structure and content for volunteers engaging with environmental education and citizen science initiatives around marine biodiversity and coastal conservation.',
   },
   {
     period: 'Feb 2026 – present',
@@ -114,7 +114,7 @@ export const experience = [
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Supporting the technical operations behind the team’s accessibility-focused projects. I work with fellow officers to keep technical initiatives running smoothly and contribute to the coordination, communication and internal workflows the organisation depends on.',
+      'Assist with MATT’s technical operations to support delivery of accessibility-focused projects. Collaborate with peers on technical initiatives and internal processes while contributing to team coordination, communication and operational workflows.',
   },
   {
     period: 'Aug 2025 – present',
@@ -122,7 +122,7 @@ export const experience = [
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Working with our academic supervisor to define the goals and strategy for developing low-cost tactile and refreshable Braille displays, and coordinating the project officers building them. I run user interviews and design surveys to keep the work user-centred, and lead development of the React Native application that supports the display.',
+      'Lead collaboration with the academic supervisor to define goals and strategy for low-cost tactile and refreshable Braille displays, guiding project officers in developing accessibility technology. Conduct user interviews and surveys for user-centred design, lead the supporting React Native mobile app, and received over 90% positive team feedback for leadership and communication.',
   },
   {
     period: 'Mar 2026 – Jul 2026',
@@ -130,7 +130,7 @@ export const experience = [
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Engaged with schools that support students with disabilities to build partnerships for technology-driven empowerment. Communicated the team’s mission to stakeholders, coordinated collaborative workshops and programs, and maintained those relationships between initiatives.',
+      'Aided in building partnerships with schools supporting students with disabilities to promote technology-driven empowerment. Helped communicate MATT’s mission to stakeholders, coordinate collaborative workshops and programs, and maintain ongoing relationships with school contacts between initiatives.',
   },
   {
     period: 'Mar 2025 – Aug 2025',
@@ -138,7 +138,7 @@ export const experience = [
     organisation: 'Monash Assistive Technology Team',
     location: 'Clayton, Victoria, Australia',
     summary:
-      'Collaborated with our academic supervisor and fellow officers to brainstorm accessibility solutions, and assisted in the design, development and testing of tactile display components for blind and low-vision users.',
+      'Collaborated with the academic supervisor and fellow officers to brainstorm accessibility solutions, and assisted in the design, development and testing of tactile display components for blind and low-vision users.',
   },
 ];
 
