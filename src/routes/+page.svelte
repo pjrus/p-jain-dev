@@ -133,9 +133,18 @@
   /** @type {HTMLElement | undefined} */
   let projectsActEl = $state();
   /** @type {HTMLElement | undefined} */
+  let projectRailViewportEl = $state();
+  /** @type {HTMLElement | undefined} */
   let projectRailEl = $state();
+  /** @type {HTMLElement | undefined} */
+  let railTrackEl = $state();
 
   let activeProjectIndex = $state(0);
+  let railProgress = $state(0);
+  let railThumbRatio = $state(0.32);
+  let isDraggingRail = $state(false);
+  let canScrollPrev = $state(false);
+  let canScrollNext = $state(true);
 
   let activeProjectCell = $derived.by(() => {
     const title = projects[activeProjectIndex]?.title ?? 'Work';
@@ -149,53 +158,156 @@
   let formStatus = $state('');
 
   /**
-   * Scrolls the pinned horizontal gallery act to bring a specific project card into view.
-   * @param {number} index
+   * Returns the horizontal alignment inset of the rail inside its viewport.
    */
-  function jumpToProject(index) {
-    if (!projectsActEl || !projectRailEl) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
-      const card = projectRailEl.children[index];
-      if (card instanceof HTMLElement) {
-        card.scrollIntoView({ behavior: 'auto', inline: 'start', block: 'nearest' });
-      }
-      activeProjectIndex = index;
-      return;
-    }
-
-    const rect = projectsActEl.getBoundingClientRect();
-    const actTop = rect.top + window.scrollY;
-    const travel = Math.max(projectsActEl.offsetHeight - window.innerHeight, 1);
-    const total = Math.max(projects.length, 1);
-    const targetP = total > 1 ? index / total : 0;
-    window.scrollTo({ top: Math.round(actTop + travel * targetP), behavior: 'smooth' });
+  function getRailInset() {
+    if (!projectRailEl) return 0;
+    return parseFloat(getComputedStyle(projectRailEl).paddingLeft) || 0;
   }
 
   /**
-   * Keeps keyboard focus inside the horizontal pan rail aligned with the viewport.
-   * @param {FocusEvent} event
+   * Syncs active project indicator, button states and progress bar with native horizontal scroll.
    */
-  function handleRailFocus(event) {
-    if (!projectsActEl || !projectRailEl) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
-    const card = target.closest('.project-card, .project-end-card');
-    if (!card) return;
-    const cards = Array.from(projectRailEl.children);
-    const idx = cards.indexOf(card);
-    if (idx === -1) return;
+  function syncRailState() {
+    if (!projectRailViewportEl || !projectRailEl) return;
+    const viewport = projectRailViewportEl;
+    const maxScroll = Math.max(viewport.scrollWidth - viewport.clientWidth, 0);
+    const left = viewport.scrollLeft;
 
-    const over = projectRailEl.scrollWidth - window.innerWidth;
-    if (over <= 0) return;
+    canScrollPrev = left > 4;
+    canScrollNext = maxScroll > 4 && left < maxScroll - 4;
+    railProgress = maxScroll > 0 ? Math.min(1, Math.max(0, left / maxScroll)) : 0;
+    railThumbRatio =
+      viewport.scrollWidth > 0
+        ? Math.min(1, Math.max(0.16, viewport.clientWidth / viewport.scrollWidth))
+        : 0.32;
 
-    const cardLeft = card instanceof HTMLElement ? card.offsetLeft : 0;
-    const desiredOffset = Math.max(0, Math.min(over, cardLeft - 80));
-    const targetP = desiredOffset / (over * 1.06);
-    const actTop = projectsActEl.getBoundingClientRect().top + window.scrollY;
-    const travel = Math.max(projectsActEl.offsetHeight - window.innerHeight, 1);
-    window.scrollTo({ top: Math.round(actTop + travel * Math.min(1, targetP)), behavior: 'instant' });
+    const inset = getRailInset();
+    const cards = Array.from(projectRailEl.querySelectorAll('.project-card'));
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+    cards.forEach((card, idx) => {
+      if (!(card instanceof HTMLElement)) return;
+      const dist = Math.abs(card.offsetLeft - inset - left);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearestIdx = idx;
+      }
+    });
+    if (nearestIdx !== activeProjectIndex) activeProjectIndex = nearestIdx;
+  }
+
+  let railRaf = 0;
+  function handleRailScroll() {
+    if (!railRaf) {
+      railRaf = requestAnimationFrame(() => {
+        railRaf = 0;
+        syncRailState();
+      });
+    }
+  }
+
+  /**
+   * Scrolls the horizontal gallery rail directly to a specific project card.
+   * @param {number} index
+   * @param {boolean} [scrollToSection]
+   */
+  function jumpToProject(index, scrollToSection = false) {
+    if (!projectRailViewportEl || !projectRailEl) return;
+    const clamped = Math.min(projects.length - 1, Math.max(0, index));
+    const card = projectRailEl.children[clamped];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (scrollToSection && projectsActEl) {
+      projectsActEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    }
+
+    if (card instanceof HTMLElement) {
+      const targetLeft = Math.max(0, card.offsetLeft - getRailInset());
+      projectRailViewportEl.scrollTo({
+        left: targetLeft,
+        behavior: reduced ? 'auto' : 'smooth',
+      });
+    }
+    activeProjectIndex = clamped;
+  }
+
+  /**
+   * Steps the horizontal gallery rail backward or forward by one card.
+   * @param {-1 | 1} direction
+   */
+  function stepProjectRail(direction) {
+    if (!projectRailViewportEl || !projectRailEl) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const firstCard = projectRailEl.querySelector('.project-card');
+    const gap = parseFloat(getComputedStyle(projectRailEl).columnGap) || 24;
+    const stepWidth = firstCard instanceof HTMLElement ? firstCard.offsetWidth + gap : 380;
+    projectRailViewportEl.scrollBy({
+      left: direction * stepWidth,
+      behavior: reduced ? 'auto' : 'smooth',
+    });
+  }
+
+  /**
+   * Maps a clientX position on the bottom scrollbar track to horizontal rail scrollLeft.
+   * @param {number} clientX
+   */
+  function scrollRailToTrackX(clientX) {
+    if (!projectRailViewportEl || !railTrackEl) return;
+    const rect = railTrackEl.getBoundingClientRect();
+    const thumbPx = rect.width * railThumbRatio;
+    const usable = Math.max(rect.width - thumbPx, 1);
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left - thumbPx / 2) / usable));
+    const maxScroll = Math.max(
+      projectRailViewportEl.scrollWidth - projectRailViewportEl.clientWidth,
+      0
+    );
+    projectRailViewportEl.scrollLeft = ratio * maxScroll;
+  }
+
+  /** @param {PointerEvent} event */
+  function handleScrollbarPointerDown(event) {
+    if (!railTrackEl) return;
+    isDraggingRail = true;
+    railTrackEl.setPointerCapture(event.pointerId);
+    scrollRailToTrackX(event.clientX);
+  }
+
+  /** @param {PointerEvent} event */
+  function handleScrollbarPointerMove(event) {
+    if (!isDraggingRail) return;
+    scrollRailToTrackX(event.clientX);
+  }
+
+  /** @param {PointerEvent} event */
+  function handleScrollbarPointerUp(event) {
+    if (!isDraggingRail) return;
+    isDraggingRail = false;
+    if (railTrackEl?.hasPointerCapture(event.pointerId)) {
+      railTrackEl.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  /** @param {KeyboardEvent} event */
+  function handleScrollbarKeyDown(event) {
+    if (!projectRailViewportEl) return;
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      stepProjectRail(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      stepProjectRail(-1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      jumpToProject(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      const maxScroll = Math.max(
+        projectRailViewportEl.scrollWidth - projectRailViewportEl.clientWidth,
+        0
+      );
+      projectRailViewportEl.scrollTo({ left: maxScroll, behavior: 'smooth' });
+    }
   }
 
   onMount(() => {
@@ -217,29 +329,14 @@
     }
 
     mountEngine();
-
-    let raf = 0;
-    function syncActiveProject() {
-      raf = 0;
-      if (!projectsActEl) return;
-      const rawP = parseFloat(projectsActEl.style.getPropertyValue('--sc-p') || '0');
-      if (Number.isNaN(rawP)) return;
-      const idx = Math.min(projects.length - 1, Math.max(0, Math.floor(rawP * projects.length)));
-      if (idx !== activeProjectIndex) activeProjectIndex = idx;
-    }
-
-    function onScroll() {
-      if (!raf) raf = requestAnimationFrame(syncActiveProject);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    syncActiveProject();
+    syncRailState();
+    window.addEventListener('resize', syncRailState, { passive: true });
 
     return () => {
       disposed = true;
       if (pollTimer) clearTimeout(pollTimer);
-      if (raf) cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', onScroll);
+      if (railRaf) cancelAnimationFrame(railRaf);
+      window.removeEventListener('resize', syncRailState);
       scInstance?.destroy();
     };
   });
@@ -441,7 +538,7 @@
             <button
               type="button"
               class="btn btn--primary domain-cta"
-              onclick={() => jumpToProject(activeTrack.projectIndex ?? 0)}
+              onclick={() => jumpToProject(activeTrack.projectIndex ?? 0, true)}
             >
               {activeTrack.cta} <ArrowIcon />
             </button>
@@ -477,16 +574,15 @@
   </div>
 </section>
 
-<!-- ACT 3 (PEAK): Inverted dark obsidian Selected Work horizontal gallery rail -->
+<!-- ACT 3 (PEAK): Inverted dark Selected Work native horizontal-scroll gallery -->
 <section
   class="projects band--dark"
   id="projects"
-  data-sc-act="pan"
-  data-sc-span="3.2"
+  data-sc-act="flow"
   aria-labelledby="projects-title"
   bind:this={projectsActEl}
 >
-  <div class="projects-stage" data-sc-stage>
+  <div class="projects-stage">
     <div class="wrap projects-head">
       <div class="projects-title-group">
         <h2 id="projects-title">Shipped software projects</h2>
@@ -496,15 +592,38 @@
       </div>
 
       <div class="projects-hud">
-        <div class="braille-chapter-badge" aria-live="polite">
-          <span class="mini-cell mini-cell--inv" aria-hidden="true">
-            {#each [1, 4, 2, 5, 3, 6] as dot}
-              <span class="mini-dot" class:is-up={activeProjectCell.dots.includes(dot)}></span>
-            {/each}
-          </span>
-          <span class="meta-label">
-            {projects[activeProjectIndex]?.title}
-          </span>
+        <div class="projects-hud-top">
+          <div class="braille-chapter-badge" aria-live="polite">
+            <span class="mini-cell mini-cell--inv" aria-hidden="true">
+              {#each [1, 4, 2, 5, 3, 6] as dot}
+                <span class="mini-dot" class:is-up={activeProjectCell.dots.includes(dot)}></span>
+              {/each}
+            </span>
+            <span class="meta-label">
+              {projects[activeProjectIndex]?.title}
+            </span>
+          </div>
+
+          <div class="projects-arrows" aria-label="Scroll projects horizontally">
+            <button
+              type="button"
+              class="rail-nav-btn"
+              aria-label="Previous project"
+              disabled={!canScrollPrev}
+              onclick={() => stepProjectRail(-1)}
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <button
+              type="button"
+              class="rail-nav-btn"
+              aria-label="Next project"
+              disabled={!canScrollNext}
+              onclick={() => stepProjectRail(1)}
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
 
         <div class="projects-jump" role="tablist" aria-label="Jump to project">
@@ -525,25 +644,56 @@
     </div>
 
     <div
-      class="project-rail"
-      data-sc-pan="0.06"
-      bind:this={projectRailEl}
-      onfocusin={handleRailFocus}
+      id="project-rail-viewport"
+      class="wrap project-rail-viewport"
+      role="region"
+      aria-label="Shipped software projects gallery"
+      bind:this={projectRailViewportEl}
+      onscroll={handleRailScroll}
     >
-      {#each projects as project, index (project.id)}
-        <ProjectCard {project} {index} />
-      {/each}
+      <div class="project-rail" bind:this={projectRailEl}>
+        {#each projects as project, index (project.id)}
+          <ProjectCard {project} {index} />
+        {/each}
 
-      <aside class="project-end-card" aria-label="More code on GitHub">
-        <p class="meta-label">Public repositories</p>
-        <h3>Full commit history on GitHub</h3>
-        <p class="project-end-copy">
-          Every live tool in this gallery links directly to its repository on GitHub, alongside coursework and hardware prototypes.
-        </p>
-        <a class="btn btn--primary" href="https://github.com/pjrus" target="_blank" rel="noreferrer">
-          View GitHub profile <ArrowIcon />
-        </a>
-      </aside>
+        <aside class="project-end-card" aria-label="More code on GitHub">
+          <p class="meta-label">Public repositories</p>
+          <h3>Full commit history on GitHub</h3>
+          <p class="project-end-copy">
+            Every live tool in this gallery links directly to its repository on GitHub, alongside coursework and hardware prototypes.
+          </p>
+          <a class="btn btn--primary" href="https://github.com/pjrus" target="_blank" rel="noreferrer">
+            View GitHub profile <ArrowIcon />
+          </a>
+        </aside>
+      </div>
+    </div>
+
+    <div class="wrap projects-rail-foot">
+      <div
+        class="rail-scrollbar"
+        class:is-dragging={isDraggingRail}
+        role="scrollbar"
+        aria-label="Horizontal project gallery scrollbar"
+        aria-controls="project-rail-viewport"
+        aria-orientation="horizontal"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(railProgress * 100)}
+        tabindex="0"
+        bind:this={railTrackEl}
+        onpointerdown={handleScrollbarPointerDown}
+        onpointermove={handleScrollbarPointerMove}
+        onpointerup={handleScrollbarPointerUp}
+        onpointercancel={handleScrollbarPointerUp}
+        onkeydown={handleScrollbarKeyDown}
+      >
+        <span
+          class="rail-scrollbar-thumb"
+          style={`width: ${(railThumbRatio * 100).toFixed(2)}%; left: ${(railProgress * (1 - railThumbRatio) * 100).toFixed(2)}%`}
+        ></span>
+      </div>
+      <p class="meta-label rail-scroll-hint">Scroll sideways or drag bar to browse all {projects.length} projects</p>
     </div>
   </div>
 </section>

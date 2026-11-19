@@ -4,8 +4,6 @@
   import '../app.css';
 
   let { children } = $props();
-
-  const year = new Date().getFullYear();
 </script>
 
 <SiteHeader />
@@ -41,10 +39,6 @@
         <a href="https://github.com/pjrus" target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/paarangat-jain-6aa1321ba/" target="_blank" rel="noreferrer">LinkedIn</a>
       </nav>
-    </div>
-
-    <div class="footer-legal">
-      <p>© {year} Paarangat Jain</p>
     </div>
   </div>
 </footer>

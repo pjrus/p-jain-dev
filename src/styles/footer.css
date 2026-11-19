@@ -6,7 +6,7 @@
   border-top: 1px solid var(--line);
   background: var(--bg);
   color: var(--ink);
-  padding-block: 48px 40px;
+  padding-block: 44px;
 }
 
 .footer-grid {
@@ -57,17 +57,4 @@
     background-size: 100% 1px;
     transition-duration: var(--m-in);
   }
-}
-
-.footer-legal {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 24px;
-  color: var(--muted);
-  font-size: var(--t-label);
 }
