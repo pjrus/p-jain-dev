@@ -33,13 +33,13 @@
   flex-shrink: 0;
 }
 
-.brand-mark {
-  display: inline-grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  background: var(--action);
+.brand-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--line-strong);
   flex-shrink: 0;
 }
 

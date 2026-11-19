@@ -45,9 +45,9 @@
 
 .post-item article {
   display: grid;
-  grid-template-columns: minmax(12rem, 0.3fr) minmax(0, 1fr);
+  grid-template-columns: minmax(11rem, 220px) minmax(0, 1fr);
   grid-template-rows: auto auto auto 1fr;
-  column-gap: 40px;
+  column-gap: clamp(24px, 3vw, 40px);
   align-items: start;
 }
 
@@ -55,7 +55,7 @@
   grid-column: 1;
   grid-row: 1 / -1;
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .post-meta {
@@ -99,9 +99,9 @@
 
 .post-summary {
   grid-column: 2;
-  margin-top: 12px;
+  margin-top: 10px;
   max-width: var(--measure);
-  color: var(--muted);
+  color: var(--ink);
   font-size: 1rem;
   line-height: 1.6;
 }

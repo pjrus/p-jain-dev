@@ -28,20 +28,18 @@ changes only grammar and world will fail it.
 
 | Build | Grammar | Nav treatment | Hero device | Act-sequence shape | Close pattern | Signature move | World | Port |
 |---|---|---|---|---|---|---|---|---|
-
-*(empty: your first build has nothing to clear, so build whatever the interview
-points at. From the second onwards, this table is the constraint.)*
+| `paarangat-jain` | Gallery / catalog (`§2.6`) | Fixed opaque hairline bar with square portrait mark, section jump links, theme toggle, and full-screen mobile `<dialog>` | 4-plane blueprint coordinate parallax hero with tactile hardware module & portrait | `flow(parallax) > flow(word-highlight) > pan(dark gallery 3.2vh) > flow(reveal+workbench) > flow(in+spine) > flow(resolve)` (6 acts, ~8.5vh) | Grounded 2-column contact & links plate resolving into a clean directory footer | Live scroll-synced Grade-1 Braille chapter cell + interactive 6-dot Perkins chord workbench (`F D S` / `J K L`) | Architectural light gallery white (`#fbfbfa`) & deep obsidian dark (`#08080a`) with blueprint cobalt | 4524 |
 
 ---
 
 ## What is taken
 
-Add a bullet here whenever a build claims something a later build should avoid
-reusing: a grammar, a nav treatment, a close pattern, a signature move, an
-act-count-and-length band. The shared columns are what the next build inherits
-as a constraint, so writing them down is the whole point.
-
-Nothing is taken yet.
+- **Grammar:** Gallery / catalog (`§2.6`) with inverted obsidian dark `pan` gallery room (`3.2vh`).
+- **Nav treatment:** Fixed opaque hairline bar with square headshot mark, 5 links, theme toggle, and full-screen `<dialog>` mobile menu.
+- **Hero device:** 4-plane blueprint dot-grid parallax hero with 6-dot tactile module and portrait.
+- **Act-sequence shape:** 6 acts at ~8.5vh (`parallax > word-highlight > pan > reveal > flow+in > resolve`).
+- **Close pattern:** 2-column direct channel list + mailto enquiry form plate into directory footer.
+- **Signature move:** Live Grade-1 Braille chapter cell & interactive 6-dot Perkins chord workbench.
 
 ---
 

@@ -19,16 +19,13 @@
     <div class="footer-grid">
       <div class="footer-identity">
         <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, back to top">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-              <circle cx="8" cy="6" r="2.2" fill="var(--action-ink)" />
-              <circle cx="16" cy="6" r="2.2" fill="var(--action-ink)" />
-              <circle cx="8" cy="12" r="2.2" fill="var(--action-ink)" />
-              <circle cx="8" cy="18" r="2.2" fill="var(--action-ink)" />
-              <circle cx="16" cy="12" r="1.3" fill="var(--action-ink)" opacity="0.35" />
-              <circle cx="16" cy="18" r="1.3" fill="var(--action-ink)" opacity="0.35" />
-            </svg>
-          </span>
+          <img
+            class="brand-avatar"
+            src={`${base}/images/paarangat-jain.webp`}
+            alt=""
+            width="28"
+            height="28"
+          />
           <span>Paarangat Jain</span>
         </a>
         <p class="footer-meta">Melbourne, Victoria, Australia</p>
