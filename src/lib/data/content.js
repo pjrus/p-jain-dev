@@ -162,3 +162,14 @@ export const experience = [
       'Collaborated with our academic supervisor and fellow officers to brainstorm accessibility solutions, and assisted in the design, development and testing of tactile display components for blind and low-vision users.',
   },
 ];
+
+// Hero status plate (desktop) and extra hero facts (phones). Bump `updated` when editing.
+export const status = {
+  updated: 'Nov 2026',
+  rows: [
+    { label: 'Availability', value: 'Open to graduate roles', note: 'from July 2027', open: true },
+    { label: 'Now', value: 'Project Coordinator', note: 'Monash Assistive Technology Team' },
+    { label: 'Focus', value: 'Rebuilding my portfolio', note: 'and gaining experience through certifications' },
+    { label: 'Based', value: 'Melbourne', note: 'Victoria, Australia' },
+  ],
+};

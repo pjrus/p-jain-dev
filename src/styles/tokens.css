@@ -13,10 +13,12 @@
   --body-ink: #18181b;
   --muted: #3f3f46;
   --accent: #1d4ed8;
-  --accent-hover: #173fb0;
+  --accent-hover: #3366f2;
   --accent-ink: #ffffff;
   --action: #1d4ed8;
   --action-ink: #ffffff;
+  --link: #1d4ed8;
+  --link-hover: #3366f2;
   --line: rgba(10, 10, 10, 0.14);
   --line-strong: rgba(10, 10, 10, 0.28);
   --tint: rgba(10, 10, 10, 0.04);
@@ -126,23 +128,25 @@
   --ink: #ffffff;
   --body-ink: #e4e4e7;
   --muted: #b4b4bc;
-  --accent: #7aa8ff;
-  --accent-hover: #97bcff;
-  --accent-ink: #000000;
-  --action: #7aa8ff;
-  --action-ink: #000000;
+  --accent: #1d4ed8;
+  --accent-hover: #3366f2;
+  --accent-ink: #ffffff;
+  --action: #1d4ed8;
+  --action-ink: #ffffff;
+  --link: #5b86ff; /* lighter than --action so blue text on black passes AA (6.3:1) */
+  --link-hover: #7aa8ff;
   --line: rgba(255, 255, 255, 0.16);
   --line-strong: rgba(255, 255, 255, 0.32);
   --tint: rgba(255, 255, 255, 0.07);
-  --accent-tint: rgba(122, 168, 255, 0.14);
+  --accent-tint: rgba(29, 78, 216, 0.14);
 
   --inv-bg: #000000;
   --inv-surface: #08080a;
   --inv-surface-raised: #101014;
   --inv-ink: #ffffff;
   --inv-muted: #b0b0b6;
-  --inv-accent: #7aa8ff;
-  --inv-accent-ink: #000000;
+  --inv-accent: #1d4ed8;
+  --inv-accent-ink: #ffffff;
   --inv-line: rgba(255, 255, 255, 0.16);
   --inv-line-strong: rgba(255, 255, 255, 0.32);
 

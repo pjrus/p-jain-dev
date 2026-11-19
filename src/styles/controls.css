@@ -58,8 +58,8 @@
 
   .btn--primary:hover,
   .button-primary:hover {
-    background: color-mix(in oklab, var(--action) 86%, var(--ink));
-    border-color: color-mix(in oklab, var(--action) 86%, var(--ink));
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
     color: var(--action-ink);
   }
 
@@ -114,7 +114,7 @@
 @media (hover: hover) and (pointer: fine) {
   .text-link:hover,
   .link:hover {
-    color: var(--action);
+    color: var(--link-hover);
     background-size: 100% 1px, 100% 1px;
     transition-duration: var(--m-in);
   }
@@ -127,7 +127,7 @@
 
 .text-link:focus-visible,
 .link:focus-visible {
-  color: var(--action);
+  color: var(--link);
   background-size: 100% 1px, 100% 1px;
 }
 

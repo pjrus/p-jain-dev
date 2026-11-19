@@ -51,7 +51,7 @@
 @media (hover: hover) and (pointer: fine) {
   .project-card:hover,
   .project-card:focus-within {
-    border-color: var(--action);
+    border-color: var(--accent-hover);
     transition-duration: 180ms;
   }
 }
@@ -120,7 +120,7 @@
 }
 
 .project-top .meta-label {
-  color: var(--action);
+  color: var(--link);
 }
 
 .project-top h3 {
@@ -192,7 +192,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .project-toggle:hover {
-    border-color: var(--action);
+    border-color: var(--accent-hover);
     background: var(--ink);
     color: var(--bg);
   }

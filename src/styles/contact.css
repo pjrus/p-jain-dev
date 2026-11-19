@@ -68,11 +68,11 @@
 
 @media (hover: hover) and (pointer: fine) {
   .channel-row:hover {
-    color: var(--action);
+    color: var(--link-hover);
   }
 
   .channel-row:hover .channel-value {
-    color: var(--action);
+    color: var(--link-hover);
   }
 
   .channel-row:hover .channel-value svg {

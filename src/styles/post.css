@@ -57,7 +57,7 @@
 }
 
 .prose a {
-  color: var(--action);
+  color: var(--link);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -131,7 +131,7 @@
 .prose .token.property,
 .prose .token.attr-name,
 .prose .token.important {
-  color: var(--action);
+  color: var(--link);
 }
 
 .prose .token.string,

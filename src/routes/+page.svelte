@@ -2,12 +2,12 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
-  import HeroTerminal from '$lib/components/HeroTerminal.svelte';
+  import HeroStatus from '$lib/components/HeroStatus.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import { education, experience, projects } from '$lib/data/content.js';
+  import { education, experience, projects, status } from '$lib/data/content.js';
   import { canonicalUrl } from '$lib/seo.js';
 
   const homeJsonLd = {
@@ -185,6 +185,14 @@
 
   <div class="wrap hero-inner">
     <div class="hero-copy">
+      <img
+        class="hero-headshot"
+        src={`${base}/images/paarangat-jain.webp`}
+        alt="Headshot of Paarangat Jain"
+        width="300"
+        height="300"
+        loading="lazy"
+      />
       <h1 id="hero-title">Paarangat Jain, developer in Melbourne.</h1>
       <p class="hero-intro">
         Computer science student at Monash University exploring how AI and other emerging technologies can solve real problems, from local-first web tools to healthcare software and affordable tactile Braille displays.
@@ -205,6 +213,15 @@
       </div>
 
       <dl class="hero-facts">
+        {#each status.rows.filter((row) => row.label !== 'Based') as row}
+          <div class="hero-fact--status">
+            <dt>{row.label}</dt>
+            <dd>
+              {#if row.open}<span class="hero-fact-dot" aria-hidden="true"></span>{/if}{row.value}
+              <span class="hero-fact-note">{row.note}</span>
+            </dd>
+          </div>
+        {/each}
         <div>
           <dt>Location</dt>
           <dd>Melbourne, Victoria</dd>
@@ -221,7 +238,7 @@
     </div>
 
     <div class="hero-stage">
-      <HeroTerminal />
+      <HeroStatus />
     </div>
   </div>
 </section>
@@ -342,7 +359,7 @@
         Open to graduate and junior full-stack engineering roles in Melbourne, as well as collaborations in assistive technology and accessible software.
       </p>
 
-      <nav class="contact-channels" aria-label="Direct contact channels">
+      <nav class="contact-channels" aria-label="Direct contact channels" data-reveal data-reveal-stagger="70">
         <a class="channel-row" href="mailto:paarangatj@gmail.com">
           <span class="channel-label">Email</span>
           <span class="channel-value">paarangatj@gmail.com <ArrowIcon /></span>

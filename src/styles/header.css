@@ -205,7 +205,7 @@
 }
 
 .mobile-menu-nav a[aria-current='page'] {
-  color: var(--action);
+  color: var(--link);
 }
 
 .mobile-menu-foot {

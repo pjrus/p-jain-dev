@@ -15,7 +15,7 @@ colors:
   dark-surface: "#000000"
   dark-surface-raised: "#08080a"
   dark-ink: "#ffffff"
-  dark-accent: "#7aa8ff"
+  dark-accent: "#1d4ed8"
   line: "rgba(10, 10, 10, 0.14)"
 typography:
   display:

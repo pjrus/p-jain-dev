@@ -36,6 +36,14 @@ html:not(.reveal-ready) [data-reveal-stagger] > * {
     border-color var(--m-out) var(--ease);
 }
 
+/* Keep the contact rows' hover colour transition alongside the staggered reveal */
+.reveal-ready [data-reveal-stagger] > .channel-row {
+  transition:
+    opacity 540ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 540ms cubic-bezier(0.16, 1, 0.3, 1),
+    color var(--m-out) var(--ease);
+}
+
 /* Subtle secondary arrival for the right-hand contact form on desktop */
 @media (min-width: 860px) {
   .reveal-ready .contact-form[data-reveal] {
