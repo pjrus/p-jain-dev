@@ -4,6 +4,7 @@
   import { encodeBrailleWord } from '$lib/braille.js';
   import ArrowIcon from '$lib/components/ArrowIcon.svelte';
   import BrailleWorkbench from '$lib/components/BrailleWorkbench.svelte';
+  import HeroTerminal from '$lib/components/HeroTerminal.svelte';
   import IconGithub from '$lib/components/IconGithub.svelte';
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
@@ -126,9 +127,6 @@
       nextEl?.focus();
     }
   }
-
-  // Live tactile cells spelling "M A T T" in the hero schematic plate
-  const heroBrailleRow = encodeBrailleWord('MATT');
 
   /** @type {HTMLElement | undefined} */
   let projectsActEl = $state();
@@ -429,53 +427,7 @@
     </div>
 
     <div class="hero-stage">
-      <div class="hero-plane hero-plane--plate" data-sc-parallax="-0.25">
-        <div class="tactile-specimen-card">
-          <div class="specimen-top">
-            <img
-              class="specimen-portrait"
-              src={`${base}/images/paarangat-jain.webp`}
-              alt="Paarangat Jain smiling in formal attire"
-              width="84"
-              height="84"
-              fetchpriority="high"
-            />
-            <div class="specimen-identity">
-              <p class="specimen-org">Monash Assistive Technology Team</p>
-              <p class="specimen-role">Project Coordinator · Tactile Displays &amp; React Native</p>
-            </div>
-          </div>
-
-          <div class="specimen-hardware" aria-hidden="true">
-            <div class="specimen-braille-strip">
-              {#each heroBrailleRow as cell}
-                <div class="specimen-cell">
-                  <span class="specimen-dots">
-                    {#each [1, 4, 2, 5, 3, 6] as dot}
-                      <span class="specimen-dot" class:is-up={cell.dots.includes(dot)}></span>
-                    {/each}
-                  </span>
-                  <span class="specimen-char">{cell.char}</span>
-                </div>
-              {/each}
-            </div>
-            <p class="specimen-coords">Refreshable 6-dot tactile module · Clayton, VIC</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-plane hero-plane--foreground" data-sc-parallax="0.22">
-        <div class="hero-evidence-bar">
-          <div>
-            <p class="meta-label">Industry experience</p>
-            <p class="evidence-value">PlasmIT Vector · Full-Stack Engineering Intern</p>
-          </div>
-          <div>
-            <p class="meta-label">Shipped software</p>
-            <p class="evidence-value">6 public projects with source</p>
-          </div>
-        </div>
-      </div>
+      <HeroTerminal />
     </div>
   </div>
 </section>
