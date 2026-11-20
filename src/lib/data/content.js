@@ -16,19 +16,6 @@ export const projects = [
     visit: 'https://studio--studio-818276670-ce8c7.us-central1.hosted.app',
   },
   {
-    id: 'braille-visualiser',
-    featured: true,
-    title: 'Braille Keyboard Visualiser',
-    kind: '3D assistive hardware tool',
-    description:
-      'A 3D visualiser for exploring Hable-inspired braille keyboard layouts in the browser. Switch between five layouts, from Triangular to Chameleon, and tune key indent, incline angle and key diameter live. Type with Perkins-style chords on clickable 3D dots, remap shortcuts, and save PNG screenshots from preset camera angles, all rendered in Three.js.',
-    image: `${base}/images/visualiser.png`,
-    alt: 'Braille Keyboard Visualiser 3D model with six tactile key dots and layout geometry sliders',
-    tags: ['Next.js', 'React', 'Three.js', 'TypeScript', 'WebGL'],
-    github: 'https://github.com/pjrus/braille-keyboard-visualizer',
-    visit: 'https://pjrus.github.io/braille-keyboard-visualizer/',
-  },
-  {
     id: 'inkboard',
     featured: true,
     title: 'Inkboard',
@@ -40,6 +27,19 @@ export const projects = [
     tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'MCP', 'Local-first'],
     github: 'https://github.com/pjrus/inkboard',
     visit: 'https://pjrus.github.io/inkboard/',
+  },
+  {
+    id: 'braille-visualiser',
+    featured: true,
+    title: 'Braille Keyboard Visualiser',
+    kind: '3D assistive hardware tool',
+    description:
+      'A 3D visualiser for exploring Hable-inspired braille keyboard layouts in the browser. Switch between five layouts, from Triangular to Chameleon, and tune key indent, incline angle and key diameter live. Type with Perkins-style chords on clickable 3D dots, remap shortcuts, and save PNG screenshots from preset camera angles, all rendered in Three.js.',
+    image: `${base}/images/visualiser.png`,
+    alt: 'Braille Keyboard Visualiser 3D model with six tactile key dots and layout geometry sliders',
+    tags: ['Next.js', 'React', 'Three.js', 'TypeScript', 'WebGL'],
+    github: 'https://github.com/pjrus/braille-keyboard-visualizer',
+    visit: 'https://pjrus.github.io/braille-keyboard-visualizer/',
   },
   {
     id: 'ressie',
