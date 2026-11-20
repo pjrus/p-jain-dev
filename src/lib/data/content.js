@@ -148,7 +148,7 @@ export const status = {
   rows: [
     { label: 'Availability', value: 'Open to graduate roles', note: 'from July 2027', open: true },
     { label: 'Now', value: 'Project Coordinator', note: 'Monash Assistive Technology Team' },
-    { label: 'Focus', value: 'Rebuilding my portfolio', note: 'and gaining experience through certifications' },
+    { label: 'Focus', value: 'Meaningful impact', note: 'through work that makes a real difference' },
     { label: 'Based', value: 'Melbourne', note: 'Victoria, Australia' },
   ],
 };
