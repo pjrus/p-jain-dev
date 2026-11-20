@@ -70,7 +70,7 @@
       <img
         class="brand-avatar"
         src={`${base}/images/paarangat-jain.webp`}
-        alt=""
+        alt="Paarangat Jain"
         width="28"
         height="28"
       />
@@ -143,7 +143,7 @@
         <img
           class="brand-avatar"
           src={`${base}/images/paarangat-jain.webp`}
-          alt=""
+          alt="Paarangat Jain"
           width="28"
           height="28"
         />

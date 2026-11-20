@@ -1,0 +1,30 @@
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 301 redirect apex domain (HTTP or HTTPS) to canonical https://www.p-jain.dev
+  RewriteCond %{HTTP_HOST} ^p-jain\.dev$ [NC]
+  RewriteRule ^ https://www.p-jain.dev%{REQUEST_URI} [R=301,L]
+
+  # 301 redirect plain HTTP on www to HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} ^www\.p-jain\.dev$ [NC]
+  RewriteRule ^ https://www.p-jain.dev%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|webp|png|jpg|jpeg|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

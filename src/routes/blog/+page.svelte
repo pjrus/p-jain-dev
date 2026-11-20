@@ -46,7 +46,7 @@
               </p>
               <a class="post-thumb" href={`${base}/blog/${post.slug}`} tabindex="-1" aria-hidden="true">
                 {#if post.thumbnail}
-                  <img src={`${base}${post.thumbnail}`} alt="" loading="lazy" />
+                  <img src={`${base}${post.thumbnail}`} alt={post.title} loading="lazy" />
                 {:else}
                   <span class="post-thumb-placeholder">&gt;_</span>
                 {/if}

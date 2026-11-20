@@ -305,7 +305,7 @@
           target="_blank"
           rel="noreferrer"
         >
-          Read my résumé <ArrowIcon />
+          View full résumé <ArrowIcon />
         </a>
       </div>
     </div>
