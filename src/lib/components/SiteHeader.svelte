@@ -66,7 +66,7 @@
   <div class="wrap header-inner">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <a class="brand" href={`${base}/#top`} aria-label="Paarangat Jain, home">
+    <a class="brand" href={`${base}/#top`} aria-label="Home">
       <img
         class="brand-avatar"
         src={`${base}/images/paarangat-jain.webp`}
@@ -74,7 +74,6 @@
         width="28"
         height="28"
       />
-      <span>Paarangat Jain</span>
     </a>
 
     <nav class="primary-nav" aria-label="Main navigation">
@@ -140,7 +139,7 @@
     }}
   >
     <div class="mobile-menu-head">
-      <a class="brand" href={`${base}/#top`} onclick={closeMenu}>
+      <a class="brand" href={`${base}/#top`} onclick={closeMenu} aria-label="Home">
         <img
           class="brand-avatar"
           src={`${base}/images/paarangat-jain.webp`}
@@ -148,7 +147,6 @@
           width="28"
           height="28"
         />
-        <span>Paarangat Jain</span>
       </a>
       <button
         class="header-icon-btn"
