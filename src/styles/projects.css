@@ -1,7 +1,6 @@
 /* ============================================================================
-   Act 3 (PEAK): Selected Work — vertical 3-column subgrid matching main layout
-   Preserves current branch visual scheme: pure white/black, sharp 0px squares,
-   centered card content, 45/10/45 (or 100%) action buttons, zero overflow.
+   Act 3 (PEAK): Selected Work — four full-width zig-zag split rows.
+   Same surfaces, borders and sharp radius as before; image on top on mobile.
    ========================================================================== */
 
 .projects {
@@ -34,146 +33,124 @@
   gap: 8px;
 }
 
-.project-grid {
+.projects {
+  overflow-x: clip; /* side-entering reveals never cause a scrollbar */
+}
+
+.project-list {
+  --row-gap: clamp(40px, 5.5vw, 80px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: var(--row-gap);
 }
 
-.project-card {
+/* Hairline between projects, equal compact space above and below it */
+.project-row + .project-row {
+  padding-top: var(--row-gap);
+  border-top: 1px solid var(--line);
+}
+
+/* Open sections, not cards: no box, no surface, a hairline between rows.
+   Default (rows 2 & 4): image left 40% / text right 60%.
+   DOM order is image → text, which is also the mobile stack order. */
+.project-row {
+  --mx: -28px; /* image enters from its own (left) side */
+  --tx: 28px;  /* text enters from the right */
   display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
   min-width: 0;
-  row-gap: 0;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
-  background: var(--surface-raised);
-  overflow: hidden;
-  transition: border-color var(--m-out) var(--ease);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .project-card:hover,
-  .project-card:focus-within {
-    border-color: var(--accent-hover);
-    transition-duration: 180ms;
-  }
+/* Rows 1 & 3: text left 60% / image right 40% */
+.project-row--text-first {
+  --mx: 28px;
+  --tx: -28px;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .project-card--revealed {
-    animation: project-card-reveal 360ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms) both;
-  }
-}
-
-@keyframes project-card-reveal {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 10px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.project-summary {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+.project-row--text-first .project-text {
+  order: -1;
 }
 
 .project-media {
-  position: relative;
-  padding: 16px 16px 0;
-  overflow: hidden;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  flex-shrink: 0;
+  min-width: 0;
 }
 
-.project-media-link {
+.project-frame {
   display: block;
+  width: 100%;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-bottom: 0;
+  aspect-ratio: 16 / 10;
 }
 
-.project-media img {
+.project-frame img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform var(--m-image-out) var(--ease);
+  /* Base scale leaves headroom so the ±12px parallax never shows an edge */
+  scale: 1.08;
+  translate: 0 var(--py, 0px);
+  transition: scale var(--m-image-out) var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .project-card:hover .project-media img {
-    transform: scale(1.028);
+  .project-row:hover .project-frame img {
+    scale: 1.11;
     transition-duration: var(--m-image);
   }
 }
 
-.project-top {
-  display: grid;
-  justify-items: center;
-  text-align: center;
-  gap: 6px;
-  padding: 20px 20px 14px;
+.project-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
 }
 
-.project-top .meta-label {
+.project-text .meta-label {
   color: var(--link);
 }
 
-.project-top h3 {
+.project-index {
   color: var(--ink);
+}
+
+.project-text h3 {
+  color: var(--ink);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.15;
 }
 
 .project-description {
   color: var(--body-ink);
-  font-size: var(--t-small);
-  line-height: 1.54;
+  font-size: clamp(1.0625rem, 1.15vw, 1.1875rem);
+  line-height: 1.6;
 }
 
-.project-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-  padding: 0 20px 20px;
+.project-text .tag-list {
+  margin-top: 6px;
 }
 
-.project-details .tag-list {
-  justify-content: center;
-}
-
-.project-details .tag-list li {
-  border-color: var(--line-strong);
-  color: var(--ink);
+.project-text .tag-list li {
   font-size: var(--t-label);
 }
 
 .project-links {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 5%;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .project-btn {
-  flex: 0 0 47.5%;
-  min-width: 0;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 18px;
   font-size: var(--t-small);
-}
-
-.project-btn:only-child {
-  flex: 0 0 100%;
 }
 
 .project-btn--source {
@@ -181,73 +158,81 @@
   color: var(--ink);
 }
 
-.project-actions {
-  display: flex;
-  justify-content: center;
+/* ---- Scroll reveal: the row stays put; image and text glide in from their
+   own sides with a slight rise, text trailing the image by 110ms. ---- */
+.reveal-ready .project-row[data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
-.project-toggle {
-  min-width: 12rem;
-  border-color: var(--ink);
-  background: var(--surface-raised);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: var(--t-small);
+.reveal-ready .project-row .project-media,
+.reveal-ready .project-row .project-text {
+  opacity: 0;
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .project-toggle:hover {
-    border-color: var(--accent-hover);
-    background: var(--ink);
-    color: var(--bg);
-  }
+.reveal-ready .project-row .project-media {
+  transform: translate3d(var(--mx), 24px, 0);
 }
 
-@media (max-width: 1020px) {
-  .project-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.reveal-ready .project-row .project-text {
+  transform: translate3d(var(--tx), 24px, 0);
+  transition-delay: 110ms;
 }
 
-@media (max-width: 680px) {
-  .project-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+.reveal-ready .project-row.is-visible .project-media,
+.reveal-ready .project-row.is-visible .project-text {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 860px) {
+  /* Stack: image on top, text below, for every row */
+  .project-row,
+  .project-row--text-first {
+    --mx: 0px;
+    --tx: 0px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 
-  .project-card {
-    grid-row: auto;
-    grid-template-rows: auto auto;
+  .project-row--text-first .project-text {
+    order: 0;
   }
 
-  .project-media {
-    padding: 12px 12px 0;
+  .project-text {
+    gap: 10px;
   }
 
-  .project-top {
-    padding: 18px 16px 12px;
-  }
-
-  .project-details {
-    padding: 0 16px 18px;
+  .project-links {
+    width: 100%;
   }
 
   .project-btn {
+    flex: 1 1 0;
+    min-width: 0;
     padding: 0 8px;
-    font-size: 0.875rem;
-    gap: 5px;
-  }
-
-  .project-toggle {
-    width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-card--revealed,
-  .project-card:hover .project-media img {
-    animation: none;
+  .project-frame img {
+    scale: 1;
+    translate: none;
     transition: none;
+  }
+
+  .project-row:hover .project-frame img {
+    scale: 1;
+  }
+
+  .reveal-ready .project-row .project-media,
+  .reveal-ready .project-row .project-text {
     transform: none;
+    transition: opacity 220ms ease-out;
+    transition-delay: 0ms;
   }
 }

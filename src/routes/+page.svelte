@@ -43,7 +43,7 @@
     ],
   };
 
-  const initiallyVisibleProjects = 3;
+  const featuredProjects = projects.filter((p) => p.featured);
 
   /** @type {HTMLElement | undefined} */
   let heroEl = $state();
@@ -51,11 +51,6 @@
   let heroGridEl = $state();
   /** @type {HTMLElement | undefined} */
   let experienceEl = $state();
-
-  let showAllProjects = $state(false);
-  let visibleProjects = $derived(
-    showAllProjects ? projects : projects.slice(0, initiallyVisibleProjects)
-  );
 
   // Form validation state (validated on submit, never while typing)
   let nameError = $state('');
@@ -259,7 +254,7 @@
 
 <SkillsMarquee items={skills} />
 
-<!-- ACT 2 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
+<!-- ACT 2 (PEAK): Selected Work, four zig-zag split rows -->
 <section
   class="projects section"
   id="projects"
@@ -272,32 +267,11 @@
       </div>
     </div>
 
-    <div class="project-grid" id="project-grid" data-reveal data-reveal-stagger="70">
-      {#each visibleProjects as project, index (project.id)}
-        {@const extra = index >= initiallyVisibleProjects}
-        <ProjectCard
-          {project}
-          {index}
-          {extra}
-          revealDelay={Math.min(extra ? index - initiallyVisibleProjects : index, 2) * 65}
-        />
+    <div class="project-list">
+      {#each featuredProjects as project, index (project.id)}
+        <ProjectCard {project} {index} />
       {/each}
     </div>
-
-    {#if projects.length > initiallyVisibleProjects}
-      <div class="project-actions" data-reveal>
-        <button
-          class="btn project-toggle"
-          type="button"
-          aria-controls="project-grid"
-          aria-expanded={showAllProjects}
-          onclick={() => (showAllProjects = !showAllProjects)}
-        >
-          {showAllProjects ? 'Show less' : 'Show more'}
-          <ArrowIcon direction={showAllProjects ? 'up' : 'down'} />
-        </button>
-      </div>
-    {/if}
   </div>
 </section>
 

@@ -1,12 +1,14 @@
 import { base } from '$app/paths';
 
+// Homepage shows only `featured: true` projects. Move the flag to swap one in.
 export const projects = [
   {
     id: 'skilliton',
+    featured: true,
     title: 'Skilliton',
     kind: 'UniHack 2026 web app',
     description:
-      'An AI-assisted peer skill exchange built at UniHack 2026 — created primarily utilising Antigravity to match students and help them organise sessions.',
+      'A peer-to-peer skill exchange built at UniHack 2026, created mainly with Antigravity. Students sign in with Google, share what they can teach and what they want to learn, and get matched with partners for skill swaps. A Genkit and Gemini assistant suggests personalised matches and chats in real time, running on a Next.js and Firebase stack.',
     image: `${base}/images/skill-issue.png`,
     alt: 'Skilliton peer skill exchange web interface showing skill matching inputs and recommended student profiles',
     tags: ['Antigravity', 'Next.js', 'Firebase', 'TypeScript', 'Genkit', 'Gemini'],
@@ -15,10 +17,11 @@ export const projects = [
   },
   {
     id: 'braille-visualiser',
+    featured: true,
     title: 'Braille Keyboard Visualiser',
     kind: '3D assistive hardware tool',
     description:
-      'A 3D interactive visualiser for exploring Hable-inspired braille keyboard layouts, Perkins-style chord typing and custom key mappings.',
+      'A 3D visualiser for exploring Hable-inspired braille keyboard layouts in the browser. Switch between five layouts, from Triangular to Chameleon, and tune key indent, incline angle and key diameter live. Type with Perkins-style chords on clickable 3D dots, remap shortcuts, and save PNG screenshots from preset camera angles, all rendered in Three.js.',
     image: `${base}/images/visualiser.png`,
     alt: 'Braille Keyboard Visualiser 3D model with six tactile key dots and layout geometry sliders',
     tags: ['Next.js', 'React', 'Three.js', 'TypeScript', 'WebGL'],
@@ -27,10 +30,11 @@ export const projects = [
   },
   {
     id: 'inkboard',
+    featured: true,
     title: 'Inkboard',
     kind: 'Local-first canvas app',
     description:
-      'A local-first infinite canvas for handwriting, typed notes and PDF annotation, with an MCP server over a token-authenticated loopback WebSocket bridge and offline archive backend for reversible CRDT edits.',
+      'A local-first infinite canvas for handwriting, typed notes and PDF annotation. Boards live in IndexedDB on a Yjs CRDT model, so edits merge cleanly and nothing leaves your device. A built-in MCP server lets AI assistants read, preview and export boards, and an opt-in, token-authenticated loopback bridge streams their edits live and reversibly.',
     image: `${base}/images/inkboard.png`,
     alt: 'Inkboard infinite canvas workspace displaying handwritten sketches, typed notes and PDF export controls',
     tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'MCP', 'Local-first'],
@@ -39,13 +43,14 @@ export const projects = [
   },
   {
     id: 'ressie',
+    featured: true,
     title: 'Ressie',
     kind: 'Local-first LaTeX tool',
     description:
-      'A local-first resume builder that turns structured form data into polished LaTeX, rendered statically in JavaScript with live preview and multiple templates.',
+      'A local-first resume builder that turns simple form fields into polished LaTeX, with no LaTeX knowledge needed. A WebAssembly TeX engine compiles in the browser as you type, giving a live PDF preview across four templates including Jake\'s Resume and Awesome-CV. Reorder sections by drag and drop, tag and duplicate resumes, and export .tex or PDF.',
     image: `${base}/images/ressie.png`,
     alt: 'Ressie split-pane resume editor with structured form inputs beside a live rendered LaTeX document preview',
-    tags: ['React', 'Vite', 'JavaScript', 'LaTeX', 'Local-first'],
+    tags: ['React', 'Vite', 'JavaScript', 'LaTeX', 'WebAssembly', 'Local-first'],
     github: 'https://github.com/pjrus/ressie',
     visit: 'https://pjrus.github.io/ressie/',
   },
@@ -63,13 +68,14 @@ export const projects = [
   },
   {
     id: 'portfolio',
+    featured: true,
     title: 'Portfolio website',
     kind: 'SvelteKit static site',
     description:
-      'A responsive personal portfolio showcasing shipped software, accessibility work and experience across web, mobile and hardware.',
+      'The site you\'re on: a fully prerendered SvelteKit portfolio, deployed to GitHub Pages through GitHub Actions with no server at runtime. Projects, experience and a Markdown blog compiled with mdsvex share one design system, with light and dark themes and scroll-driven reveals and parallax that all respect reduced-motion settings and keyboard navigation.',
     image: `${base}/images/portfolio.png`,
     alt: 'Paarangat Jain personal portfolio homepage showing projects and engineering experience',
-    tags: ['SvelteKit', 'JavaScript', 'CSS', 'Accessibility'],
+    tags: ['SvelteKit', 'JavaScript', 'CSS', 'mdsvex', 'GitHub Actions', 'Accessibility'],
     github: 'https://github.com/pjrus/p-jain-dev',
   },
 ];

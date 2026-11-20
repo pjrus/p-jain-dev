@@ -1,54 +1,59 @@
 <script>
+  import { onMount } from 'svelte';
   import ArrowIcon from './ArrowIcon.svelte';
+  import { clamp01, onScrollFrame } from '$lib/scroll.js';
 
-  let { project, index = 0, extra = false, revealDelay = 0 } = $props();
+  let { project, index = 0 } = $props();
+
+  // Rows 1 & 3: text left / image right. Rows 2 & 4: image left / text right.
+  const textFirst = $derived(index % 2 === 0);
+  const href = $derived(project.visit ?? project.github);
+
+  /** @type {HTMLElement | undefined} */
+  let frameEl = $state();
+
+  // Scroll-linked parallax: image drifts ±12px inside its overflow-hidden frame.
+  onMount(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    return onScrollFrame(() => {
+      if (!frameEl) return;
+      const rect = frameEl.getBoundingClientRect();
+      const vh = window.innerHeight || 900;
+      const p = clamp01((vh - rect.top) / Math.max(1, rect.height + vh));
+      frameEl.style.setProperty('--py', `${((0.5 - p) * 24).toFixed(2)}px`);
+    });
+  });
 </script>
 
-<article
-  class="project-card"
-  class:project-card--revealed={extra}
-  class:is-visible={extra}
-  style={`--reveal-delay: ${revealDelay}ms`}
->
-  <div class="project-summary">
-    <div class="project-media">
-      {#if project.visit || project.github}
-        <a
-          class="project-media-link"
-          href={project.visit ?? project.github}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Open ${project.title}`}
-        >
-          <img
-            src={project.image}
-            alt={project.alt}
-            width="1600"
-            height="1000"
-            loading={index < 3 ? 'eager' : 'lazy'}
-            decoding="async"
-          />
-        </a>
-      {:else}
-        <img
-          src={project.image}
-          alt={project.alt}
-          width="1600"
-          height="1000"
-          loading={index < 3 ? 'eager' : 'lazy'}
-          decoding="async"
-        />
-      {/if}
-    </div>
-
-    <div class="project-top">
-      <p class="meta-label">{project.kind}</p>
-      <h3>{project.title}</h3>
-      <p class="project-description">{project.description}</p>
-    </div>
+<article class="project-row" class:project-row--text-first={textFirst} data-reveal>
+  <div class="project-media">
+    <svelte:element
+      this={href ? 'a' : 'div'}
+      class="project-frame"
+      bind:this={frameEl}
+      href={href}
+      target={href ? '_blank' : undefined}
+      rel={href ? 'noreferrer' : undefined}
+      aria-label={href ? `Open ${project.title}` : undefined}
+    >
+      <img
+        src={project.image}
+        alt={project.alt}
+        width="1600"
+        height="1000"
+        loading={index < 2 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </svelte:element>
   </div>
 
-  <div class="project-details">
+  <div class="project-text">
+    <p class="meta-label">
+      <span class="project-index">{String(index + 1).padStart(2, '0')}</span> / {project.kind}
+    </p>
+    <h3>{project.title}</h3>
+    <p class="project-description">{project.description}</p>
+
     <ul class="tag-list" aria-label={`${project.title} technologies`}>
       {#each project.tags as tag}<li>{tag}</li>{/each}
     </ul>
