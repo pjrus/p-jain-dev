@@ -54,10 +54,10 @@ test('built static site excludes drafts, includes routes, and has no scrollcraft
     assert.ok(!html.includes('scrollcraft'), `${name} should not reference scrollcraft`);
   }
 
-  assert.ok(robotsTxt.includes('Sitemap: https://pjrus.github.io/sitemap.xml'));
-  assert.ok(sitemapXml.includes('<loc>https://pjrus.github.io</loc>'));
-  assert.ok(sitemapXml.includes('<loc>https://pjrus.github.io/about</loc>'));
-  assert.ok(sitemapXml.includes('<loc>https://pjrus.github.io/blog</loc>'));
+  assert.ok(robotsTxt.includes('Sitemap: https://www.p-jain.dev/sitemap.xml'));
+  assert.ok(sitemapXml.includes('<loc>https://www.p-jain.dev</loc>'));
+  assert.ok(sitemapXml.includes('<loc>https://www.p-jain.dev/about</loc>'));
+  assert.ok(sitemapXml.includes('<loc>https://www.p-jain.dev/blog</loc>'));
 
   const heroMatch = indexHtml.match(/<h1[^>]*id="hero-title"[\s\S]*?<\/h1>/);
   assert.ok(heroMatch, 'index.html should include #hero-title');
