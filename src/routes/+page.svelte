@@ -8,8 +8,10 @@
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
+  import SkillsMarquee from '$lib/components/SkillsMarquee.svelte';
   import { buildContactMailto, validateContact } from '$lib/contact.js';
   import { education, experience, heroFacts, projects } from '$lib/data/content.js';
+  import { skills } from '$lib/data/skills.js';
   import { clamp01, onScrollFrame } from '$lib/scroll.js';
   import { canonicalUrl } from '$lib/seo.js';
 
@@ -130,7 +132,14 @@
           },
           { rootMargin: '0px 0px -28% 0px', threshold: 0.05 }
         );
-        targets.forEach((el) => revealObserver?.observe(el));
+        // Anything already peeking into the first viewport reveals now; the -28% trigger
+        // line above is only for content scrolled into view, and would otherwise leave
+        // above-the-fold content (e.g. the Projects head on 900px screens) invisible.
+        const vh = window.innerHeight;
+        targets.forEach((el) => {
+          if (el.getBoundingClientRect().top < vh) revealEl(el);
+          else revealObserver?.observe(el);
+        });
 
         // Ensure bottom-of-page sections (e.g. Contact on tall screens) always reveal at scroll end
         onScrollBottom = () => {
@@ -248,6 +257,8 @@
   </div>
 </section>
 
+<SkillsMarquee items={skills} />
+
 <!-- ACT 2 (PEAK): Selected Work vertical 3-column grid (matches main layout) -->
 <section
   class="projects section"
@@ -257,7 +268,7 @@
   <div class="wrap projects-shell">
     <div class="projects-head" data-reveal>
       <div class="projects-title-group">
-        <h2 id="projects-title">Shipped software projects</h2>
+        <h2 id="projects-title">Projects</h2>
       </div>
     </div>
 

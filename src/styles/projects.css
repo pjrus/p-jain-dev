@@ -11,9 +11,14 @@
   color: var(--ink);
 }
 
+/* Follows the hero marquee directly: tighter top so cards start above the fold */
+.projects.section {
+  padding-top: clamp(36px, 3.5vw, 52px);
+}
+
 .projects-shell {
   display: grid;
-  gap: clamp(28px, 3.5vw, 40px);
+  gap: clamp(24px, 2.5vw, 32px);
 }
 
 .projects-head {
