@@ -98,10 +98,11 @@
   \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
 \end{itemize}
 
-\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
+\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT, MCP, WebSockets \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
 \begin{itemize}
-  \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation.
-  \item Stored data in the browser with IndexedDB and used a CRDT-based model for conflict-free state.
+  \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation, storing boards in IndexedDB with a Yjs CRDT model for conflict-free state.
+  \item Added a local MCP server (stdio and Streamable HTTP) exposing Zod-validated board tools, PNG previews, PDF export and workflow prompts to AI assistants.
+  \item Built an opt-in token-authenticated loopback WebSocket bridge for live undoable CRDT edits in the browser, alongside a sandboxed offline archive backend and read-only mode.
 \end{itemize}
 
 \resumeProject{Ressie}{Apr. 2026 -- Present}{React, Vite, JavaScript, LaTeX \textbar{} \href{https://github.com/pjrus/ressie}{GitHub} \textbar{} \href{https://pjrus.github.io/ressie/}{Live}}

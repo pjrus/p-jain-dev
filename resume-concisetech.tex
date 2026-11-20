@@ -92,10 +92,10 @@
   \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
 \end{itemize}
 
-\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
+\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT, MCP, WebSockets \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
 \begin{itemize}
-  \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation.
-  \item Stored data in the browser with IndexedDB and used a CRDT-based model for conflict-free state.
+  \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation using IndexedDB and Yjs CRDTs.
+  \item Added a local MCP server (stdio/HTTP) with a token-authenticated loopback WebSocket bridge for live undoable browser edits and a sandboxed offline archive backend.
 \end{itemize}
 
 \resumeProject{Braille Keyboard Visualiser}{Apr. 2026 -- Present}{Next.js, React, Three.js, TypeScript, WebGL \textbar{} \href{https://github.com/pjrus/braille-keyboard-visualizer}{GitHub} \textbar{} \href{https://pjrus.github.io/braille-keyboard-visualizer/}{Live}}
