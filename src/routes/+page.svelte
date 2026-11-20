@@ -193,7 +193,7 @@
 </script>
 
 <SeoHead
-  title="Paarangat Jain: full-stack and assistive-tech developer in Melbourne"
+  title="Paarangat Jain | Full-Stack Developer in Melbourne"
   description="Paarangat Jain is a Melbourne-based developer building local-first web software, mobile applications and affordable tactile Braille hardware."
   jsonLd={homeJsonLd}
 />
@@ -210,7 +210,8 @@
         alt="Headshot of Paarangat Jain"
         width="300"
         height="300"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
       />
       <CharRevealText id="hero-title" text="Paarangat Jain, developer in Melbourne." />
       <p class="hero-intro">

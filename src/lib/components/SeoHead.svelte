@@ -43,7 +43,7 @@
   <meta name="twitter:image" content={imageUrl} />
   <meta name="twitter:image:alt" content={imageAlt} />
 
-  {#if noindex}<meta name="robots" content="noindex, nofollow" />{/if}
+  {#if noindex}<meta name="robots" content="noindex, nofollow" />{:else}<meta name="robots" content="index, follow, max-image-preview:large" />{/if}
   {#if type === 'article'}
     <meta property="article:published_time" content={publishedTime} />
     {#each tags as tag}<meta property="article:tag" content={tag} />{/each}
