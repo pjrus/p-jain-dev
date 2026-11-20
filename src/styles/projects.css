@@ -10,7 +10,7 @@
   color: var(--ink);
 }
 
-/* Follows the hero marquee directly: tighter top so cards start above the fold */
+/* Follows the hero directly: tighter top so projects start above the fold */
 .projects.section {
   padding-top: clamp(36px, 3.5vw, 52px);
 }

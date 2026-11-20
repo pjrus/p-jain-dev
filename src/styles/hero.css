@@ -5,11 +5,11 @@
 
 .hero {
   position: relative;
-  /* Sized to content; the skills marquee below supplies the bottom padding */
+  /* Sized to content */
   display: flex;
   align-items: center;
-  padding-top: calc(var(--nav-h) + clamp(48px, 5vw, 80px));
-  padding-bottom: 0;
+  padding-top: calc(var(--nav-h) + clamp(32px, 3.5vw, 48px));
+  padding-bottom: clamp(48px, 5vw, 72px);
   overflow: clip;
   background: var(--bg);
 }
@@ -167,7 +167,7 @@ html.m-enter-done .hero-stage {
 /* Separate tablet & mobile art direction */
 @media (max-width: 960px) {
   .hero {
-    padding-top: calc(var(--nav-h) + 48px);
+    padding-top: calc(var(--nav-h) + 40px);
   }
 
   .hero-inner {
@@ -187,7 +187,7 @@ html.m-enter-done .hero-stage {
 
 @media (max-width: 640px) {
   .hero {
-    padding-top: calc(var(--nav-h) + 40px);
+    padding-top: calc(var(--nav-h) + 32px);
   }
 
   .hero-inner {

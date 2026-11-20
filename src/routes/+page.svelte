@@ -8,10 +8,8 @@
   import IconLinkedin from '$lib/components/IconLinkedin.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import SeoHead from '$lib/components/SeoHead.svelte';
-  import SkillsMarquee from '$lib/components/SkillsMarquee.svelte';
   import { buildContactMailto, validateContact } from '$lib/contact.js';
   import { education, experience, heroFacts, projects } from '$lib/data/content.js';
-  import { skills } from '$lib/data/skills.js';
   import { clamp01, onScrollFrame } from '$lib/scroll.js';
   import { canonicalUrl } from '$lib/seo.js';
 
@@ -251,8 +249,6 @@
     </div>
   </div>
 </section>
-
-<SkillsMarquee items={skills} />
 
 <!-- ACT 2 (PEAK): Selected Work, four zig-zag split rows -->
 <section
