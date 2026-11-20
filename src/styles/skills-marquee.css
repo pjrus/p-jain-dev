@@ -13,8 +13,8 @@
   --pill-dot: var(--link);
 
   position: relative;
-  /* Sits snugly under the hero grid as part of the hero block */
-  padding-block: clamp(34px, 3.5vw, 44px) clamp(22px, 2vw, 28px);
+  /* Closes the hero block: snug above, generous padding below */
+  padding-block: clamp(34px, 3.5vw, 44px) clamp(40px, 5vw, 80px);
   background: var(--bg);
   overflow: hidden;
 }
@@ -141,7 +141,7 @@
   .skills-marquee {
     --marquee-gap: 8px;
     --marquee-fade: 32px;
-    padding-block: 28px 22px;
+    padding-block: 28px 40px;
   }
 
   .marquee-pill {

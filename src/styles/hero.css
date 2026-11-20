@@ -5,11 +5,11 @@
 
 .hero {
   position: relative;
-  /* Sized to content, with generous internal padding above and below */
+  /* Sized to content; the skills marquee below supplies the bottom padding */
   display: flex;
   align-items: center;
   padding-top: calc(var(--nav-h) + clamp(48px, 5vw, 80px));
-  padding-bottom: clamp(40px, 5vw, 80px);
+  padding-bottom: 0;
   overflow: clip;
   background: var(--bg);
 }
