@@ -59,6 +59,8 @@
   --measure: 62ch;
   --padt: clamp(72px, 8vw, 120px);
   --padb: clamp(56px, 6vw, 88px);
+  /* Non-home pages: gap between the fixed nav and the page title (40px -> 48px) */
+  --subpage-pt: clamp(2.5rem, 4vw, 3rem);
 
   /* Radius scale (sharp squares everywhere; --r-pill strictly for status pills) */
   --r-sm: 0px;

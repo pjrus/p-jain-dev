@@ -66,7 +66,7 @@ footer {
 }
 
 .page-section {
-  padding-top: calc(var(--nav-h) + clamp(48px, 6vw, 88px));
+  padding-top: calc(var(--nav-h) + var(--subpage-pt));
   padding-bottom: clamp(64px, 8vw, 112px);
 }
 

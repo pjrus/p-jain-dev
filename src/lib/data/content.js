@@ -30,7 +30,7 @@ export const projects = [
     title: 'Inkboard',
     kind: 'Local-first canvas app',
     description:
-      'A local-first infinite canvas for handwriting, typed notes and PDF annotation, with an MCP server over a token-authenticated loopback WebSocket bridge and offline archive backend for undoable CRDT edits.',
+      'A local-first infinite canvas for handwriting, typed notes and PDF annotation, with an MCP server over a token-authenticated loopback WebSocket bridge and offline archive backend for reversible CRDT edits.',
     image: `${base}/images/inkboard.png`,
     alt: 'Inkboard infinite canvas workspace displaying handwritten sketches, typed notes and PDF export controls',
     tags: ['TypeScript', 'Vite', 'IndexedDB', 'CRDT', 'MCP', 'Local-first'],
