@@ -82,6 +82,11 @@
   width: 100%;
 }
 
+.project-frame--phone {
+  display: flex;
+  justify-content: center;
+}
+
 .project-text {
   display: flex;
   flex-direction: column;

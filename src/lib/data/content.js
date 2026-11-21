@@ -67,6 +67,19 @@ export const projects = [
     visit: 'https://pjrus.github.io/trackie/kanban/',
   },
   {
+    id: 'pomo-app',
+    featured: true,
+    device: 'phone',
+    title: 'Pomo App',
+    kind: 'Expo mobile app',
+    description:
+      'A cross-platform Pomodoro focus timer built with Expo, React Native and TypeScript for structured study and work sessions. Switch smoothly between focus, short break and long break intervals with clear session tracking, tactile controls and persistent local preferences in an intuitive mobile interface.',
+    image: `${base}/images/pomo-app.svg`,
+    alt: 'Pomo App mobile Pomodoro timer showing Focus mode active, a 25:00 circular progress ring for Session 1 of 4, current task label, and Start, Reset and Skip controls',
+    tags: ['Expo', 'React Native', 'TypeScript', 'Mobile UI', 'Local storage'],
+    github: 'https://github.com/pjrus/pomo-app',
+  },
+  {
     id: 'portfolio',
     featured: true,
     title: 'Portfolio website',

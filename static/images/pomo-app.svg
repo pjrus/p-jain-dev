@@ -1,0 +1,484 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 384 832"
+  width="384"
+  height="832"
+  fill="none"
+  role="img"
+  aria-label="Pomo App mobile interface showing Focus mode active, 25:00 circular progress timer for Session 1 of 4, Deep Work Architecture task pill, and Start, Reset and Skip controls"
+>
+  <defs>
+    <!-- Deep obsidian canvas with restrained architectural cobalt depth -->
+    <linearGradient id="bg-canvas" x1="192" y1="0" x2="192" y2="832" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d111a" />
+      <stop offset="38%" stop-color="#090b10" />
+      <stop offset="100%" stop-color="#06070b" />
+    </linearGradient>
+
+    <radialGradient id="top-ambient" cx="192" cy="110" r="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.22" />
+      <stop offset="55%" stop-color="#1d4ed8" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="ring-ambient" cx="192" cy="404" r="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.14" />
+      <stop offset="62%" stop-color="#1d4ed8" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Active mode pill gradient -->
+    <linearGradient id="pill-active" x1="28" y1="118" x2="132" y2="152" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+
+    <!-- Circular progress ring sweep -->
+    <linearGradient id="progress-stroke" x1="192" y1="280" x2="192" y2="528" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="48%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+
+    <!-- Primary Start CTA crisp highlight -->
+    <linearGradient id="start-btn" x1="192" y1="582" x2="192" y2="642" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#e4e8f1" />
+    </linearGradient>
+
+    <!-- Soft glow filter for progress ring & active indicator -->
+    <filter id="ring-glow" x="42" y="254" width="300" height="300" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="7" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="btn-shadow" x="106" y="572" width="172" height="92" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+
+    <!-- Subtle architectural micro-grid overlay -->
+    <pattern id="micro-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#ffffff" stroke-opacity="0.024" stroke-width="0.75" />
+    </pattern>
+  </defs>
+
+  <!-- Screen Canvas -->
+  <rect width="384" height="832" fill="url(#bg-canvas)" />
+  <rect width="384" height="832" fill="url(#micro-grid)" />
+  <rect width="384" height="420" fill="url(#top-ambient)" />
+  <circle cx="192" cy="404" r="156" fill="url(#ring-ambient)" />
+
+  <!-- ====================================================================== -->
+  <!-- iOS Status Bar (flanks centered Dynamic Island zone x:132..252)        -->
+  <!-- ====================================================================== -->
+  <g font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif">
+    <text
+      x="68"
+      y="34"
+      fill="#f4f4f5"
+      font-size="14.5"
+      font-weight="600"
+      letter-spacing="-0.02em"
+      text-anchor="middle"
+    >9:41</text>
+  </g>
+
+  <!-- Status icons: Cellular signal, Wi-Fi, Battery -->
+  <g fill="#f4f4f5">
+    <!-- Cellular 4 bars -->
+    <rect x="282" y="30" width="3" height="4.5" rx="1" />
+    <rect x="287" y="28" width="3" height="6.5" rx="1" />
+    <rect x="292" y="25.5" width="3" height="9" rx="1" />
+    <rect x="297" y="23" width="3" height="11.5" rx="1" />
+
+    <!-- Wi-Fi -->
+    <path
+      d="M308.5 26.8C311.7 24.1 316.3 24.1 319.5 26.8"
+      stroke="#f4f4f5"
+      stroke-width="1.65"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      d="M310.8 29.6C312.7 28 315.3 28 317.2 29.6"
+      stroke="#f4f4f5"
+      stroke-width="1.65"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <circle cx="314" cy="33" r="1.4" />
+
+    <!-- Battery -->
+    <rect x="328" y="23.5" width="23" height="11" rx="3" stroke="#f4f4f5" stroke-opacity="0.45" stroke-width="1.15" fill="none" />
+    <rect x="330" y="25.5" width="17.5" height="7" rx="1.5" fill="#f4f4f5" />
+    <path d="M352.5 27.2V30.8C353.5 30.4 353.5 27.6 352.5 27.2Z" fill="#f4f4f5" fill-opacity="0.55" />
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Subtle Top App Header                                                  -->
+  <!-- ====================================================================== -->
+  <g>
+    <circle cx="32" cy="84" r="4" fill="#3b82f6" />
+    <text
+      x="43"
+      y="88.5"
+      fill="#e4e4e7"
+      font-family="'SF Mono', ui-monospace, Menlo, Consolas, monospace"
+      font-size="12"
+      font-weight="600"
+      letter-spacing="0.12em"
+    >POMO</text>
+
+    <!-- Sound / focus ambience icon button -->
+    <rect x="326" y="69" width="32" height="32" rx="16" fill="#ffffff" fill-opacity="0.045" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1" />
+    <path
+      d="M336.5 82.5H339.2L343.2 79V91L339.2 87.5H336.5C335.95 87.5 335.5 87.05 335.5 86.5V83.5C335.5 82.95 335.95 82.5 336.5 82.5Z"
+      stroke="#a1a1aa"
+      stroke-width="1.4"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M346.2 82.2C347.3 83.6 347.3 86.4 346.2 87.8"
+      stroke="#a1a1aa"
+      stroke-width="1.4"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Mode Selector Pills: Focus (active), Short Break, Long Break           -->
+  <!-- ====================================================================== -->
+  <g font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif">
+    <!-- Outer segmented control rail -->
+    <rect
+      x="24"
+      y="116"
+      width="336"
+      height="42"
+      rx="21"
+      fill="#111520"
+      stroke="#ffffff"
+      stroke-opacity="0.08"
+      stroke-width="1"
+    />
+
+    <!-- Active Pill: Focus -->
+    <rect x="28" y="120" width="104" height="34" rx="17" fill="url(#pill-active)" />
+    <rect
+      x="28.5"
+      y="120.5"
+      width="103"
+      height="33"
+      rx="16.5"
+      stroke="#93c5fd"
+      stroke-opacity="0.32"
+      stroke-width="1"
+    />
+    <text
+      x="80"
+      y="141.5"
+      fill="#ffffff"
+      font-size="13"
+      font-weight="600"
+      text-anchor="middle"
+      letter-spacing="-0.01em"
+    >Focus</text>
+
+    <!-- Inactive Pill: Short Break -->
+    <text
+      x="192"
+      y="141.5"
+      fill="#9ca3af"
+      font-size="12.5"
+      font-weight="500"
+      text-anchor="middle"
+      letter-spacing="-0.01em"
+    >Short Break</text>
+
+    <!-- Inactive Pill: Long Break -->
+    <text
+      x="304"
+      y="141.5"
+      fill="#9ca3af"
+      font-size="12.5"
+      font-weight="500"
+      text-anchor="middle"
+      letter-spacing="-0.01em"
+    >Long Break</text>
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Current Task Label Pill                                                -->
+  <!-- ====================================================================== -->
+  <g>
+    <rect
+      x="72"
+      y="182"
+      width="240"
+      height="34"
+      rx="17"
+      fill="#ffffff"
+      fill-opacity="0.045"
+      stroke="#ffffff"
+      stroke-opacity="0.09"
+      stroke-width="1"
+    />
+    <circle cx="93" cy="199" r="6.5" fill="#5b86ff" fill-opacity="0.18" />
+    <circle cx="93" cy="199" r="3.2" fill="#60a5fa" />
+    <text
+      x="202"
+      y="203.2"
+      fill="#e4e4e7"
+      font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+      font-size="12.5"
+      font-weight="500"
+      text-anchor="middle"
+      letter-spacing="-0.005em"
+    >Deep Work · Architecture</text>
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Circular Progress Ring & 25:00 Timer Readout                           -->
+  <!-- ====================================================================== -->
+  <g>
+    <!-- Precision outer dashed dial ring -->
+    <circle
+      cx="192"
+      cy="404"
+      r="141"
+      stroke="#ffffff"
+      stroke-opacity="0.07"
+      stroke-width="1.25"
+      stroke-dasharray="2 12.76"
+    />
+
+    <!-- Base muted track -->
+    <circle
+      cx="192"
+      cy="404"
+      r="124"
+      stroke="#ffffff"
+      stroke-opacity="0.085"
+      stroke-width="10"
+    />
+
+    <!-- Subtle inner hairline ring -->
+    <circle
+      cx="192"
+      cy="404"
+      r="107"
+      stroke="#ffffff"
+      stroke-opacity="0.04"
+      stroke-width="1"
+    />
+
+    <!-- Active cobalt progress arc (circumference = 779.11; ~82% sweep = 639) -->
+    <circle
+      cx="192"
+      cy="404"
+      r="124"
+      stroke="url(#progress-stroke)"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-dasharray="639 141"
+      transform="rotate(-90 192 404)"
+      filter="url(#ring-glow)"
+    />
+
+    <!-- Crisp top 12-o'clock start cap glint -->
+    <circle cx="192" cy="280" r="3" fill="#dbeafe" fill-opacity="0.9" />
+
+    <!-- Eyebrow label -->
+    <text
+      x="192"
+      y="355"
+      fill="#7aa8ff"
+      font-family="'SF Mono', ui-monospace, Menlo, Consolas, monospace"
+      font-size="10.5"
+      font-weight="600"
+      letter-spacing="0.16em"
+      text-anchor="middle"
+    >FOCUS</text>
+
+    <!-- Primary countdown readout -->
+    <text
+      x="192"
+      y="418"
+      fill="#ffffff"
+      font-family="'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+      font-size="62"
+      font-weight="600"
+      letter-spacing="-0.04em"
+      text-anchor="middle"
+    >25:00</text>
+
+    <!-- Session counter -->
+    <text
+      x="192"
+      y="450"
+      fill="#a1a1aa"
+      font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+      font-size="13"
+      font-weight="500"
+      letter-spacing="-0.005em"
+      text-anchor="middle"
+    >Session 1 of 4</text>
+
+    <!-- 4-interval session progress dots -->
+    <rect x="163" y="468" width="18" height="5" rx="2.5" fill="#5b86ff" />
+    <circle cx="191" cy="470.5" r="2.5" fill="#ffffff" fill-opacity="0.22" />
+    <circle cx="203" cy="470.5" r="2.5" fill="#ffffff" fill-opacity="0.22" />
+    <circle cx="215" cy="470.5" r="2.5" fill="#ffffff" fill-opacity="0.22" />
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Tactile Timer Controls: Reset | Start | Skip                           -->
+  <!-- ====================================================================== -->
+  <g>
+    <!-- Reset secondary button -->
+    <circle
+      cx="74"
+      cy="612"
+      r="26"
+      fill="#ffffff"
+      fill-opacity="0.055"
+      stroke="#ffffff"
+      stroke-opacity="0.11"
+      stroke-width="1"
+    />
+    <!-- Rotate CCW icon -->
+    <path
+      d="M67.2 609.2C68.4 606 71.4 603.8 75 603.8C79.6 603.8 83.2 607.5 83.2 612C83.2 616.5 79.6 620.2 75 620.2C71.9 620.2 69.2 618.5 67.8 616"
+      stroke="#d4d4d8"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      d="M66.2 604.6V609.6H71.2"
+      stroke="#d4d4d8"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <text
+      x="74"
+      y="654"
+      fill="#71717a"
+      font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+      font-size="11"
+      font-weight="500"
+      text-anchor="middle"
+    >Reset</text>
+
+    <!-- Primary Start CTA button -->
+    <g filter="url(#btn-shadow)">
+      <rect x="122" y="582" width="140" height="60" rx="30" fill="url(#start-btn)" />
+      <!-- Play triangle -->
+      <path d="M162 604.4L174.5 612L162 619.6V604.4Z" fill="#09090b" />
+      <text
+        x="203"
+        y="617.5"
+        fill="#09090b"
+        font-family="'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+        font-size="16.5"
+        font-weight="650"
+        letter-spacing="-0.015em"
+        text-anchor="middle"
+      >Start</text>
+    </g>
+
+    <!-- Skip secondary button -->
+    <circle
+      cx="310"
+      cy="612"
+      r="26"
+      fill="#ffffff"
+      fill-opacity="0.055"
+      stroke="#ffffff"
+      stroke-opacity="0.11"
+      stroke-width="1"
+    />
+    <!-- Skip forward icon -->
+    <path
+      d="M303.5 605.4L312.5 612L303.5 618.6V605.4Z"
+      stroke="#d4d4d8"
+      stroke-width="1.75"
+      stroke-linejoin="round"
+      fill="#d4d4d8"
+    />
+    <line
+      x1="316"
+      y1="605.5"
+      x2="316"
+      y2="618.5"
+      stroke="#d4d4d8"
+      stroke-width="1.9"
+      stroke-linecap="round"
+    />
+    <text
+      x="310"
+      y="654"
+      fill="#71717a"
+      font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif"
+      font-size="11"
+      font-weight="500"
+      text-anchor="middle"
+    >Skip</text>
+  </g>
+
+  <!-- ====================================================================== -->
+  <!-- Floating Bottom Tab Bar (Timer | Stats | Settings)                     -->
+  <!-- ====================================================================== -->
+  <g font-family="'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif">
+    <rect
+      x="34"
+      y="714"
+      width="316"
+      height="58"
+      rx="29"
+      fill="#111520"
+      fill-opacity="0.92"
+      stroke="#ffffff"
+      stroke-opacity="0.09"
+      stroke-width="1"
+    />
+
+    <!-- Active Tab: Timer -->
+    <rect
+      x="40"
+      y="720"
+      width="98"
+      height="46"
+      rx="23"
+      fill="#5b86ff"
+      fill-opacity="0.16"
+      stroke="#5b86ff"
+      stroke-opacity="0.22"
+      stroke-width="1"
+    />
+    <circle cx="89" cy="736" r="7.5" stroke="#ffffff" stroke-width="1.6" />
+    <path d="M89 732.2V736L91.8 737.6" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="89" y="757" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">Timer</text>
+
+    <!-- Tab: Stats -->
+    <rect x="184" y="736" width="3" height="7" rx="1" fill="#71717a" />
+    <rect x="190.5" y="731" width="3" height="12" rx="1" fill="#71717a" />
+    <rect x="197" y="734" width="3" height="9" rx="1" fill="#71717a" />
+    <text x="192" y="757" fill="#71717a" font-size="10.5" font-weight="500" text-anchor="middle">Stats</text>
+
+    <!-- Tab: Settings -->
+    <circle cx="295" cy="736.5" r="3" stroke="#71717a" stroke-width="1.5" />
+    <path
+      d="M295 729.5V731.5M295 741.5V743.5M288 736.5H290M300 736.5H302M290.1 731.6L291.5 733M298.5 740L299.9 741.4M299.9 731.6L298.5 733M291.5 740L290.1 741.4"
+      stroke="#71717a"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+    <text x="295" y="757" fill="#71717a" font-size="10.5" font-weight="500" text-anchor="middle">Settings</text>
+  </g>
+</svg>

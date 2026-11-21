@@ -1,31 +1,44 @@
 <script>
   import ArrowIcon from './ArrowIcon.svelte';
   import LaptopMockup from './LaptopMockup.svelte';
+  import PhoneMockup from './PhoneMockup.svelte';
 
   let { project, index = 0 } = $props();
 
   // Rows 1 & 3: text left / image right. Rows 2 & 4: image left / text right.
   const textFirst = $derived(index % 2 === 0);
   const href = $derived(project.visit ?? project.github);
+  const isPhone = $derived(project.device === 'phone');
 </script>
 
 <article class="project-row" class:project-row--text-first={textFirst} data-reveal>
   <div class="project-media">
-    <svelte:element
-      this={href ? 'a' : 'div'}
-      class="project-frame"
-      href={href}
-      target={href ? '_blank' : undefined}
-      rel={href ? 'noreferrer' : undefined}
-      aria-label={href ? `Open ${project.title}` : undefined}
-    >
-      <LaptopMockup
-        src={project.image}
-        alt={project.alt}
-        url={href}
-        loading={index < 2 ? 'eager' : 'lazy'}
-      />
-    </svelte:element>
+    {#if isPhone}
+      <div class="project-frame project-frame--phone">
+        <PhoneMockup
+          src={project.image}
+          alt={project.alt}
+          caption={project.caption}
+          loading={index < 2 ? 'eager' : 'lazy'}
+        />
+      </div>
+    {:else}
+      <svelte:element
+        this={href ? 'a' : 'div'}
+        class="project-frame"
+        href={href}
+        target={href ? '_blank' : undefined}
+        rel={href ? 'noreferrer' : undefined}
+        aria-label={href ? `Open ${project.title}` : undefined}
+      >
+        <LaptopMockup
+          src={project.image}
+          alt={project.alt}
+          url={href}
+          loading={index < 2 ? 'eager' : 'lazy'}
+        />
+      </svelte:element>
+    {/if}
   </div>
 
   <div class="project-text">
