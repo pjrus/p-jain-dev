@@ -1,28 +1,12 @@
 <script>
-  import { onMount } from 'svelte';
   import ArrowIcon from './ArrowIcon.svelte';
-  import { clamp01, onScrollFrame } from '$lib/scroll.js';
+  import LaptopMockup from './LaptopMockup.svelte';
 
   let { project, index = 0 } = $props();
 
   // Rows 1 & 3: text left / image right. Rows 2 & 4: image left / text right.
   const textFirst = $derived(index % 2 === 0);
   const href = $derived(project.visit ?? project.github);
-
-  /** @type {HTMLElement | undefined} */
-  let frameEl = $state();
-
-  // Scroll-linked parallax: image drifts ±12px inside its overflow-hidden frame.
-  onMount(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    return onScrollFrame(() => {
-      if (!frameEl) return;
-      const rect = frameEl.getBoundingClientRect();
-      const vh = window.innerHeight || 900;
-      const p = clamp01((vh - rect.top) / Math.max(1, rect.height + vh));
-      frameEl.style.setProperty('--py', `${((0.5 - p) * 24).toFixed(2)}px`);
-    });
-  });
 </script>
 
 <article class="project-row" class:project-row--text-first={textFirst} data-reveal>
@@ -30,19 +14,16 @@
     <svelte:element
       this={href ? 'a' : 'div'}
       class="project-frame"
-      bind:this={frameEl}
       href={href}
       target={href ? '_blank' : undefined}
       rel={href ? 'noreferrer' : undefined}
       aria-label={href ? `Open ${project.title}` : undefined}
     >
-      <img
+      <LaptopMockup
         src={project.image}
         alt={project.alt}
-        width="1600"
-        height="1000"
+        url={href}
         loading={index < 2 ? 'eager' : 'lazy'}
-        decoding="async"
       />
     </svelte:element>
   </div>

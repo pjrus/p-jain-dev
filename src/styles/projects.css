@@ -80,27 +80,6 @@
 .project-frame {
   display: block;
   width: 100%;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  aspect-ratio: 16 / 10;
-}
-
-.project-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  /* Base scale leaves headroom so the ±12px parallax never shows an edge */
-  scale: 1.08;
-  translate: 0 var(--py, 0px);
-  transition: scale var(--m-image-out) var(--ease);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .project-row:hover .project-frame img {
-    scale: 1.11;
-    transition-duration: var(--m-image);
-  }
 }
 
 .project-text {
@@ -219,16 +198,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-frame img {
-    scale: 1;
-    translate: none;
-    transition: none;
-  }
-
-  .project-row:hover .project-frame img {
-    scale: 1;
-  }
-
   .reveal-ready .project-row .project-media,
   .reveal-ready .project-row .project-text {
     transform: none;
