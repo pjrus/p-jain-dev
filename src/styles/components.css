@@ -19,31 +19,17 @@
   display: inline-block;
 }
 
-html.m-enter .char-reveal:not(.is-visible):not(.is-reduced) .char-reveal-char {
+/* Hidden pre-hydration (until app.html's 700ms failsafe) and while an armed reveal waits */
+html.m-enter:not(.m-enter-done) .char-reveal-char,
+.char-reveal.is-armed:not(.is-visible) .char-reveal-char {
   opacity: 0;
   transform: translate3d(-12px, 0, 0);
 }
 
-html.m-enter .char-reveal.is-visible:not(.is-reduced) .char-reveal-char {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+.char-reveal.is-armed.is-visible .char-reveal-char {
   transition:
-    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) var(--char-delay, 0ms),
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) var(--char-delay, 0ms);
-}
-
-.char-reveal.is-reduced .char-reveal-char {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .char-reveal .char-reveal-char {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
+    opacity 400ms var(--ease-enter) var(--char-delay, 0ms),
+    transform 400ms var(--ease-enter) var(--char-delay, 0ms);
 }
 
 .dossier-plate {

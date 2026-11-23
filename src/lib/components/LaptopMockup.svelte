@@ -274,7 +274,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 1180 / 712;
-    transition: transform 320ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+    transition: transform var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   /* Soft ambient backlight glow behind the chassis (revealed on hover when interactive) */
@@ -294,8 +294,8 @@
     transform: scale(0.96);
     pointer-events: none;
     transition:
-      opacity 360ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
-      transform 360ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+      opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+      transform var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   /* Soft, realistic ground drop shadow underneath the laptop base */
@@ -316,8 +316,8 @@
     filter: blur(9px);
     pointer-events: none;
     transition:
-      opacity 320ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
-      transform 320ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+      opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+      transform var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   .laptop-chassis {
@@ -443,7 +443,7 @@
       rgba(255, 255, 255, 0) 100%
     );
     opacity: 0.65;
-    transition: opacity 320ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+    transition: opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   /* Interactive hover state on pointer devices */

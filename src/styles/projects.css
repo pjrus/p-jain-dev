@@ -142,35 +142,15 @@
   color: var(--ink);
 }
 
-/* ---- Scroll reveal: the row stays put; image and text glide in from their
-   own sides with a slight rise, text trailing the image by 110ms. ---- */
-.reveal-ready .project-row[data-reveal] {
-  opacity: 1;
-  transform: none;
-  transition: none;
+/* ---- Scroll reveal: the row is a stagger container (data-reveal-stagger), so it
+   stays put while image then text (90ms behind) glide in from their own sides.
+   Timing and easing come from the shared reveal rule in motion.css. ---- */
+.reveal-ready .project-row > .project-media:not(.is-visible) {
+  transform: translate3d(var(--mx), var(--reveal-y), 0);
 }
 
-.reveal-ready .project-row .project-media,
-.reveal-ready .project-row .project-text {
-  opacity: 0;
-  transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-ready .project-row .project-media {
-  transform: translate3d(var(--mx), 24px, 0);
-}
-
-.reveal-ready .project-row .project-text {
-  transform: translate3d(var(--tx), 24px, 0);
-  transition-delay: 110ms;
-}
-
-.reveal-ready .project-row.is-visible .project-media,
-.reveal-ready .project-row.is-visible .project-text {
-  opacity: 1;
-  transform: none;
+.reveal-ready .project-row > .project-text:not(.is-visible) {
+  transform: translate3d(var(--tx), var(--reveal-y), 0);
 }
 
 @media (max-width: 860px) {
@@ -199,14 +179,5 @@
     flex: 1 1 0;
     min-width: 0;
     padding: 0 8px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-ready .project-row .project-media,
-  .reveal-ready .project-row .project-text {
-    transform: none;
-    transition: opacity 220ms ease-out;
-    transition-delay: 0ms;
   }
 }

@@ -44,11 +44,12 @@
   const featuredProjects = projects.filter((p) => p.featured);
 
   /** @type {HTMLElement | undefined} */
-  let heroEl = $state();
-  /** @type {HTMLElement | undefined} */
-  let heroGridEl = $state();
-  /** @type {HTMLElement | undefined} */
   let experienceEl = $state();
+
+  // Viewport line (fraction of height) where the spine head sits; matches the 50vh in experience.css.
+  const SPINE_LINE = 0.5;
+  // Reveals fire once an element's top crosses this fraction of the viewport.
+  const REVEAL_LINE = 0.88;
 
   // Form validation state (validated on submit, never while typing)
   let nameError = $state('');
@@ -57,100 +58,90 @@
   let formStatus = $state('');
 
   /**
-   * Normalised flow progress (0..1) from entering bottom to leaving top of viewport.
-   * Computed live from getBoundingClientRect so layout shifts (e.g. expanding projects)
-   * never leave cached coordinates stale.
-   * @param {HTMLElement} el
-   * @param {number} vh
+   * Scroll-in reveals. Anything at or above the trigger line on mount is shown at once
+   * (it was already painted visible by SSR, so hiding it would flicker); the rest reveal
+   * as their top crosses REVEAL_LINE, or the moment they are found above the viewport.
+   * @param {HTMLElement} root
    */
-  function sectionProgress(el, vh) {
-    const rect = el.getBoundingClientRect();
-    return clamp01((vh - rect.top) / Math.max(1, rect.height + vh));
+  function armReveals(root) {
+    const targets = Array.from(root.querySelectorAll('[data-reveal]'));
+
+    /** @param {Element} el */
+    const reveal = (el) => {
+      observer.unobserve(el);
+      el.classList.add('is-visible');
+      const step = Number(el.getAttribute('data-reveal-stagger'));
+      if (!step) return;
+      Array.from(el.children).forEach((kid, i) => {
+        // A custom property (not transition-delay) so the stagger never delays hover states
+        if (kid instanceof HTMLElement) kid.style.setProperty('--reveal-delay', `${i * step}ms`);
+        kid.classList.add('is-visible');
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) reveal(entry.target);
+        }
+      },
+      { rootMargin: `0px 0px -${Math.round((1 - REVEAL_LINE) * 100)}% 0px` }
+    );
+
+    const line = window.innerHeight * REVEAL_LINE;
+    document.documentElement.classList.add('reveal-ready');
+    for (const el of targets) {
+      if (el.getBoundingClientRect().top < line) reveal(el);
+      else observer.observe(el);
+    }
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove('reveal-ready');
+    };
+  }
+
+  /**
+   * Milestone states for the experience spine: a node is "reached" once it crosses
+   * SPINE_LINE, the same line the spine head is pinned to. Where CSS scroll-driven
+   * animations are missing, this loop also scrubs the spine fill itself.
+   * All layout reads happen before any writes, so a frame never forces a second layout.
+   * @param {HTMLElement} section
+   */
+  function trackSpine(section) {
+    const spine = section.querySelector('.experience-spine');
+    const fill = section.querySelector('.experience-spine-fill');
+    const items = Array.from(section.querySelectorAll('.experience-item'));
+    const nodes = items.map((item) => item.querySelector('.experience-node'));
+    const scrubFill = !CSS.supports('animation-timeline: view()');
+    if (!(spine instanceof HTMLElement) || !(fill instanceof HTMLElement)) return () => {};
+
+    return onScrollFrame(() => {
+      const line = window.innerHeight * SPINE_LINE;
+      const spineRect = spine.getBoundingClientRect();
+      const reached = nodes.map((node) => (node?.getBoundingClientRect().top ?? Infinity) <= line);
+
+      if (scrubFill) {
+        const p = clamp01((line - spineRect.top) / Math.max(1, spineRect.height));
+        fill.style.setProperty('--sc-p', p.toFixed(4));
+      }
+      items.forEach((item, i) => item.classList.toggle('is-reached', reached[i]));
+    });
   }
 
   onMount(() => {
     document.documentElement.classList.add('m-enter-done');
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion && experienceEl) {
-      experienceEl.style.setProperty('--sc-p', '1');
-    }
+    // Reduced motion: no reveals, no scrubbing. Content stays visible and the spine full.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const stopScroll = reducedMotion
-      ? () => {}
-      : onScrollFrame(() => {
-          const vh = window.innerHeight || 900;
-          if (heroEl && heroGridEl) {
-            const p = sectionProgress(heroEl, vh);
-            heroGridEl.style.transform = `translate3d(0,${(-0.6 * (p - 0.5) * 100).toFixed(2)}px,0)`;
-          }
-          if (experienceEl) {
-            experienceEl.style.setProperty('--sc-p', sectionProgress(experienceEl, vh).toFixed(4));
-          }
-        });
-
-    // Scroll-triggered fade-in reveals (triggers when content enters the lower-middle viewport)
-    const rootEl = document.getElementById('main-content');
-    /** @type {IntersectionObserver | null} */
-    let revealObserver = null;
-    /** @type {(() => void) | null} */
-    let onScrollBottom = null;
-
-    if (rootEl) {
-      const targets = Array.from(rootEl.querySelectorAll('[data-reveal]'));
-      /** @param {Element} el */
-      const revealEl = (el) => {
-        if (el.classList.contains('is-visible')) return;
-        el.classList.add('is-visible');
-        const stagger = parseFloat(el.getAttribute('data-reveal-stagger') ?? '');
-        if (!Number.isNaN(stagger)) {
-          Array.from(el.children).forEach((kid, i) => {
-            if (kid instanceof HTMLElement) {
-              kid.style.transitionDelay = `${i * stagger}ms`;
-            }
-            kid.classList.add('is-visible');
-          });
-        }
-        revealObserver?.unobserve(el);
-      };
-
-      document.documentElement.classList.add('reveal-ready');
-
-      if ('IntersectionObserver' in window) {
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) revealEl(entry.target);
-            });
-          },
-          { rootMargin: '0px 0px -28% 0px', threshold: 0.05 }
-        );
-        // Anything already peeking into the first viewport reveals now; the -28% trigger
-        // line above is only for content scrolled into view, and would otherwise leave
-        // above-the-fold content (e.g. the Projects head on 900px screens) invisible.
-        const vh = window.innerHeight;
-        targets.forEach((el) => {
-          if (el.getBoundingClientRect().top < vh) revealEl(el);
-          else revealObserver?.observe(el);
-        });
-
-        // Ensure bottom-of-page sections (e.g. Contact on tall screens) always reveal at scroll end
-        onScrollBottom = () => {
-          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
-            targets.forEach((el) => revealEl(el));
-          }
-        };
-        window.addEventListener('scroll', onScrollBottom, { passive: true });
-      } else {
-        targets.forEach((el) => revealEl(el));
-      }
-    }
+    const root = document.getElementById('main-content');
+    const stopReveals = root && 'IntersectionObserver' in window ? armReveals(root) : () => {};
+    const stopSpine = experienceEl ? trackSpine(experienceEl) : () => {};
 
     return () => {
-      stopScroll();
-      revealObserver?.disconnect();
-      if (onScrollBottom) window.removeEventListener('scroll', onScrollBottom);
-      document.documentElement.classList.remove('reveal-ready');
+      stopReveals();
+      stopSpine();
     };
   });
 
@@ -199,8 +190,8 @@
 />
 
 <!-- ACT 1: Dimensional 4-plane architectural hero -->
-<section class="hero" id="top" aria-labelledby="hero-title" bind:this={heroEl}>
-  <div class="hero-plane hero-plane--grid" aria-hidden="true" bind:this={heroGridEl}></div>
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-plane hero-plane--grid" aria-hidden="true"></div>
 
   <div class="wrap hero-inner">
     <div class="hero-copy">
@@ -315,9 +306,9 @@
         <span class="experience-spine-fill"></span>
       </div>
 
-      <div class="experience-list" data-reveal data-reveal-stagger="45">
+      <div class="experience-list">
         {#each experience as item}
-          <article class="experience-item">
+          <article class="experience-item" data-reveal>
             <span class="experience-node" aria-hidden="true"></span>
             <div class="experience-item-top">
               <h3>{item.role}</h3>

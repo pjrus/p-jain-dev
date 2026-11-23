@@ -5,7 +5,8 @@
    * Character-by-character left-slide text reveal with parallel row starts.
    * Splits text into non-wrapping inline-block word spans and inline-block character spans,
    * resets stagger offset at each visual line break so all rows animate in parallel from left
-   * to right, and triggers once at 20% viewport intersection while respecting reduced motion.
+   * to right, and triggers once at 20% viewport intersection. Only animates on a first page
+   * load with motion allowed; otherwise the text is simply shown.
    *
    * @type {{
    *   text: string,
@@ -25,8 +26,9 @@
 
   /** @type {HTMLElement | undefined} */
   let rootEl = $state();
+  // Armed = this mount will animate; chars hide until the reveal fires.
+  let isArmed = $state(false);
   let isVisible = $state(false);
-  let reducedMotion = $state(false);
   /** @type {number[]} */
   let wordOffsets = $state([]);
 
@@ -58,63 +60,38 @@
   }
 
   onMount(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    reducedMotion = mq.matches;
+    // app.html adds `m-enter` before first paint (motion allowed) and `m-enter-done` after
+    // 700ms as a failsafe. If that failsafe already fired, the title is on screen
+    // un-animated (slow JS, or a client-side navigation), so never hide it again.
+    const html = document.documentElement;
+    if (!html.classList.contains('m-enter') || html.classList.contains('m-enter-done')) return;
+    if (!rootEl || !('IntersectionObserver' in window)) return;
 
-    /** @param {MediaQueryListEvent} event */
-    const onMotionChange = (event) => {
-      reducedMotion = event.matches;
-      if (event.matches) {
-        isVisible = true;
-      }
-    };
-    mq.addEventListener('change', onMotionChange);
-
-    if (reducedMotion) {
-      isVisible = true;
-      return () => mq.removeEventListener('change', onMotionChange);
-    }
+    isArmed = true;
 
     /** @type {number | null} */
     let raf1 = null;
     /** @type {number | null} */
     let raf2 = null;
 
-    const reveal = () => {
-      measureRowOffsets();
-      // Wait two animation frames so measured row delays and initial hidden styles commit before transitioning.
-      raf1 = requestAnimationFrame(() => {
-        raf2 = requestAnimationFrame(() => {
-          isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        measureRowOffsets();
+        // Two frames so the measured row delays commit before the transition starts.
+        raf1 = requestAnimationFrame(() => {
+          raf2 = requestAnimationFrame(() => {
+            isVisible = true;
+          });
         });
-      });
-    };
-
-    /** @type {IntersectionObserver | null} */
-    let observer = null;
-
-    if (rootEl && 'IntersectionObserver' in window) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              reveal();
-              observer?.disconnect();
-              observer = null;
-              break;
-            }
-          }
-        },
-        { threshold: 0.2 }
-      );
-      observer.observe(rootEl);
-    } else {
-      reveal();
-    }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(rootEl);
 
     return () => {
-      mq.removeEventListener('change', onMotionChange);
-      observer?.disconnect();
+      observer.disconnect();
       if (raf1 !== null) cancelAnimationFrame(raf1);
       if (raf2 !== null) cancelAnimationFrame(raf2);
     };
@@ -125,7 +102,7 @@
   this={tag}
   bind:this={rootEl}
   {id}
-  class={['char-reveal', isVisible && 'is-visible', reducedMotion && 'is-reduced', className]
+  class={['char-reveal', isArmed && 'is-armed', isVisible && 'is-visible', className]
     .filter(Boolean)
     .join(' ')}
   aria-label={text}
@@ -133,8 +110,6 @@
   {#each words as word, wordIndex}<span class="char-reveal-word" aria-hidden="true">{#each word.chars as char, charIndex}<span
           class="char-reveal-char"
           aria-hidden="true"
-          style:--char-delay={reducedMotion
-            ? '0ms'
-            : `${((wordOffsets[wordIndex] ?? 0) + charIndex) * staggerMs}ms`}
+          style:--char-delay={`${((wordOffsets[wordIndex] ?? 0) + charIndex) * staggerMs}ms`}
         >{char}</span>{/each}</span>{#if wordIndex < words.length - 1}{' '}{/if}{/each}
 </svelte:element>

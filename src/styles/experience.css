@@ -1,6 +1,8 @@
 /* ============================================================================
-   Act 5: Experience & Education Ledger with ScrollCraft --sc-p vertical spine
-   Balanced asymmetric split (0.78fr / 1.22fr) with sticky left context column
+   Act 5: Experience & Education Ledger with a scroll-drawn vertical spine
+   Balanced asymmetric split (0.78fr / 1.22fr) with sticky left context column.
+   The spine's fill head is pinned to the viewport midline (50vh, SPINE_LINE in
+   +page.svelte): it reaches each milestone node as that node crosses the midline.
    ========================================================================== */
 
 .experience {
@@ -15,10 +17,17 @@
 }
 
 .experience-header {
-  position: sticky;
-  top: calc(var(--nav-h) + 28px);
   display: grid;
   gap: 14px;
+}
+
+/* Pin the context column only when it fits below the nav (~700px tall incl. offset).
+   em-based so the threshold grows with the visitor's text size. */
+@media (min-width: 961px) and (min-height: 45em) {
+  .experience-header {
+    position: sticky;
+    top: calc(var(--nav-h) + 28px);
+  }
 }
 
 .experience-intro {
@@ -81,8 +90,40 @@
   height: 100%;
   background: var(--action);
   transform-origin: 50% 0%;
+  /* --sc-p is written by the JS fallback; full when JS or motion is off */
   transform: scaleY(var(--sc-p, 1));
-  will-change: transform;
+  will-change: transform; /* scrubbed every scroll frame */
+}
+
+/* Motion armed before first paint: start empty so the fill never flashes full */
+html.m-enter .experience-spine-fill {
+  transform: scaleY(var(--sc-p, 0));
+}
+
+/* Compositor-driven where supported: no main-thread work, no lag on trackpad inertia */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .experience-spine {
+      view-timeline: --spine block;
+      view-timeline-inset: 0; /* ignore html scroll-padding: measure the true viewport */
+    }
+
+    .experience-spine-fill {
+      animation: spine-fill linear both;
+      animation-timeline: --spine;
+      /* head enters at the spine top as it crosses the midline, finishes at its bottom */
+      animation-range: cover 50vh cover calc(100% - 50vh);
+    }
+  }
+}
+
+@keyframes spine-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
 }
 
 .experience-list {
@@ -112,6 +153,12 @@
   border-radius: 0;
   border: 2px solid var(--action);
   background: var(--bg);
+  transition: background-color var(--m-in) var(--ease);
+}
+
+/* Milestone reached: the spine head has passed this node */
+.experience-item.is-reached .experience-node {
+  background: var(--action);
 }
 
 .experience-item-top {
@@ -153,15 +200,5 @@
   .experience-grid {
     grid-template-columns: 1fr;
     gap: 32px;
-  }
-
-  .experience-header {
-    position: static;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .experience-spine-fill {
-    transform: scaleY(1);
   }
 }

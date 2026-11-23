@@ -26,6 +26,31 @@
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 75%, transparent 100%);
 }
 
+/* Far-plane drift (+30px -> -30px across the hero's pass through the viewport), scroll-driven
+   on the compositor. Browsers without scroll timelines keep the grid static. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero {
+      view-timeline: --hero block;
+      view-timeline-inset: 0; /* ignore html scroll-padding: measure the true viewport */
+    }
+
+    .hero-plane--grid {
+      animation: hero-grid-drift linear both;
+      animation-timeline: --hero;
+    }
+  }
+}
+
+@keyframes hero-grid-drift {
+  from {
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    transform: translate3d(0, -30px, 0);
+  }
+}
+
 :root[data-theme='dark'] .hero-plane--grid {
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
 }
@@ -136,7 +161,7 @@
 html.m-enter:not(.m-enter-done) .hero-copy > *:not(h1),
 html.m-enter:not(.m-enter-done) .hero-stage {
   opacity: 0;
-  transform: translate3d(0, 12px, 0);
+  transform: translate3d(0, var(--reveal-y), 0);
 }
 
 html.m-enter-done .hero-copy > *:not(h1),
@@ -144,8 +169,8 @@ html.m-enter-done .hero-stage {
   opacity: 1;
   transform: none;
   transition:
-    opacity 540ms var(--ease-enter),
-    transform 540ms var(--ease-enter);
+    opacity var(--m-enter) var(--ease-enter),
+    transform var(--m-enter) var(--ease-enter);
 }
 
 html.m-enter-done .hero-copy > *:nth-child(3) {
@@ -239,14 +264,5 @@ html.m-enter-done .hero-stage {
 
   .hero-stage {
     display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.m-enter .hero-copy > *,
-  html.m-enter .hero-stage {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
   }
 }

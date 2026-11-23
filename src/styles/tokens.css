@@ -84,6 +84,9 @@
   --m-press: 90ms;
   --m-image: 600ms;
   --m-image-out: 400ms;
+  --m-enter: 560ms; /* every load and scroll entrance */
+  --m-surface: 320ms; /* mockup hover lift, glow and crossfades */
+  --reveal-y: 16px; /* entrance rise distance */
 }
 
 /* Dark mode: pure black ground with crisp hairlines, AAA ink & cobalt accent */

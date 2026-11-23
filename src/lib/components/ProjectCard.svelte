@@ -11,7 +11,12 @@
   const isPhone = $derived(project.device === 'phone');
 </script>
 
-<article class="project-row" class:project-row--text-first={textFirst} data-reveal>
+<article
+  class="project-row"
+  class:project-row--text-first={textFirst}
+  data-reveal
+  data-reveal-stagger="90"
+>
   <div class="project-media">
     {#if isPhone}
       <div class="project-frame project-frame--phone">

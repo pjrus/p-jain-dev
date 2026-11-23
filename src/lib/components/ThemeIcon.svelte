@@ -57,7 +57,7 @@
   /* Both discs occupy one cell, so the swap happens in place. */
   .theme-icon svg {
     grid-area: 1 / 1;
-    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+    transition: transform 420ms var(--ease-enter), opacity 200ms ease;
   }
 
   /* Outgoing and incoming both turn clockwise, so the pair reads as one wheel
@@ -89,7 +89,7 @@
     transform-origin: 12px 12px;
     transform: scale(0.35);
     opacity: 0;
-    transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1), opacity 160ms ease;
+    transition: transform 380ms var(--ease-enter), opacity 160ms ease;
   }
 
   .is-dark .rays {

@@ -370,7 +370,7 @@
     filter: blur(28px);
     opacity: 0.55;
     pointer-events: none;
-    transition: opacity 320ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+    transition: opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   .phone-canvas-host {
@@ -379,7 +379,7 @@
     z-index: 2;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 360ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+    transition: opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   .phone-mockup--3d .phone-canvas-host {
@@ -402,7 +402,7 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    transition: opacity 280ms var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+    transition: opacity var(--m-surface, 320ms) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
   }
 
   .phone-mockup--3d .phone-2d {
@@ -627,15 +627,6 @@
     .phone-canvas-host,
     .phone-controls {
       display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .phone-glow,
-    .phone-canvas-host,
-    .phone-2d,
-    .phone-reset-btn {
-      transition: none;
     }
   }
 </style>
