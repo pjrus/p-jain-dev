@@ -149,7 +149,7 @@ Every corner in the system is square — there is no `border-radius` anywhere in
 
 ## Components
 
-Every control is a precise, static object: sharp corners, a defined edge, and state changes that are strictly colour/border, never scale or shadow-lift. Nothing bounces, grows, or floats on hover.
+Every control is a precise object: sharp corners, a defined edge, and hover states led by colour and border. Bordered surfaces may also rise slightly on hover (see **The Slight-Raise Rule**); nothing bounces, scales, or grows.
 
 ### Buttons
 - **Shape:** square corners (`0px`), 1px border (transparent at rest for filled variants).
@@ -158,7 +158,7 @@ Every control is a precise, static object: sharp corners, a defined edge, and st
 - **Text link:** no fill or border; an underline rendered as a `currentColor` rule sitting under the label (not flush to the baseline), colour shifts to `--primary` on hover. Height-matched to `.button` so the two sit level in a row.
 
 ### Chips
-- **Tag list** (tech-stack tags): transparent background, 1px `--line` border, `--muted` text, monospace, uppercase-free but tracked. No selected/unselected state — purely informational.
+- **Tag list** (tech-stack tags): transparent background, 1px `--line` border, `--muted` text, monospace, uppercase-free but tracked. No selected/unselected state — purely informational, so the cursor stays default. Hover: border turns `--action`, text turns `--link`, and the chip rises 1px (no shadow).
 - **Experience period:** filled `--tint` background, `--ink` text, no border — a soft badge rather than an outlined chip, distinguishing "when" metadata from "what" tags.
 
 ### Cards / Containers
@@ -186,10 +186,10 @@ A vertical rail (`border-left`) running from a heading icon down through each en
 - **Do** reuse the single `--shadow` token verbatim rather than authoring a new blur/spread value for a "more important" surface.
 - **Do** reserve `--font-mono` for metadata (labels, timestamps, tags, kickers) and keep it uppercase and letter-spaced when it is.
 - **Do** use `--accent-strong` rather than `--accent` for any text or focus-ring use of coral; reserve plain `--accent` for graphics-scale marks like the status dot.
-- **Do** keep hover/focus states to colour and border changes only — no scale, translate, or added shadow on interactive elements (the theme-toggle icon's rotate/scale transition is the one deliberate exception, reserved for that single control).
+- **Do** lead hover states with colour and border. **The Slight-Raise Rule:** bordered surfaces may add a small upward translate on hover — 1px for chips, 2px for cards (education cards, which also take `--shadow-md`), up to 4px for device mockups — and nothing larger. Never scale on hover; the theme-toggle icon's rotate/scale swap remains the one exception. Raises apply only on fine-pointer hover (`(hover: hover) and (pointer: fine)`), use `--m-in`/`--m-out` with `--ease`, and are dropped under `prefers-reduced-motion` (the colour and border change stays).
 
 ### Don't:
 - **Don't** introduce a second shadow value or a multi-level elevation scale — depth in this system is binary, not graduated.
 - **Don't** round any corner, on any component, for any reason — a single rounded element breaks the dossier/field-report read that the rest of the system is built on.
 - **Don't** set body copy or multi-sentence content in the monospace font — it is reserved for short, tracked, uppercase metadata only.
-- **Don't** add decorative motion (bounce, float, parallax, gradient shimmer) — the system's only motion budget is functional: colour/border transitions on hover, and the theme-toggle's icon swap.
+- **Don't** add decorative motion (bounce, gradient shimmer) — the motion budget is functional: hover colour/border shifts with the slight raise above, the theme-toggle's icon swap, scroll entrances (`--m-enter`, `--ease-enter`), and the experience spine.
