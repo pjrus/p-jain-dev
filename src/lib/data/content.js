@@ -8,12 +8,12 @@ export const projects = [
     title: 'Skilliton',
     kind: 'UniHack 2026 web app',
     description:
-      'A peer-to-peer skill exchange built at UniHack 2026, created mainly with Antigravity. Students sign in with Google, share what they can teach and what they want to learn, and get matched with partners for skill swaps. A Genkit and Gemini assistant suggests personalised matches and chats in real time, running on a Next.js and Firebase stack.',
+      'A peer-to-peer skill exchange built at UniHack 2026, created mainly with Antigravity and hosted via AI Studio. Students sign in with Google, share what they can teach and what they want to learn, and get matched with partners for skill swaps. A Genkit and Gemini assistant suggests personalised matches and chats in real time, running on a Next.js and Firebase stack.',
     image: `${base}/images/skill-issue.png`,
     alt: 'Skilliton peer skill exchange web interface showing skill matching inputs and recommended student profiles',
     tags: ['Antigravity', 'Next.js', 'Firebase', 'TypeScript', 'Genkit', 'Gemini'],
     github: 'https://github.com/pjrus/unihack-2026-final',
-    visit: 'https://studio--studio-818276670-ce8c7.us-central1.hosted.app',
+    visit: 'https://skilliton.ai.studio',
   },
   {
     id: 'inkboard',
