@@ -1,8 +1,9 @@
 /* ============================================================================
    Act 5: Experience & Education Ledger with a scroll-drawn vertical spine
    Balanced asymmetric split (0.78fr / 1.22fr) with sticky left context column.
-   The spine's fill head is pinned to the viewport midline (50vh, SPINE_LINE in
-   +page.svelte): it reaches each milestone node as that node crosses the midline.
+   The spine fill starts as the spine top crosses mid-viewport and completes the moment
+   the spine's end scrolls on screen (SPINE_START/END in +page.svelte); each milestone
+   node fills as the head passes it.
    ========================================================================== */
 
 .experience {
@@ -111,8 +112,8 @@ html.m-enter .experience-spine-fill {
     .experience-spine-fill {
       animation: spine-fill linear both;
       animation-timeline: --spine;
-      /* head enters at the spine top as it crosses the midline, finishes at its bottom */
-      animation-range: cover 50vh cover calc(100% - 50vh);
+      /* 0%: spine top at mid-viewport. 100%: spine bottom at the viewport bottom */
+      animation-range: cover 50vh cover calc(100% - 100vh);
     }
   }
 }

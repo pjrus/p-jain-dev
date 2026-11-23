@@ -46,8 +46,10 @@
   /** @type {HTMLElement | undefined} */
   let experienceEl = $state();
 
-  // Viewport line (fraction of height) where the spine head sits; matches the 50vh in experience.css.
-  const SPINE_LINE = 0.5;
+  // Spine fill runs from "spine top at mid-viewport" (0%) to "spine bottom on screen" (100%),
+  // so it is always complete once the end of the timeline is visible. Matches experience.css.
+  const SPINE_START = 0.5;
+  const SPINE_END = 1;
   // Reveals fire once an element's top crosses this fraction of the viewport.
   const REVEAL_LINE = 0.88;
 
@@ -102,9 +104,9 @@
   }
 
   /**
-   * Milestone states for the experience spine: a node is "reached" once it crosses
-   * SPINE_LINE, the same line the spine head is pinned to. Where CSS scroll-driven
-   * animations are missing, this loop also scrubs the spine fill itself.
+   * Milestone states for the experience spine: a node is "reached" once the fill head
+   * passes its centre. Where CSS scroll-driven animations are missing, this loop also
+   * scrubs the fill itself (same progress maths as the CSS animation-range).
    * All layout reads happen before any writes, so a frame never forces a second layout.
    * @param {HTMLElement} section
    */
@@ -117,14 +119,15 @@
     if (!(spine instanceof HTMLElement) || !(fill instanceof HTMLElement)) return () => {};
 
     return onScrollFrame(() => {
-      const line = window.innerHeight * SPINE_LINE;
+      const vh = window.innerHeight;
       const spineRect = spine.getBoundingClientRect();
-      const reached = nodes.map((node) => (node?.getBoundingClientRect().top ?? Infinity) <= line);
+      const nodeRects = nodes.map((node) => node?.getBoundingClientRect());
+      const travel = Math.max(1, spineRect.height - vh * (SPINE_END - SPINE_START));
+      const p = clamp01((vh * SPINE_START - spineRect.top) / travel);
+      const head = spineRect.top + p * spineRect.height;
+      const reached = nodeRects.map((r) => !!r && r.top + r.height / 2 <= head);
 
-      if (scrubFill) {
-        const p = clamp01((line - spineRect.top) / Math.max(1, spineRect.height));
-        fill.style.setProperty('--sc-p', p.toFixed(4));
-      }
+      if (scrubFill) fill.style.setProperty('--sc-p', p.toFixed(4));
       items.forEach((item, i) => item.classList.toggle('is-reached', reached[i]));
     });
   }
