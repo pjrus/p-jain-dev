@@ -53,6 +53,25 @@
   border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
   background: var(--surface-raised);
+  transition:
+    border-color var(--m-out) var(--ease),
+    box-shadow var(--m-out) var(--ease),
+    transform var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .edu-mini-card:hover {
+    border-color: var(--action);
+    box-shadow: var(--shadow-md);
+    transform: translate3d(0, -2px, 0);
+    transition-duration: var(--m-in);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edu-mini-card:hover {
+    transform: none;
+  }
 }
 
 .edu-award {
