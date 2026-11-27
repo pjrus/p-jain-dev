@@ -166,6 +166,7 @@ export const status = {
   updated: 'Nov 2026',
   rows: [
     { label: 'Availability', value: 'Open to graduate roles', note: 'from July 2027', open: true },
+    { label: 'Work rights', value: 'Australian citizen' },
     { label: 'Now', value: 'Project Coordinator', note: 'Monash Assistive Technology Team' },
     { label: 'Focus', value: 'Meaningful impact', note: 'through work that makes a real difference' },
     { label: 'Based', value: 'Melbourne', note: 'Victoria, Australia' },
@@ -174,7 +175,9 @@ export const status = {
 
 /** @type {Array<{ label: string, value: string, note?: string, open?: boolean }>} */
 export const heroFacts = [
-  ...status.rows.filter((row) => row.label === 'Availability' || row.label === 'Focus'),
+  ...status.rows.filter(
+    (row) => row.label === 'Availability' || row.label === 'Work rights' || row.label === 'Focus'
+  ),
   { label: 'Scope', value: 'Web, mobile, hardware' },
 ];
 

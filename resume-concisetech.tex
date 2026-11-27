@@ -1,7 +1,7 @@
 
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[left=1.0cm,right=1.0cm,top=0.8cm,bottom=0.8cm]{geometry}
+\usepackage[left=1.0cm,right=1.0cm,top=0.7cm,bottom=0.7cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -24,11 +24,20 @@
 \setlength{\parskip}{0pt}
 \setlist[itemize]{leftmargin=1.25em,itemsep=0pt,topsep=1pt,parsep=0pt}
 \titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
-\titlespacing*{\section}{0pt}{6pt}{3pt}
+\titlespacing*{\section}{0pt}{5pt}{2pt}
 
 \newcommand{\resumeEntry}[4]{%
   \noindent\textbf{#1}\hfill\textit{#2}\par
   \noindent{\color{muted}#3\hfill\textit{#4}}\par
+  \vspace{1pt}
+}
+
+\newcommand{\resumeOrg}[2]{%
+  \noindent\textbf{#1}\hfill #2\par
+}
+
+\newcommand{\resumeRole}[2]{%
+  \noindent{\color{muted}\textit{#1}\hfill\textit{#2}}\par
   \vspace{1pt}
 }
 
@@ -51,43 +60,57 @@
 }
 
 \section{Education}
-\resumeEntry{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science (Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
+\resumeEntry{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science (Advanced CS, Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
+\begin{itemize}
+  \item Key Units (AI \& Data): Deep Learning, Data Analytics, Modelling for Data Analysis
+  \item Key CS Units: Parallel Computing, Operating Systems, Databases, Object-Oriented Design, Algorithms \& Data Structures
+  \item Faculty of IT Student Volunteer @ Monash Open Day 2026
+\end{itemize}
+\vspace{1pt}
 \resumeEntry{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
 
 \section{Experience}
-\resumeEntry{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
+\resumeOrg{PlasmIT Vector}{Docklands, VIC (Remote)}
+\resumeRole{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}
 \begin{itemize}
   \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
   \item Collaborated on implementation, testing and documentation across the software development lifecycle.
   \item Worked with the team to deliver features and resolve issues across the stack, following agreed development practices.
 \end{itemize}
+\vspace{2pt}
 
-\resumeEntry{Web Developer}{Mar. 2026 -- Present}{Ocean Connect}{Remote}
+\resumeOrg{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\resumeRole{Project Coordinator}{Aug. 2025 -- Present}
 \begin{itemize}
-  \item Support the development, management and maintenance of Ocean Connect's website, keeping programme, event and community initiative information clear, accessible and up to date.
-  \item Improve site structure and update content so volunteers and community members can easily engage with environmental education and citizen science initiatives.
-  \item Apply web development skills to strengthen the organisation's digital presence and its mission of raising awareness about marine biodiversity and coastal conservation.
-\end{itemize}
-
-\resumeEntry{Project Officer $\rightarrow$ Project Coordinator}{Mar. 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
-\begin{itemize}
-  \item Progressed from designing and testing tactile display components to leading collaboration with the academic supervisor on low-cost refreshable Braille displays.
+  \item Lead collaboration with the academic supervisor to define goals and strategies for low-cost refreshable Braille displays.
   \item Guide and coordinate project officers in brainstorming and developing accessibility technology.
   \item Lead development of the React Native mobile application supporting the tactile display project.
   \item Received more than 90\% positive feedback from team members for effective leadership and communication.
 \end{itemize}
-
-\resumeEntry{Operations Officer}{Feb. 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\resumeRole{Operations Officer}{Feb. 2026 -- Present}
 \begin{itemize}
   \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
-  \item Collaborate with peers to ensure smooth execution of technical initiatives and internal processes.
-  \item Contribute to the organisation's coordination, communication and operational workflows.
+  \item Collaborate with peers to ensure smooth execution of technical initiatives, coordination and internal workflows.
+\end{itemize}
+\resumeRole{Projects Officer}{Mar. 2025 -- Aug. 2025}
+\begin{itemize}
+  \item Collaborated with the academic supervisor and fellow officers to brainstorm accessibility solutions.
+  \item Assisted in the design, development and testing of tactile display components for blind and low-vision users.
+\end{itemize}
+\vspace{2pt}
+
+\resumeOrg{Ocean Connect}{Remote}
+\resumeRole{Volunteer Web Developer}{Mar. 2026 -- Present}
+\begin{itemize}
+  \item Maintain and update Ocean Connect's website so programme, event and community information stays clear and accessible.
+  \item Improve site structure and content so volunteers can easily engage with environmental education and citizen science.
+  \item Strengthen the organisation's digital presence in support of marine biodiversity and coastal conservation awareness.
 \end{itemize}
 
 \section{Projects}
 \resumeProject{Skill-Issue (Skilliton)}{Feb. 2026}{Antigravity, Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://skilliton.ai.studio}{Live}}
 \begin{itemize}
-  \item Built an AI-powered peer-to-peer skill exchange platform at UniHack 2026 using Antigravity, enabling university students to find partners for skill swaps.
+  \item Built an AI-powered peer-to-peer skill exchange platform at UniHack 2026 using Antigravity for university students.
   \item Developed the full-stack application with Next.js, TypeScript and Firebase Authentication with Google OAuth support.
   \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
 \end{itemize}
@@ -106,8 +129,9 @@
 \end{itemize}
 
 \section{Skills}
-\textbf{Languages:} Hindi (Fluent), English (Fluent), Punjabi (Limited)\\[3pt]
-\textbf{Programming languages:} Haskell, Python, JavaScript, PHP, MySQL, R, TypeScript, HTML/CSS\\[3pt]
-\textbf{Technologies:} React Native, React, Next.js, Expo, Docker, Git, Arduino, MongoDB, Figma, VPS deployment, functional programming, statistical analysis
+\textbf{Programming languages} \textbar{} TypeScript, JavaScript, Python, SQL (MySQL), Haskell, PHP, R, HTML/CSS\\[1pt]
+\textbf{Frameworks and libraries} \textbar{} React, Next.js, React Native, Expo, SvelteKit, Vite, Three.js, Tailwind CSS, Yjs\\[1pt]
+\textbf{Tools and infrastructure} \textbar{} Git, Docker, Firebase, MongoDB, IndexedDB, MCP, Linux/VPS, Figma, Arduino\\[1pt]
+\textbf{Spoken languages} \textbar{} English (Fluent), Hindi (Fluent), Punjabi (Limited)
 
 \end{document}

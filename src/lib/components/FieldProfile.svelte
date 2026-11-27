@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <dl class="dossier-facts" aria-label="Availability, focus, and scope">
+  <dl class="dossier-facts" aria-label="Availability, work rights, focus, and scope">
     {#each heroFacts as row (row.label)}
       <div class="dossier-fact">
         <dt>{row.label}</dt>
