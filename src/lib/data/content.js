@@ -133,7 +133,7 @@ export const experience = [
     organisation: 'Ocean Connect',
     location: 'Remote',
     summary:
-      'Support the development, management and maintenance of Ocean Connect’s website so programme, event and community initiative details stay clear, accessible and up to date. Improve site structure and content for volunteers engaging with environmental education and citizen science initiatives around marine biodiversity and coastal conservation.',
+      'Volunteer web developer leading a visual redesign and rebuild of Ocean Connect’s website. Designed and presented multiple layout concepts to stakeholders, iterated on feedback, and remade the frontend design and structure to make community programmes and citizen science initiatives clearer and more accessible.',
   },
   {
     period: 'Feb 2026 – present',
