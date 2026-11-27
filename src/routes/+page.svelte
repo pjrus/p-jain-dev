@@ -19,9 +19,9 @@
     name: 'Paarangat Jain',
     url: canonicalUrl('/'),
     image: canonicalUrl('/images/paarangat-jain.webp'),
-    jobTitle: 'Developer & Accessibility Advocate',
+    jobTitle: 'Full-Stack Software Developer',
     description:
-      'Melbourne-based developer building accessible, useful software across web, mobile and assistive technology.',
+      'Melbourne-based software developer building accessible, practical software products across web, mobile and AI-powered tools.',
     email: 'mailto:paarangatj@gmail.com',
     address: {
       '@type': 'PostalAddress',
@@ -34,10 +34,10 @@
       'https://www.linkedin.com/in/paarangat-jain-6aa1321ba/',
     ],
     knowsAbout: [
+      'Full-stack software development',
       'Accessible web development',
       'Mobile application development',
-      'Assistive technology',
-      'Full-stack software development',
+      'Local-first software',
     ],
   };
 
@@ -187,8 +187,8 @@
 </script>
 
 <SeoHead
-  title="Paarangat Jain | Full-Stack Developer in Melbourne"
-  description="Paarangat Jain is a Melbourne-based developer building local-first web software, mobile applications and affordable tactile Braille hardware."
+  title="Paarangat Jain | Full-Stack Software Developer in Melbourne"
+  description="Paarangat Jain is a Melbourne-based software developer building local-first web apps, mobile applications and AI-powered software products."
   jsonLd={homeJsonLd}
 />
 
@@ -209,7 +209,7 @@
       />
       <CharRevealText id="hero-title" text="Paarangat Jain, developer in Melbourne." />
       <p class="hero-intro">
-        Computer science student at Monash University exploring how AI and other emerging technologies can solve real problems, from local-first web tools to healthcare software and affordable tactile Braille displays.
+        Computer science student at Monash University building practical software products—from local-first web tools and AI-powered apps to full-stack and mobile applications.
       </p>
 
       <div class="hero-actions">
@@ -277,7 +277,7 @@
     <div class="experience-header" data-reveal>
       <h2 id="experience-title">Engineering experience and education</h2>
       <p class="experience-intro">
-        Healthcare full-stack delivery, community web maintenance and leadership across assistive hardware.
+        Full-stack web and mobile delivery, website redesigns and software leadership across engineering teams.
       </p>
 
       <div class="experience-education">
@@ -335,7 +335,7 @@
     <div class="contact-aside" data-reveal>
       <h2 id="contact-title">Contact and portfolio links</h2>
       <p class="contact-lede">
-        Open to graduate and junior full-stack engineering roles in Melbourne, as well as collaborations in assistive technology and accessible software.
+        Open to graduate and junior full-stack engineering roles in Melbourne, as well as collaborations on accessible and impactful software products.
       </p>
 
       <nav class="contact-channels" aria-label="Direct contact channels" data-reveal data-reveal-stagger="70">

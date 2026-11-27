@@ -23,7 +23,7 @@
     <div class="dossier-meta">
       <p class="dossier-name">Paarangat Jain</p>
       <p class="dossier-sub">Monash CS (Maths minor)</p>
-      <p class="dossier-role">Full-stack &amp; assistive tech</p>
+      <p class="dossier-role">Full-stack &amp; mobile software</p>
     </div>
   </div>
 

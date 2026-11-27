@@ -178,7 +178,7 @@ export const heroFacts = [
   ...status.rows.filter(
     (row) => row.label === 'Availability' || row.label === 'Work rights' || row.label === 'Focus'
   ),
-  { label: 'Scope', value: 'Web, mobile, hardware' },
+  { label: 'Scope', value: 'Web, mobile, AI tools' },
 ];
 
 export const skills = [

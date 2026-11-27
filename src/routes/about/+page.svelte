@@ -4,7 +4,7 @@
   import { canonicalUrl } from '$lib/seo.js';
 
   const aboutDescription =
-    'Meet Paarangat Jain, a Melbourne-based computer science student and accessibility-focused developer building practical web, mobile and assistive technology.';
+    'Meet Paarangat Jain, a Melbourne-based computer science student and software developer building practical web, mobile and AI-powered software products.';
 
   const aboutJsonLd = {
     '@context': 'https://schema.org',
@@ -17,7 +17,7 @@
       name: 'Paarangat Jain',
       url: canonicalUrl('/'),
       image: canonicalUrl('/images/paarangat-jain.webp'),
-      jobTitle: 'Developer & Accessibility Advocate',
+      jobTitle: 'Full-Stack Software Developer',
     },
   };
 </script>
@@ -35,10 +35,10 @@
   <div class="about-layout">
     <div class="about-copy">
       <p>
-        Hi, I’m Paarangat Jain. I’m a computer science student at Monash University, developer and accessibility advocate drawn to complex problems with practical outcomes. What began as an early interest in code has grown into work across full-stack products, mobile applications and assistive technology.
+        Hi, I’m Paarangat Jain. I’m a computer science student at Monash University and software developer drawn to complex problems with practical outcomes. What began as an early interest in code has grown into building full-stack web products, mobile applications and local-first software tools.
       </p>
       <p>
-        As Project Coordinator with the Monash Assistive Technology Team, I help lead the development of affordable tactile displays for blind and low-vision users. The work connects hardware with a React Native companion application and keeps user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat in Melbourne, keeping up with K-dramas and Netflix, or catching the latest Marvel film.
+        As Project Coordinator with the Monash Assistive Technology Team, I lead development of our React Native mobile application and keep user research close to the engineering process. Away from the keyboard, I’m usually looking for somewhere new to eat in Melbourne, keeping up with K-dramas and Netflix, or catching the latest Marvel film.
       </p>
       <div>
         <a class="btn btn--primary" href={`${base}/Paarangat-Jain-Resume.pdf`} target="_blank" rel="noreferrer">
