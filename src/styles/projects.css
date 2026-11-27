@@ -145,10 +145,12 @@
 /* ---- Scroll reveal: the row is a stagger container (data-reveal-stagger), so it
    stays put while image then text (90ms behind) glide in from their own sides.
    Timing and easing come from the shared reveal rule in motion.css. ---- */
+html.m-enter:not(.m-enter-done) .project-row > .project-media,
 .reveal-ready .project-row > .project-media:not(.is-visible) {
   transform: translate3d(var(--mx), var(--reveal-y), 0);
 }
 
+html.m-enter:not(.m-enter-done) .project-row > .project-text,
 .reveal-ready .project-row > .project-text:not(.is-visible) {
   transform: translate3d(var(--tx), var(--reveal-y), 0);
 }

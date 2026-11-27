@@ -2,26 +2,29 @@
    Motion polish & reduced-motion guardrails
    ========================================================================== */
 
-/* Scroll-in reveals. Content is only hidden once JS has armed the observer
-   (html.reveal-ready), so no-JS and reduced-motion visitors always see it.
-   A [data-reveal-stagger] container stays put; its children reveal in turn. */
-.reveal-ready [data-reveal]:not([data-reveal-stagger]),
-.reveal-ready [data-reveal-stagger] > * {
+/* Scroll-in reveals. Pre-hidden before first paint while html.m-enter is pending
+   (cleared by hydration or app.html's 700ms failsafe), then controlled by
+   html.reveal-ready. Transitions live only on .is-visible so entering the hidden
+   state is instant and never fights the fade-in. */
+html.m-enter:not(.m-enter-done) [data-reveal]:not([data-reveal-stagger]),
+html.m-enter:not(.m-enter-done) [data-reveal-stagger] > *,
+.reveal-ready [data-reveal]:not([data-reveal-stagger]):not(.is-visible),
+.reveal-ready [data-reveal-stagger] > *:not(.is-visible) {
   opacity: 0;
   transform: translate3d(0, var(--reveal-y), 0);
-  transition:
-    opacity var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms),
-    transform var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms);
 }
 
 .reveal-ready [data-reveal].is-visible,
 .reveal-ready [data-reveal-stagger] > .is-visible {
   opacity: 1;
   transform: none;
+  transition:
+    opacity var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms),
+    transform var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms);
 }
 
 /* Contact rows keep their hover colour; the stagger delay applies to the entrance only */
-.reveal-ready [data-reveal-stagger] > .channel-row {
+.reveal-ready [data-reveal-stagger] > .channel-row.is-visible {
   transition:
     opacity var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms),
     transform var(--m-enter) var(--ease-enter) var(--reveal-delay, 0ms),
