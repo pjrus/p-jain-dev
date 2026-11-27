@@ -9,8 +9,15 @@
 \usepackage{enumitem}
 \usepackage{tabularx}
 \usepackage{xcolor}
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks,
+  pdftitle={Paarangat Jain - Software Engineering Resume},
+  pdfauthor={Paarangat Jain},
+  pdfsubject={Software Engineering and Full-Stack Developer Resume},
+  pdfkeywords={Software Engineer, Full-Stack Developer, TypeScript, React, Next.js, React Native, Python, SQL, Monash University}
+]{hyperref}
 \usepackage{titlesec}
+\input{glyphtounicode}
+\pdfgentounicode=1
 
 \let\oldhref\href
 \renewcommand{\href}[2]{\oldhref{#1}{\underline{#2}}}
@@ -32,15 +39,6 @@
   \vspace{1pt}
 }
 
-\newcommand{\resumeOrg}[2]{%
-  \noindent\textbf{#1}\hfill #2\par
-}
-
-\newcommand{\resumeRole}[2]{%
-  \noindent{\color{muted}\textit{#1}\hfill\textit{#2}}\par
-  \vspace{1pt}
-}
-
 \newcommand{\resumeProject}[3]{%
   \begin{tabularx}{\textwidth}{@{}Xr@{}}
     \textbf{#1} & \textit{#2}
@@ -54,84 +52,80 @@
 {\centering
   {\LARGE\bfseries Paarangat Jain}\par
   \vspace{3pt}
-  0410 215 889 \textbar{} \href{mailto:paarangat@gmail.com}{paarangat@gmail.com} \textbar{}
+  Melbourne, VIC \textbar{} 0410 215 889 \textbar{} \href{mailto:paarangat@gmail.com}{paarangat@gmail.com} \textbar{}
   \href{https://linkedin.com/in/paarangat-jain}{linkedin.com/in/paarangat-jain} \textbar{}
+  \href{https://github.com/pjrus}{github.com/pjrus} \textbar{}
   \href{https://p-jain.dev}{p-jain.dev}\par
 }
 
 \section{Education}
-\resumeEntry{Monash University}{Jan. 2024 -- June 2027}{Bachelor of Computer Science (Advanced CS, Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
+\resumeEntry{Monash University}{Jan 2024 -- Jun 2027}{Bachelor of Computer Science (Advanced Computer Science, Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
 \begin{itemize}
   \item Key Units (AI \& Data): Deep Learning, Data Analytics, Modelling for Data Analysis
   \item Key CS Units: Parallel Computing, Operating Systems, Databases, Object-Oriented Design, Algorithms \& Data Structures
-  \item Faculty of IT Student Volunteer @ Monash Open Day 2026
+  \item Faculty of IT Student Volunteer, Monash Open Day 2026
 \end{itemize}
 \vspace{1pt}
-\resumeEntry{Viewbank College}{Jan. 2019 -- Dec. 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
+\resumeEntry{Viewbank College}{Jan 2019 -- Dec 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
 
 \section{Experience}
-\resumeOrg{PlasmIT Vector}{Docklands, VIC (Remote)}
-\resumeRole{Full-stack Engineering Intern}{Jun. 2026 -- Sep. 2026}
+\resumeEntry{Full-Stack Engineering Intern}{Jun 2026 -- Sep 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
 \begin{itemize}
-  \item Assisted with the design and development of full-stack applications across frontend, backend and database components.
-  \item Collaborated on implementation, testing and documentation across the software development lifecycle.
-  \item Worked with the team to deliver features and resolve issues across the stack, following agreed development practices.
+  \item Developed mobile and Next.js full-stack web applications across frontend, backend and database components.
+  \item Collaborated on implementation, testing and technical documentation across the software development lifecycle (SDLC).
+  \item Delivered features and resolved cross-stack defects with the engineering team following agreed development practices.
 \end{itemize}
-\vspace{2pt}
 
-\resumeOrg{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
-\resumeRole{Project Coordinator}{Aug. 2025 -- Present}
+\resumeEntry{Project Coordinator (formerly Project Officer)}{Mar 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
 \begin{itemize}
-  \item Lead collaboration with the academic supervisor to define goals and strategies for low-cost refreshable Braille displays.
-  \item Guide and coordinate project officers in brainstorming and developing accessibility technology.
+  \item Progressed from designing and testing tactile display components to leading collaboration with the academic supervisor on low-cost refreshable Braille displays.
+  \item Guide and coordinate project officers in designing and developing accessibility hardware and software solutions.
   \item Lead development of the React Native mobile application supporting the tactile display project.
-  \item Received more than 90\% positive feedback from team members for effective leadership and communication.
+  \item Achieved over 90\% positive peer feedback from team members for effective leadership and communication.
 \end{itemize}
-\resumeRole{Operations Officer}{Feb. 2026 -- Present}
-\begin{itemize}
-  \item Assist in the technical operations of MATT, supporting delivery of accessibility-focused projects.
-  \item Collaborate with peers to ensure smooth execution of technical initiatives, coordination and internal workflows.
-\end{itemize}
-\resumeRole{Projects Officer}{Mar. 2025 -- Aug. 2025}
-\begin{itemize}
-  \item Collaborated with the academic supervisor and fellow officers to brainstorm accessibility solutions.
-  \item Assisted in the design, development and testing of tactile display components for blind and low-vision users.
-\end{itemize}
-\vspace{2pt}
 
-\resumeOrg{Ocean Connect}{Remote}
-\resumeRole{Volunteer Web Developer}{Mar. 2026 -- Present}
+\resumeEntry{Web Developer}{Mar 2026 -- Present}{Ocean Connect}{Remote}
 \begin{itemize}
-  \item Maintain and update Ocean Connect's website so programme, event and community information stays clear and accessible.
+  \item Volunteer to maintain Ocean Connect's website so programme, event and community information stays clear and accessible.
   \item Improve site structure and content so volunteers can easily engage with environmental education and citizen science.
   \item Strengthen the organisation's digital presence in support of marine biodiversity and coastal conservation awareness.
 \end{itemize}
 
-\section{Projects}
-\resumeProject{Skill-Issue (Skilliton)}{Feb. 2026}{Antigravity, Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://skilliton.ai.studio}{Live}}
+\resumeEntry{Operations Officer}{Feb 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
 \begin{itemize}
-  \item Built an AI-powered peer-to-peer skill exchange platform at UniHack 2026 using Antigravity for university students.
+  \item Support the technical operations of MATT to enable on-time delivery of accessibility-focused engineering projects.
+  \item Collaborate with peers to execute technical initiatives, internal processes and team workflows.
+  \item Contribute to cross-team coordination, stakeholder communication and operational documentation.
+\end{itemize}
+
+\section{Projects}
+\resumeProject{Skill-Issue (Skilliton)}{Feb 2026}{Antigravity, Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://skilliton.ai.studio}{Live}}
+\begin{itemize}
+  \item Built an AI-powered peer-to-peer skill exchange web platform at UniHack 2026 using Antigravity for university students.
   \item Developed the full-stack application with Next.js, TypeScript and Firebase Authentication with Google OAuth support.
   \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
 \end{itemize}
 
-\resumeProject{Inkboard}{Sep. 2026 -- Present}{TypeScript, Vite, IndexedDB, CRDT, MCP, WebSockets \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
+\resumeProject{Inkboard}{Sep 2026 -- Present}{TypeScript, Vite, IndexedDB, Yjs CRDT, MCP, WebSockets \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
 \begin{itemize}
   \item Built a local-first infinite canvas for handwriting, typed notes and PDF annotation using IndexedDB and Yjs CRDTs.
-  \item Added a local MCP server (stdio/HTTP) exposing Zod-validated tools, PNG previews, PDF export and prompts.
-  \item Built a token-authenticated 127.0.0.1 WebSocket bridge for reversible live edits and an offline archive backend.
+  \item Added a local MCP server (stdio, HTTP) exposing Zod-validated tools, PNG previews, PDF export and prompts.
+  \item Built a token-authenticated localhost WebSocket bridge for reversible live edits and an offline archive backend.
 \end{itemize}
 
-\resumeProject{Braille Keyboard Visualiser}{Apr. 2026 -- Present}{Next.js, React, Three.js, TypeScript, WebGL \textbar{} \href{https://github.com/pjrus/braille-keyboard-visualizer}{GitHub} \textbar{} \href{https://pjrus.github.io/braille-keyboard-visualizer/}{Live}}
+\resumeProject{Braille Keyboard Visualiser}{Apr 2026 -- Present}{Next.js, React, Three.js, TypeScript, WebGL \textbar{} \href{https://github.com/pjrus/braille-keyboard-visualizer}{GitHub} \textbar{} \href{https://pjrus.github.io/braille-keyboard-visualizer/}{Live}}
 \begin{itemize}
   \item Built a 3D interactive visualiser for exploring Hable-inspired braille keyboard layouts using Three.js and WebGL.
   \item Implemented Perkins-style chord typing and custom key mappings with interactive layout geometry controls.
 \end{itemize}
 
-\section{Skills}
-\textbf{Programming languages} \textbar{} TypeScript, JavaScript, Python, SQL (MySQL), Haskell, PHP, R, HTML/CSS\\[1pt]
-\textbf{Frameworks and libraries} \textbar{} React, Next.js, React Native, Expo, SvelteKit, Vite, Three.js, Tailwind CSS, Yjs\\[1pt]
-\textbf{Tools and infrastructure} \textbar{} Git, Docker, Firebase, MongoDB, IndexedDB, MCP, Linux/VPS, Figma, Arduino\\[1pt]
-\textbf{Spoken languages} \textbar{} English (Fluent), Hindi (Fluent), Punjabi (Limited)
+\section{Technical Skills}
+\textbf{Programming Languages:} TypeScript, JavaScript, Python, SQL, MySQL, Haskell, PHP, R, HTML, CSS\\[1pt]
+\textbf{Frameworks \& Libraries:} React, Next.js, React Native, Expo, SvelteKit, Vite, Three.js, Tailwind CSS, Yjs\\[1pt]
+\textbf{Tools \& Infrastructure:} Git, GitHub Actions, Docker, Firebase, MongoDB, IndexedDB, MCP, Linux, VPS, Figma, Arduino\\[1pt]
+\textbf{Spoken Languages:} English (Fluent), Hindi (Fluent), Punjabi (Limited)
+
+\vspace{6pt}
+{\centering References available upon request.\par}
 
 \end{document}
