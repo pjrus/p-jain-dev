@@ -50,8 +50,9 @@
   // so it is always complete once the end of the timeline is visible. Matches experience.css.
   const SPINE_START = 0.5;
   const SPINE_END = 1;
-  // Reveals fire once an element's top crosses this fraction of the viewport.
-  const REVEAL_LINE = 0.88;
+  // Matches --reveal-y in tokens.css so elements shifted down while hidden still trigger
+  // the moment their resting top enters the viewport.
+  const REVEAL_OFFSET_PX = 16;
 
   // Form validation state (validated on submit, never while typing)
   let nameError = $state('');
@@ -60,23 +61,29 @@
   let formStatus = $state('');
 
   /**
-   * Scroll-in reveals. Anything at or above the trigger line on mount is shown at once
-   * (it was already painted visible by SSR, so hiding it would flicker); the rest reveal
-   * as their top crosses REVEAL_LINE, or the moment they are found above the viewport.
+   * Scroll-in reveals. Any element already in view (even partially) or above the viewport on
+   * mount is marked visible before `reveal-ready` is applied, so it never enters a hidden or
+   * animated state. Only elements completely below the viewport start hidden and reveal as
+   * soon as they enter the viewport.
    * @param {HTMLElement} root
    */
   function armReveals(root) {
     const targets = Array.from(root.querySelectorAll('[data-reveal]'));
 
-    /** @param {Element} el */
-    const reveal = (el) => {
+    /**
+     * @param {Element} el
+     * @param {boolean} withStagger
+     */
+    const reveal = (el, withStagger = true) => {
       observer.unobserve(el);
       el.classList.add('is-visible');
       const step = Number(el.getAttribute('data-reveal-stagger'));
       if (!step) return;
       Array.from(el.children).forEach((kid, i) => {
         // A custom property (not transition-delay) so the stagger never delays hover states
-        if (kid instanceof HTMLElement) kid.style.setProperty('--reveal-delay', `${i * step}ms`);
+        if (withStagger && kid instanceof HTMLElement) {
+          kid.style.setProperty('--reveal-delay', `${i * step}ms`);
+        }
         kid.classList.add('is-visible');
       });
     };
@@ -87,14 +94,24 @@
           if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) reveal(entry.target);
         }
       },
-      { rootMargin: `0px 0px -${Math.round((1 - REVEAL_LINE) * 100)}% 0px` }
+      { rootMargin: `0px 0px ${REVEAL_OFFSET_PX}px 0px`, threshold: 0 }
     );
 
-    const line = window.innerHeight * REVEAL_LINE;
-    document.documentElement.classList.add('reveal-ready');
+    // Measure before adding `reveal-ready` so the hidden translateY offset never skews rect.top.
+    const viewportHeight = window.innerHeight;
+    /** @type {Element[]} */
+    const offscreen = [];
     for (const el of targets) {
-      if (el.getBoundingClientRect().top < line) reveal(el);
-      else observer.observe(el);
+      if (el.getBoundingClientRect().top < viewportHeight) {
+        reveal(el, false);
+      } else {
+        offscreen.push(el);
+      }
+    }
+
+    document.documentElement.classList.add('reveal-ready');
+    for (const el of offscreen) {
+      observer.observe(el);
     }
 
     return () => {
