@@ -61,10 +61,9 @@
   let formStatus = $state('');
 
   /**
-   * Scroll-in reveals. Any element already in view (even partially) or above the viewport on
-   * mount is marked visible before `reveal-ready` is applied, so it never enters a hidden or
-   * animated state. Only elements completely below the viewport start hidden and reveal as
-   * soon as they enter the viewport.
+   * Scroll-in reveals. Elements already above the viewport are marked visible immediately.
+   * Elements currently in view (even partially) fade in right away on the next frame, while
+   * elements completely below the viewport stay hidden until any part of them enters view.
    * @param {HTMLElement} root
    */
   function armReveals(root) {
@@ -97,13 +96,18 @@
       { rootMargin: `0px 0px ${REVEAL_OFFSET_PX}px 0px`, threshold: 0 }
     );
 
-    // Measure before adding `reveal-ready` so the hidden translateY offset never skews rect.top.
+    // Measure before adding `reveal-ready` so the hidden translateY offset never skews rects.
     const viewportHeight = window.innerHeight;
+    /** @type {Element[]} */
+    const inView = [];
     /** @type {Element[]} */
     const offscreen = [];
     for (const el of targets) {
-      if (el.getBoundingClientRect().top < viewportHeight) {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom <= 0) {
         reveal(el, false);
+      } else if (rect.top < viewportHeight) {
+        inView.push(el);
       } else {
         offscreen.push(el);
       }
@@ -114,8 +118,23 @@
       observer.observe(el);
     }
 
+    /** @type {number | null} */
+    let raf1 = null;
+    /** @type {number | null} */
+    let raf2 = null;
+    if (inView.length > 0) {
+      // Wait two frames so the initial hidden state paints before transitioning to visible.
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          for (const el of inView) reveal(el);
+        });
+      });
+    }
+
     return () => {
       observer.disconnect();
+      if (raf1 !== null) cancelAnimationFrame(raf1);
+      if (raf2 !== null) cancelAnimationFrame(raf2);
       document.documentElement.classList.remove('reveal-ready');
     };
   }
