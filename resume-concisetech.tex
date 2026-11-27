@@ -1,7 +1,7 @@
 
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[left=1.0cm,right=1.0cm,top=0.72cm,bottom=0.72cm]{geometry}
+\usepackage[left=1.0cm,right=1.0cm,top=0.80cm,bottom=0.80cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -29,14 +29,14 @@
 \color{ink}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\setlist[itemize]{leftmargin=1.25em,itemsep=0.8pt,topsep=0pt,partopsep=0pt,parsep=0pt,before=\vspace{2pt}}
+\setlist[itemize]{leftmargin=1.25em,itemsep=1pt,topsep=0pt,partopsep=0pt,parsep=0pt,before=\vspace{2.25pt}}
 \titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{2.5pt}\titlerule]
-\titlespacing*{\section}{0pt}{11.5pt}{5pt}
+\titlespacing*{\section}{0pt}{12.5pt}{5.5pt}
 
 \newcommand{\resumeHeader}[2]{%
   {\centering
     {\LARGE\bfseries #1}\par
-    \vspace{3pt}
+    \vspace{3.5pt}
     #2\par
   }
 }
@@ -51,12 +51,8 @@
   \noindent\textit{\color{muted}#3}\par
 }
 
-\newcommand{\entrysep}{\vspace{7.5pt}}
-\newcommand{\skillsep}{\\[2.5pt]}
-\newcommand{\resumeFooter}[1]{%
-  \par\vspace{10pt}
-  {\centering #1\par}
-}
+\newcommand{\entrysep}{\vspace{8.5pt}}
+\newcommand{\skillsep}{\\[3pt]}
 
 \begin{document}
 
@@ -137,7 +133,5 @@
 \textbf{Frameworks \& Libraries:} React, Next.js, React Native, Expo, SvelteKit, Vite, Three.js, Tailwind CSS, Yjs\skillsep
 \textbf{Tools \& Infrastructure:} Git, GitHub Actions, Docker, Firebase, MongoDB, IndexedDB, MCP, Linux, VPS, Figma, Arduino\skillsep
 \textbf{Spoken Languages:} English (Fluent), Hindi (Fluent), Punjabi (Limited)
-
-\resumeFooter{References available upon request.}
 
 \end{document}
