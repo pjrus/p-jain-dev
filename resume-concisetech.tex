@@ -1,7 +1,7 @@
 
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[left=1.0cm,right=1.0cm,top=0.7cm,bottom=0.7cm]{geometry}
+\usepackage[left=1.0cm,right=1.0cm,top=0.95cm,bottom=0.85cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -31,7 +31,7 @@
 \setlength{\parskip}{0pt}
 \setlist[itemize]{leftmargin=1.25em,itemsep=0pt,topsep=1pt,parsep=0pt}
 \titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.4pt}]
-\titlespacing*{\section}{0pt}{5pt}{2pt}
+\titlespacing*{\section}{0pt}{10pt}{3pt}
 
 \newcommand{\resumeEntry}[4]{%
   \noindent\textbf{#1}\hfill\textit{#2}\par
@@ -59,37 +59,23 @@
 }
 
 \section{Education}
-\resumeEntry{Monash University}{Jan 2024 -- Jun 2027}{Bachelor of Computer Science (Advanced Computer Science, Mathematics Minor), WAM: 73.8, GPA: 3.000}{Clayton, VIC}
+\resumeEntry{Monash University}{Jan 2024 -- Jun 2027}{Bachelor of Computer Science (Adv. CS, Maths Minor) \textbar{} WAM: 73.8, GPA: 3.000}{Clayton, VIC}
 \begin{itemize}
   \item Key Units (AI \& Data): Deep Learning, Data Analytics, Modelling for Data Analysis
   \item Key CS Units: Parallel Computing, Operating Systems, Databases, Object-Oriented Design, Algorithms \& Data Structures
   \item Faculty of IT Student Volunteer, Monash Open Day 2026
 \end{itemize}
-\vspace{1pt}
+\vspace{3pt}
 \resumeEntry{Viewbank College}{Jan 2019 -- Dec 2023}{Victorian Certificate of Education (VCE), ATAR: 90.15}{Rosanna, VIC}
 
 \section{Experience}
-\resumeEntry{Full-Stack Engineering Intern}{Jun 2026 -- Sep 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
-\begin{itemize}
-  \item Developed mobile and Next.js full-stack web applications across frontend, backend and database components.
-  \item Collaborated on implementation, testing and technical documentation across the software development lifecycle (SDLC).
-  \item Delivered features and resolved cross-stack defects with the engineering team following agreed development practices.
-\end{itemize}
-
-\resumeEntry{Project Coordinator (formerly Project Officer)}{Mar 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
-\begin{itemize}
-  \item Progressed from designing and testing tactile display components to leading collaboration with the academic supervisor on low-cost refreshable Braille displays.
-  \item Guide and coordinate project officers in designing and developing accessibility hardware and software solutions.
-  \item Lead development of the React Native mobile application supporting the tactile display project.
-  \item Achieved over 90\% positive peer feedback from team members for effective leadership and communication.
-\end{itemize}
-
 \resumeEntry{Web Developer}{Mar 2026 -- Present}{Ocean Connect}{Remote}
 \begin{itemize}
   \item Volunteer web developer leading a full visual redesign and rebuild of Ocean Connect's public website.
   \item Designed and presented multiple UI layout concepts to stakeholders, iterating on feedback to finalise the new direction.
   \item Rebuilt the site's frontend design, structure and content to improve accessibility and engagement for community programmes.
 \end{itemize}
+\vspace{2.5pt}
 
 \resumeEntry{Operations Officer}{Feb 2026 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
 \begin{itemize}
@@ -97,14 +83,32 @@
   \item Collaborate with peers to execute technical initiatives, internal processes and team workflows.
   \item Contribute to cross-team coordination, stakeholder communication and operational documentation.
 \end{itemize}
+\vspace{2.5pt}
+
+\resumeEntry{Project Coordinator -- Tactile Display (formerly Project Officer)}{Mar 2025 -- Present}{Monash Assistive Technology Team (MATT)}{Clayton, VIC}
+\begin{itemize}
+  \item Progressed from prototyping tactile display components to leading Braille display strategy with the academic supervisor.
+  \item Guide and coordinate project officers in designing and developing accessibility hardware and software solutions.
+  \item Lead development of the React Native mobile application supporting the tactile display project.
+  \item Achieved over 90\% positive peer feedback from team members for effective leadership and communication.
+\end{itemize}
+\vspace{2pt}
+
+\resumeEntry{Full-Stack Engineering Intern}{Jun 2026 -- Sep 2026}{PlasmIT Vector}{Docklands, VIC (Remote)}
+\begin{itemize}
+  \item Developed mobile and Next.js full-stack web applications across frontend, backend and database components.
+  \item Collaborated on implementation, testing and technical documentation across the software development lifecycle (SDLC).
+  \item Delivered features and resolved cross-stack defects with the engineering team following agreed development practices.
+\end{itemize}
 
 \section{Projects}
-\resumeProject{Skill-Issue (Skilliton)}{Feb 2026}{Antigravity, Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://skilliton.ai.studio}{Live}}
+\resumeProject{Skill-Issue (Skilliton)}{Feb 2026}{Next.js, TypeScript, Firebase, Genkit, Gemini, Tailwind CSS, Antigravity \textbar{} \href{https://github.com/pjrus/unihack-2026-final}{GitHub} \textbar{} \href{https://skilliton.ai.studio}{Live}}
 \begin{itemize}
-  \item Built an AI-powered peer-to-peer skill exchange web platform at UniHack 2026 using Antigravity for university students.
+  \item Built an AI-powered peer-to-peer skill exchange web platform at UniHack 2026 for university students.
   \item Developed the full-stack application with Next.js, TypeScript and Firebase Authentication with Google OAuth support.
   \item Integrated an AI assistant using Google Genkit and Gemini for personalised skill recommendations and real-time chat.
 \end{itemize}
+\vspace{2.5pt}
 
 \resumeProject{Inkboard}{Sep 2026 -- Present}{TypeScript, Vite, IndexedDB, Yjs CRDT, MCP, WebSockets \textbar{} \href{https://github.com/pjrus/inkboard}{GitHub} \textbar{} \href{https://pjrus.github.io/inkboard/}{Live}}
 \begin{itemize}
@@ -112,6 +116,7 @@
   \item Added a local MCP server (stdio, HTTP) exposing Zod-validated tools, PNG previews, PDF export and prompts.
   \item Built a token-authenticated localhost WebSocket bridge for reversible live edits and an offline archive backend.
 \end{itemize}
+\vspace{2.5pt}
 
 \resumeProject{Braille Keyboard Visualiser}{Apr 2026 -- Present}{Next.js, React, Three.js, TypeScript, WebGL \textbar{} \href{https://github.com/pjrus/braille-keyboard-visualizer}{GitHub} \textbar{} \href{https://pjrus.github.io/braille-keyboard-visualizer/}{Live}}
 \begin{itemize}
@@ -125,7 +130,7 @@
 \textbf{Tools \& Infrastructure:} Git, GitHub Actions, Docker, Firebase, MongoDB, IndexedDB, MCP, Linux, VPS, Figma, Arduino\\[1pt]
 \textbf{Spoken Languages:} English (Fluent), Hindi (Fluent), Punjabi (Limited)
 
-\vspace{6pt}
+\vspace{5pt}
 {\centering References available upon request.\par}
 
 \end{document}
