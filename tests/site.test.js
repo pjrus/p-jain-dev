@@ -72,14 +72,11 @@ test('built static site excludes drafts, includes routes, and has no scrollcraft
   assert.ok(heroMatch[0].includes('--char-delay: 0ms'), 'first char should start at 0ms delay');
   assert.ok(heroMatch[0].includes('--char-delay: 22ms'), 'second char should stagger by 22ms');
 
-  assert.ok(indexHtml.includes('Pomo App'), 'index.html should include the Pomo App project');
-  assert.ok(indexHtml.includes('phone-mockup'), 'index.html should render PhoneMockup for Pomo App');
-  assert.ok(indexHtml.includes('Drag to rotate 360°'), 'index.html should include 3D rotation hint');
-  assert.ok(indexHtml.includes('/images/pomo-app.svg'), 'index.html should reference pomo-app.svg');
+  assert.equal(indexHtml.includes('Pomo App'), false, 'index.html should hide the Pomo App project while unfeatured');
   assert.equal(
     fs.existsSync(path.join(BUILD_DIR, 'images', 'pomo-app.svg')),
     true,
-    'build/images/pomo-app.svg should be copied to build output'
+    'build/images/pomo-app.svg should be kept in build output'
   );
 
   const postFiles = fs.readdirSync(POSTS_DIR).filter((file) => file.endsWith('.md'));

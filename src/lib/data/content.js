@@ -68,7 +68,7 @@ export const projects = [
   },
   {
     id: 'pomo-app',
-    featured: true,
+    featured: false,
     device: 'phone',
     title: 'Pomo App',
     kind: 'Expo mobile app',
