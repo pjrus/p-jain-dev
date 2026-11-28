@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { buildContactMailto, validateContact } from '../src/lib/contact.js';
+import { clamp01, SMOOTH_SCROLL_OPTIONS } from '../src/lib/scroll.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const BUILD_DIR = path.join(ROOT, 'build');
@@ -35,6 +36,21 @@ test('validateContact trims valid fields and buildContactMailto encodes URI comp
   assert.ok(href.includes('Portfolio%20enquiry%20from%20Ada%20Lovelace'));
   assert.ok(href.includes('Hello%20%26%20welcome!'));
   assert.ok(href.includes('Email%3A%20ada%40example.com'));
+});
+
+test('smooth scroll options keep wheel damped, touch native, and rAF unified', () => {
+  assert.equal(clamp01(-0.5), 0);
+  assert.equal(clamp01(0.42), 0.42);
+  assert.equal(clamp01(1.5), 1);
+
+  assert.ok(SMOOTH_SCROLL_OPTIONS.lerp >= 0.07 && SMOOTH_SCROLL_OPTIONS.lerp <= 0.09);
+  assert.ok(
+    SMOOTH_SCROLL_OPTIONS.wheelMultiplier >= 0.6 && SMOOTH_SCROLL_OPTIONS.wheelMultiplier <= 0.75
+  );
+  assert.equal(SMOOTH_SCROLL_OPTIONS.smoothWheel, true);
+  assert.equal(SMOOTH_SCROLL_OPTIONS.syncTouch, false);
+  assert.equal(SMOOTH_SCROLL_OPTIONS.autoRaf, false);
+  assert.equal(SMOOTH_SCROLL_OPTIONS.allowNestedScroll, true);
 });
 
 test('built static site excludes drafts, includes routes, and has no scrollcraft leftovers', () => {

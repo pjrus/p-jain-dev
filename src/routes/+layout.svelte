@@ -1,9 +1,18 @@
 <script>
+  import { onMount } from 'svelte';
+  import { afterNavigate } from '$app/navigation';
   import { base } from '$app/paths';
   import SiteHeader from '$lib/components/SiteHeader.svelte';
+  import { initSmoothScroll, syncSmoothScroll } from '$lib/scroll.js';
+  import 'lenis/dist/lenis.css';
   import '../app.css';
 
   let { children } = $props();
+
+  onMount(() => initSmoothScroll());
+  afterNavigate(() => {
+    requestAnimationFrame(syncSmoothScroll);
+  });
 </script>
 
 <SiteHeader />

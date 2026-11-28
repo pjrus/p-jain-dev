@@ -15,7 +15,7 @@
   class="project-row"
   class:project-row--text-first={textFirst}
   data-reveal
-  data-reveal-stagger="90"
+  data-reveal-stagger="110"
 >
   <div class="project-media">
     {#if isPhone}

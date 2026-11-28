@@ -6,6 +6,7 @@
   import IconGithub from './IconGithub.svelte';
   import IconLinkedin from './IconLinkedin.svelte';
   import ThemeIcon from './ThemeIcon.svelte';
+  import { startSmoothScroll, stopSmoothScroll } from '$lib/scroll.js';
 
   const THEME_KEY = 'portfolio-theme';
 
@@ -47,12 +48,14 @@
 
   function openMenu() {
     isMenuOpen = true;
+    stopSmoothScroll();
     menuEl?.showModal();
   }
 
   function closeMenu() {
     isMenuOpen = false;
     menuEl?.close();
+    startSmoothScroll();
   }
 
   const pathname = $derived(page.url.pathname.replace(/\/+$/, '') || '/');
@@ -132,8 +135,12 @@
     id="mobile-menu"
     class="mobile-menu"
     aria-label="Site navigation"
+    data-lenis-prevent
     bind:this={menuEl}
-    onclose={() => (isMenuOpen = false)}
+    onclose={() => {
+      isMenuOpen = false;
+      startSmoothScroll();
+    }}
     onclick={(event) => {
       if (event.target === menuEl) closeMenu();
     }}

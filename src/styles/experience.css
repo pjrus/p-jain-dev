@@ -10,6 +10,10 @@
   border-top: 1px solid var(--line);
 }
 
+.experience.section {
+  padding-block: clamp(88px, 10vw, 144px);
+}
+
 .experience-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
@@ -131,8 +135,8 @@ html.m-enter .experience-spine-fill {
     .experience-spine-fill {
       animation: spine-fill linear both;
       animation-timeline: --spine;
-      /* 0%: spine top at mid-viewport. 100%: spine bottom at the viewport bottom */
-      animation-range: cover 50vh cover calc(100% - 100vh);
+      /* 0%: spine top at 60vh. 100%: spine bottom at 90vh (matches SPINE_START/END in +page.svelte) */
+      animation-range: cover 40vh cover calc(100% - 90vh);
     }
   }
 }
@@ -148,14 +152,14 @@ html.m-enter .experience-spine-fill {
 
 .experience-list {
   display: grid;
-  gap: 22px;
+  gap: clamp(28px, 3.5vw, 44px);
 }
 
 .experience-item {
   position: relative;
   display: grid;
   gap: 6px;
-  padding-bottom: 20px;
+  padding-bottom: clamp(24px, 3vw, 38px);
   border-bottom: 1px solid var(--line);
 }
 

@@ -38,6 +38,7 @@
     .hero-plane--grid {
       animation: hero-grid-drift linear both;
       animation-timeline: --hero;
+      will-change: transform;
     }
   }
 }

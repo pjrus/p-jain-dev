@@ -46,13 +46,13 @@
   /** @type {HTMLElement | undefined} */
   let experienceEl = $state();
 
-  // Spine fill runs from "spine top at mid-viewport" (0%) to "spine bottom on screen" (100%),
-  // so it is always complete once the end of the timeline is visible. Matches experience.css.
-  const SPINE_START = 0.5;
-  const SPINE_END = 1;
-  // Matches --reveal-y in tokens.css so elements shifted down while hidden still trigger
-  // the moment their resting top enters the viewport.
-  const REVEAL_OFFSET_PX = 16;
+  // Spine fill runs from "spine top at 60vh" (0%) to "spine bottom at 90vh" (100%),
+  // giving a longer, more deliberate scrub runway that matches experience.css.
+  const SPINE_START = 0.6;
+  const SPINE_END = 0.9;
+  // Trigger scroll-in reveals once an element clears the bottom 32px of the viewport
+  // so entrances unfold deliberately at the slower wheel speed without popping prematurely.
+  const REVEAL_ROOT_MARGIN = '0px 0px -32px 0px';
 
   // Form validation state (validated on submit, never while typing)
   let nameError = $state('');
@@ -93,7 +93,7 @@
           if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) reveal(entry.target);
         }
       },
-      { rootMargin: `0px 0px ${REVEAL_OFFSET_PX}px 0px`, threshold: 0 }
+      { rootMargin: REVEAL_ROOT_MARGIN, threshold: 0 }
     );
 
     // Measure before adding `reveal-ready` so the hidden translateY offset never skews rects.
@@ -154,6 +154,10 @@
     const scrubFill = !CSS.supports('animation-timeline: view()');
     if (!(spine instanceof HTMLElement) || !(fill instanceof HTMLElement)) return () => {};
 
+    let lastP = '';
+    /** @type {boolean[]} */
+    const lastReached = items.map(() => false);
+
     return onScrollFrame(() => {
       const vh = window.innerHeight;
       const spineRect = spine.getBoundingClientRect();
@@ -163,8 +167,19 @@
       const head = spineRect.top + p * spineRect.height;
       const reached = nodeRects.map((r) => !!r && r.top + r.height / 2 <= head);
 
-      if (scrubFill) fill.style.setProperty('--sc-p', p.toFixed(4));
-      items.forEach((item, i) => item.classList.toggle('is-reached', reached[i]));
+      if (scrubFill) {
+        const nextP = p.toFixed(4);
+        if (nextP !== lastP) {
+          lastP = nextP;
+          fill.style.setProperty('--sc-p', nextP);
+        }
+      }
+      items.forEach((item, i) => {
+        if (reached[i] !== lastReached[i]) {
+          lastReached[i] = reached[i];
+          item.classList.toggle('is-reached', reached[i]);
+        }
+      });
     });
   }
 
